@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public float playerHeight;
     public LayerMask whatIsGround;
     [SerializeField] private bool grounded;
-    [SerializeField] private bool flipped;
+    private bool flipped;
     public List<bool> additionalJumps = new();
 
     private Vector2 movement;
