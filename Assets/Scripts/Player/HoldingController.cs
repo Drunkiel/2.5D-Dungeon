@@ -9,15 +9,9 @@ public enum ItemType
 
 public class HoldingController : MonoBehaviour
 {
-    public static HoldingController instance;
     public GearHolder _gearHolder;
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
-    public void PickItem(ItemID _itemID)
+    public bool PickItem(ItemID _itemID)
     {
         switch (_itemID.itemType)
         {
@@ -25,7 +19,7 @@ public class HoldingController : MonoBehaviour
                 if (!CanPickWeapon(_itemID._weaponItem.holdingType))
                 {
                     print($"Can't pick item: {_itemID.itemType}");
-                    return;
+                    return false;
                 }
 
                 switch (_itemID._weaponItem.holdingType)
@@ -51,7 +45,7 @@ public class HoldingController : MonoBehaviour
                 if (!CanPickArmor(_itemID._armorItem.armorType))
                 {
                     print($"Can't pick armor: {_itemID.itemType}");
-                    return;
+                    return false;
                 }
 
                 switch (_itemID._armorItem.armorType)
@@ -72,10 +66,13 @@ public class HoldingController : MonoBehaviour
                 break;
 
             case ItemType.Collectable:
+                //For tests
+                InventoryController.instance.AddToInventory(_itemID);
                 break;
         }
 
         Destroy(_itemID.gameObject);
+        return true;
     }
 
     public bool CanPickWeapon(WeaponHoldingType holdingType)

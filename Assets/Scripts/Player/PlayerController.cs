@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
     public float speedForce;
     private readonly float maxSpeed = 1.2f;
     public float jumpForce;
@@ -19,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private float newVelocityY;
     public bool isMoving;
 
+    public HoldingController _holdingController;
     [SerializeField] private Rigidbody rgBody;
     [SerializeField] private Animator anim;
     [SerializeField] private ParticleSystem particle;
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         moveSoundSource = GetComponent<AudioSource>();
+        instance = this;
     }
 
     // Update is called once per frame
