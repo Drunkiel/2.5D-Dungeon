@@ -66,8 +66,16 @@ public class HoldingController : MonoBehaviour
                 break;
 
             case ItemType.Collectable:
-                //For tests
-                InventoryController.instance.AddToInventory(_itemID);
+                InventoryController _inventoryController = InventoryController.instance;
+
+                //Looking for available slot in inventory
+                int availableSlot = _inventoryController.GetAvailableSlotIndex();
+                if (availableSlot == -1)
+                    return false;
+
+                //Cloning item to founded slot and adding it to inventory
+                GameObject itemClone = Instantiate(_itemID.gameObject, _inventoryController._slots[availableSlot].transform);
+                _inventoryController.AddToInventory(itemClone.GetComponent<ItemID>(), availableSlot);
                 break;
         }
 
@@ -139,7 +147,7 @@ public class HoldingController : MonoBehaviour
     public ArmorItem PickArmor(ItemID _itemID, Transform newParent)
     {
         GameObject weaponCopy = Instantiate(_itemID.gameObject, newParent);
-       // weaponCopy.transform.localRotation = Quaternion.identity; Maybe later
+        // weaponCopy.transform.localRotation = Quaternion.identity; Maybe later
         weaponCopy.transform.localScale = Vector3.one;
 
         return weaponCopy.GetComponent<ItemID>()._armorItem;

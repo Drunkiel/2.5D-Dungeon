@@ -8,7 +8,7 @@ public class InventoryController : MonoBehaviour
     private readonly int countOfSlots = 24;
     public List<InventorySlot> _slots = new();
     [SerializeField] private GameObject slotPrefab;
-    [SerializeField] private Transform slotParent;
+    public Transform slotParent;
 
     private void Start()
     {
@@ -23,13 +23,15 @@ public class InventoryController : MonoBehaviour
         instance = this;
     }
 
-    public void AddToInventory(ItemID _itemID)
+    public void AddToInventory(ItemID _itemID, int slotIndex)
     {
-        int availableSlot = GetAvailableSlotIndex();
-        if (availableSlot == -1)
+        if (slotIndex == -1)
             return;
 
-        _slots[availableSlot]._itemID = _itemID;
+        _slots[slotIndex]._itemID = _itemID;
+        GameObject slot = Instantiate(_slots[slotIndex].itemPlacePrefab, _slots[slotIndex].transform);
+        _slots[slotIndex]._itemID.transform.SetParent(slot.transform, false);
+        //_slots[slotIndex].AssignItem();
     }
 
     public int GetAvailableSlotIndex()
@@ -37,10 +39,7 @@ public class InventoryController : MonoBehaviour
         for (int i = 0; i < countOfSlots; i++)
         {
             if (_slots[i]._itemID == null)
-            {
-                print(i);
                 return i;
-            }
         }
 
         return -1;
