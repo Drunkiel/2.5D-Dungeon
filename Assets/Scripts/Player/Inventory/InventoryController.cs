@@ -31,7 +31,7 @@ public class InventoryController : MonoBehaviour
         _slots[slotIndex]._itemID = _itemID;
         GameObject slot = Instantiate(_slots[slotIndex].itemPlacePrefab, _slots[slotIndex].transform);
         _slots[slotIndex]._itemID.transform.SetParent(slot.transform, false);
-        //_slots[slotIndex].AssignItem();
+        slot.GetComponent<DragDrop>().image.sprite = _itemID._collectableItem._itemData.itemSprite;
     }
 
     public int GetAvailableSlotIndex()

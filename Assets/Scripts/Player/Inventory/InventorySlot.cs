@@ -5,11 +5,11 @@ using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour, IDropHandler
 {
     public int slotID;
-    public Image image;
+    //public Image image;
     public ItemID _itemID;
     public GameObject itemPlacePrefab;
 
-    public void AssignItem()
+/*    public void AssignItem()
     {
         Sprite sprite = null;
         switch (_itemID.itemType)
@@ -26,7 +26,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         }
 
         image.sprite = sprite;
-    }
+    }*/
 
     public void OnDrop(PointerEventData eventData)
     {

@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
     public InventorySlot currentSlot;
+    public Image image;
     [SerializeField] private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
 
@@ -25,6 +27,9 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        rectTransform.SetParent(currentSlot.transform);
+        rectTransform.localPosition = Vector3.zero;
+
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
     }
@@ -39,10 +44,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnDrop(PointerEventData eventData)
     {
-        RectTransform rectTransform = eventData.pointerDrag.GetComponent<RectTransform>();
         rectTransform.SetParent(currentSlot.transform);
         rectTransform.localPosition = Vector3.zero;
     }
-
-    //TODO: Fix why if dropped out of inventory not reseting
 }
