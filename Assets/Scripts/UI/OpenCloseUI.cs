@@ -10,4 +10,10 @@ public class OpenCloseUI : MonoBehaviour
         isOpen = !isOpen;
         UI.SetActive(isOpen);
     }
+
+    public void Close()
+    {
+        isOpen = false;
+        UI.SetActive(false);
+    }
 }

@@ -16,6 +16,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        currentSlot._itemID = null;
+
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
     }
@@ -29,6 +31,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         rectTransform.SetParent(currentSlot.transform);
         rectTransform.localPosition = Vector3.zero;
+        currentSlot._itemID = transform.GetChild(1).GetComponent<ItemID>();
 
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
