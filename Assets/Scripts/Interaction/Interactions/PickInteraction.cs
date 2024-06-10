@@ -12,4 +12,9 @@ public class PickInteraction : MonoBehaviour
         GetComponent<EventTriggerController>().canBeShown = false;
         GetComponent<HintEvent>().ChangeHint(0);
     }
+
+    public void Replace()
+    {
+
+    }
 }

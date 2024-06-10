@@ -19,26 +19,11 @@ public class HoldingController : MonoBehaviour
                 if (!CanPickWeapon(_itemID._weaponItem.holdingType))
                 {
                     print($"Can't pick item: {_itemID.itemType}");
+                    ReplaceItem(_itemID);
                     return false;
                 }
 
-                switch (_itemID._weaponItem.holdingType)
-                {
-                    //Picking weapon to right hand
-                    case WeaponHoldingType.Right_Hand:
-                        _gearHolder._weaponRight = PickWeapon(_itemID, _gearHolder.rightHandTransform);
-                        break;
-
-                    //Picking weapon to left hand
-                    case WeaponHoldingType.Left_Hand:
-                        _gearHolder._weaponLeft = PickWeapon(_itemID, _gearHolder.leftHandTransform);
-                        break;
-
-                    //Picking weapon to both hands
-                    case WeaponHoldingType.Both_Hands:
-                        _gearHolder._weaponBoth = PickWeapon(_itemID, _gearHolder.bothHandTransform);
-                        break;
-                }
+                SetWeapon(_itemID);
                 break;
 
             case ItemType.Armor:
@@ -48,21 +33,7 @@ public class HoldingController : MonoBehaviour
                     return false;
                 }
 
-                switch (_itemID._armorItem.armorType)
-                {
-                    case ArmorType.Helmet:
-                        _gearHolder._armorHead = PickArmor(_itemID, _gearHolder.headTransform);
-                        break;
-
-                    case ArmorType.Chestplate:
-                        _gearHolder._armorChestplate = PickArmor(_itemID, _gearHolder.bodyTransform);
-                        break;
-
-                    case ArmorType.Boots:
-                        _gearHolder._armorRightBoot = PickArmor(_itemID, _gearHolder.rightFeetTransform);
-                        _gearHolder._armorLeftBoot = PickArmor(_itemID, _gearHolder.leftFeetTransform);
-                        break;
-                }
+                SetArmor(_itemID);
                 break;
 
             case ItemType.Collectable:
@@ -109,10 +80,10 @@ public class HoldingController : MonoBehaviour
         return false;
     }
 
-    public WeaponItem PickWeapon(ItemID _itemID, Transform newParent)
+    public WeaponItem PickWeapon(ItemID _itemID, Quaternion rotation, Transform newParent)
     {
         GameObject weaponCopy = Instantiate(_itemID.gameObject, newParent);
-        weaponCopy.transform.localRotation = Quaternion.identity;
+        weaponCopy.transform.localRotation = rotation;
         weaponCopy.transform.localScale = Vector3.one;
 
         return weaponCopy.GetComponent<ItemID>()._weaponItem;
@@ -147,9 +118,73 @@ public class HoldingController : MonoBehaviour
     public ArmorItem PickArmor(ItemID _itemID, Transform newParent)
     {
         GameObject weaponCopy = Instantiate(_itemID.gameObject, newParent);
-        // weaponCopy.transform.localRotation = Quaternion.identity; Maybe later
         weaponCopy.transform.localScale = Vector3.one;
 
         return weaponCopy.GetComponent<ItemID>()._armorItem;
+    }
+
+    public void ReplaceItem(ItemID _itemID)
+    {
+        ItemID _holdingItemID;
+
+        switch (_itemID.itemType)
+        {
+            case ItemType.Weapon:
+                //Replacing item on stand
+                _holdingItemID = _gearHolder.GetHoldingWeapon(_itemID._weaponItem.holdingType).GetComponent<ItemID>();
+                Transform weaponClone = PickWeapon(_holdingItemID, Quaternion.Euler(0, 0, 90), _itemID.transform.parent).gameObject.transform;
+                weaponClone.localScale = new(0.25f, 0.25f, 0.25f);
+                Destroy(_holdingItemID.gameObject);
+
+                //Picking weapon by player
+                SetWeapon(_itemID);
+
+                Destroy(_itemID.gameObject);
+                break;
+
+            case ItemType.Armor:
+                _holdingItemID = _gearHolder.GetHoldingArmor(_itemID._armorItem.armorType).GetComponent<ItemID>();
+                break;
+        }
+    }
+
+    private void SetWeapon(ItemID _itemID)
+    {
+        switch (_itemID._weaponItem.holdingType)
+        {
+            //Picking weapon to right hand
+            case WeaponHoldingType.Right_Hand:
+                _gearHolder._weaponRight = PickWeapon(_itemID, Quaternion.identity, _gearHolder.rightHandTransform);
+                break;
+
+            //Picking weapon to left hand
+            case WeaponHoldingType.Left_Hand:
+                _gearHolder._weaponLeft = PickWeapon(_itemID, Quaternion.identity, _gearHolder.leftHandTransform);
+                break;
+
+            //Picking weapon to both hands
+            case WeaponHoldingType.Both_Hands:
+                _gearHolder._weaponBoth = PickWeapon(_itemID, Quaternion.identity, _gearHolder.bothHandTransform);
+                break;
+        }
+    }
+
+    private void SetArmor(ItemID _itemID)
+    {
+        switch (_itemID._armorItem.armorType)
+        {
+            case ArmorType.Helmet:
+                _gearHolder._armorHead = PickArmor(_itemID, _gearHolder.headTransform);
+                break;
+
+            case ArmorType.Chestplate:
+                _gearHolder._armorChestplate = PickArmor(_itemID, _gearHolder.bodyTransform);
+                break;
+
+            case ArmorType.Boots:
+                _gearHolder._armorRightBoot = PickArmor(_itemID, _gearHolder.rightFeetTransform);
+                _gearHolder._armorLeftBoot = PickArmor(_itemID, _gearHolder.leftFeetTransform);
+                break;
+        }
     }
 }

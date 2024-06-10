@@ -23,4 +23,37 @@ public class GearHolder
     public ArmorItem _armorChestplate;
     public ArmorItem _armorRightBoot;
     public ArmorItem _armorLeftBoot;
+
+    public WeaponItem GetHoldingWeapon(WeaponHoldingType holdingType)
+    {
+        return holdingType switch
+        {
+            WeaponHoldingType.Right_Hand => _weaponRight,
+            WeaponHoldingType.Left_Hand => _weaponLeft,
+            WeaponHoldingType.Both_Hands => _weaponBoth,
+            _ => null,
+        };
+    }
+
+    public Transform GetHoldingWeaponParent(WeaponHoldingType holdingType)
+    {
+        return holdingType switch
+        {
+            WeaponHoldingType.Right_Hand => rightHandTransform,
+            WeaponHoldingType.Left_Hand => leftHandTransform,
+            WeaponHoldingType.Both_Hands => bothHandTransform,
+            _ => null,
+        };
+    }
+
+    public ArmorItem GetHoldingArmor(ArmorType holdingType)
+    {
+        return holdingType switch
+        {
+            ArmorType.Helmet => _armorHead,
+            ArmorType.Chestplate => _armorChestplate,
+            ArmorType.Boots => _armorRightBoot,
+            _ => throw null,
+        };
+    }
 }
