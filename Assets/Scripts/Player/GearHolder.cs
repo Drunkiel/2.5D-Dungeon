@@ -53,7 +53,7 @@ public class GearHolder
             ArmorType.Helmet => _armorHead,
             ArmorType.Chestplate => _armorChestplate,
             ArmorType.Boots => _armorRightBoot,
-            _ => throw null,
+            _ => null,
         };
     }
 }

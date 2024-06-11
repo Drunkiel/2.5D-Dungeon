@@ -18,7 +18,6 @@ public class HoldingController : MonoBehaviour
             case ItemType.Weapon:
                 if (!CanPickWeapon(_itemID._weaponItem.holdingType))
                 {
-                    print($"Can't pick item: {_itemID.itemType}");
                     ReplaceItem(_itemID);
                     return false;
                 }
@@ -29,7 +28,7 @@ public class HoldingController : MonoBehaviour
             case ItemType.Armor:
                 if (!CanPickArmor(_itemID._armorItem.armorType))
                 {
-                    print($"Can't pick armor: {_itemID.itemType}");
+                    ReplaceItem(_itemID);
                     return false;
                 }
 
@@ -83,6 +82,7 @@ public class HoldingController : MonoBehaviour
     public WeaponItem PickWeapon(ItemID _itemID, Quaternion rotation, Transform newParent)
     {
         GameObject weaponCopy = Instantiate(_itemID.gameObject, newParent);
+        weaponCopy.name = _itemID.name;
         weaponCopy.transform.localRotation = rotation;
         weaponCopy.transform.localScale = Vector3.one;
 
@@ -117,35 +117,74 @@ public class HoldingController : MonoBehaviour
 
     public ArmorItem PickArmor(ItemID _itemID, Transform newParent)
     {
-        GameObject weaponCopy = Instantiate(_itemID.gameObject, newParent);
-        weaponCopy.transform.localScale = Vector3.one;
+        GameObject armorCopy = Instantiate(_itemID.gameObject, newParent);
+        armorCopy.name = _itemID.name;
+        armorCopy.transform.localScale = Vector3.one;
 
-        return weaponCopy.GetComponent<ItemID>()._armorItem;
+        return armorCopy.GetComponent<ItemID>()._armorItem;
     }
 
     public void ReplaceItem(ItemID _itemID)
     {
+        if (_itemID == null)
+            return;
+
         ItemID _holdingItemID;
+        PickInteraction _pickInteraction = null;
 
         switch (_itemID.itemType)
         {
             case ItemType.Weapon:
-                //Replacing item on stand
-                _holdingItemID = _gearHolder.GetHoldingWeapon(_itemID._weaponItem.holdingType).GetComponent<ItemID>();
+                //Get current item
+                WeaponItem _weaponItem = _gearHolder.GetHoldingWeapon(_itemID._weaponItem.holdingType);
+
+                //Checks if item is found
+                if (_weaponItem == null)
+                    return;
+
+                //Assign founded item 
+                _holdingItemID = _weaponItem.GetComponent<ItemID>();
+
+                //Gets stand Pick interaction script
+                _pickInteraction = _itemID.transform.parent.parent.GetChild(0).GetComponent<PickInteraction>();
+
+                //Making clone of weapon item and assigning it to stand
                 Transform weaponClone = PickWeapon(_holdingItemID, Quaternion.Euler(0, 0, 90), _itemID.transform.parent).gameObject.transform;
                 weaponClone.localScale = new(0.25f, 0.25f, 0.25f);
+                _pickInteraction._itemID = weaponClone.GetComponent<ItemID>();
                 Destroy(_holdingItemID.gameObject);
 
                 //Picking weapon by player
                 SetWeapon(_itemID);
-
-                Destroy(_itemID.gameObject);
                 break;
 
             case ItemType.Armor:
-                _holdingItemID = _gearHolder.GetHoldingArmor(_itemID._armorItem.armorType).GetComponent<ItemID>();
+                //Get current item
+                ArmorItem _armorItem = _gearHolder.GetHoldingArmor(_itemID._armorItem.armorType);
+
+                //Checks if item is found
+                if (_armorItem == null)
+                    return;
+
+                //Assign founded item 
+                _holdingItemID = _armorItem.GetComponent<ItemID>();
+
+                //Gets stand Pick interaction script
+                _pickInteraction = _itemID.transform.parent.parent.GetChild(0).GetComponent<PickInteraction>();
+
+                //Making clone of armor item and assigning it to stand
+                Transform armorClone = PickArmor(_holdingItemID, _itemID.transform.parent).gameObject.transform;
+                armorClone.localScale = new(0.5f, 0.5f, 0.5f);
+                _pickInteraction._itemID = armorClone.GetComponent<ItemID>();
+                Destroy(_holdingItemID.gameObject);
+
+                //Picking armor by player
+                SetArmor(_itemID);
                 break;
         }
+
+        ComparisonController.instance.MakeComparison(_pickInteraction._itemID, false);
+        Destroy(_itemID.gameObject);
     }
 
     private void SetWeapon(ItemID _itemID)

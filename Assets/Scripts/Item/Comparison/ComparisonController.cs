@@ -2,19 +2,26 @@ using UnityEngine;
 
 public class ComparisonController : MonoBehaviour
 {
+    public static ComparisonController instance;
+
     public ComparisonItem currentItem;
     public ComparisonItem otherItem;
 
     [SerializeField] private OpenCloseUI _openCloseUI;
 
-    public void MakeComparison(ItemID _otherItemID)
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    public void MakeComparison(ItemID _otherItemID, bool updateUI = true)
     {
         otherItem._itemID = _otherItemID;
         currentItem._itemID = GetItem(_otherItemID);
 
         if (currentItem._itemID == null)
             return;
-        else 
+        else if (updateUI) 
             _openCloseUI.OpenClose();
 
         currentItem.OverrideData();
