@@ -21,8 +21,7 @@ public class GearHolder
 
     public ArmorItem _armorHead;
     public ArmorItem _armorChestplate;
-    public ArmorItem _armorRightBoot;
-    public ArmorItem _armorLeftBoot;
+    public ArmorItem _armorBoots;
 
     public WeaponItem GetHoldingWeapon(WeaponHoldingType holdingType)
     {
@@ -52,7 +51,7 @@ public class GearHolder
         {
             ArmorType.Helmet => _armorHead,
             ArmorType.Chestplate => _armorChestplate,
-            ArmorType.Boots => _armorRightBoot,
+            ArmorType.Boots => _armorBoots,
             _ => null,
         };
     }

@@ -84,7 +84,8 @@ public class HoldingController : MonoBehaviour
         GameObject weaponCopy = Instantiate(_itemID.gameObject, newParent);
         weaponCopy.name = _itemID.name;
         weaponCopy.transform.localRotation = rotation;
-        weaponCopy.transform.localScale = Vector3.one;
+        if (_itemID._weaponItem.resizable)
+            weaponCopy.transform.localScale = Vector3.one;
 
         return weaponCopy.GetComponent<ItemID>()._weaponItem;
     }
@@ -106,7 +107,7 @@ public class HoldingController : MonoBehaviour
                     return false;
 
             case ArmorType.Boots:
-                if (_gearHolder._armorRightBoot == null && _gearHolder._armorLeftBoot == null)
+                if (_gearHolder._armorBoots == null)
                     return true;
                 else
                     return false;
@@ -150,7 +151,9 @@ public class HoldingController : MonoBehaviour
 
                 //Making clone of weapon item and assigning it to stand
                 Transform weaponClone = PickWeapon(_holdingItemID, Quaternion.Euler(0, 0, 90), _itemID.transform.parent).gameObject.transform;
-                weaponClone.localScale = new(0.25f, 0.25f, 0.25f);
+                if (weaponClone.GetComponent<ItemID>()._weaponItem.resizable)
+                    weaponClone.localScale = new(0.25f, 0.25f, 0.25f);
+
                 _pickInteraction._itemID = weaponClone.GetComponent<ItemID>();
                 Destroy(_holdingItemID.gameObject);
 
@@ -176,7 +179,12 @@ public class HoldingController : MonoBehaviour
                 Transform armorClone = PickArmor(_holdingItemID, _itemID.transform.parent).gameObject.transform;
                 armorClone.localScale = new(0.5f, 0.5f, 0.5f);
                 _pickInteraction._itemID = armorClone.GetComponent<ItemID>();
+
+                //If armor is boots then destroy both of boots
+                if (_holdingItemID._armorItem.armorType == ArmorType.Boots)
+                    Destroy(_gearHolder.leftFeetTransform.GetChild(1).gameObject);
                 Destroy(_holdingItemID.gameObject);
+
 
                 //Picking armor by player
                 SetArmor(_itemID);
@@ -212,17 +220,20 @@ public class HoldingController : MonoBehaviour
     {
         switch (_itemID._armorItem.armorType)
         {
+            //Picking armor to head
             case ArmorType.Helmet:
                 _gearHolder._armorHead = PickArmor(_itemID, _gearHolder.headTransform);
                 break;
 
+            //Picking armor to body
             case ArmorType.Chestplate:
                 _gearHolder._armorChestplate = PickArmor(_itemID, _gearHolder.bodyTransform);
                 break;
 
+            //Picking armor to legs
             case ArmorType.Boots:
-                _gearHolder._armorRightBoot = PickArmor(_itemID, _gearHolder.rightFeetTransform);
-                _gearHolder._armorLeftBoot = PickArmor(_itemID, _gearHolder.leftFeetTransform);
+                _gearHolder._armorBoots = PickArmor(_itemID, _gearHolder.rightFeetTransform);
+                PickArmor(_itemID, _gearHolder.leftFeetTransform);
                 break;
         }
     }

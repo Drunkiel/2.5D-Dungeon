@@ -12,7 +12,7 @@ public enum WeaponType
     Sword,
     Shield,
     Bow,
-    Staff,
+    Wand,
 }
 
 public class WeaponItem : MonoBehaviour
@@ -20,6 +20,7 @@ public class WeaponItem : MonoBehaviour
     public ItemData _itemData;
     public WeaponType weaponType;
     public WeaponHoldingType holdingType;
+    public bool resizable = true;
     public int damage;
     public int durability;
 }

@@ -7,7 +7,7 @@ public class ComparisonController : MonoBehaviour
     public ComparisonItem currentItem;
     public ComparisonItem otherItem;
 
-    [SerializeField] private OpenCloseUI _openCloseUI;
+    [SerializeField] private OpenCloseInteraction _openCloseUI;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class ComparisonController : MonoBehaviour
         if (currentItem._itemID == null)
             return;
         else if (updateUI) 
-            _openCloseUI.OpenClose();
+            _openCloseUI.Open(1);
 
         currentItem.OverrideData();
         otherItem.OverrideData();
@@ -73,10 +73,10 @@ public class ComparisonController : MonoBehaviour
                         return _gearHolder._armorChestplate.GetComponent<ItemID>();
 
                     case ArmorType.Boots:
-                        if (_gearHolder._armorRightBoot == null)
+                        if (_gearHolder._armorBoots == null)
                             return null;
 
-                        return _gearHolder._armorRightBoot.GetComponent<ItemID>();
+                        return _gearHolder._armorBoots.GetComponent<ItemID>();
                 }
                 break;
         }
