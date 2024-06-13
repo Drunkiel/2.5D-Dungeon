@@ -62,10 +62,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b714a8efc50d56146b80aea317013c5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemData: {fileID: 11400000, guid: 1cd240f7daeb2ff4fbac7499ad7cb3c7, type: 2}
+  _itemData: {fileID: 11400000, guid: ec6316b99be5c044f886ebf9369bbdf9, type: 2}
   armorType: 2
-  protection: 0
-  durability: 0
+  _itemAttributes:
+  - attributeType: 3
+    amount: 5
 --- !u!1 &6994585768560687239
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,7 +110,7 @@ GameObject:
   - component: {fileID: 3592734510918868253}
   - component: {fileID: 338471376165099542}
   m_Layer: 0
-  m_Name: Texture (1)
+  m_Name: Texture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,7 +172,7 @@ SpriteRenderer:
   m_SortingLayerID: 1052403287
   m_SortingLayer: 1
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: b05fff999543ae44a939b8c465e16cf7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bf967241b69319f46b690867c0248ff3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

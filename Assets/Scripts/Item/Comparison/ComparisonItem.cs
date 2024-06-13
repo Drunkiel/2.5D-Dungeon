@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,36 +11,42 @@ public class ComparisonItem : MonoBehaviour
     public TMP_Text itemNameText;
     public TMP_Text holdingTypeText;
 
-    public GameObject[] itemTypeObjects;
-    public TMP_Text[] idkTexts;
+    public Transform statContent;
+    public TMP_Text statTextPrefab;
 
     public void OverrideData()
     {
         ItemData _itemData = null;
+        List<Attributes> _attributes = new();
 
         switch (_itemID.itemType)
         {
             case ItemType.Weapon:
                 _itemData = _itemID._weaponItem._itemData;
-
-                itemTypeObjects[0].SetActive(true);
-                itemTypeObjects[1].SetActive(false);
+                _attributes = _itemID._weaponItem._itemAttributes;
 
                 holdingTypeText.text = "Holding type:" + _itemID._weaponItem.holdingType;
-                idkTexts[0].text = "Damage: " + _itemID._weaponItem.damage;
-                idkTexts[1].text = "No mana so far";
-                idkTexts[2].text = "Durability: " + _itemID._weaponItem.durability;
+
+                for (int i = 0; i < _attributes.Count; i++)
+                {
+                    TMP_Text newStatText = Instantiate(statTextPrefab, statContent);
+                    newStatText.text = $"{_attributes[i].attributeType}: {_attributes[i].amount}";
+                }
+
                 break;
 
             case ItemType.Armor:
                 _itemData = _itemID._armorItem._itemData;
-
-                itemTypeObjects[0].SetActive(false);
-                itemTypeObjects[1].SetActive(true);
+                _attributes = _itemID._armorItem._itemAttributes;
 
                 holdingTypeText.text = "Holding type:" + _itemID._armorItem.armorType;
-                idkTexts[3].text = "Protection: " + _itemID._armorItem.protection;
-                idkTexts[4].text = "Durability: " + _itemID._armorItem.durability;
+
+                for (int i = 0; i < _attributes.Count; i++)
+                {
+                    TMP_Text newStatText = Instantiate(statTextPrefab, statContent);
+                    newStatText.text = $"{_attributes[i].attributeType}: {_attributes[i].amount}";
+                }
+
                 break;
         }
 

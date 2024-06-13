@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum WeaponHoldingType
@@ -21,6 +22,12 @@ public class WeaponItem : MonoBehaviour
     public WeaponType weaponType;
     public WeaponHoldingType holdingType;
     public bool resizable = true;
-    public int damage;
-    public int durability;
+    //Attributes
+    public List<Attributes> _itemAttributes = new();
+
+    private void Start()
+    {
+        //Overwritting sprite
+        transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = _itemData.itemSprite;
+    }
 }

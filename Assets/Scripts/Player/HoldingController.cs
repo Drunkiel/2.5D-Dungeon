@@ -150,7 +150,7 @@ public class HoldingController : MonoBehaviour
                 _pickInteraction = _itemID.transform.parent.parent.GetChild(0).GetComponent<PickInteraction>();
 
                 //Making clone of weapon item and assigning it to stand
-                Transform weaponClone = PickWeapon(_holdingItemID, Quaternion.Euler(0, 0, 90), _itemID.transform.parent).gameObject.transform;
+                Transform weaponClone = PickWeapon(_holdingItemID, Quaternion.identity, _itemID.transform.parent).gameObject.transform;
                 if (weaponClone.GetComponent<ItemID>()._weaponItem.resizable)
                     weaponClone.localScale = new(0.25f, 0.25f, 0.25f);
 
@@ -201,17 +201,22 @@ public class HoldingController : MonoBehaviour
         {
             //Picking weapon to right hand
             case WeaponHoldingType.Right_Hand:
-                _gearHolder._weaponRight = PickWeapon(_itemID, Quaternion.identity, _gearHolder.rightHandTransform);
+                _gearHolder._weaponRight = PickWeapon(_itemID, Quaternion.Euler(0, 0, -90), _gearHolder.rightHandTransform);
                 break;
 
             //Picking weapon to left hand
             case WeaponHoldingType.Left_Hand:
-                _gearHolder._weaponLeft = PickWeapon(_itemID, Quaternion.identity, _gearHolder.leftHandTransform);
+                Quaternion rotation = Quaternion.Euler(0, 0, -90);
+
+                if (_itemID._weaponItem.weaponType == WeaponType.Shield)
+                    rotation = Quaternion.identity;
+
+                _gearHolder._weaponLeft = PickWeapon(_itemID, rotation, _gearHolder.leftHandTransform);
                 break;
 
             //Picking weapon to both hands
             case WeaponHoldingType.Both_Hands:
-                _gearHolder._weaponBoth = PickWeapon(_itemID, Quaternion.identity, _gearHolder.bothHandTransform);
+                _gearHolder._weaponBoth = PickWeapon(_itemID, Quaternion.Euler(0, 0, -90), _gearHolder.bothHandTransform);
                 break;
         }
     }
