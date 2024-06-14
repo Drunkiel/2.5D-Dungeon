@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
 {
     public static InventoryController instance;
 
     private readonly int countOfSlots = 24;
-    public List<InventorySlot> _slots = new();
+    public List<InventorySlot> _gearSlots = new();
+    public List<InventorySlot> _inventorySlots = new();
     [SerializeField] private GameObject slotPrefab;
     public Transform slotParent;
 
@@ -17,7 +19,7 @@ public class InventoryController : MonoBehaviour
             GameObject newSlot = Instantiate(slotPrefab, slotParent);
             InventorySlot slot = newSlot.GetComponent<InventorySlot>();
             slot.slotID = i;
-            _slots.Add(slot);
+            _inventorySlots.Add(slot);
         }
 
         instance = this;
@@ -28,17 +30,23 @@ public class InventoryController : MonoBehaviour
         if (slotIndex == -1)
             return;
 
-        _slots[slotIndex]._itemID = _itemID;
-        GameObject slot = Instantiate(_slots[slotIndex].itemPlacePrefab, _slots[slotIndex].transform);
-        _slots[slotIndex]._itemID.transform.SetParent(slot.transform, false);
+        _inventorySlots[slotIndex]._itemID = _itemID;
+        GameObject slot = Instantiate(_inventorySlots[slotIndex].itemPlacePrefab, _inventorySlots[slotIndex].transform);
+        _inventorySlots[slotIndex]._itemID.transform.SetParent(slot.transform, false);
         slot.GetComponent<DragDrop>().image.sprite = _itemID._collectableItem._itemData.itemSprite;
+    }
+
+    public void AddToGearInventory(ItemData _itemData, int slotIndex)
+    {
+        GameObject slot = Instantiate(_gearSlots[slotIndex].itemPlacePrefab, _gearSlots[slotIndex].transform);
+        slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemData.itemSprite;
     }
 
     public int GetAvailableSlotIndex()
     {
         for (int i = 0; i < countOfSlots; i++)
         {
-            if (_slots[i]._itemID == null)
+            if (_inventorySlots[i]._itemID == null)
                 return i;
         }
 

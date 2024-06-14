@@ -13,6 +13,8 @@ public class HoldingController : MonoBehaviour
 
     public bool PickItem(ItemID _itemID)
     {
+        InventoryController _inventoryController = InventoryController.instance;
+
         switch (_itemID.itemType)
         {
             case ItemType.Weapon:
@@ -23,6 +25,10 @@ public class HoldingController : MonoBehaviour
                 }
 
                 SetWeapon(_itemID);
+
+                //Cloning item to founded slot and adding it to inventory
+                int weaponSlotIndex = (int)_itemID._weaponItem.holdingType + 3;
+                _inventoryController.AddToGearInventory(_itemID._weaponItem._itemData, weaponSlotIndex);
                 break;
 
             case ItemType.Armor:
@@ -33,18 +39,20 @@ public class HoldingController : MonoBehaviour
                 }
 
                 SetArmor(_itemID);
+
+                //Cloning item to founded slot and adding it to inventory
+                int armorSlotIndex = (int)_itemID._armorItem.armorType;
+                _inventoryController.AddToGearInventory(_itemID._armorItem._itemData, armorSlotIndex);
                 break;
 
             case ItemType.Collectable:
-                InventoryController _inventoryController = InventoryController.instance;
-
                 //Looking for available slot in inventory
                 int availableSlot = _inventoryController.GetAvailableSlotIndex();
                 if (availableSlot == -1)
                     return false;
 
                 //Cloning item to founded slot and adding it to inventory
-                GameObject itemClone = Instantiate(_itemID.gameObject, _inventoryController._slots[availableSlot].transform);
+                GameObject itemClone = Instantiate(_itemID.gameObject, _inventoryController._inventorySlots[availableSlot].transform);
                 _inventoryController.AddToInventory(itemClone.GetComponent<ItemID>(), availableSlot);
                 break;
         }

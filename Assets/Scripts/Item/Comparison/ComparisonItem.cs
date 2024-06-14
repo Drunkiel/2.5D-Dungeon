@@ -13,6 +13,7 @@ public class ComparisonItem : MonoBehaviour
 
     public Transform statContent;
     public TMP_Text statTextPrefab;
+    public List<TMP_Text> allContextTexts = new();
 
     public void OverrideData()
     {
@@ -27,12 +28,6 @@ public class ComparisonItem : MonoBehaviour
 
                 holdingTypeText.text = "Holding type:" + _itemID._weaponItem.holdingType;
 
-                for (int i = 0; i < _attributes.Count; i++)
-                {
-                    TMP_Text newStatText = Instantiate(statTextPrefab, statContent);
-                    newStatText.text = $"{_attributes[i].attributeType}: {_attributes[i].amount}";
-                }
-
                 break;
 
             case ItemType.Armor:
@@ -41,13 +36,22 @@ public class ComparisonItem : MonoBehaviour
 
                 holdingTypeText.text = "Holding type:" + _itemID._armorItem.armorType;
 
-                for (int i = 0; i < _attributes.Count; i++)
-                {
-                    TMP_Text newStatText = Instantiate(statTextPrefab, statContent);
-                    newStatText.text = $"{_attributes[i].attributeType}: {_attributes[i].amount}";
-                }
-
                 break;
+        }
+
+        //Removing content
+        for (int i = 0; i < allContextTexts.Count; i++)
+        {
+            Destroy(allContextTexts[i].gameObject);
+        }
+        allContextTexts.Clear();
+
+        //Adding new content
+        for (int i = 0; i < _attributes.Count; i++)
+        {
+            TMP_Text newStatText = Instantiate(statTextPrefab, statContent);
+            newStatText.text = $"{_attributes[i].attributeType}: {_attributes[i].amount}";
+            allContextTexts.Add(newStatText);
         }
 
         itemShowcase.sprite = _itemData.itemSprite;
