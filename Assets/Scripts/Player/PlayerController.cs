@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
+    public bool isPlayerStopped;
 
     public float speedForce;
     private readonly float maxSpeed = 1.2f;
@@ -38,6 +39,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isPlayerStopped) 
+            return;
+
         //Movement, jump and animations control
         isMoving = movement.magnitude > 0.1f;
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, whatIsGround);
@@ -67,12 +71,18 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y < -10f)
             transform.position = new(0, 0, 0);
 
+        if (isPlayerStopped)
+            return;
+
         Vector3 move = new Vector3(movement.x, 0, movement.y).normalized;
         rgBody.AddForce(move * speedForce, ForceMode.Acceleration);
     }
 
     public void MovementInput(InputAction.CallbackContext context)
     {
+        if (isPlayerStopped)
+            return;
+
         Vector2 inputValue = context.ReadValue<Vector2>();
 
         //Flipping player to direction they are going

@@ -140,6 +140,7 @@ public class HoldingController : MonoBehaviour
 
         ItemID _holdingItemID;
         PickInteraction _pickInteraction = null;
+        InventoryController _inventoryController = InventoryController.instance;
 
         switch (_itemID.itemType)
         {
@@ -163,10 +164,21 @@ public class HoldingController : MonoBehaviour
                     weaponClone.localScale = new(0.25f, 0.25f, 0.25f);
 
                 _pickInteraction._itemID = weaponClone.GetComponent<ItemID>();
+
+                //Adding clone to inventory
+                _inventoryController.DeleteGearInventory((int)_weaponItem.holdingType);
+                _weaponItem = _gearHolder.GetHoldingWeapon(_itemID._weaponItem.holdingType);
+                _inventoryController.AddToGearInventory(_weaponItem._itemData, (int)_weaponItem.holdingType);
+
                 Destroy(_holdingItemID.gameObject);
 
                 //Picking weapon by player
                 SetWeapon(_itemID);
+
+                //Adding clone to inventory
+                _weaponItem = _gearHolder.GetHoldingWeapon(_itemID._weaponItem.holdingType);
+                _inventoryController.DeleteGearInventory((int)_weaponItem.holdingType);
+                _inventoryController.AddToGearInventory(_weaponItem._itemData, (int)_weaponItem.holdingType);
                 break;
 
             case ItemType.Armor:
@@ -188,7 +200,7 @@ public class HoldingController : MonoBehaviour
                 armorClone.localScale = new(0.5f, 0.5f, 0.5f);
                 _pickInteraction._itemID = armorClone.GetComponent<ItemID>();
 
-                //If armor is boots then destroy both of boots
+                //If armor is boots then destroy both
                 if (_holdingItemID._armorItem.armorType == ArmorType.Boots)
                     Destroy(_gearHolder.leftFeetTransform.GetChild(1).gameObject);
                 Destroy(_holdingItemID.gameObject);
@@ -196,6 +208,11 @@ public class HoldingController : MonoBehaviour
 
                 //Picking armor by player
                 SetArmor(_itemID);
+
+                //Adding clone to inventory
+                _armorItem = _gearHolder.GetHoldingArmor(_itemID._armorItem.armorType);
+                _inventoryController.DeleteGearInventory((int)_armorItem.armorType);
+                _inventoryController.AddToGearInventory(_armorItem._itemData, (int)_armorItem.armorType);
                 break;
         }
 

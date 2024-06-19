@@ -33,13 +33,22 @@ public class InventoryController : MonoBehaviour
         _inventorySlots[slotIndex]._itemID = _itemID;
         GameObject slot = Instantiate(_inventorySlots[slotIndex].itemPlacePrefab, _inventorySlots[slotIndex].transform);
         _inventorySlots[slotIndex]._itemID.transform.SetParent(slot.transform, false);
-        slot.GetComponent<DragDrop>().image.sprite = _itemID._collectableItem._itemData.itemSprite;
+        slot.GetComponent<DragDrop>().image.sprite = _itemID._collectableItem._itemData.itemIconSprite;
     }
 
     public void AddToGearInventory(ItemData _itemData, int slotIndex)
     {
         GameObject slot = Instantiate(_gearSlots[slotIndex].itemPlacePrefab, _gearSlots[slotIndex].transform);
-        slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemData.itemSprite;
+        slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemData.itemIconSprite;
+    }
+
+    public void DeleteGearInventory(int slotIndex)
+    {
+        if (_gearSlots[slotIndex].transform.childCount <= 0)
+            return;
+
+        GameObject item = _gearSlots[slotIndex].transform.GetChild(1).gameObject;
+        Destroy(item);
     }
 
     public int GetAvailableSlotIndex()
