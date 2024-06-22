@@ -13,6 +13,11 @@ public class CameraController : MonoBehaviour
         instance = this;
     }
 
+    public void ResetZoom()
+    {
+        virtualCamera.m_Lens.FieldOfView = 80;
+    }
+
     public IEnumerator ZoomTo(int number, float timeToEnd)
     {
         float startValue = virtualCamera.m_Lens.FieldOfView;

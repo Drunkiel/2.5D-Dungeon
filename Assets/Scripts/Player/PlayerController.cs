@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool grounded;
     private bool flipped;
     public List<bool> additionalJumps = new();
+    private Vector3 lastGroundedPosition;
 
     private Vector2 movement;
     private Vector2 newVelocityXZ;
@@ -63,16 +64,19 @@ public class PlayerController : MonoBehaviour
         if (newVelocityY < -10)
             newVelocityY = -10;
 
-        rgBody.velocity = new Vector3(newVelocityXZ.x, rgBody.velocity.y, newVelocityXZ.y);
+        rgBody.velocity = new(newVelocityXZ.x, rgBody.velocity.y, newVelocityXZ.y);
     }
 
     private void FixedUpdate()
     {
         if (transform.position.y < -10f)
-            transform.position = new(0, 0, 0);
+            transform.position = lastGroundedPosition;
 
         if (isPlayerStopped)
             return;
+
+        if (grounded)
+            lastGroundedPosition = transform.position;
 
         Vector3 move = new Vector3(movement.x, 0, movement.y).normalized;
         rgBody.AddForce(move * speedForce, ForceMode.Acceleration);
@@ -80,10 +84,10 @@ public class PlayerController : MonoBehaviour
 
     public void MovementInput(InputAction.CallbackContext context)
     {
+        Vector2 inputValue = context.ReadValue<Vector2>();
+
         if (isPlayerStopped)
             return;
-
-        Vector2 inputValue = context.ReadValue<Vector2>();
 
         //Flipping player to direction they are going
         if (inputValue.x < 0 && !flipped)
@@ -144,5 +148,10 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < additionalJumps.Count; i++)
             additionalJumps[i] = false;
+    }
+
+    public void ResetMovement()
+    {
+        movement = new();
     }
 }
