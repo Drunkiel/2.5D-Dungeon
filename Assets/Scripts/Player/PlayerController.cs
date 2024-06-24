@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
     {
         moveSoundSource = GetComponent<AudioSource>();
         instance = this;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

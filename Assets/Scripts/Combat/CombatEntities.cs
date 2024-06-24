@@ -10,7 +10,5 @@ public class CombatEntities : MonoBehaviour
     private void Awake()
     {
         instance = this;
-
-        DontDestroyOnLoad(transform.parent.gameObject);
     }
 }
