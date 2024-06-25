@@ -5,17 +5,16 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
-    public bool isPlayerStopped;
 
-    public float speedForce;
-    private readonly float maxSpeed = 1.2f;
-    public float jumpForce;
+    public PlayerStatistics _statistics;
+
+    public bool isPlayerStopped;
 
     public float playerHeight;
     public LayerMask whatIsGround;
     [SerializeField] private bool grounded;
     private bool flipped;
-    public List<bool> additionalJumps = new();
+    
     private Vector3 lastGroundedPosition;
 
     private Vector2 movement;
@@ -60,8 +59,8 @@ public class PlayerController : MonoBehaviour
         newVelocityXZ = new(rgBody.velocity.x, rgBody.velocity.z);
         newVelocityY = rgBody.velocity.y;
 
-        if (newVelocityXZ.magnitude > maxSpeed)
-            newVelocityXZ = Vector3.ClampMagnitude(newVelocityXZ, maxSpeed);
+        if (newVelocityXZ.magnitude > _statistics.maxSpeed)
+            newVelocityXZ = Vector3.ClampMagnitude(newVelocityXZ, _statistics.maxSpeed);
 
         if (newVelocityY < -10)
             newVelocityY = -10;
@@ -81,7 +80,7 @@ public class PlayerController : MonoBehaviour
             lastGroundedPosition = transform.position;
 
         Vector3 move = new Vector3(movement.x, 0, movement.y).normalized;
-        rgBody.AddForce(move * speedForce, ForceMode.Acceleration);
+        rgBody.AddForce(move * _statistics.speedForce, ForceMode.Acceleration);
     }
 
     public void MovementInput(InputAction.CallbackContext context)
@@ -123,19 +122,19 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         rgBody.velocity = new Vector3(rgBody.velocity.x, 0f, rgBody.velocity.z);
-        rgBody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        rgBody.AddForce(transform.up * _statistics.jumpForce, ForceMode.Impulse);
     }
 
     private bool CheckIfCanJump()
     {
-        if (additionalJumps.Count == 0)
+        if (_statistics.additionalJumps.Count == 0)
             return false;
 
-        for (int i = 0; i < additionalJumps.Count; i++)
+        for (int i = 0; i < _statistics.additionalJumps.Count; i++)
         {
-            if (!additionalJumps[i])
+            if (!_statistics.additionalJumps[i])
             {
-                additionalJumps[i] = true;
+                _statistics.additionalJumps[i] = true;
                 return true;
             }
         }
@@ -145,11 +144,11 @@ public class PlayerController : MonoBehaviour
 
     private void ResetJumps()
     {
-        if (additionalJumps.Count == 0)
+        if (_statistics.additionalJumps.Count == 0)
             return;
 
-        for (int i = 0; i < additionalJumps.Count; i++)
-            additionalJumps[i] = false;
+        for (int i = 0; i < _statistics.additionalJumps.Count; i++)
+            _statistics.additionalJumps[i] = false;
     }
 
     public void ResetMovement()

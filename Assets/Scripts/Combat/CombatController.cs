@@ -38,5 +38,6 @@ public class CombatController : MonoBehaviour
         CombatEntities _combatEntities = CombatEntities.instance;
         _combatEntities.player.transform.position = new(-1.7f, 2, 0);
         _combatEntities.enemy.transform.position = new(1.7f, 2f, 0);
+        _combatEntities.enemy.transform.GetChild(0).localScale = new(-1, 1, 1);
     }
 }
