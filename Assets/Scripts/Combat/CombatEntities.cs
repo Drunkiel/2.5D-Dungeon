@@ -7,6 +7,9 @@ public class CombatEntities : MonoBehaviour
     public GameObject player;
     public GameObject enemy;
 
+    public Vector3 playerPreviousPosition;
+    public float playerXScale;
+
     private void Awake()
     {
         instance = this;

@@ -14,18 +14,41 @@ public class PlayerStatsController : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        UpdateHealthSlider(PlayerController.instance._statistics.maxHealth);
+        UpdateManaSlider(PlayerController.instance._statistics.maxMana);
+    }
+
     public void UpdateHealthSlider(float newValue)
     {
         healthSlider.gameObject.SetActive(true);
-        healthSlider.value = newValue / PlayerController.instance._statistics.maxHealth;
 
-        StartCoroutine(HideSlider(healthSlider.gameObject));
+        StartCoroutine(HideSlider(healthSlider, newValue / PlayerController.instance._statistics.maxHealth));
     }
 
-    IEnumerator HideSlider(GameObject slider)
+    public void UpdateManaSlider(float newValue)
     {
-        yield return new WaitForSeconds(2);
+        manaSlider.gameObject.SetActive(true);
 
-        slider.SetActive(false);
+        StartCoroutine(HideSlider(manaSlider, newValue / PlayerController.instance._statistics.maxMana));
+    }
+
+
+    IEnumerator HideSlider(Slider slider, float newValue)
+    {
+        float startValue = slider.value;
+        float time = 0f;
+
+        while (time < 0.5f)
+        {
+            time += Time.deltaTime;
+            slider.value = Mathf.Lerp(startValue, newValue, time / 0.5f);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(10);
+
+        slider.gameObject.SetActive(false);
     }
 }

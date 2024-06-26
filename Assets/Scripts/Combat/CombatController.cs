@@ -1,10 +1,12 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CombatController : MonoBehaviour
 {
     public static CombatController instance;
+    public Transform playerPlace;
+    public Transform enemyPlace;
+    public Transform cameraLookPoint;
 
     private void Awake()
     {
@@ -13,31 +15,65 @@ public class CombatController : MonoBehaviour
 
     public void StartCombat()
     {
-        StartCoroutine(WaitAndLoadScene(1));
+        CombatEntities _combatEntities = CombatEntities.instance;
+        PlayerController _playerController = PlayerController.instance;
+
+        _combatEntities.playerPreviousPosition = _playerController.transform.position;
+        _combatEntities.playerXScale = _playerController.transform.localScale.x;
+
+        StartCoroutine(WaitAndLoadScene());
+        StartCoroutine(WaitAndSetForCombat());
     }
 
     public void EndCombat()
     {
-        StartCoroutine(WaitAndLoadScene(0));
+        StartCoroutine(WaitAndLoadScene());
+        StartCoroutine(WaitAndReset());
     }
 
-    IEnumerator WaitAndLoadScene(int sceneIndex)
+    IEnumerator WaitAndLoadScene()
     {
         //Some effects before starting battle
         PlayerController.instance.isPlayerStopped = true;
         StartCoroutine(CameraController.instance.ZoomTo(20, 1f));
 
         yield return new WaitForSeconds(1);
+
         TransitionController.instance.StartTransition();
 
         yield return new WaitForSeconds(1);
+    }
 
-        //Loading combat scene
-        SceneManager.LoadScene(sceneIndex);
+    IEnumerator WaitAndSetForCombat()
+    {
+        yield return new WaitForSeconds(1);
+
+        CameraController.instance.virtualCameras[1].Priority = 99;
+
+        yield return new WaitForSeconds(1);
 
         CombatEntities _combatEntities = CombatEntities.instance;
-        _combatEntities.player.transform.position = new(-1.7f, 2, 0);
-        _combatEntities.enemy.transform.position = new(1.7f, 2f, 0);
+        _combatEntities.player.transform.position = playerPlace.position;
+        _combatEntities.player.transform.GetChild(0).localScale = new(1, 1, 1);
+
+        _combatEntities.enemy.transform.position = enemyPlace.position;
         _combatEntities.enemy.transform.GetChild(0).localScale = new(-1, 1, 1);
+
+        CameraController.instance.ResetZoom();
+    }
+
+    IEnumerator WaitAndReset()
+    {
+        yield return new WaitForSeconds(1);
+
+        CameraController.instance.virtualCameras[1].Priority = 1;
+
+        yield return new WaitForSeconds(1);
+
+        CombatEntities _combatEntities = CombatEntities.instance;
+        _combatEntities.player.transform.position = _combatEntities.playerPreviousPosition;
+        _combatEntities.player.transform.GetChild(0).localScale = new(_combatEntities.playerXScale, 1, 1);
+
+        CameraController.instance.ResetZoom();
     }
 }

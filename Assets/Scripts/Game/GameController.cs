@@ -4,6 +4,7 @@ public class GameController : MonoBehaviour
 {
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (gameObject.scene.name != "DontDestroyOnLoad")
+            DontDestroyOnLoad(gameObject);
     }
 }
