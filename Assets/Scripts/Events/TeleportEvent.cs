@@ -32,7 +32,7 @@ public class TeleportEvent : MonoBehaviour
     public void SetCooldown()
     {
         isOnCooldown = true;
-        Invoke(nameof(ResetCooldown), 15);
+        Invoke(nameof(ResetCooldown), 10);
     }
 
     public void ResetCooldown()

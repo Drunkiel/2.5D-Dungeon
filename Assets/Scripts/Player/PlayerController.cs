@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsGround;
     [SerializeField] private bool grounded;
     private bool flipped;
-    
+
     private Vector3 lastGroundedPosition;
 
     private Vector2 movement;
@@ -39,7 +38,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isPlayerStopped) 
+        if (isPlayerStopped)
             return;
 
         //Movement, jump and animations control
@@ -105,6 +104,9 @@ public class PlayerController : MonoBehaviour
 
     public void JumpInput(InputAction.CallbackContext context)
     {
+        if (isPlayerStopped)
+            return;
+
         if (context.performed)
         {
             if (grounded)

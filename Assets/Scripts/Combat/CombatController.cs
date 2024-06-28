@@ -46,11 +46,7 @@ public class CombatController : MonoBehaviour
 
     IEnumerator WaitAndSetForCombat()
     {
-        yield return new WaitForSeconds(1);
-
-        CameraController.instance.virtualCameras[1].Priority = 99;
-
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
 
         CombatEntities _combatEntities = CombatEntities.instance;
         _combatEntities.player.transform.position = playerPlace.position;
@@ -60,20 +56,18 @@ public class CombatController : MonoBehaviour
         _combatEntities.enemy.transform.GetChild(0).localScale = new(-1, 1, 1);
 
         CameraController.instance.ResetZoom();
+        CameraController.instance.virtualCameras[1].Priority = 99;
     }
 
     IEnumerator WaitAndReset()
     {
-        yield return new WaitForSeconds(1);
-
-        CameraController.instance.virtualCameras[1].Priority = 1;
-
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
 
         CombatEntities _combatEntities = CombatEntities.instance;
         _combatEntities.player.transform.position = _combatEntities.playerPreviousPosition;
         _combatEntities.player.transform.GetChild(0).localScale = new(_combatEntities.playerXScale, 1, 1);
 
         CameraController.instance.ResetZoom();
+        CameraController.instance.virtualCameras[1].Priority = 1;
     }
 }
