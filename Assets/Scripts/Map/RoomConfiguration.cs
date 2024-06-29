@@ -17,7 +17,10 @@ public class RoomConfiguration : MonoBehaviour
     public List<PortalPosition> portalPositions { private set; get; } = new();
     [SerializeField] private GameObject portalPrefab;
 
-    public List<GameObject> spawnedPortals = new();
+    [SerializeField] private GameObject portalWest;
+    [SerializeField] private GameObject portalNorth;
+    [SerializeField] private GameObject portalEast;
+    [SerializeField] private GameObject portalSouth;
 
     private void Awake()
     {
@@ -36,23 +39,26 @@ public class RoomConfiguration : MonoBehaviour
         for (int i = 0; i < portalPositions.Count; i++)
         {
             GameObject newPortal = Instantiate(portalPrefab, transform);
-            spawnedPortals.Add(newPortal);
 
             switch (portalPositions[i])
             {
                 case PortalPosition.West:
+                    portalWest = newPortal;
                     newPortal.transform.localPosition = new(-roomSize.x / 2 + 1, 0.5f, 0);
                     break;
 
                 case PortalPosition.North:
+                    portalNorth = newPortal;
                     newPortal.transform.localPosition = new(0, 0.5f, roomSize.y / 2 - 1);
                     break;
 
                 case PortalPosition.East:
+                    portalEast = newPortal;
                     newPortal.transform.localPosition = new(roomSize.x / 2 - 1, 0.5f, 0);
                     break;
 
                 case PortalPosition.South:
+                    portalSouth = newPortal;
                     newPortal.transform.localPosition = new(0, 0.5f, -roomSize.y / 2 + 1);
                     break;
             }
@@ -76,10 +82,31 @@ public class RoomConfiguration : MonoBehaviour
 
     public GameObject GetPortal(PortalPosition portalPosition)
     {
-        for (int i = 0; i < spawnedPortals.Count; i++)
+        switch (portalPosition)
         {
-            if (spawnedPortals[i].transform.name[7] == portalPosition.ToString()[0])
-                return spawnedPortals[i];
+            case PortalPosition.West:
+                if (portalWest == null)
+                    return null;
+
+                return portalWest;
+
+            case PortalPosition.North:
+                if (portalNorth == null)
+                    return null;
+
+                return portalNorth;
+
+            case PortalPosition.East:
+                if (portalEast == null)
+                    return null;
+
+                return portalEast;
+
+            case PortalPosition.South:
+                if (portalSouth == null)
+                    return null;
+
+                return portalSouth;
         }
 
         return null;
@@ -89,10 +116,10 @@ public class RoomConfiguration : MonoBehaviour
     {
         return portalPosition switch
         {
-            PortalPosition.West => GetPortal(PortalPosition.East),
-            PortalPosition.North => GetPortal(PortalPosition.South),
-            PortalPosition.East => GetPortal(PortalPosition.West),
-            PortalPosition.South => GetPortal(PortalPosition.North),
+            PortalPosition.West => portalEast,
+            PortalPosition.North => portalSouth,
+            PortalPosition.East => portalWest,
+            PortalPosition.South => portalNorth,
             _ => null,
         };
     }

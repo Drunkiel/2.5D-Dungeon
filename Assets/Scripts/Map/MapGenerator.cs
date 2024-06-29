@@ -5,37 +5,54 @@ public class MapGenerator : MonoBehaviour
 {
     public GameObject startRoom;
     public GameObject roomPrefab;
+    public string mapLayout = "010\n" +
+                              "010\n" +
+                              "010\n" +
+                              "010\n" +
+                              "010\n";
+    public Vector2 mapSize;
 
     [SerializeField] private List<GameObject> spawnedRooms = new();
 
     private void Start()
     {
-        GenerateMap();
+        GetMapSize();
+        //GenerateMap();
     }
 
     public void GenerateMap()
     {
-        for (int i = 1; i <= 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             GameObject newRoom = Instantiate(roomPrefab, transform);
             spawnedRooms.Add(newRoom);
-            newRoom.transform.localPosition = new(0, 0, 10 * i);
-            RoomConfiguration _configuration = newRoom.GetComponent<RoomConfiguration>();
-            _configuration.Config(new() { PortalPosition.North, PortalPosition.South });
+            newRoom.transform.localPosition = new(0, 0, 10 * (i + 1));
+            newRoom.name = $"Room_{i}";
+            RoomConfiguration _newRoomConfiguration = newRoom.GetComponent<RoomConfiguration>();
+            _newRoomConfiguration.Config(new() { PortalPosition.North, PortalPosition.South });
 
-            if (i == 1)
-            {
-                _configuration.ConfigurePortal(PortalPosition.South, startRoom.transform);
-                startRoom.GetComponent<EventTriggerController>().enterEvent.AddListener(() =>
-                {
-                    startRoom.GetComponent<TeleportEvent>().TeleportToObject(_configuration.GetPortal(PortalPosition.South).transform);
-                });
-            }
+            RoomConfiguration _previousRoomConfiguration;
+
+            if (i == 0)
+                _previousRoomConfiguration = startRoom.GetComponent<RoomConfiguration>();
             else
-            {
-                //_configuration.ConfigurePortal(PortalPosition.South, _configuration.GetOppositePortal(PortalPosition.South).transform);
-                _configuration.ConfigurePortal(PortalPosition.South, spawnedRooms[i].GetComponent<RoomConfiguration>().GetOppositePortal(PortalPosition.South).transform);
+                _previousRoomConfiguration = spawnedRooms[i - 1].GetComponent<RoomConfiguration>();
 
+            _newRoomConfiguration.ConfigurePortal(PortalPosition.South, _previousRoomConfiguration.GetOppositePortal(PortalPosition.South).transform);
+            _previousRoomConfiguration.ConfigurePortal(PortalPosition.North, _newRoomConfiguration.GetOppositePortal(PortalPosition.North).transform);
+        }
+    }
+
+    public void GetMapSize()
+    {
+        for (int i = 0; i < mapLayout.Length; i++)
+        {
+            if (mapLayout[i] == '\n')
+            {
+                if (mapSize.x == 0)
+                    mapSize.x = i;
+
+                mapSize.y++;
             }
         }
     }
