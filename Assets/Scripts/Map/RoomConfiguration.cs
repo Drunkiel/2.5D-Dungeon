@@ -22,6 +22,8 @@ public class RoomConfiguration : MonoBehaviour
     [SerializeField] private GameObject portalEast;
     [SerializeField] private GameObject portalSouth;
 
+    public List<RoomConfiguration> nearbyRooms = new();
+
     private void Awake()
     {
         roomSize = new(transform.GetChild(0).localScale.x, transform.GetChild(0).localScale.z);
@@ -43,21 +45,33 @@ public class RoomConfiguration : MonoBehaviour
             switch (portalPositions[i])
             {
                 case PortalPosition.West:
+                    if (portalWest != null)
+                        return;
+
                     portalWest = newPortal;
                     newPortal.transform.localPosition = new(-roomSize.x / 2 + 1, 0.5f, 0);
                     break;
 
                 case PortalPosition.North:
+                    if (portalNorth != null)
+                        return;
+
                     portalNorth = newPortal;
                     newPortal.transform.localPosition = new(0, 0.5f, roomSize.y / 2 - 1);
                     break;
 
                 case PortalPosition.East:
+                    if (portalEast != null)
+                        return;
+
                     portalEast = newPortal;
                     newPortal.transform.localPosition = new(roomSize.x / 2 - 1, 0.5f, 0);
                     break;
 
                 case PortalPosition.South:
+                    if (portalSouth != null)
+                        return;
+
                     portalSouth = newPortal;
                     newPortal.transform.localPosition = new(0, 0.5f, -roomSize.y / 2 + 1);
                     break;
@@ -71,8 +85,11 @@ public class RoomConfiguration : MonoBehaviour
     {
         GameObject portal = GetPortal(portalPosition);
 
-        if (portal == null) 
+        if (portal == null)
+        {
+            Debug.Log($"{gameObject.name} does not have any portals");
             return;
+        }
 
         portal.GetComponent<EventTriggerController>().enterEvent.AddListener(() =>
         {

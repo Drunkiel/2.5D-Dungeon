@@ -5173,6 +5173,7 @@ MonoBehaviour:
   portalNorth: {fileID: 37360456}
   portalEast: {fileID: 0}
   portalSouth: {fileID: 0}
+  nearbyRooms: []
 --- !u!4 &729133377
 Transform:
   m_ObjectHideFlags: 0
@@ -9790,15 +9791,17 @@ MonoBehaviour:
   startRoom: {fileID: 729133375}
   roomPrefab: {fileID: 8992172140928246382, guid: 3280468e1466be34dafbfed2d03cfcd3,
     type: 3}
-  mapLayout: '0,2,0
+  mapLayout: '1,1,1
 
-    2,2,0
+    1,1,1
 
-    0,2,0
+    1,1,1
 
-    1,2,2
+    1,1,1
 
-    1,1,0
+    1,1,1
+
+    1,1,1
 
 '
   mapLayoutCopy: 
