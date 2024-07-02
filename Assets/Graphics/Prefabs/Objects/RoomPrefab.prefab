@@ -46,12 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomSize: {x: 0, y: 0}
+  portalPositionsToAvoid: 00000000
   portalPrefab: {fileID: 48137215656976847, guid: c87939e846de226479484f32a4943fd1,
     type: 3}
   portalWest: {fileID: 0}
   portalNorth: {fileID: 0}
   portalEast: {fileID: 0}
   portalSouth: {fileID: 0}
+  nearbyRooms: []
 --- !u!1001 &6407075153286082070
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
@@ -13,7 +12,7 @@ public class MapGenerator : MonoBehaviour
                               "0,1,0\n" +
                               "0,1,0\n" +
                               "0,1,0\n";
-    public string mapLayoutCopy;
+    public List<int> mapLayoutCopy = new();
 
     public Vector2Int mapSize;
 
@@ -27,7 +26,8 @@ public class MapGenerator : MonoBehaviour
 
     public void GenerateMap()
     {
-        mapLayoutCopy = ExtractNumbers(mapLayout);
+        mapLayoutCopy.Clear();
+        mapLayoutCopy = ExtractNumbersFromString(mapLayout);
 
         int index = 0;
 
@@ -36,9 +36,9 @@ public class MapGenerator : MonoBehaviour
         {
             for (int x = 0; x < mapSize.x; x++)
             {
-                char number = mapLayoutCopy[index];
+                int number = mapLayoutCopy[index];
 
-                if (number != '0')
+                if (number != 0)
                 {
                     // Calculate the spawn position
                     Vector3 spawnPosition = new(x - 1, y + 1);
@@ -114,12 +114,13 @@ public class MapGenerator : MonoBehaviour
                 }
             }
 
-            _newRoomConfiguration.Config(portalPositions);
+            _newRoomConfiguration.CustomConfig(portalPositions);
         }
     }
 
     private void SetRoomPortals()
     {
+        //Configuring start room portal
         RoomConfiguration _startRoomConfiguration = startRoom.GetComponent<RoomConfiguration>();
         _startRoomConfiguration.ConfigurePortal(PortalPosition.North, _startRoomConfiguration.nearbyRooms[0].GetOppositePortal(PortalPosition.North).transform);
 
@@ -127,24 +128,45 @@ public class MapGenerator : MonoBehaviour
         {
             RoomConfiguration _roomConfiguration = spawnedRooms[i].GetComponent<RoomConfiguration>();
 
+            //Connecting portals to each other
             for (int j = 0; j < _roomConfiguration.nearbyRooms.Count; j++)
             {
                 switch (_roomConfiguration.portalPositions[j])
                 {
                     case PortalPosition.West:
-                        _roomConfiguration.ConfigurePortal(PortalPosition.West, _roomConfiguration.nearbyRooms[j].GetOppositePortal(PortalPosition.West).transform);
+                        Transform oppositeWestPortal = _roomConfiguration.nearbyRooms[j].GetOppositePortal(PortalPosition.West).transform;
+
+                        if (oppositeWestPortal == null)
+                            break;
+
+                        _roomConfiguration.ConfigurePortal(PortalPosition.West, oppositeWestPortal);
                         break;
 
                     case PortalPosition.North:
-                        _roomConfiguration.ConfigurePortal(PortalPosition.North, _roomConfiguration.nearbyRooms[j].GetOppositePortal(PortalPosition.North).transform);
+                        Transform oppositeNorthPortal = _roomConfiguration.nearbyRooms[j].GetOppositePortal(PortalPosition.North).transform;
+
+                        if (oppositeNorthPortal == null)
+                            break;
+
+                        _roomConfiguration.ConfigurePortal(PortalPosition.North, oppositeNorthPortal);
                         break;
 
                     case PortalPosition.East:
-                        _roomConfiguration.ConfigurePortal(PortalPosition.East, _roomConfiguration.nearbyRooms[j].GetOppositePortal(PortalPosition.East).transform);
+                        Transform oppositeEastPortal = _roomConfiguration.nearbyRooms[j].GetOppositePortal(PortalPosition.East).transform;
+
+                        if (oppositeEastPortal == null)
+                            break;
+
+                        _roomConfiguration.ConfigurePortal(PortalPosition.East, oppositeEastPortal);
                         break;
 
                     case PortalPosition.South:
-                        _roomConfiguration.ConfigurePortal(PortalPosition.South, _roomConfiguration.nearbyRooms[j].GetOppositePortal(PortalPosition.South).transform);
+                        Transform oppositeSouthPortal = _roomConfiguration.nearbyRooms[j].GetOppositePortal(PortalPosition.South).transform;
+
+                        if (oppositeSouthPortal == null)
+                            break;
+
+                        _roomConfiguration.ConfigurePortal(PortalPosition.South, oppositeSouthPortal);
                         break;
                 }
             }
@@ -157,7 +179,7 @@ public class MapGenerator : MonoBehaviour
 
         for (int i = 0; i < mapLayout.Length; i++)
         {
-            if (mapLayout[i] != ',' && mapLayout[i] != '\n')
+            if (mapLayout[i] == ',' || mapLayout[i] == '\n')
                 columnNumber++;
 
             //Getting to the last collumn
@@ -174,18 +196,16 @@ public class MapGenerator : MonoBehaviour
                     Debug.LogError($"There is diffrent row length on row: {mapSize.y}");
                     return false;
                 }
-                else
-                    columnNumber = 0;
             }
         }
 
         return true;
     }
 
-    private string ExtractNumbers(string input)
+    private List<int> ExtractNumbersFromString(string input)
     {
         string[] rows = input.Split('\n');
-        string numbersOnly = "";
+        List<int> numbersOnly = new();
 
         // Loop through each row
         foreach (string row in rows)
@@ -195,7 +215,12 @@ public class MapGenerator : MonoBehaviour
 
             // Loop through each number in the row
             foreach (string number in numbers)
-                numbersOnly += number;
+            {
+                if (!int.TryParse(number, out int newNumber))
+                    newNumber = 0;
+
+                numbersOnly.Add(newNumber); 
+            }
         }
 
         return numbersOnly;

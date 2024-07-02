@@ -14,7 +14,7 @@ public class RoomConfiguration : MonoBehaviour
     [SerializeField] private Vector2 roomSize;
 
     //Portal config
-    public List<PortalPosition> portalPositions { private set; get; } = new();
+    public List<PortalPosition> portalPositions = new();
     [SerializeField] private GameObject portalPrefab;
 
     [SerializeField] private GameObject portalWest;
@@ -29,7 +29,7 @@ public class RoomConfiguration : MonoBehaviour
         roomSize = new(transform.GetChild(0).localScale.x, transform.GetChild(0).localScale.z);
     }
 
-    public void Config(List<PortalPosition> portalPositions)
+    public void CustomConfig(List<PortalPosition> portalPositions)
     {
         this.portalPositions = portalPositions;
 
@@ -131,13 +131,33 @@ public class RoomConfiguration : MonoBehaviour
 
     public GameObject GetOppositePortal(PortalPosition portalPosition)
     {
-        return portalPosition switch
+        switch (portalPosition)
         {
-            PortalPosition.West => portalEast,
-            PortalPosition.North => portalSouth,
-            PortalPosition.East => portalWest,
-            PortalPosition.South => portalNorth,
-            _ => null,
-        };
+            case PortalPosition.West:
+                if (portalEast == null)
+                    return null;
+
+                return portalEast;
+
+            case PortalPosition.North:
+                if (portalSouth == null)
+                    return null;
+
+                return portalSouth;
+
+            case PortalPosition.East:
+                if (portalWest == null)
+                    return null;
+
+                return portalWest;
+
+            case PortalPosition.South:
+                if (portalNorth == null)
+                    return null;
+
+                return portalNorth;
+        }
+
+        return null;
     }
 }

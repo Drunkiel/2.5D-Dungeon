@@ -5167,6 +5167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomSize: {x: 0, y: 0}
+  portalPositions: 
   portalPrefab: {fileID: 48137215656976847, guid: c87939e846de226479484f32a4943fd1,
     type: 3}
   portalWest: {fileID: 0}
@@ -9791,7 +9792,7 @@ MonoBehaviour:
   startRoom: {fileID: 729133375}
   roomPrefab: {fileID: 8992172140928246382, guid: 3280468e1466be34dafbfed2d03cfcd3,
     type: 3}
-  mapLayout: '1,1,1
+  mapLayout: '1,1,10
 
     1,1,1
 
@@ -9805,7 +9806,7 @@ MonoBehaviour:
 
 '
   mapLayoutCopy: 
-  mapSize: {x: 0, y: 0}
+  mapSize: {x: 3, y: 6}
   spawnedRooms: []
 --- !u!4 &1575217420 stripped
 Transform:
