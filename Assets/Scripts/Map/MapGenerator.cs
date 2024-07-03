@@ -122,7 +122,9 @@ public class MapGenerator : MonoBehaviour
     {
         //Configuring start room portal
         RoomConfiguration _startRoomConfiguration = startRoom.GetComponent<RoomConfiguration>();
-        _startRoomConfiguration.ConfigurePortal(PortalPosition.North, _startRoomConfiguration.nearbyRooms[0].GetOppositePortal(PortalPosition.North).transform);
+
+        if (_startRoomConfiguration.nearbyRooms.Count > 0)
+            _startRoomConfiguration.ConfigurePortal(PortalPosition.North, _startRoomConfiguration.nearbyRooms[0].GetOppositePortal(PortalPosition.North).transform);
 
         for (int i = 0; i < spawnedRooms.Count; i++)
         {
@@ -186,7 +188,7 @@ public class MapGenerator : MonoBehaviour
             if (mapLayout[i] == '\n')
             {
                 if (mapSize.x == 0)
-                    mapSize.x = (i + 1) / 2;
+                    mapSize.x = columnNumber;
 
                 mapSize.y++;
 
@@ -196,6 +198,8 @@ public class MapGenerator : MonoBehaviour
                     Debug.LogError($"There is diffrent row length on row: {mapSize.y}");
                     return false;
                 }
+                else
+                    columnNumber = 0;
             }
         }
 
@@ -222,6 +226,8 @@ public class MapGenerator : MonoBehaviour
                 numbersOnly.Add(newNumber); 
             }
         }
+
+        numbersOnly.RemoveAt(numbersOnly.Count - 1);
 
         return numbersOnly;
     }
