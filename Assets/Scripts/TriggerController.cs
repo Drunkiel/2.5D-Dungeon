@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ public class TriggerController : MonoBehaviour
     public string[] objectsTag;
     public HashSet<string> objectsTagsSet;
 
-    void Start()
+    void Awake()
     {
         objectsTagsSet = new HashSet<string>(objectsTag);
     }
@@ -31,9 +30,10 @@ public class TriggerController : MonoBehaviour
 
     void CheckCollision(Collider collider, bool enter = true)
     {
-        string colliderTag = collider.tag;
+        if (objectsTagsSet == null)
+            return;
 
-        if (objectsTagsSet.Contains(colliderTag))
+        if (objectsTagsSet.Contains(collider.tag))
         {
             isTriggered = reverseReturn ? !enter : enter;
             return;

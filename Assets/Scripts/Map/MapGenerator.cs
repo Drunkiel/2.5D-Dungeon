@@ -4,7 +4,8 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     public GameObject startRoom;
-    public GameObject roomPrefab;
+    public List<GameObject> roomPrefabs = new();
+    [SerializeField] private int distanceBetweenRooms = 10;
 
     [Multiline]
     public string mapLayout = "0,1,0\n" +
@@ -38,14 +39,14 @@ public class MapGenerator : MonoBehaviour
             {
                 int number = mapLayoutCopy[index];
 
-                if (number != 0)
+                if (number != 0 && number < roomPrefabs.Count)
                 {
                     // Calculate the spawn position
-                    Vector3 spawnPosition = new(x - 1, y + 1);
+                    Vector3 spawnPosition = new(x - Mathf.FloorToInt(mapSize.x / 2), y + 1);
 
                     // Instantiate the room prefab at the calculated position
-                    GameObject newRoom = Instantiate(roomPrefab, transform);
-                    newRoom.transform.localPosition = new(spawnPosition.x * 10, 0, spawnPosition.y * 10);
+                    GameObject newRoom = Instantiate(roomPrefabs[number], transform);
+                    newRoom.transform.localPosition = new(spawnPosition.x * distanceBetweenRooms, 0, spawnPosition.y * distanceBetweenRooms);
                     spawnedRooms.Add(newRoom);
                     newRoom.name = $"Room_{index}";
                 }
@@ -69,7 +70,7 @@ public class MapGenerator : MonoBehaviour
             List<PortalPosition> portalPositions = new();
             float spawnDistance = Vector3.Distance(spawnedRooms[i].transform.position, startRoom.transform.position);
 
-            if (spawnDistance <= 10)
+            if (spawnDistance <= distanceBetweenRooms)
             {
                 portalPositions.Add(PortalPosition.South);
                 startRoom.GetComponent<RoomConfiguration>().nearbyRooms.Add(_newRoomConfiguration);
@@ -89,7 +90,7 @@ public class MapGenerator : MonoBehaviour
                 //Checks the distance between rooms
                 float distance = Vector3.Distance(spawnedRooms[i].transform.position, spawnedRooms[j].transform.position);
 
-                if (distance <= 10)
+                if (distance <= distanceBetweenRooms)
                 {
                     Vector3 directionVector = spawnedRooms[j].transform.position - spawnedRooms[i].transform.position;
 

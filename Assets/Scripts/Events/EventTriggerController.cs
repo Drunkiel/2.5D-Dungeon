@@ -10,7 +10,7 @@ public class EventTriggerController : MonoBehaviour
     public UnityEvent stayEvent;
     public UnityEvent exitEvent;
 
-    private void Start()
+    private void Awake()
     {
         objectTag = GetComponent<TriggerController>().objectsTag[0];
     }

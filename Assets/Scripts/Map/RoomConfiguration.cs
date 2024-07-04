@@ -29,6 +29,11 @@ public class RoomConfiguration : MonoBehaviour
         roomSize = new(transform.GetChild(0).localScale.x, transform.GetChild(0).localScale.z);
     }
 
+    public Vector2 GetRoomSize()
+    {
+        return roomSize;
+    }
+
     public void CustomConfig(List<PortalPosition> portalPositions)
     {
         this.portalPositions = portalPositions;
