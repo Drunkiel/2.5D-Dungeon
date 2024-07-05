@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
     public static CameraController instance;
 
+    private int currentCamera;
     public CinemachineVirtualCamera[] virtualCameras;
 
     private void Awake()
@@ -13,9 +14,26 @@ public class CameraController : MonoBehaviour
         instance = this;
     }
 
+    public void SetCamera(int index)
+    {
+        if (index >= virtualCameras.Length)
+            return;
+
+        for (int i = 0; i < virtualCameras.Length; i++)
+        {
+            if (i != index)
+                virtualCameras[i].Priority = 1;
+            else
+            {
+                currentCamera = index;
+                virtualCameras[index].Priority = 99;
+            }
+        }
+    }
+
     public void ResetZoom()
     {
-        virtualCameras[0].m_Lens.FieldOfView = 80;
+        virtualCameras[currentCamera].m_Lens.FieldOfView = 80;
     }
 
     public IEnumerator ZoomTo(int number, float timeToEnd)
@@ -26,7 +44,7 @@ public class CameraController : MonoBehaviour
         while (time < timeToEnd)
         {
             time += Time.deltaTime;
-            virtualCameras[0].m_Lens.FieldOfView = Mathf.Lerp(startValue, number, time / timeToEnd);
+            virtualCameras[currentCamera].m_Lens.FieldOfView = Mathf.Lerp(startValue, number, time / timeToEnd);
             yield return null;
         }
     }

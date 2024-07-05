@@ -30,7 +30,7 @@ public class ComparisonController : MonoBehaviour
 
     private ItemID GetItem(ItemID _otherItemID)
     {
-        GearHolder _gearHolder = PlayerController.instance._holdingController._gearHolder;
+        GearHolder _gearHolder = PlayerController.instance._holdingController._itemController._gearHolder;
 
         switch (_otherItemID.itemType)
         {

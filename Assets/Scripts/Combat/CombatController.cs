@@ -7,6 +7,7 @@ public class CombatController : MonoBehaviour
     public Transform playerPlace;
     public Transform enemyPlace;
     public Transform cameraLookPoint;
+    [SerializeField] private OpenCloseUI _openCloseUI;
 
     private void Awake()
     {
@@ -39,6 +40,7 @@ public class CombatController : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
+        //Starting transition
         TransitionController.instance.StartTransition();
 
         yield return new WaitForSeconds(1);
@@ -48,26 +50,38 @@ public class CombatController : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
 
+        //Setting player to combat state
         CombatEntities _combatEntities = CombatEntities.instance;
         _combatEntities.player.transform.position = playerPlace.position;
         _combatEntities.player.transform.GetChild(0).localScale = new(1, 1, 1);
 
+        //Setting enemy to combat state
         _combatEntities.enemy.transform.position = enemyPlace.position;
         _combatEntities.enemy.transform.GetChild(0).localScale = new(-1, 1, 1);
 
+        //Setting camera to combat state
         CameraController.instance.ResetZoom();
-        CameraController.instance.virtualCameras[1].Priority = 99;
+        CameraController.instance.SetCamera(1);
+        _openCloseUI.Open();
     }
 
     IEnumerator WaitAndReset()
     {
         yield return new WaitForSeconds(2);
 
+        //Reseting player to previous state
         CombatEntities _combatEntities = CombatEntities.instance;
         _combatEntities.player.transform.position = _combatEntities.playerPreviousPosition;
         _combatEntities.player.transform.GetChild(0).localScale = new(_combatEntities.playerXScale, 1, 1);
+        PlayerController.instance.ResetMovement();
+        PlayerController.instance.isPlayerStopped = false;
 
+        //Destroying enemy
+        Destroy(_combatEntities.enemy);
+
+        //Reseting camera and UI
         CameraController.instance.ResetZoom();
-        CameraController.instance.virtualCameras[1].Priority = 1;
+        CameraController.instance.SetCamera(0);
+        _openCloseUI.Close();
     }
 }

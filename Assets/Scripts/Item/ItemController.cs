@@ -7,7 +7,7 @@ public enum ItemType
     Collectable,
 }
 
-public class HoldingController : MonoBehaviour
+public class ItemController : MonoBehaviour
 {
     public GearHolder _gearHolder;
 
@@ -98,6 +98,32 @@ public class HoldingController : MonoBehaviour
         return weaponCopy.GetComponent<ItemID>()._weaponItem;
     }
 
+    private void SetWeapon(ItemID _itemID)
+    {
+        switch (_itemID._weaponItem.holdingType)
+        {
+            //Picking weapon to right hand
+            case WeaponHoldingType.Right_Hand:
+                _gearHolder._weaponRight = PickWeapon(_itemID, Quaternion.Euler(0, 0, -90), _gearHolder.rightHandTransform);
+                break;
+
+            //Picking weapon to left hand
+            case WeaponHoldingType.Left_Hand:
+                Quaternion rotation = Quaternion.Euler(0, 0, -90);
+
+                if (_itemID._weaponItem.weaponType == WeaponType.Shield)
+                    rotation = Quaternion.identity;
+
+                _gearHolder._weaponLeft = PickWeapon(_itemID, rotation, _gearHolder.leftHandTransform);
+                break;
+
+            //Picking weapon to both hands
+            case WeaponHoldingType.Both_Hands:
+                _gearHolder._weaponBoth = PickWeapon(_itemID, Quaternion.Euler(0, 0, -90), _gearHolder.bothHandTransform);
+                break;
+        }
+    }
+
     public bool CanPickArmor(ArmorType armorType)
     {
         switch (armorType)
@@ -131,6 +157,28 @@ public class HoldingController : MonoBehaviour
         armorCopy.transform.localScale = Vector3.one;
 
         return armorCopy.GetComponent<ItemID>()._armorItem;
+    }
+
+    private void SetArmor(ItemID _itemID)
+    {
+        switch (_itemID._armorItem.armorType)
+        {
+            //Picking armor to head
+            case ArmorType.Helmet:
+                _gearHolder._armorHead = PickArmor(_itemID, _gearHolder.headTransform);
+                break;
+
+            //Picking armor to body
+            case ArmorType.Chestplate:
+                _gearHolder._armorChestplate = PickArmor(_itemID, _gearHolder.bodyTransform);
+                break;
+
+            //Picking armor to legs
+            case ArmorType.Boots:
+                _gearHolder._armorBoots = PickArmor(_itemID, _gearHolder.rightFeetTransform);
+                PickArmor(_itemID, _gearHolder.leftFeetTransform);
+                break;
+        }
     }
 
     public void ReplaceItem(ItemID _itemID)
@@ -218,53 +266,5 @@ public class HoldingController : MonoBehaviour
 
         ComparisonController.instance.MakeComparison(_pickInteraction._itemID, false);
         Destroy(_itemID.gameObject);
-    }
-
-    private void SetWeapon(ItemID _itemID)
-    {
-        switch (_itemID._weaponItem.holdingType)
-        {
-            //Picking weapon to right hand
-            case WeaponHoldingType.Right_Hand:
-                _gearHolder._weaponRight = PickWeapon(_itemID, Quaternion.Euler(0, 0, -90), _gearHolder.rightHandTransform);
-                break;
-
-            //Picking weapon to left hand
-            case WeaponHoldingType.Left_Hand:
-                Quaternion rotation = Quaternion.Euler(0, 0, -90);
-
-                if (_itemID._weaponItem.weaponType == WeaponType.Shield)
-                    rotation = Quaternion.identity;
-
-                _gearHolder._weaponLeft = PickWeapon(_itemID, rotation, _gearHolder.leftHandTransform);
-                break;
-
-            //Picking weapon to both hands
-            case WeaponHoldingType.Both_Hands:
-                _gearHolder._weaponBoth = PickWeapon(_itemID, Quaternion.Euler(0, 0, -90), _gearHolder.bothHandTransform);
-                break;
-        }
-    }
-
-    private void SetArmor(ItemID _itemID)
-    {
-        switch (_itemID._armorItem.armorType)
-        {
-            //Picking armor to head
-            case ArmorType.Helmet:
-                _gearHolder._armorHead = PickArmor(_itemID, _gearHolder.headTransform);
-                break;
-
-            //Picking armor to body
-            case ArmorType.Chestplate:
-                _gearHolder._armorChestplate = PickArmor(_itemID, _gearHolder.bodyTransform);
-                break;
-
-            //Picking armor to legs
-            case ArmorType.Boots:
-                _gearHolder._armorBoots = PickArmor(_itemID, _gearHolder.rightFeetTransform);
-                PickArmor(_itemID, _gearHolder.leftFeetTransform);
-                break;
-        }
     }
 }
