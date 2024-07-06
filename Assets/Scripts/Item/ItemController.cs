@@ -11,7 +11,7 @@ public class ItemController : MonoBehaviour
 {
     public GearHolder _gearHolder;
 
-    public bool PickItem(ItemID _itemID)
+    public bool PickItem(ItemID _itemID, bool isPlayer = true)
     {
         InventoryController _inventoryController = InventoryController.instance;
 
@@ -25,6 +25,10 @@ public class ItemController : MonoBehaviour
                 }
 
                 SetWeapon(_itemID);
+
+                //If npc then do nothing
+                if (!isPlayer)
+                    break;
 
                 //Cloning item to founded slot and adding it to inventory
                 int weaponSlotIndex = (int)_itemID._weaponItem.holdingType + 3;
@@ -40,12 +44,20 @@ public class ItemController : MonoBehaviour
 
                 SetArmor(_itemID);
 
+                //If npc then do nothing
+                if (!isPlayer)
+                    break;
+
                 //Cloning item to founded slot and adding it to inventory
                 int armorSlotIndex = (int)_itemID._armorItem.armorType;
                 _inventoryController.AddToGearInventory(_itemID._armorItem._itemData, armorSlotIndex);
                 break;
 
             case ItemType.Collectable:
+                //If npc then do nothing
+                if (!isPlayer)
+                    break;
+
                 //Looking for available slot in inventory
                 int availableSlot = _inventoryController.GetAvailableSlotIndex();
                 if (availableSlot == -1)

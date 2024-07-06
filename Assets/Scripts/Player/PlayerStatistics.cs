@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class PlayerStatistics
@@ -13,4 +14,24 @@ public class PlayerStatistics
 
     public float jumpForce;
     public List<bool> additionalJumps = new();
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        if (health < 0)
+        {
+            health = 0;
+            Debug.Log("Player died ;<");
+        }
+    }
+
+    public void TakeMana(int amount)
+    {
+        mana -= amount;
+        if (mana < 0)
+        {
+            mana = 0;
+            Debug.Log("Player has no more mana ;<");
+        }
+    }
 }

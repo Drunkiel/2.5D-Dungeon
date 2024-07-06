@@ -54,7 +54,7 @@ public class ComparisonItem : MonoBehaviour
             allContextTexts.Add(newStatText);
         }
 
-        itemShowcase.sprite = _itemData.itemSprite;
+        itemShowcase.sprite = _itemData.itemIconSprite;
         itemNameText.text = _itemData.itemName;
     }
 }

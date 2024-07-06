@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class CombatController : MonoBehaviour
 {
     public static CombatController instance;
+    [SerializeField] private bool isPlayerTurn;
     public Transform playerPlace;
     public Transform enemyPlace;
     public Transform cameraLookPoint;
+    public CombatUI _combatUI;
     [SerializeField] private OpenCloseUI _openCloseUI;
 
     private void Awake()
@@ -21,6 +24,7 @@ public class CombatController : MonoBehaviour
 
         _combatEntities.playerPreviousPosition = _playerController.transform.position;
         _combatEntities.playerXScale = _playerController.transform.localScale.x;
+        isPlayerTurn = true;
 
         StartCoroutine(WaitAndLoadScene());
         StartCoroutine(WaitAndSetForCombat());
@@ -30,6 +34,28 @@ public class CombatController : MonoBehaviour
     {
         StartCoroutine(WaitAndLoadScene());
         StartCoroutine(WaitAndReset());
+    }
+
+    public void TakeTurn(Action action)
+    {
+        //Do some animation stuff
+
+        //Taking action
+        action();
+
+        //Checks
+        CombatEntities _combatEntities = CombatEntities.instance;
+        if (_combatEntities.player.GetComponent<PlayerController>()._statistics.health <= 0 || 
+            _combatEntities.enemy.GetComponent<EnemyController>()._statistics.health <= 0)
+            EndCombat();
+
+        //Ending turn
+        isPlayerTurn = !isPlayerTurn;
+    }
+
+    public bool IsPlayerTurn()
+    {
+        return isPlayerTurn;
     }
 
     IEnumerator WaitAndLoadScene()
@@ -48,6 +74,10 @@ public class CombatController : MonoBehaviour
 
     IEnumerator WaitAndSetForCombat()
     {
+        //Set player skills
+        for (int i = 0; i < 6; i++)
+            _combatUI.SetSkillToBTN(i, PlayerController.instance._holdingController._skillsController._skillHolder._skillDatas[i]);
+
         yield return new WaitForSeconds(2);
 
         //Setting player to combat state
