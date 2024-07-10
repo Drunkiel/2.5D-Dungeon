@@ -12,17 +12,23 @@ public class PortalController : MonoBehaviour
 
     public void TeleportToPosition(Vector3 position)
     {
+        if (PlayerController.instance.isPlayerStopped)
+            return;
+
         StartCoroutine(WaitAndTeleport(position));
     }
 
     public void TeleportToObject(Transform objectTransform)
     {
+        if (PlayerController.instance.isPlayerStopped)
+            return;
+
         StartCoroutine(WaitAndTeleport(objectTransform.position));
     }
 
     IEnumerator WaitAndTeleport(Vector3 position)
     {
-        //Some effects before starting battle
+        //Some effects before teleportation
         PlayerController.instance.isPlayerStopped = true;
         StartCoroutine(CameraController.instance.ZoomTo(20, 1f));
 
@@ -31,7 +37,7 @@ public class PortalController : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        //Loading combat scene
+        //Teleporting player
         PlayerController.instance.transform.position = position;
         PlayerController.instance.ResetMovement();
         PlayerController.instance.isPlayerStopped = false;

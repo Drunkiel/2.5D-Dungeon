@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
 
-    public PlayerStatistics _statistics;
+    public EntityStatistics _statistics;
 
     public bool isPlayerStopped;
 
