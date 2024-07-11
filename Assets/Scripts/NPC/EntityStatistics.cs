@@ -9,9 +9,9 @@ public class EntityStatistics
     public int mana;
     public int maxMana;
 
-    public float damageMultiplier;
-    public float protectionMultiplier;
-    public float manaUsageMultiplier;
+    public float damageMultiplier = 1;
+    public float protectionMultiplier = 1;
+    public float manaUsageMultiplier = 1;
 
     public int allProtection;
     public int meleeProtection;
@@ -29,9 +29,9 @@ public class EntityStatistics
     public float jumpForce;
     public List<bool> additionalJumps = new();
 
-    public void TakeDamage(int amount, ElementalTypes elementalTypes)
+    public void TakeDamage(int amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes)
     {
-        int damageToDeal = CalculateDamage(amount * damageMultiplier, elementalTypes);
+        int damageToDeal = CalculateDamage(amount * damageMultiplier, attributeTypes, elementalTypes);
 
         health -= damageToDeal;
         if (health < 0)
@@ -41,14 +41,26 @@ public class EntityStatistics
         }
     }
 
-    public int CalculateDamage(float amount, ElementalTypes elementalTypes)
+    public int CalculateDamage(float amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes)
     {
         float damageOutput = amount;
 
         damageOutput -= allProtection * (1.5f * protectionMultiplier);
-        damageOutput -= meleeProtection * (1.2f * protectionMultiplier);
-        damageOutput -= rangeProtection * (1.2f * protectionMultiplier);
-        damageOutput -= magicProtection * (1.2f * protectionMultiplier);
+
+        switch(attributeTypes)
+        {
+            case AttributeTypes.MeleeDamage:
+                damageOutput -= meleeProtection * (1.2f * protectionMultiplier);
+                break;
+
+            case AttributeTypes.RangeDamage:
+                damageOutput -= rangeProtection * (1.2f * protectionMultiplier);
+                break;
+
+            case AttributeTypes.MagicDamage:
+                damageOutput -= magicProtection * (1.2f * protectionMultiplier);
+                break;
+        }
 
         switch (elementalTypes)
         {
@@ -76,18 +88,23 @@ public class EntityStatistics
         if (damageOutput <= 0)
             damageOutput = 1;
 
-        Debug.Log(damageOutput);
-
         return Mathf.FloorToInt(damageOutput);
     }
 
     public void TakeMana(int amount)
     {
-        mana -= amount;
+        mana -= CalculateManaUsage(amount * manaUsageMultiplier);
         if (mana < 0)
         {
             mana = 0;
             Debug.Log("Player has no more mana ;<");
         }
+    }
+
+    private int CalculateManaUsage(float amount)
+    {
+        float manaOutput = amount;
+
+        return Mathf.FloorToInt(manaOutput);
     }
 }
