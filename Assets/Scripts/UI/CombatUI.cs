@@ -71,7 +71,7 @@ public class CombatUI : MonoBehaviour
             for (int j = 0; j < attributeTypes.Count; j++)
             {
                 if (_skillData._skillAttributes[i].attributeType == attributeTypes[j])
-                return _skillData._skillAttributes[i].amount;
+                    return _skillData._skillAttributes[i].amount;
             }
         }
 
