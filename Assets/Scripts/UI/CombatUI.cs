@@ -36,8 +36,11 @@ public class CombatUI : MonoBehaviour
                 EntityStatistics _playerStatistics = PlayerController.instance._statistics;
 
                 //Checks if player has enough mana to cast skill
-                if (_playerStatistics.mana < manaUsage)
-                    return;
+                if (_playerStatistics.mana * _playerStatistics.manaUsageMultiplier < manaUsage)
+                    {
+                        print($"Not enough mana: {Mathf.Abs(_playerStatistics.mana - manaUsage)}");
+                        return;
+                    }
 
                 //Do stuff
                 Attributes _attributes = _skillData._skillAttributes[0];

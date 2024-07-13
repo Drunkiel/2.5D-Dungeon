@@ -12,7 +12,7 @@ public class PortalController : MonoBehaviour
 
     public void TeleportToPosition(Vector3 position)
     {
-        if (PlayerController.instance.isPlayerStopped)
+        if (PlayerController.instance.isStopped)
             return;
 
         StartCoroutine(WaitAndTeleport(position));
@@ -20,7 +20,7 @@ public class PortalController : MonoBehaviour
 
     public void TeleportToObject(Transform objectTransform)
     {
-        if (PlayerController.instance.isPlayerStopped)
+        if (PlayerController.instance.isStopped)
             return;
 
         StartCoroutine(WaitAndTeleport(objectTransform.position));
@@ -29,7 +29,7 @@ public class PortalController : MonoBehaviour
     IEnumerator WaitAndTeleport(Vector3 position)
     {
         //Some effects before teleportation
-        PlayerController.instance.isPlayerStopped = true;
+        PlayerController.instance.isStopped = true;
         StartCoroutine(CameraController.instance.ZoomTo(20, 1f));
 
         yield return new WaitForSeconds(1);
@@ -40,7 +40,7 @@ public class PortalController : MonoBehaviour
         //Teleporting player
         PlayerController.instance.transform.position = position;
         PlayerController.instance.ResetMovement();
-        PlayerController.instance.isPlayerStopped = false;
+        PlayerController.instance.isStopped = false;
         CameraController.instance.ResetZoom();
     }
 }

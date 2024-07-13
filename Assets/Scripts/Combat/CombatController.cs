@@ -61,7 +61,7 @@ public class CombatController : MonoBehaviour
     IEnumerator WaitAndLoadScene()
     {
         //Some effects before starting battle
-        PlayerController.instance.isPlayerStopped = true;
+        PlayerController.instance.isStopped = true;
         StartCoroutine(CameraController.instance.ZoomTo(20, 1f));
 
         yield return new WaitForSeconds(1);
@@ -88,6 +88,7 @@ public class CombatController : MonoBehaviour
         //Setting enemy to combat state
         _combatEntities.enemy.transform.position = enemyPlace.position;
         _combatEntities.enemy.transform.GetChild(0).localScale = new(-1, 1, 1);
+        _combatEntities.enemy.GetComponent<EnemyController>().isStopped = true;
 
         //Setting camera to combat state
         CameraController.instance.ResetZoom();
@@ -99,17 +100,17 @@ public class CombatController : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
 
-        //Reseting player to previous state
+        //Resetting player to previous state
         CombatEntities _combatEntities = CombatEntities.instance;
         _combatEntities.player.transform.position = _combatEntities.playerPreviousPosition;
         _combatEntities.player.transform.GetChild(0).localScale = new(_combatEntities.playerXScale, 1, 1);
         PlayerController.instance.ResetMovement();
-        PlayerController.instance.isPlayerStopped = false;
+        PlayerController.instance.isStopped = false;
 
         //Destroying enemy
         Destroy(_combatEntities.enemy);
 
-        //Reseting camera and UI
+        //Resetting camera and UI
         CameraController.instance.ResetZoom();
         CameraController.instance.SetCamera(0);
         _openCloseUI.Close();

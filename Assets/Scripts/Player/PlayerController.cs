@@ -7,12 +7,12 @@ public class PlayerController : MonoBehaviour
 
     public EntityStatistics _statistics;
 
-    public bool isPlayerStopped;
+    public bool isStopped;
 
     public float playerHeight;
     public LayerMask whatIsGround;
     [SerializeField] private bool grounded;
-    private bool flipped;
+    private bool isFlipped;
 
     private Vector3 lastGroundedPosition;
 
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isPlayerStopped)
+        if (isStopped)
             return;
 
         //Movement, jump and animations control
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y < -10f)
             transform.position = lastGroundedPosition;
 
-        if (isPlayerStopped)
+        if (isStopped)
             return;
 
         if (grounded)
@@ -84,19 +84,19 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 inputValue = context.ReadValue<Vector2>();
 
-        if (isPlayerStopped)
+        if (isStopped)
             return;
 
         //Flipping player to direction they are going
-        if (inputValue.x < 0 && !flipped)
+        if (inputValue.x < 0 && !isFlipped)
         {
             transform.GetChild(0).localScale = new(-1, 1, 1);
-            flipped = true;
+            isFlipped = true;
         }
-        else if (inputValue.x > 0 && flipped)
+        else if (inputValue.x > 0 && isFlipped)
         {
             transform.GetChild(0).localScale = new(1, 1, 1);
-            flipped = false;
+            isFlipped = false;
         }
 
         movement = new Vector2(inputValue.x, inputValue.y);
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
     public void JumpInput(InputAction.CallbackContext context)
     {
-        if (isPlayerStopped)
+        if (isStopped)
             return;
 
         if (context.performed)

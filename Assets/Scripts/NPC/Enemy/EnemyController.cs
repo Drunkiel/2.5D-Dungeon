@@ -1,7 +1,9 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyController : MonoBehaviour
 {
+    public bool isStopped;
     public EntityStatistics _statistics;
     public HoldingController _holdingController;
 
@@ -11,30 +13,68 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Rigidbody rgBody;
 
     [SerializeField] private Vector3 startPosition;
-    [SerializeField] private int wanderingDistance;
+    [SerializeField] private float wanderingDistance;
     [SerializeField] private Vector3 positionToGo;
+
+    private bool isFlipped;
+    public bool isNewPositionFound;
 
     private void Start()
     {
         startPosition = transform.position;
+        SetNewPosition();
     }
 
     private void Update()
     {
         isMoving = movement.magnitude > 0.01f;
-        GoTo(positionToGo);
 
+        if (isStopped)
+            return;
+
+        if (Vector3.Distance(transform.position, positionToGo) < 0.2f)
+        {
+            if (!isNewPositionFound)
+            {
+                StartCoroutine(PauseBeforeNewPosition());
+                isNewPositionFound = true;
+            }
+            else
+                movement = Vector2.zero;
+        }
+        else
+            GoTo(positionToGo);
+
+        //Controls max speed
         if (rgBody.velocity.magnitude > _statistics.maxSpeed)
             rgBody.velocity = Vector3.ClampMagnitude(rgBody.velocity, _statistics.maxSpeed);
     }
 
     private void FixedUpdate()
     {
-        Vector3 move = new Vector3(movement.x, 0, movement.y).normalized;
-        rgBody.AddForce(move * _statistics.speedForce, ForceMode.Acceleration);
+        if (transform.position.y < -10f)
+        {
+            print($"Enemy fall off the map {transform.name} on position: {transform.position}");
+            Destroy(gameObject);
+        }
 
-        if (Vector3.Distance(transform.position, positionToGo) < 1)
-            positionToGo = GetRandomPosition();
+        if (isStopped)
+            return;
+
+        Vector3 move = new Vector3(movement.x, 0, movement.y).normalized;
+        rgBody.AddForce(move * (_statistics.speedForce * rgBody.mass), ForceMode.Force);
+    }
+
+    private void SetNewPosition()
+    {
+        positionToGo = GetRandomPosition();
+    }
+
+    private IEnumerator PauseBeforeNewPosition()
+    {
+        yield return new WaitForSeconds(Random.Range(2, 5));
+        isNewPositionFound = false;
+        SetNewPosition();
     }
 
     private void GoTo(Vector3 position)
@@ -44,13 +84,25 @@ public class EnemyController : MonoBehaviour
             direction.x * _statistics.speedForce,
             direction.z * _statistics.speedForce
         );
+
+        //Flipping Enemy to direction they are going
+        if (movement.x < 0 && !isFlipped)
+        {
+            transform.GetChild(0).localScale = new(-1, 1, 1);
+            isFlipped = true;
+        }
+        else if (movement.x > 0 && isFlipped)
+        {
+            transform.GetChild(0).localScale = new(1, 1, 1);
+            isFlipped = false;
+        }
     }
 
     private Vector3 GetRandomPosition()
     {
         //Getting random position on X and Z axis
-        float deltaX = Random.Range(-wanderingDistance / 2, wanderingDistance / 2);
-        float deltaZ = Random.Range(-wanderingDistance / 2, wanderingDistance / 2);
+        float deltaX = Random.Range(-wanderingDistance, wanderingDistance);
+        float deltaZ = Random.Range(-wanderingDistance, wanderingDistance);
 
         //New position
         Vector3 newPosition = new(startPosition.x + deltaX, startPosition.y, startPosition.z + deltaZ);

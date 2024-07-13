@@ -5645,9 +5645,10 @@ MonoBehaviour:
     earthResistance: 0
     airResistance: 0
     speedForce: 30
+    maxSpeed: 1.2
     jumpForce: 4
     additionalJumps: 
-  isPlayerStopped: 0
+  isStopped: 0
   playerHeight: 0.25
   whatIsGround:
     serializedVersion: 2
@@ -9039,6 +9040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93b08e84e557b2c40a44bd0b6d5014d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isStopped: 0
   _statistics:
     health: 5
     maxHealth: 5
@@ -9055,7 +9057,8 @@ MonoBehaviour:
     waterResistance: 0
     earthResistance: 0
     airResistance: 0
-    speedForce: 30
+    speedForce: 12
+    maxSpeed: 0.9
     jumpForce: 5
     additionalJumps: 
   _holdingController: {fileID: 910727403}
@@ -9063,8 +9066,9 @@ MonoBehaviour:
   isMoving: 0
   rgBody: {fileID: 910727405}
   startPosition: {x: 0, y: 0, z: 0}
-  wanderingDistance: 5
+  wanderingDistance: 0.5
   positionToGo: {x: 0, y: 0, z: 0}
+  isNewPositionFound: 0
 --- !u!114 &910727413
 MonoBehaviour:
   m_ObjectHideFlags: 0

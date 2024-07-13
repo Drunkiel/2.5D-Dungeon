@@ -24,7 +24,7 @@ public class EntityStatistics
     public int airResistance;
 
     public float speedForce;
-    public readonly float maxSpeed = 1.2f;
+    public float maxSpeed = 1.2f;
 
     public float jumpForce;
     public List<bool> additionalJumps = new();
