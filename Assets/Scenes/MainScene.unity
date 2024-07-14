@@ -5636,6 +5636,9 @@ MonoBehaviour:
     damageMultiplier: 1
     protectionMultiplier: 1
     manaUsageMultiplier: 1
+    meleeDamage: 0
+    rangeDamage: 0
+    magicDamage: 0
     allProtection: 0
     meleeProtection: 0
     rangeProtection: 0
@@ -9049,6 +9052,9 @@ MonoBehaviour:
     damageMultiplier: 1
     protectionMultiplier: 1
     manaUsageMultiplier: 1
+    meleeDamage: 0
+    rangeDamage: 0
+    magicDamage: 0
     allProtection: 0
     meleeProtection: 0
     rangeProtection: 0
@@ -9068,7 +9074,6 @@ MonoBehaviour:
   startPosition: {x: 0, y: 0, z: 0}
   wanderingDistance: 0.5
   positionToGo: {x: 0, y: 0, z: 0}
-  isNewPositionFound: 0
 --- !u!114 &910727413
 MonoBehaviour:
   m_ObjectHideFlags: 0

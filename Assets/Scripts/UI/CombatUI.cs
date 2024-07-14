@@ -44,7 +44,23 @@ public class CombatUI : MonoBehaviour
 
                 //Do stuff
                 Attributes _attributes = _skillData._skillAttributes[0];
-                _enemyStatistics.TakeDamage(skillDamage, _attributes.attributeType, _attributes.elementalTypes);
+                int playerDamage = 0;
+                switch (_attributes.attributeType)
+                {
+                    case AttributeTypes.MeleeDamage:
+                        playerDamage = _playerStatistics.meleeDamage;
+                        break;
+                    
+                    case AttributeTypes.RangeDamage:
+                        playerDamage = _playerStatistics.rangeDamage;
+                        break;
+
+                    case AttributeTypes.MagicDamage:
+                        playerDamage = _playerStatistics.magicDamage;
+                        break;
+                }
+
+                _enemyStatistics.TakeDamage((skillDamage + playerDamage) * _playerStatistics.damageMultiplier, _attributes.attributeType, _attributes.elementalTypes);
                 _playerStatistics.TakeMana(manaUsage);
             });
         });

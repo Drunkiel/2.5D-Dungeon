@@ -22,6 +22,7 @@ public class CombatController : MonoBehaviour
         CombatEntities _combatEntities = CombatEntities.instance;
         PlayerController _playerController = PlayerController.instance;
 
+        _playerController.RecalculateStatistics();
         _combatEntities.playerPreviousPosition = _playerController.transform.position;
         _combatEntities.playerXScale = _playerController.transform.localScale.x;
         isPlayerTurn = true;

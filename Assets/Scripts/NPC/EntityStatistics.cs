@@ -13,6 +13,10 @@ public class EntityStatistics
     public float protectionMultiplier = 1;
     public float manaUsageMultiplier = 1;
 
+    public int meleeDamage;
+    public int rangeDamage;
+    public int magicDamage;
+
     public int allProtection;
     public int meleeProtection;
     public int rangeProtection;
@@ -29,7 +33,7 @@ public class EntityStatistics
     public float jumpForce;
     public List<bool> additionalJumps = new();
 
-    public void TakeDamage(int amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes)
+    public void TakeDamage(float amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes)
     {
         int damageToDeal = CalculateDamage(amount * damageMultiplier, attributeTypes, elementalTypes);
 
@@ -106,5 +110,16 @@ public class EntityStatistics
         float manaOutput = amount;
 
         return Mathf.FloorToInt(manaOutput);
+    }
+
+    public void ResetStatistics()
+    {
+        meleeDamage = 0;
+        rangeDamage = 0;
+        magicDamage = 0;
+        allProtection = 0;
+        meleeProtection = 0;
+        rangeProtection = 0;
+        magicProtection = 0;
     }
 }

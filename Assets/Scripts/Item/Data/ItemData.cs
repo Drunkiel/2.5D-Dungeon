@@ -9,5 +9,6 @@ public class ItemData : ScriptableObject
     public string itemName;
     public Sprite itemSprite;
     public Sprite itemIconSprite;
+    public List<Attributes> _attributes = new();
     public List<ItemBuff> _itemBuffs = new();
 }
