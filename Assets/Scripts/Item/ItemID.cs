@@ -3,16 +3,27 @@ using UnityEngine;
 public enum ItemBuffs
 {
     NoBuff,
-    DamageMultiplier,
-    ProtectionMultiplier,
-    ManaReductionMultiplier,
+    //Damage
+    Damage,
+    //Protection
+    AllProtection,
+    ElementalProtection,
+    //Health
+    MaxHealth,
+    HealthRegeneration,
+    //Mana
+    MaxMana,
+    ManaRegeneration,
+    ManaUsage,
+    //Speed
+    Speed,
 }
 
 [System.Serializable]
 public class ItemBuff
 {
     public ItemBuffs itemBuffs;
-    [Range(0, 2)]
+    [Range(-2, 2)]
     public float amount = 1;
 }
 

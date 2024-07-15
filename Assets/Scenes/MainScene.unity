@@ -5631,10 +5631,13 @@ MonoBehaviour:
   _statistics:
     health: 50
     maxHealth: 100
+    healthRegeneration: 1
     mana: 10
     maxMana: 10
+    manaRegeneration: 1
     damageMultiplier: 1
-    protectionMultiplier: 1
+    allProtectionMultiplier: 1
+    elementalProtectionMultiplier: 1
     manaUsageMultiplier: 1
     meleeDamage: 0
     rangeDamage: 0
@@ -9047,10 +9050,13 @@ MonoBehaviour:
   _statistics:
     health: 5
     maxHealth: 5
+    healthRegeneration: 0
     mana: 5
     maxMana: 5
+    manaRegeneration: 0
     damageMultiplier: 1
-    protectionMultiplier: 1
+    allProtectionMultiplier: 1
+    elementalProtectionMultiplier: 1
     manaUsageMultiplier: 1
     meleeDamage: 0
     rangeDamage: 0
