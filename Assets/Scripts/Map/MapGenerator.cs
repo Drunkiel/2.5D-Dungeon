@@ -5,14 +5,7 @@ public class MapGenerator : MonoBehaviour
 {
     public GameObject startRoom;
     public List<GameObject> roomPrefabs = new();
-    [SerializeField] private int distanceBetweenRooms = 10;
-
-    [Multiline]
-    public string mapLayout = "0,1,0\n" +
-                              "0,1,0\n" +
-                              "0,1,0\n" +
-                              "0,1,0\n" +
-                              "0,1,0\n";
+    public MapData _mapData;
     public List<int> mapLayoutCopy = new();
 
     public Vector2Int mapSize;
@@ -27,8 +20,14 @@ public class MapGenerator : MonoBehaviour
 
     public void GenerateMap()
     {
+        if (_mapData == null)
+        {
+            print("No room to generate");
+            return;
+        }
+
         mapLayoutCopy.Clear();
-        mapLayoutCopy = ExtractNumbersFromString(mapLayout);
+        mapLayoutCopy = ExtractNumbersFromString(_mapData.mapLayout);
 
         int index = 0;
 
@@ -46,7 +45,11 @@ public class MapGenerator : MonoBehaviour
 
                     // Instantiate the room prefab at the calculated position
                     GameObject newRoom = Instantiate(roomPrefabs[number], transform);
-                    newRoom.transform.localPosition = new(spawnPosition.x * distanceBetweenRooms, 0, spawnPosition.y * distanceBetweenRooms);
+                    newRoom.transform.localPosition = new(
+                        spawnPosition.x * _mapData.distanceBetweenRooms,
+                        0,
+                        spawnPosition.y * _mapData.distanceBetweenRooms
+                    );
                     spawnedRooms.Add(newRoom);
                     newRoom.name = $"Room_{index}";
                 }
@@ -57,6 +60,14 @@ public class MapGenerator : MonoBehaviour
 
         SpawnPortals();
         SetRoomPortals();
+    }
+
+    public void ClearMap()
+    {
+        for (int i = 0; i < spawnedRooms.Count; i++)
+            Destroy(spawnedRooms[i]);
+
+        spawnedRooms.Clear();
     }
 
     private void SpawnPortals()
@@ -70,7 +81,7 @@ public class MapGenerator : MonoBehaviour
             List<PortalPosition> portalPositions = new();
             float spawnDistance = Vector3.Distance(spawnedRooms[i].transform.position, startRoom.transform.position);
 
-            if (spawnDistance <= distanceBetweenRooms)
+            if (spawnDistance <= _mapData.distanceBetweenRooms)
             {
                 portalPositions.Add(PortalPosition.South);
                 startRoom.GetComponent<RoomConfiguration>().nearbyRooms.Add(_newRoomConfiguration);
@@ -90,7 +101,7 @@ public class MapGenerator : MonoBehaviour
                 //Checks the distance between rooms
                 float distance = Vector3.Distance(spawnedRooms[i].transform.position, spawnedRooms[j].transform.position);
 
-                if (distance <= distanceBetweenRooms)
+                if (distance <= _mapData.distanceBetweenRooms)
                 {
                     Vector3 directionVector = spawnedRooms[j].transform.position - spawnedRooms[i].transform.position;
 
@@ -180,13 +191,13 @@ public class MapGenerator : MonoBehaviour
     {
         int columnNumber = 0; //Checker if map is correctly made
 
-        for (int i = 0; i < mapLayout.Length; i++)
+        for (int i = 0; i < _mapData.mapLayout.Length; i++)
         {
-            if (mapLayout[i] == ',' || mapLayout[i] == '\n')
+            if (_mapData.mapLayout[i] == ',' || _mapData.mapLayout[i] == '\n')
                 columnNumber++;
 
-            //Getting to the last collumn
-            if (mapLayout[i] == '\n')
+            //Getting to the last column
+            if (_mapData.mapLayout[i] == '\n')
             {
                 if (mapSize.x == 0)
                     mapSize.x = columnNumber;
@@ -196,7 +207,7 @@ public class MapGenerator : MonoBehaviour
                 //Checking if every row is the same size
                 if (columnNumber != mapSize.x)
                 {
-                    Debug.LogError($"There is diffrent row length on row: {mapSize.y}");
+                    Debug.LogError($"There is different row length on row: {mapSize.y}");
                     return false;
                 }
                 else

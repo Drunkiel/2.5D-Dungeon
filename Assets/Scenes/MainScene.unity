@@ -2662,6 +2662,59 @@ PrefabInstance:
       addedObject: {fileID: 639266067}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0755d05ecddda1a4ca0e5c1b9a51a7e1, type: 3}
+--- !u!1 &318119444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 318119445}
+  - component: {fileID: 318119446}
+  m_Layer: 0
+  m_Name: SaveLoad_System
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &318119445
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318119444}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2127031423}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &318119446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318119444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc758979c531ee0b09c0b0e0722b39ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _da: {fileID: 11400000, guid: e86d5caf74eca17d0923c68e16430f17, type: 2}
+  _settingsData:
+    resolutionIndex: 0
+    fullscreenOn: 1
+    maxFPS: 60
+    vSync: 1
+    qualityIndex: 0
+    backgroundVolume: 50
+    effectsVolume: 50
 --- !u!4 &318437619 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 893334614078022549, guid: 0755d05ecddda1a4ca0e5c1b9a51a7e1,
@@ -13989,12 +14042,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 8992172140928246382, guid: 3280468e1466be34dafbfed2d03cfcd3, type: 3}
   - {fileID: 8992172140928246382, guid: b84a13486f9c40041a5c4b4e9dd0d781, type: 3}
-  distanceBetweenRooms: 50
-  mapLayout: '1,1,1
-
-    1,2,1
-
-'
+  _mapData: {fileID: 11400000, guid: e86d5caf74eca17d0923c68e16430f17, type: 2}
   mapLayoutCopy: 
   mapSize: {x: 0, y: 0}
   spawnedRooms: []
@@ -19467,6 +19515,7 @@ Transform:
   - {fileID: 957334902}
   - {fileID: 1474277144}
   - {fileID: 880061378}
+  - {fileID: 318119445}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2127031424
