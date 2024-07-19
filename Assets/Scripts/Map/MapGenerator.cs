@@ -1,24 +1,61 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
-public class MapGenerator : MonoBehaviour
+public class MapGenerator : SaveLoadSystem
 {
     public GameObject startRoom;
     public List<GameObject> roomPrefabs = new();
     public MapData _mapData;
+    public List<MapData> _mapDatas = new();
     public List<int> mapLayoutCopy = new();
-
-    public Vector2Int mapSize;
 
     [SerializeField] private List<GameObject> spawnedRooms = new();
 
     private void Start()
     {
-        if (CheckMap())
-            GenerateMap();
+        Load(mapSavePath);
+
+        GenerateMap(_mapData);
     }
 
-    public void GenerateMap()
+    public override void Load(string path)
+    {
+        List<string> allMaps = GetAllMaps();
+
+        for (int i = 0; i < allMaps.Count; i++)
+        {
+            //Here load data from file
+            MapData newMap = ScriptableObject.CreateInstance<MapData>();
+            newMap.mapID = (short)i;
+            string saveFile = ReadFromFile(mapSavePath + allMaps[i]);
+            JsonUtility.FromJsonOverwrite(saveFile, newMap);
+
+            //Checks if map is in standard
+            if (CheckMap(newMap))
+                _mapDatas.Add(newMap);
+        }
+    }
+
+    public List<string> GetAllMaps()
+    {
+        List<string> foundedMaps = new();
+
+        //Gets all files from folder
+        DirectoryInfo dir = new(mapSavePath);
+        FileInfo[] info = dir.GetFiles("*.*");
+
+        //Fetch files with extension .json
+        foreach (FileInfo singleFile in info)
+        {
+            if (Path.GetExtension(mapSavePath + singleFile.Name) == ".json")
+                foundedMaps.Add(singleFile.Name);
+        }
+
+        return foundedMaps;
+    }
+
+    public void GenerateMap(MapData _mapToGenerate)
     {
         if (_mapData == null)
         {
@@ -32,16 +69,16 @@ public class MapGenerator : MonoBehaviour
         int index = 0;
 
         // Loop through the map size starting from bottom-left
-        for (int y = mapSize.y - 1; y >= 0; y--)
+        for (int y = _mapToGenerate.mapSize.y - 1; y >= 0; y--)
         {
-            for (int x = 0; x < mapSize.x; x++)
+            for (int x = 0; x < _mapToGenerate.mapSize.x; x++)
             {
                 int number = mapLayoutCopy[index];
 
                 if (number != 0 && number < roomPrefabs.Count)
                 {
                     // Calculate the spawn position
-                    Vector3 spawnPosition = new(x - Mathf.FloorToInt(mapSize.x / 2), y + 1);
+                    Vector3 spawnPosition = new(x - Mathf.FloorToInt(_mapToGenerate.mapSize.x / 2), y + 1);
 
                     // Instantiate the room prefab at the calculated position
                     GameObject newRoom = Instantiate(roomPrefabs[number], transform);
@@ -187,27 +224,27 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private bool CheckMap()
+    private bool CheckMap(MapData _mapToCheck)
     {
         int columnNumber = 0; //Checker if map is correctly made
 
-        for (int i = 0; i < _mapData.mapLayout.Length; i++)
+        for (int i = 0; i < _mapToCheck.mapLayout.Length; i++)
         {
-            if (_mapData.mapLayout[i] == ',' || _mapData.mapLayout[i] == '\n')
+            if (_mapToCheck.mapLayout[i] == ',' || _mapToCheck.mapLayout[i] == '\n')
                 columnNumber++;
 
             //Getting to the last column
-            if (_mapData.mapLayout[i] == '\n')
+            if (_mapToCheck.mapLayout[i] == '\n')
             {
-                if (mapSize.x == 0)
-                    mapSize.x = columnNumber;
+                if (_mapToCheck.mapSize.x == 0)
+                    _mapToCheck.mapSize.x = columnNumber;
 
-                mapSize.y++;
+                _mapToCheck.mapSize.y++;
 
                 //Checking if every row is the same size
-                if (columnNumber != mapSize.x)
+                if (columnNumber != _mapToCheck.mapSize.x)
                 {
-                    Debug.LogError($"There is different row length on row: {mapSize.y}");
+                    Debug.LogError($"There is different row length on row: {_mapToCheck.mapSize.y}");
                     return false;
                 }
                 else
