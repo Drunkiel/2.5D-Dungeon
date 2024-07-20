@@ -2706,7 +2706,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc758979c531ee0b09c0b0e0722b39ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _da: {fileID: 11400000, guid: e86d5caf74eca17d0923c68e16430f17, type: 2}
   _settingsData:
     resolutionIndex: 0
     fullscreenOn: 1
@@ -14037,14 +14036,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea65a09f77c0c36438eebe986e5799ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settingsData:
+    resolutionIndex: 0
+    fullscreenOn: 1
+    maxFPS: 60
+    vSync: 1
+    qualityIndex: 0
+    backgroundVolume: 50
+    effectsVolume: 50
   startRoom: {fileID: 729133375}
   roomPrefabs:
   - {fileID: 0}
   - {fileID: 8992172140928246382, guid: 3280468e1466be34dafbfed2d03cfcd3, type: 3}
   - {fileID: 8992172140928246382, guid: b84a13486f9c40041a5c4b4e9dd0d781, type: 3}
-  _mapData: {fileID: 11400000, guid: e86d5caf74eca17d0923c68e16430f17, type: 2}
+  _mapData: {fileID: 0}
+  _mapDatas: []
   mapLayoutCopy: 
-  mapSize: {x: 0, y: 0}
   spawnedRooms: []
 --- !u!1 &1550620555
 GameObject:

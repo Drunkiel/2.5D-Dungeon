@@ -16,12 +16,13 @@ public class MapGenerator : SaveLoadSystem
     {
         Load(mapSavePath);
 
+        _mapData = _mapDatas[0];
         GenerateMap(_mapData);
     }
 
     public override void Load(string path)
     {
-        List<string> allMaps = GetAllMaps();
+        List<string> allMaps = GetGameFiles(mapSavePath);
 
         for (int i = 0; i < allMaps.Count; i++)
         {
@@ -31,28 +32,10 @@ public class MapGenerator : SaveLoadSystem
             string saveFile = ReadFromFile(mapSavePath + allMaps[i]);
             JsonUtility.FromJsonOverwrite(saveFile, newMap);
 
-            //Checks if map is in standard
+            //Checks if map is in standard's
             if (CheckMap(newMap))
                 _mapDatas.Add(newMap);
         }
-    }
-
-    public List<string> GetAllMaps()
-    {
-        List<string> foundedMaps = new();
-
-        //Gets all files from folder
-        DirectoryInfo dir = new(mapSavePath);
-        FileInfo[] info = dir.GetFiles("*.*");
-
-        //Fetch files with extension .json
-        foreach (FileInfo singleFile in info)
-        {
-            if (Path.GetExtension(mapSavePath + singleFile.Name) == ".json")
-                foundedMaps.Add(singleFile.Name);
-        }
-
-        return foundedMaps;
     }
 
     public void GenerateMap(MapData _mapToGenerate)
