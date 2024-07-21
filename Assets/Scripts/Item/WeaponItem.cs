@@ -25,7 +25,7 @@ public class WeaponItem : MonoBehaviour
 
     private void Start()
     {
-        //Overwritting sprite
-        transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = _itemData.itemSprite;
+        //Overwriting sprite
+        transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = _itemData.sprite;
     }
 }

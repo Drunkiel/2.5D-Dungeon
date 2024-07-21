@@ -28,7 +28,7 @@ public class MapGenerator : SaveLoadSystem
         {
             //Here load data from file
             MapData newMap = ScriptableObject.CreateInstance<MapData>();
-            newMap.mapID = (short)i;
+            newMap.ID = (short)i;
             string saveFile = ReadFromFile(mapSavePath + allMaps[i]);
             JsonUtility.FromJsonOverwrite(saveFile, newMap);
 
@@ -47,21 +47,21 @@ public class MapGenerator : SaveLoadSystem
         }
 
         mapLayoutCopy.Clear();
-        mapLayoutCopy = ExtractNumbersFromString(_mapData.mapLayout);
+        mapLayoutCopy = ExtractNumbersFromString(_mapData.layout);
 
         int index = 0;
 
         // Loop through the map size starting from bottom-left
-        for (int y = _mapToGenerate.mapSize.y - 1; y >= 0; y--)
+        for (int y = _mapToGenerate.size.y - 1; y >= 0; y--)
         {
-            for (int x = 0; x < _mapToGenerate.mapSize.x; x++)
+            for (int x = 0; x < _mapToGenerate.size.x; x++)
             {
                 int number = mapLayoutCopy[index];
 
                 if (number != 0 && number < roomPrefabs.Count)
                 {
                     // Calculate the spawn position
-                    Vector3 spawnPosition = new(x - Mathf.FloorToInt(_mapToGenerate.mapSize.x / 2), y + 1);
+                    Vector3 spawnPosition = new(x - Mathf.FloorToInt(_mapToGenerate.size.x / 2), y + 1);
 
                     // Instantiate the room prefab at the calculated position
                     GameObject newRoom = Instantiate(roomPrefabs[number], transform);
@@ -211,23 +211,23 @@ public class MapGenerator : SaveLoadSystem
     {
         int columnNumber = 0; //Checker if map is correctly made
 
-        for (int i = 0; i < _mapToCheck.mapLayout.Length; i++)
+        for (int i = 0; i < _mapToCheck.layout.Length; i++)
         {
-            if (_mapToCheck.mapLayout[i] == ',' || _mapToCheck.mapLayout[i] == '\n')
+            if (_mapToCheck.layout[i] == ',' || _mapToCheck.layout[i] == '\n')
                 columnNumber++;
 
             //Getting to the last column
-            if (_mapToCheck.mapLayout[i] == '\n')
+            if (_mapToCheck.layout[i] == '\n')
             {
-                if (_mapToCheck.mapSize.x == 0)
-                    _mapToCheck.mapSize.x = columnNumber;
+                if (_mapToCheck.size.x == 0)
+                    _mapToCheck.size.x = columnNumber;
 
-                _mapToCheck.mapSize.y++;
+                _mapToCheck.size.y++;
 
                 //Checking if every row is the same size
-                if (columnNumber != _mapToCheck.mapSize.x)
+                if (columnNumber != _mapToCheck.size.x)
                 {
-                    Debug.LogError($"There is different row length on row: {_mapToCheck.mapSize.y}");
+                    Debug.LogError($"There is different row length on row: {_mapToCheck.size.y}");
                     return false;
                 }
                 else

@@ -5861,6 +5861,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba24c4a1c5c037647ae8f0abcdd73e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settingsData:
+    resolutionIndex: 0
+    fullscreenOn: 1
+    maxFPS: 60
+    vSync: 1
+    qualityIndex: 0
+    backgroundVolume: 50
+    effectsVolume: 50
   _gearHolder:
     rightHandTransform: {fileID: 706863153}
     leftHandTransform: {fileID: 716742760}
@@ -5875,6 +5883,19 @@ MonoBehaviour:
     _armorHead: {fileID: 0}
     _armorChestplate: {fileID: 0}
     _armorBoots: {fileID: 0}
+  itemData: {fileID: 0}
+  itemDatas:
+  - {fileID: 11400000, guid: ec6316b99be5c044f886ebf9369bbdf9, type: 2}
+  - {fileID: 11400000, guid: 5f0c7f526811ed0489e4717a14a43e1c, type: 2}
+  - {fileID: 11400000, guid: 35d4d76fd7f50fd429c26e3fee3c1bf1, type: 2}
+  - {fileID: 11400000, guid: 1cd240f7daeb2ff4fbac7499ad7cb3c7, type: 2}
+  - {fileID: 11400000, guid: 20421f1f4bbdf6243a6380f3e0c59adb, type: 2}
+  - {fileID: 11400000, guid: ccdea97792ec2954aaa9b377d5919f69, type: 2}
+  - {fileID: 11400000, guid: 09fc58a47dbdd144e9d06d164984a81b, type: 2}
+  - {fileID: 11400000, guid: c74fce6da67b85944a843fd5c44ccff6, type: 2}
+  - {fileID: 11400000, guid: 021b0892890eead42a644ba5d266d2ac, type: 2}
+  - {fileID: 11400000, guid: dc972b4eeb495d240827a9e52e61852c, type: 2}
+  - {fileID: 11400000, guid: 8a72ffbd004ddf742a708d2422985765, type: 2}
 --- !u!114 &642340676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8786,7 +8807,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &910727400
 Animator:
   serializedVersion: 5
@@ -9144,6 +9165,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba24c4a1c5c037647ae8f0abcdd73e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settingsData:
+    resolutionIndex: 0
+    fullscreenOn: 1
+    maxFPS: 60
+    vSync: 1
+    qualityIndex: 0
+    backgroundVolume: 50
+    effectsVolume: 50
   _gearHolder:
     rightHandTransform: {fileID: 1764575751}
     leftHandTransform: {fileID: 1841590697}
@@ -9158,6 +9187,8 @@ MonoBehaviour:
     _armorHead: {fileID: 0}
     _armorChestplate: {fileID: 0}
     _armorBoots: {fileID: 0}
+  itemData: {fileID: 0}
+  itemDatas: []
 --- !u!114 &910727414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10799,6 +10830,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168383355}
   m_CullTransparentMesh: 1
+--- !u!1 &1172781364
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1172781365}
+  m_Layer: 0
+  m_Name: Item_Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1172781365
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172781364}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2127031423}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1174829175
 GameObject:
   m_ObjectHideFlags: 0
@@ -19523,6 +19585,7 @@ Transform:
   - {fileID: 1474277144}
   - {fileID: 880061378}
   - {fileID: 318119445}
+  - {fileID: 1172781365}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2127031424

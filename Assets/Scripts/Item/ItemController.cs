@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 
 public enum ItemType
@@ -7,9 +8,35 @@ public enum ItemType
     Collectable,
 }
 
-public class ItemController : MonoBehaviour
+public class ItemController : SaveLoadSystem
 {
     public GearHolder _gearHolder;
+    public ItemData itemData;
+    public ItemData[] itemDatas;
+
+    // void Start()
+    // {
+    //     for (int i = 0; i < itemDatas.Length; i++)
+    //     {   
+    //         itemData = itemDatas[i];
+    //         Save(itemsSavePath + $"/{itemDatas[i].displayedName}.json");
+    //     }
+    // }
+
+    public override void Save(string path)
+    {
+        //EXAMPLE
+        //Here open file
+        FileStream saveFile = new(path, FileMode.OpenOrCreate);
+
+        //Here collect data to save
+
+        //Here save data to file
+        string jsonData = JsonUtility.ToJson(itemData, true);
+
+        saveFile.Close();
+        File.WriteAllText(path, jsonData);
+    }
 
     public bool PickItem(ItemID _itemID, bool isPlayer = true)
     {

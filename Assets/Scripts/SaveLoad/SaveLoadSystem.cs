@@ -7,6 +7,7 @@ public class SaveLoadSystem : MonoBehaviour
     private static readonly string mainPath = Application.dataPath + "/Game";
     public static readonly string savePath = mainPath + "/Saves/";
     public static readonly string mapSavePath = mainPath + "/Maps/";
+    public static readonly string itemsSavePath = mainPath + "/Items/";
     public SaveData _data;
     public SettingsData _settingsData;
 
@@ -18,18 +19,18 @@ public class SaveLoadSystem : MonoBehaviour
             Directory.CreateDirectory(mainPath + "/Saves");
 
             //Creating items directory
-            Directory.CreateDirectory(mainPath + "/Items");
-            Directory.CreateDirectory(mainPath + "/Items/Weapons");
-            Directory.CreateDirectory(mainPath + "/Items/Weapons/Warrior");
-            Directory.CreateDirectory(mainPath + "/Items/Weapons/Archer");
-            Directory.CreateDirectory(mainPath + "/Items/Weapons/Mage");
+            Directory.CreateDirectory(itemsSavePath);
+            Directory.CreateDirectory(itemsSavePath + "Weapons");
+            Directory.CreateDirectory(itemsSavePath + "Weapons/Warrior");
+            Directory.CreateDirectory(itemsSavePath + "Weapons/Archer");
+            Directory.CreateDirectory(itemsSavePath + "Weapons/Mage");
 
-            Directory.CreateDirectory(mainPath + "/Items/Armor");
-            Directory.CreateDirectory(mainPath + "/Items/Armor/Warrior");
-            Directory.CreateDirectory(mainPath + "/Items/Armor/Archer");
-            Directory.CreateDirectory(mainPath + "/Items/Armor/Mage");
+            Directory.CreateDirectory(itemsSavePath + "Armor");
+            Directory.CreateDirectory(itemsSavePath + "Armor/Warrior");
+            Directory.CreateDirectory(itemsSavePath + "Armor/Archer");
+            Directory.CreateDirectory(itemsSavePath + "Armor/Mage");
 
-            Directory.CreateDirectory(mainPath + "/Items/Collectable");
+            Directory.CreateDirectory(itemsSavePath + "Collectable");
         }
     }
 
