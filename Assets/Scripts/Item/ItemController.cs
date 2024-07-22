@@ -1,4 +1,3 @@
-using System.IO;
 using UnityEngine;
 
 public enum ItemType
@@ -11,38 +10,12 @@ public enum ItemType
 public class ItemController : SaveLoadSystem
 {
     public GearHolder _gearHolder;
-    public ItemData itemData;
-    public ItemData[] itemDatas;
-
-    // void Start()
-    // {
-    //     for (int i = 0; i < itemDatas.Length; i++)
-    //     {   
-    //         itemData = itemDatas[i];
-    //         Save(itemsSavePath + $"/{itemDatas[i].displayedName}.json");
-    //     }
-    // }
-
-    public override void Save(string path)
-    {
-        //EXAMPLE
-        //Here open file
-        FileStream saveFile = new(path, FileMode.OpenOrCreate);
-
-        //Here collect data to save
-
-        //Here save data to file
-        string jsonData = JsonUtility.ToJson(itemData, true);
-
-        saveFile.Close();
-        File.WriteAllText(path, jsonData);
-    }
 
     public bool PickItem(ItemID _itemID, bool isPlayer = true)
     {
         InventoryController _inventoryController = InventoryController.instance;
 
-        switch (_itemID.itemType)
+        switch (_itemID._itemData.itemType)
         {
             case ItemType.Weapon:
                 if (!CanPickWeapon(_itemID._weaponItem.holdingType))
@@ -59,7 +32,7 @@ public class ItemController : SaveLoadSystem
 
                 //Cloning item to founded slot and adding it to inventory
                 int weaponSlotIndex = (int)_itemID._weaponItem.holdingType + 3;
-                _inventoryController.AddToGearInventory(_itemID._weaponItem._itemData, weaponSlotIndex);
+                _inventoryController.AddToGearInventory(_itemID._itemData, weaponSlotIndex);
                 break;
 
             case ItemType.Armor:
@@ -77,7 +50,7 @@ public class ItemController : SaveLoadSystem
 
                 //Cloning item to founded slot and adding it to inventory
                 int armorSlotIndex = (int)_itemID._armorItem.armorType;
-                _inventoryController.AddToGearInventory(_itemID._armorItem._itemData, armorSlotIndex);
+                _inventoryController.AddToGearInventory(_itemID._itemData, armorSlotIndex);
                 break;
 
             case ItemType.Collectable:
@@ -229,7 +202,7 @@ public class ItemController : SaveLoadSystem
         PickInteraction _pickInteraction = null;
         InventoryController _inventoryController = InventoryController.instance;
 
-        switch (_itemID.itemType)
+        switch (_itemID._itemData.itemType)
         {
             case ItemType.Weapon:
                 //Get current item
@@ -255,7 +228,7 @@ public class ItemController : SaveLoadSystem
                 //Adding clone to inventory
                 _inventoryController.DeleteGearInventory((int)_weaponItem.holdingType);
                 _weaponItem = _gearHolder.GetHoldingWeapon(_itemID._weaponItem.holdingType);
-                _inventoryController.AddToGearInventory(_weaponItem._itemData, (int)_weaponItem.holdingType);
+                _inventoryController.AddToGearInventory(_itemID._itemData, (int)_weaponItem.holdingType);
 
                 Destroy(_holdingItemID.gameObject);
 
@@ -265,7 +238,7 @@ public class ItemController : SaveLoadSystem
                 //Adding clone to inventory
                 _weaponItem = _gearHolder.GetHoldingWeapon(_itemID._weaponItem.holdingType);
                 _inventoryController.DeleteGearInventory((int)_weaponItem.holdingType);
-                _inventoryController.AddToGearInventory(_weaponItem._itemData, (int)_weaponItem.holdingType);
+                _inventoryController.AddToGearInventory(_itemID._itemData, (int)_weaponItem.holdingType);
                 break;
 
             case ItemType.Armor:
@@ -299,7 +272,7 @@ public class ItemController : SaveLoadSystem
                 //Adding clone to inventory
                 _armorItem = _gearHolder.GetHoldingArmor(_itemID._armorItem.armorType);
                 _inventoryController.DeleteGearInventory((int)_armorItem.armorType);
-                _inventoryController.AddToGearInventory(_armorItem._itemData, (int)_armorItem.armorType);
+                _inventoryController.AddToGearInventory(_itemID._itemData, (int)_armorItem.armorType);
                 break;
         }
 

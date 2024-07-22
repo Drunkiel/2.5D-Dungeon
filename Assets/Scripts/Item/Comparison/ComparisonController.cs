@@ -32,7 +32,7 @@ public class ComparisonController : MonoBehaviour
     {
         GearHolder _gearHolder = PlayerController.instance._holdingController._itemController._gearHolder;
 
-        switch (_otherItemID.itemType)
+        switch (_otherItemID._itemData.itemType)
         {
             case ItemType.Weapon:
                 switch (_otherItemID._weaponItem.holdingType)

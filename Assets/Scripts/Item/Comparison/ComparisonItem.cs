@@ -20,16 +20,16 @@ public class ComparisonItem : MonoBehaviour
         ItemData _itemData = null;
         List<ItemBuff> _itemBuffs;
 
-        switch (_itemID.itemType)
+        switch (_itemID._itemData.itemType)
         {
             case ItemType.Weapon:
-                _itemData = _itemID._weaponItem._itemData;
+                _itemData = _itemID._itemData;
 
                 holdingTypeText.text = "Holding type:" + _itemID._weaponItem.holdingType;
                 break;
 
             case ItemType.Armor:
-                _itemData = _itemID._armorItem._itemData;
+                _itemData = _itemID._itemData;
 
                 holdingTypeText.text = "Holding type:" + _itemID._armorItem.armorType;
                 break;

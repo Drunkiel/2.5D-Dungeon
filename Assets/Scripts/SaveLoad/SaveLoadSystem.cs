@@ -8,8 +8,8 @@ public class SaveLoadSystem : MonoBehaviour
     public static readonly string savePath = mainPath + "/Saves/";
     public static readonly string mapSavePath = mainPath + "/Maps/";
     public static readonly string itemsSavePath = mainPath + "/Items/";
-    public SaveData _data;
-    public SettingsData _settingsData;
+    //public SaveData _data;
+    //public SettingsData _settingsData;
 
     void Awake()
     {
@@ -43,7 +43,7 @@ public class SaveLoadSystem : MonoBehaviour
         //Here collect data to save
 
         //Here save data to file
-        string jsonData = JsonUtility.ToJson(_settingsData, true);
+        string jsonData = JsonUtility.ToJson(new(), true);
 
         saveFile.Close();
         File.WriteAllText(path, jsonData);
@@ -54,7 +54,7 @@ public class SaveLoadSystem : MonoBehaviour
         //EXAMPLE
         //Here load data from file
         string saveFile = ReadFromFile(path);
-        JsonUtility.FromJsonOverwrite(saveFile, _settingsData);
+        JsonUtility.FromJsonOverwrite(saveFile, new());
 
         //Here override game data
     }

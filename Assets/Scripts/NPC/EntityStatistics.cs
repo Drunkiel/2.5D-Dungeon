@@ -149,14 +149,14 @@ public class EntityStatistics
         ResetStatistics();
 
         //Getting weapons
-        WeaponItem _weaponLeft = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Left_Hand);
-        WeaponItem _weaponRight = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Right_Hand);
-        WeaponItem _weaponBoth = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Both_Hands);
+        ItemID _weaponLeft = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Left_Hand).GetComponent<ItemID>();
+        ItemID _weaponRight = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Right_Hand).GetComponent<ItemID>();
+        ItemID _weaponBoth = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Both_Hands).GetComponent<ItemID>();
 
         //Getting armor
-        ArmorItem _armorHead = _gearHolder.GetHoldingArmor(ArmorType.Helmet);
-        ArmorItem _armorChestplate = _gearHolder.GetHoldingArmor(ArmorType.Chestplate);
-        ArmorItem _armorBoots = _gearHolder.GetHoldingArmor(ArmorType.Boots);
+        ItemID _armorHead = _gearHolder.GetHoldingArmor(ArmorType.Helmet).GetComponent<ItemID>();
+        ItemID _armorChestplate = _gearHolder.GetHoldingArmor(ArmorType.Chestplate).GetComponent<ItemID>();
+        ItemID _armorBoots = _gearHolder.GetHoldingArmor(ArmorType.Boots).GetComponent<ItemID>();
 
         List<Attributes> _allAttributes = new();
         List<ItemBuff> _allBuffs = new();

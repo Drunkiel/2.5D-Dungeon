@@ -29,7 +29,7 @@ public class ItemBuff
 
 public class ItemID : MonoBehaviour
 {
-    public ItemType itemType;
+    public ItemData _itemData;
     public WeaponItem _weaponItem;
     public ArmorItem _armorItem;
     public CollectableItem _collectableItem;

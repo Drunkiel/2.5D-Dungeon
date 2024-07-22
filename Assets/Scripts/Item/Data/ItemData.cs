@@ -7,6 +7,7 @@ public class ItemData : ScriptableObject
 {
     public short ID;
     public string displayedName;
+    public ItemType itemType;
     public Sprite sprite;
     public Sprite iconSprite;
     public List<Attributes> _attributes = new();

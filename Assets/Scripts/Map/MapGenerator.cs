@@ -22,19 +22,19 @@ public class MapGenerator : SaveLoadSystem
 
     public override void Load(string path)
     {
-        List<string> allMaps = GetGameFiles(mapSavePath);
+        List<string> allMaps = GetGameFiles(path);
 
         for (int i = 0; i < allMaps.Count; i++)
         {
             //Here load data from file
-            MapData newMap = ScriptableObject.CreateInstance<MapData>();
-            newMap.ID = (short)i;
-            string saveFile = ReadFromFile(mapSavePath + allMaps[i]);
-            JsonUtility.FromJsonOverwrite(saveFile, newMap);
+            MapData _newMap = ScriptableObject.CreateInstance<MapData>();
+            _newMap.ID = (short)i;
+            string saveFile = ReadFromFile(path + allMaps[i]);
+            JsonUtility.FromJsonOverwrite(saveFile, _newMap);
 
             //Checks if map is in standard's
-            if (CheckMap(newMap))
-                _mapDatas.Add(newMap);
+            if (CheckMap(_newMap))
+                _mapDatas.Add(_newMap);
         }
     }
 

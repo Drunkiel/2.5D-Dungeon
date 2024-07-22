@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum WeaponHoldingType
@@ -18,7 +17,6 @@ public enum WeaponType
 
 public class WeaponItem : MonoBehaviour
 {
-    public ItemData _itemData;
     public WeaponType weaponType;
     public WeaponHoldingType holdingType;
     public bool resizable = true;
@@ -26,6 +24,6 @@ public class WeaponItem : MonoBehaviour
     private void Start()
     {
         //Overwriting sprite
-        transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = _itemData.sprite;
+        transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = GetComponent<ItemID>()._itemData.sprite;
     }
 }
