@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 0
   displayedName: Shield
-  sprite: {fileID: 21300000, guid: 97c2633e09959754d92687a99987e88a, type: 3}
-  iconSprite: {fileID: 21300000, guid: f54386c981a0e2049b1e17c19ea0a296, type: 3}
-  _attributes: []
-  _itemBuffs: []
+  itemType: 0
+  _attributes:
+  - attributeType: 0
+    elementalTypes: 0
+    amount: 0
+  - attributeType: 0
+    elementalTypes: 0
+    amount: 0
+  _itemBuffs:
+  - itemBuffs: 0
+    amount: 0

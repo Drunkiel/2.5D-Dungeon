@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class ItemHolder : SaveLoadSystem
 {
@@ -7,18 +9,35 @@ public class ItemHolder : SaveLoadSystem
     public List<ItemID> _weaponItems = new();
     public List<ItemID> _armorItems = new();
     public List<ItemID> _collectableItems = new();
+    public WeaponData weaponData;
 
     void Start()
     {
-        Load(itemsSavePath + "Weapons/Warrior");
-        Load(itemsSavePath + "Weapons/Archer");
-        Load(itemsSavePath + "Weapons/Mage");
+        // Load(itemsSavePath + "Weapons/Warrior");
+        // Load(itemsSavePath + "Weapons/Archer");
+        // Load(itemsSavePath + "Weapons/Mage");
 
-        Load(itemsSavePath + "Armor/Warrior");
-        Load(itemsSavePath + "Armor/Archer");
-        Load(itemsSavePath + "Armor/Mage");
+        // Load(itemsSavePath + "Armor/Warrior");
+        // Load(itemsSavePath + "Armor/Archer");
+        // Load(itemsSavePath + "Armor/Mage");
 
-        Load(itemsSavePath + "Collectable");
+        // Load(itemsSavePath + "Collectable");
+        // Save(itemsSavePath + "/Test.json");
+        Load(itemsSavePath);
+    }
+
+    public override void Save(string path)
+    {
+        // Collect data to save
+        string jsonData = JsonConvert.SerializeObject(weaponData, Formatting.Indented, new JsonSerializerSettings
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            PreserveReferencesHandling = PreserveReferencesHandling.None
+        });
+
+        // Save data to file
+        File.WriteAllText(path, jsonData);
     }
 
     public override void Load(string path)
@@ -27,14 +46,18 @@ public class ItemHolder : SaveLoadSystem
 
         for (int i = 0; i < itemsLocation.Count; i++)
         {
-            //Here load data from file
-            ItemData _itemData = ScriptableObject.CreateInstance<ItemData>();
-            _itemData.ID = (short)i;
-            string saveFile = ReadFromFile($"{path}/{itemsLocation[i]}");
-            JsonUtility.FromJsonOverwrite(saveFile, _itemData);
+            // Here load data from file
+            WeaponData _itemData = ScriptableObject.CreateInstance<WeaponData>();
+            //_itemData.ID = (short)i;
 
-            //Checks if item is in standard's
-            _allItems.Add(_itemData);
+            string saveFile = ReadFromFile($"{path}/{itemsLocation[i]}");
+            
+            // Deserialize
+            JsonConvert.PopulateObject(saveFile, _itemData);
+            weaponData = _itemData;
+
+            // Checks if item is in standard's
+            //_allItems.Add(_itemData);
         }
     }
 }

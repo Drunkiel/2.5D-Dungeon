@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f17f7b790ba804183036b898dc947f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 0
+  _itemData: {fileID: 11400000, guid: 021b0892890eead42a644ba5d266d2ac, type: 2}
   _weaponItem: {fileID: 762045578651188922}
   _armorItem: {fileID: 0}
   _collectableItem: {fileID: 0}
@@ -94,13 +94,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19778a1b8797984baba6c83dadba4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemData: {fileID: 11400000, guid: 021b0892890eead42a644ba5d266d2ac, type: 2}
   weaponType: 0
   holdingType: 0
   resizable: 1
-  _itemAttributes:
-  - attributeType: 0
-    amount: 5
 --- !u!1 &8935575956995396796
 GameObject:
   m_ObjectHideFlags: 0

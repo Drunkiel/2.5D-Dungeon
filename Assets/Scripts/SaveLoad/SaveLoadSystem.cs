@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class SaveLoadSystem : MonoBehaviour
@@ -8,8 +9,6 @@ public class SaveLoadSystem : MonoBehaviour
     public static readonly string savePath = mainPath + "/Saves/";
     public static readonly string mapSavePath = mainPath + "/Maps/";
     public static readonly string itemsSavePath = mainPath + "/Items/";
-    //public SaveData _data;
-    //public SettingsData _settingsData;
 
     void Awake()
     {
@@ -37,15 +36,14 @@ public class SaveLoadSystem : MonoBehaviour
     public virtual void Save(string path)
     {
         //EXAMPLE
-        //Here open file
-        FileStream saveFile = new(path, FileMode.OpenOrCreate);
-
-        //Here collect data to save
-
         //Here save data to file
-        string jsonData = JsonUtility.ToJson(new(), true);
+        string jsonData = JsonConvert.SerializeObject(new(), Formatting.Indented, new JsonSerializerSettings
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            PreserveReferencesHandling = PreserveReferencesHandling.None
+        });
 
-        saveFile.Close();
         File.WriteAllText(path, jsonData);
     }
 
@@ -53,8 +51,10 @@ public class SaveLoadSystem : MonoBehaviour
     {
         //EXAMPLE
         //Here load data from file
-        string saveFile = ReadFromFile(path);
-        JsonUtility.FromJsonOverwrite(saveFile, new());
+        string saveFile = ReadFromFile($"{path}/");
+            
+        // Deserialize
+        JsonConvert.PopulateObject(saveFile, new());
 
         //Here override game data
     }

@@ -2706,14 +2706,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc758979c531ee0b09c0b0e0722b39ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settingsData:
-    resolutionIndex: 0
-    fullscreenOn: 1
-    maxFPS: 60
-    vSync: 1
-    qualityIndex: 0
-    backgroundVolume: 50
-    effectsVolume: 50
 --- !u!4 &318437619 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 893334614078022549, guid: 0755d05ecddda1a4ca0e5c1b9a51a7e1,
@@ -5861,14 +5853,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba24c4a1c5c037647ae8f0abcdd73e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settingsData:
-    resolutionIndex: 0
-    fullscreenOn: 1
-    maxFPS: 60
-    vSync: 1
-    qualityIndex: 0
-    backgroundVolume: 50
-    effectsVolume: 50
   _gearHolder:
     rightHandTransform: {fileID: 706863153}
     leftHandTransform: {fileID: 716742760}
@@ -5883,19 +5867,6 @@ MonoBehaviour:
     _armorHead: {fileID: 0}
     _armorChestplate: {fileID: 0}
     _armorBoots: {fileID: 0}
-  itemData: {fileID: 0}
-  itemDatas:
-  - {fileID: 11400000, guid: ec6316b99be5c044f886ebf9369bbdf9, type: 2}
-  - {fileID: 11400000, guid: 5f0c7f526811ed0489e4717a14a43e1c, type: 2}
-  - {fileID: 11400000, guid: 35d4d76fd7f50fd429c26e3fee3c1bf1, type: 2}
-  - {fileID: 11400000, guid: 1cd240f7daeb2ff4fbac7499ad7cb3c7, type: 2}
-  - {fileID: 11400000, guid: 20421f1f4bbdf6243a6380f3e0c59adb, type: 2}
-  - {fileID: 11400000, guid: ccdea97792ec2954aaa9b377d5919f69, type: 2}
-  - {fileID: 11400000, guid: 09fc58a47dbdd144e9d06d164984a81b, type: 2}
-  - {fileID: 11400000, guid: c74fce6da67b85944a843fd5c44ccff6, type: 2}
-  - {fileID: 11400000, guid: 021b0892890eead42a644ba5d266d2ac, type: 2}
-  - {fileID: 11400000, guid: dc972b4eeb495d240827a9e52e61852c, type: 2}
-  - {fileID: 11400000, guid: 8a72ffbd004ddf742a708d2422985765, type: 2}
 --- !u!114 &642340676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9165,14 +9136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba24c4a1c5c037647ae8f0abcdd73e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settingsData:
-    resolutionIndex: 0
-    fullscreenOn: 1
-    maxFPS: 60
-    vSync: 1
-    qualityIndex: 0
-    backgroundVolume: 50
-    effectsVolume: 50
   _gearHolder:
     rightHandTransform: {fileID: 1764575751}
     leftHandTransform: {fileID: 1841590697}
@@ -9187,8 +9150,6 @@ MonoBehaviour:
     _armorHead: {fileID: 0}
     _armorChestplate: {fileID: 0}
     _armorBoots: {fileID: 0}
-  itemData: {fileID: 0}
-  itemDatas: []
 --- !u!114 &910727414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10874,18 +10835,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0296077a866ec4ca8b1aed372888e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settingsData:
-    resolutionIndex: 0
-    fullscreenOn: 1
-    maxFPS: 60
-    vSync: 1
-    qualityIndex: 0
-    backgroundVolume: 50
-    effectsVolume: 50
   _allItems: []
   _weaponItems: []
   _armorItems: []
   _collectableItems: []
+  weaponData: {fileID: 11400000, guid: 9fd50d627056879539a8a93a461c2939, type: 2}
 --- !u!1 &1174829175
 GameObject:
   m_ObjectHideFlags: 0
@@ -14123,14 +14077,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea65a09f77c0c36438eebe986e5799ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settingsData:
-    resolutionIndex: 0
-    fullscreenOn: 1
-    maxFPS: 60
-    vSync: 1
-    qualityIndex: 0
-    backgroundVolume: 50
-    effectsVolume: 50
   startRoom: {fileID: 729133375}
   roomPrefabs:
   - {fileID: 0}

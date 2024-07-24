@@ -14,6 +14,6 @@ public class ArmorItem : MonoBehaviour
     private void Start()
     {
         //Overwriting sprite
-        transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = GetComponent<ItemID>()._itemData.sprite;
+        //transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = GetComponent<ItemID>()._itemData.sprite;
     }
 }
