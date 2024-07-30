@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using System.IO;
 
 public class ItemHolder : SaveLoadSystem
 {
@@ -9,55 +9,68 @@ public class ItemHolder : SaveLoadSystem
     public List<ItemID> _weaponItems = new();
     public List<ItemID> _armorItems = new();
     public List<ItemID> _collectableItems = new();
-    public WeaponData weaponData;
+    public List<Object> allobjects = new();
+    public List<Object> objects = new();
 
     void Start()
     {
-        // Load(itemsSavePath + "Weapons/Warrior");
-        // Load(itemsSavePath + "Weapons/Archer");
-        // Load(itemsSavePath + "Weapons/Mage");
-
-        // Load(itemsSavePath + "Armor/Warrior");
-        // Load(itemsSavePath + "Armor/Archer");
-        // Load(itemsSavePath + "Armor/Mage");
-
-        // Load(itemsSavePath + "Collectable");
-        // Save(itemsSavePath + "/Test.json");
+        Save(itemsSavePath);
+        
         Load(itemsSavePath);
     }
 
     public override void Save(string path)
     {
-        // Collect data to save
-        string jsonData = JsonConvert.SerializeObject(weaponData, Formatting.Indented, new JsonSerializerSettings
+        for (int i = 0; i < allobjects.Count; i++)
         {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.Auto,
-            PreserveReferencesHandling = PreserveReferencesHandling.None
-        });
+            // Collect data to save
+            string jsonData = JsonConvert.SerializeObject(allobjects[i], Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                TypeNameHandling = TypeNameHandling.Auto,
+                PreserveReferencesHandling = PreserveReferencesHandling.None
+            });
 
-        // Save data to file
-        File.WriteAllText(path, jsonData);
+            // Save data to file
+            File.WriteAllText($"{path}/{allobjects[i].name}.json", jsonData);
+        }
     }
 
     public override void Load(string path)
     {
         List<string> itemsLocation = GetGameFiles(path);
 
-        for (int i = 0; i < itemsLocation.Count; i++)
+        foreach (var itemLocation in itemsLocation)
         {
-            // Here load data from file
-            WeaponData _itemData = ScriptableObject.CreateInstance<WeaponData>();
-            //_itemData.ID = (short)i;
+            string saveFile = ReadFromFile($"{path}/{itemLocation}");
+            Object _newItem = new();
 
-            string saveFile = ReadFromFile($"{path}/{itemsLocation[i]}");
-            
-            // Deserialize
-            JsonConvert.PopulateObject(saveFile, _itemData);
-            weaponData = _itemData;
+            //Test if founded json is parsable to other types
+            ItemDataParser _itemParser = ScriptableObject.CreateInstance<ItemDataParser>();
+            JsonConvert.PopulateObject(saveFile, _itemParser);
 
-            // Checks if item is in standard's
-            //_allItems.Add(_itemData);
+            switch(_itemParser._itemData.itemType)
+            {
+                //Parse to weapon
+                case ItemType.Weapon:
+                    WeaponData _newWeapon = ScriptableObject.CreateInstance<WeaponData>();
+                    JsonConvert.PopulateObject(saveFile, _newWeapon);
+                    _newItem = _newWeapon;
+                    break;
+                
+                case ItemType.Armor:
+                    //Parse to armor
+                    ArmorData _newArmor = ScriptableObject.CreateInstance<ArmorData>();
+                    JsonConvert.PopulateObject(saveFile, _newArmor);
+                    _newItem = _newArmor;
+                    break;
+            }
+
+            //If empty drop warning
+            if (_newItem == null)
+                Debug.LogWarning($"File {itemLocation} does not match any known data type.");
+
+            objects.Add(_newItem);
         }
     }
 }
