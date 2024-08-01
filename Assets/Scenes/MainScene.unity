@@ -5783,6 +5783,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 1adfeedf-6cb6-4539-93ec-5d1796dd9b86
     m_ActionName: Player/Inventory[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dbafc34f-578e-40b7-bd22-d0faea7b10f0
+    m_ActionName: Player/PIck[/Keyboard/f,/Gamepad/buttonWest]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -10839,17 +10843,10 @@ MonoBehaviour:
   _weaponItems: []
   _armorItems: []
   _collectableItems: []
-  allobjects:
-  - {fileID: 11400000, guid: 3d0314da2422bce2ba4c6743f0f7ad8c, type: 2}
-  - {fileID: 11400000, guid: afa72512047dfe9cf92cdf4544d96646, type: 2}
-  - {fileID: 11400000, guid: 5b50ea28e4e84c8ba92b50f3aabc4c7e, type: 2}
-  - {fileID: 11400000, guid: 9fd50d627056879539a8a93a461c2939, type: 2}
-  - {fileID: 11400000, guid: a55b5b70d2dd9f8118b9f595978e6fc0, type: 2}
-  - {fileID: 11400000, guid: 54b0bd007505d0bc491784735c735ef3, type: 2}
-  - {fileID: 11400000, guid: f552c40f1ee6a0c478d5779a23097c06, type: 2}
-  - {fileID: 11400000, guid: 1722b5f674680cbc7bbfff8a5d169b8a, type: 2}
-  - {fileID: 11400000, guid: 725b2061ad38b0e13834130eb8d1071f, type: 2}
   objects: []
+  itemPrefabs:
+  - {fileID: 2585958969199680765, guid: 7d30b57c0ff02e2b0aca84dc7e5901a0, type: 3}
+  - {fileID: 674930728305127747, guid: 53571433a80458b5ebbff357e6437959, type: 3}
 --- !u!1 &1174829175
 GameObject:
   m_ObjectHideFlags: 0
