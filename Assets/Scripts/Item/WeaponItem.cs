@@ -20,10 +20,4 @@ public class WeaponItem : MonoBehaviour
     public WeaponType weaponType;
     public WeaponHoldingType holdingType;
     public bool resizable = true;
-
-    private void Start()
-    {
-        //Overwriting sprite
-        //transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = GetComponent<ItemID>()._itemData.sprite;
-    }
 }

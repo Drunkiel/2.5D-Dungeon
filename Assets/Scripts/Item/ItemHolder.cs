@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.IO;
+using Unity.VisualScripting;
 
 public class ItemHolder : SaveLoadSystem
 {
@@ -15,18 +16,19 @@ public class ItemHolder : SaveLoadSystem
     void Start()
     {
         // Save(itemsSavePath);
-        // Load(itemsSavePath + "Weapons/Warrior");
-        // Load(itemsSavePath + "Weapons/Archer");
-        // Load(itemsSavePath + "Weapons/Mage");
+        Load(itemsSavePath + "Weapons/Warrior");
+        Load(itemsSavePath + "Weapons/Archer");
+        Load(itemsSavePath + "Weapons/Mage");
 
         Load(itemsSavePath + "Armor/Warrior");
         Load(itemsSavePath + "Armor/Archer");
         Load(itemsSavePath + "Armor/Mage");
 
+        Load(itemsSavePath + "Collectable");
+        
         _allItems.AddRange(_weaponItems);
         _allItems.AddRange(_armorItems);
         _allItems.AddRange(_collectableItems);
-        //Load(itemsSavePath + "Collectable");
     }
 
     // public override void Save(string path)
@@ -76,6 +78,13 @@ public class ItemHolder : SaveLoadSystem
                     _newItem = _newArmor;
                     _armorItems.Add(CreateArmorItem(_newArmor, path));
                     break;
+
+                case ItemType.Collectable:
+                    CollectableData _newCollectable = ScriptableObject.CreateInstance<CollectableData>();
+                    JsonConvert.PopulateObject(saveFile, _newCollectable);
+                    _newItem = _newCollectable;
+                    _collectableItems.Add(CreateCollectableItem(_newCollectable, path));
+                    break;
             }
 
             //If empty drop warning
@@ -93,26 +102,31 @@ public class ItemHolder : SaveLoadSystem
         ItemID _itemID = Instantiate(itemPrefabs[0], new Vector2(0, -2), Quaternion.identity).GetComponent<ItemID>();
         WeaponItem _weaponItem = _itemID._weaponItem;
 
-        //Create new texture
-        byte[] spriteData = File.ReadAllBytes($"{path}/{_weaponData._itemData.spritePath}");
-        Texture2D texture = new(2, 2)
-        {
-            filterMode = FilterMode.Point
-        };
-
-        //Assigning data
-        if (texture.LoadImage(spriteData))
-        {
-            //Convert texture to sprite
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
-            _weaponItem.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = sprite;
-        }
-
+        //Load values
         _itemID._itemData = _weaponData._itemData;
         _weaponItem.weaponType = _weaponData.weaponType;
         _weaponItem.holdingType = _weaponData.holdingType;
-        _weaponItem.resizable = _weaponData.resizable;
+        _weaponItem.transform.localScale = new(_weaponData.size.x, _weaponData.size.y, 1);
         _itemID.name = _weaponData._itemData.displayedName;
+
+        //Create a sprite
+        int orderInLayer = 0;
+        switch(_weaponItem.holdingType)
+        {
+            case WeaponHoldingType.Right_Hand:
+                orderInLayer = 5;
+                break;
+
+            case WeaponHoldingType.Left_Hand:
+                orderInLayer = 2;
+                break;
+
+            case WeaponHoldingType.Both_Hands:
+                orderInLayer = 8;
+                break;
+        }
+        LoadTexture(_weaponItem, $"{path}/{_weaponData._itemData.spritePath}", orderInLayer, 20f);
+
         return _itemID;
     }
 
@@ -122,8 +136,41 @@ public class ItemHolder : SaveLoadSystem
         ItemID _itemID = Instantiate(itemPrefabs[1], new Vector2(0, -2), Quaternion.identity).GetComponent<ItemID>();
         ArmorItem _armorItem = _itemID._armorItem;
 
+        //Load values
+        _itemID._itemData = _armorData._itemData;
+        _armorItem.armorType = _armorData.armorType;
+        _itemID.name = _armorData._itemData.displayedName;
+
+        //Create a sprite
+        int orderInLayer = 5;
+        if (_armorItem.armorType == ArmorType.Chestplate)
+            orderInLayer = 3;
+
+        LoadTexture(_armorItem, $"{path}/{_armorData._itemData.spritePath}", orderInLayer, 100f);
+
+        return _itemID;
+    }
+
+    private ItemID CreateCollectableItem(CollectableData _collectableData, string path)
+    {
+        //Creating new item
+        ItemID _itemID = Instantiate(itemPrefabs[2], new Vector2(0, -2), Quaternion.identity).GetComponent<ItemID>();
+        CollectableItem _collectableItem = _itemID._collectableItem;
+
+        //Load values
+        _itemID._itemData = _collectableData._itemData;
+        _itemID.name = _collectableData._itemData.displayedName;
+
+        //Create a sprite
+        LoadTexture(_collectableItem, $"{path}/{_collectableData._itemData.spritePath}", 5, 20f);
+
+        return _itemID;
+    }
+
+    private void LoadTexture(Object itemObject, string path, int orderInLayer, float pixelsPerUnit)
+    {
         //Create new texture
-        byte[] spriteData = File.ReadAllBytes($"{path}/{_armorData._itemData.spritePath}");
+        byte[] spriteData = File.ReadAllBytes(path);
         Texture2D texture = new(2, 2)
         {
             filterMode = FilterMode.Point
@@ -133,13 +180,10 @@ public class ItemHolder : SaveLoadSystem
         if (texture.LoadImage(spriteData))
         {
             //Convert texture to sprite
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
-            _armorItem.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = sprite;
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
+            SpriteRenderer spriteRenderer = itemObject.GetComponent<Transform>().GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = sprite;
+            spriteRenderer.sortingOrder = orderInLayer;
         }
-
-        _itemID._itemData = _armorData._itemData;
-        _armorItem.armorType = _armorData.armorType;
-        _itemID.name = _armorData._itemData.displayedName;
-        return _itemID;
     }
 }
