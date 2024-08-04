@@ -19,17 +19,20 @@ public class ComparisonItem : MonoBehaviour
     {
         ItemData _itemData = null;
         List<ItemBuff> _itemBuffs;
+        Sprite iconSprite = null;
 
         switch (_itemID._itemData.itemType)
         {
             case ItemType.Weapon:
                 _itemData = _itemID._itemData;
+                iconSprite = _itemID._weaponItem.iconSprite;
 
                 holdingTypeText.text = "Holding type:" + _itemID._weaponItem.holdingType;
                 break;
 
             case ItemType.Armor:
                 _itemData = _itemID._itemData;
+                iconSprite = _itemID._armorItem.iconSprite;
 
                 holdingTypeText.text = "Holding type:" + _itemID._armorItem.armorType;
                 break;
@@ -50,7 +53,7 @@ public class ComparisonItem : MonoBehaviour
             allContextTexts.Add(newStatText);
         }
 
-        //itemShowcase.sprite = _itemData.iconSprite;
+        itemShowcase.sprite = iconSprite;
         itemNameText.text = _itemData.displayedName;
     }
 }

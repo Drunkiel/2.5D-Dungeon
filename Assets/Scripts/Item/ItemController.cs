@@ -32,7 +32,7 @@ public class ItemController : SaveLoadSystem
 
                 //Cloning item to founded slot and adding it to inventory
                 int weaponSlotIndex = (int)_itemID._weaponItem.holdingType + 3;
-                _inventoryController.AddToGearInventory(_itemID._itemData, weaponSlotIndex);
+                _inventoryController.AddToGearInventory(_itemID, weaponSlotIndex);
                 break;
 
             case ItemType.Armor:
@@ -50,7 +50,7 @@ public class ItemController : SaveLoadSystem
 
                 //Cloning item to founded slot and adding it to inventory
                 int armorSlotIndex = (int)_itemID._armorItem.armorType;
-                _inventoryController.AddToGearInventory(_itemID._itemData, armorSlotIndex);
+                _inventoryController.AddToGearInventory(_itemID, armorSlotIndex);
                 break;
 
             case ItemType.Collectable:
@@ -103,7 +103,7 @@ public class ItemController : SaveLoadSystem
     {
         GameObject weaponCopy = Instantiate(_itemID.gameObject, newParent);
         weaponCopy.name = _itemID.name;
-        weaponCopy.transform.localRotation = rotation;
+        weaponCopy.transform.SetLocalPositionAndRotation(Vector3.zero, rotation);
         if (_itemID._weaponItem.resizable)
             weaponCopy.transform.localScale = Vector3.one;
 
@@ -167,6 +167,7 @@ public class ItemController : SaveLoadSystem
         GameObject armorCopy = Instantiate(_itemID.gameObject, newParent);
         armorCopy.name = _itemID.name;
         armorCopy.transform.localScale = Vector3.one;
+        armorCopy.transform.localPosition = Vector3.zero;
 
         return armorCopy.GetComponent<ItemID>()._armorItem;
     }
@@ -222,13 +223,14 @@ public class ItemController : SaveLoadSystem
                 Transform weaponClone = PickWeapon(_holdingItemID, Quaternion.identity, _itemID.transform.parent).gameObject.transform;
                 if (weaponClone.GetComponent<ItemID>()._weaponItem.resizable)
                     weaponClone.localScale = new(0.25f, 0.25f, 0.25f);
+                weaponClone.localPosition = Vector2.zero;
 
                 _pickInteraction._itemID = weaponClone.GetComponent<ItemID>();
 
                 //Adding clone to inventory
                 _inventoryController.DeleteGearInventory((int)_weaponItem.holdingType);
                 _weaponItem = _gearHolder.GetHoldingWeapon(_itemID._weaponItem.holdingType);
-                _inventoryController.AddToGearInventory(_itemID._itemData, (int)_weaponItem.holdingType);
+                _inventoryController.AddToGearInventory(_itemID, (int)_weaponItem.holdingType);
 
                 Destroy(_holdingItemID.gameObject);
 
@@ -238,7 +240,7 @@ public class ItemController : SaveLoadSystem
                 //Adding clone to inventory
                 _weaponItem = _gearHolder.GetHoldingWeapon(_itemID._weaponItem.holdingType);
                 _inventoryController.DeleteGearInventory((int)_weaponItem.holdingType);
-                _inventoryController.AddToGearInventory(_itemID._itemData, (int)_weaponItem.holdingType);
+                _inventoryController.AddToGearInventory(_itemID, (int)_weaponItem.holdingType);
                 break;
 
             case ItemType.Armor:
@@ -258,6 +260,7 @@ public class ItemController : SaveLoadSystem
                 //Making clone of armor item and assigning it to stand
                 Transform armorClone = PickArmor(_holdingItemID, _itemID.transform.parent).gameObject.transform;
                 armorClone.localScale = new(0.5f, 0.5f, 0.5f);
+                armorClone.localPosition = Vector2.zero;
                 _pickInteraction._itemID = armorClone.GetComponent<ItemID>();
 
                 //If armor is boots then destroy both
@@ -272,7 +275,7 @@ public class ItemController : SaveLoadSystem
                 //Adding clone to inventory
                 _armorItem = _gearHolder.GetHoldingArmor(_itemID._armorItem.armorType);
                 _inventoryController.DeleteGearInventory((int)_armorItem.armorType);
-                _inventoryController.AddToGearInventory(_itemID._itemData, (int)_armorItem.armorType);
+                _inventoryController.AddToGearInventory(_itemID, (int)_armorItem.armorType);
                 break;
         }
 

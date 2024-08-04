@@ -125,7 +125,9 @@ public class ItemHolder : SaveLoadSystem
                 orderInLayer = 8;
                 break;
         }
+
         LoadTexture(_weaponItem, $"{path}/{_weaponData._itemData.spritePath}", orderInLayer, 20f);
+        _weaponItem.iconSprite = _itemID._itemData.GetSprite($"{path}/{_weaponData._itemData.spriteIconPath}", 20f);
 
         return _itemID;
     }
@@ -147,6 +149,7 @@ public class ItemHolder : SaveLoadSystem
             orderInLayer = 3;
 
         LoadTexture(_armorItem, $"{path}/{_armorData._itemData.spritePath}", orderInLayer, 100f);
+        _armorItem.iconSprite = _itemID._itemData.GetSprite($"{path}/{_armorData._itemData.spriteIconPath}", 20f);
 
         return _itemID;
     }
@@ -163,27 +166,15 @@ public class ItemHolder : SaveLoadSystem
 
         //Create a sprite
         LoadTexture(_collectableItem, $"{path}/{_collectableData._itemData.spritePath}", 5, 20f);
+        _collectableItem.iconSprite = _itemID._itemData.GetSprite($"{path}/{_collectableData._itemData.spriteIconPath}", 20f);
 
         return _itemID;
     }
 
     private void LoadTexture(Object itemObject, string path, int orderInLayer, float pixelsPerUnit)
     {
-        //Create new texture
-        byte[] spriteData = File.ReadAllBytes(path);
-        Texture2D texture = new(2, 2)
-        {
-            filterMode = FilterMode.Point
-        };
-
-        //Assigning data
-        if (texture.LoadImage(spriteData))
-        {
-            //Convert texture to sprite
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
-            SpriteRenderer spriteRenderer = itemObject.GetComponent<Transform>().GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = sprite;
-            spriteRenderer.sortingOrder = orderInLayer;
-        }
+        SpriteRenderer spriteRenderer = itemObject.GetComponent<Transform>().GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = itemObject.GetComponent<ItemID>()._itemData.GetSprite(path, pixelsPerUnit);
+        spriteRenderer.sortingOrder = orderInLayer;
     }
 }

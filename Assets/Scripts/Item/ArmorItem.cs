@@ -10,4 +10,5 @@ public enum ArmorType
 public class ArmorItem : MonoBehaviour
 {
     public ArmorType armorType;
+    public Sprite iconSprite;
 }
