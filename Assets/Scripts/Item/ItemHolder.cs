@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
-using System.IO;
 using Unity.VisualScripting;
 
 public class ItemHolder : SaveLoadSystem
@@ -10,7 +9,6 @@ public class ItemHolder : SaveLoadSystem
     public List<ItemID> _weaponItems = new();
     public List<ItemID> _armorItems = new();
     public List<ItemID> _collectableItems = new();
-    //public List<Object> allobjects = new();
     public List<GameObject> itemPrefabs = new();
 
     void Start()
@@ -30,23 +28,6 @@ public class ItemHolder : SaveLoadSystem
         _allItems.AddRange(_armorItems);
         _allItems.AddRange(_collectableItems);
     }
-
-    // public override void Save(string path)
-    // {
-    //     for (int i = 0; i < allobjects.Count; i++)
-    //     {
-    //         // Collect data to save
-    //         string jsonData = JsonConvert.SerializeObject(allobjects[i], Formatting.Indented, new JsonSerializerSettings
-    //         {
-    //             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-    //             TypeNameHandling = TypeNameHandling.Auto,
-    //             PreserveReferencesHandling = PreserveReferencesHandling.None
-    //         });
-
-    //         // Save data to file
-    //         File.WriteAllText($"{path}/{allobjects[i].name}.json", jsonData);
-    //     }
-    // }
 
     public override void Load(string path)
     {

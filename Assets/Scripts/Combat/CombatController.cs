@@ -5,6 +5,7 @@ using UnityEngine;
 public class CombatController : MonoBehaviour
 {
     public static CombatController instance;
+    public bool inCombat;
     [SerializeField] private bool isPlayerTurn;
     public Transform playerPlace;
     public Transform enemyPlace;
@@ -26,6 +27,7 @@ public class CombatController : MonoBehaviour
         _combatEntities.playerPreviousPosition = _playerController.transform.position;
         _combatEntities.playerXScale = _playerController.transform.localScale.x;
         isPlayerTurn = true;
+        inCombat = true;
 
         StartCoroutine(WaitAndLoadScene());
         StartCoroutine(WaitAndSetForCombat());
@@ -35,6 +37,7 @@ public class CombatController : MonoBehaviour
     {
         StartCoroutine(WaitAndLoadScene());
         StartCoroutine(WaitAndReset());
+        inCombat = false;
     }
 
     public void TakeTurn(Action action)

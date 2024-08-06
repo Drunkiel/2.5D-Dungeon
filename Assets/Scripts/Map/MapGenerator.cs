@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.IO;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class MapGenerator : SaveLoadSystem
@@ -30,7 +30,7 @@ public class MapGenerator : SaveLoadSystem
             MapData _newMap = ScriptableObject.CreateInstance<MapData>();
             _newMap.ID = (short)i;
             string saveFile = ReadFromFile(path + allMaps[i]);
-            JsonUtility.FromJsonOverwrite(saveFile, _newMap);
+            JsonConvert.PopulateObject(saveFile, _newMap);
 
             //Checks if map is in standard's
             if (CheckMap(_newMap))

@@ -25,6 +25,12 @@ public class InventoryController : MonoBehaviour
         instance = this;
     }
 
+    public void OpenCloseInventory()
+    {
+        if (!PlayerController.instance.isStopped)
+            GetComponent<OpenCloseUI>().OpenClose();
+    }
+
     public void AddToInventory(ItemID _itemID, int slotIndex)
     {
         if (slotIndex == -1)
