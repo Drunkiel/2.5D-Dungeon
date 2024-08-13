@@ -8057,7 +8057,7 @@ MonoBehaviour:
       - m_Target: {fileID: 2133669216}
         m_TargetAssemblyTypeName: ConsoleController, Assembly-CSharp
         m_MethodName: SendToChat
-        m_Mode: 6
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -20747,6 +20747,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2133669215}
   - component: {fileID: 2133669216}
+  - component: {fileID: 2133669217}
   m_Layer: 5
   m_Name: Console
   m_TagString: Untagged
@@ -20792,7 +20793,21 @@ MonoBehaviour:
   chatParent: {fileID: 2095602627}
   chatTextPrefab: {fileID: 8198119149994399923, guid: 24f04279355e4d12fa2c89687d19ffb8,
     type: 3}
+  _commands: {fileID: 2133669217}
   messages: []
+--- !u!114 &2133669217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133669214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 351e3fd56531a2cdca3b806a6492df21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _consoleController: {fileID: 2133669216}
 --- !u!4 &2136546272 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 893334614078022549, guid: 0755d05ecddda1a4ca0e5c1b9a51a7e1,
