@@ -1,10 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class TransitionController : MonoBehaviour
 {
     public static TransitionController instance;
 
-    public string[] animationNames;
     [SerializeField] private GameObject UI;
     [SerializeField] private Animator animator;
 
@@ -13,11 +13,18 @@ public class TransitionController : MonoBehaviour
         instance = this;
     }
 
-    public void StartTransition()
+    public void StartTransition(float delay)
     {
-        int randomAnimationIndex = Random.Range(0, animationNames.Length);
-
+        int animationIndex = Random.Range(0, Mathf.FloorToInt(animator.runtimeAnimatorController.animationClips.Length / 2));
         UI.SetActive(true);
-        animator.Play(animationNames[randomAnimationIndex]);
+        animator.Play($"Close_{animationIndex}");
+        StartCoroutine(WaitAndOpen(animator.GetCurrentAnimatorClipInfo(0).Length + delay, animationIndex));
+    }
+
+    private IEnumerator WaitAndOpen(float waitTime, int animationIndex)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        animator.Play($"Open_{animationIndex}");
     }
 }

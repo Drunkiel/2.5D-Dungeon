@@ -8086,7 +8086,19 @@ MonoBehaviour:
         m_CallState: 2
   m_OnDeselect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2133669216}
+        m_TargetAssemblyTypeName: ConsoleController, Assembly-CSharp
+        m_MethodName: ExitChatMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTextSelection:
     m_PersistentCalls:
       m_Calls: []
@@ -20107,8 +20119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb720eaa9abcdfa49b76bbbbcbf5096a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationNames:
-  - Clip1
+  closeAnimationNames: []
+  openAnimationNames: []
   UI: {fileID: 766223434}
   animator: {fileID: 2080440941}
 --- !u!1001 &2083163638
@@ -20768,8 +20780,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 910236288}
-  - {fileID: 757337903}
   - {fileID: 460878984}
+  - {fileID: 757337903}
   m_Father: {fileID: 1683140269}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

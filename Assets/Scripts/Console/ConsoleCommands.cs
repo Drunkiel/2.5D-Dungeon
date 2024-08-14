@@ -5,7 +5,7 @@ public class ConsoleCommands : MonoBehaviour
 {
     [SerializeField] private ConsoleController _consoleController;
 
-    public void Clear(int a)
+    public void Clear()
     {
         foreach (TMP_Text singleMessage in _consoleController.messages)
             Destroy(singleMessage.gameObject);

@@ -25,6 +25,8 @@ public class ConsoleController : MonoBehaviour
     [SerializeField] private TMP_Text chatTextPrefab;
     [SerializeField] private ConsoleCommands _commands;
     public List<TMP_Text> messages = new();
+    [SerializeField] private string commandName = "";
+    [SerializeField] private List<string> commandAttributes = new();
 
     public void SendToChat()
     {
@@ -36,12 +38,12 @@ public class ConsoleController : MonoBehaviour
             ChatMessage(SenderType.Player, chatInput.text);
         else
         {
-            string commandName = chatInput.text[1..];
+            commandName = chatInput.text[1..];
             commandName = char.ToUpper(commandName[0]) + commandName[1..];
 
+                SendCommand(commandName);
             try
             {
-                SendCommand(commandName);
             }
             catch (TargetParameterCountException ex)
             {
@@ -74,7 +76,9 @@ public class ConsoleController : MonoBehaviour
         MethodInfo methodInfo = consoleCommandsType.GetMethod(commandName);
 
         if (methodInfo != null)
+        {
             methodInfo.Invoke(commandName, parameters);
+        }
         else
             ChatMessage(SenderType.System, $"There is no such command as: {commandName}", OutputType.Error);
     }
@@ -113,5 +117,14 @@ public class ConsoleController : MonoBehaviour
     {
         if (!CombatController.instance.inCombat)
             PlayerController.instance.isStopped = false;
+    }
+
+    private string GetCommand()
+    {
+        string[] splittedString = chatInput.text[1..].Split(" ");
+        commandAttributes.Clear();
+        commandAttributes.AddRange(splittedString[1..]);
+
+        return splittedString[0];
     }
 }

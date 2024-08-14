@@ -71,7 +71,7 @@ public class CombatController : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         //Starting transition
-        TransitionController.instance.StartTransition();
+        TransitionController.instance.StartTransition(1);
 
         yield return new WaitForSeconds(1);
     }

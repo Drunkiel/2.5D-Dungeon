@@ -33,7 +33,7 @@ public class PortalController : MonoBehaviour
         StartCoroutine(CameraController.instance.ZoomTo(20, 1f));
 
         yield return new WaitForSeconds(1);
-        TransitionController.instance.StartTransition();
+        TransitionController.instance.StartTransition(1);
 
         yield return new WaitForSeconds(1);
 
