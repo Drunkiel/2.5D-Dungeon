@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
@@ -28,22 +29,30 @@ public class ConsoleController : MonoBehaviour
     [SerializeField] private string commandName = "";
     [SerializeField] private List<string> commandAttributes = new();
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Backslash) && !chatInput.isFocused)
+            GetComponent<OpenCloseUI>().OpenClose();
+    }
+
     public void SendToChat()
     {
-        //Checks if message is empty
-        if (chatInput.text == "")
+        //Check if message is empty
+        if (string.IsNullOrEmpty(chatInput.text))
             return;
 
         if (chatInput.text[0] != '/')
+        {
             ChatMessage(SenderType.Player, chatInput.text);
+        }
         else
         {
-            commandName = chatInput.text[1..];
+            commandName = GetCommand();
             commandName = char.ToUpper(commandName[0]) + commandName[1..];
 
-                SendCommand(commandName);
             try
             {
+                SendCommand(commandName, commandAttributes.ToArray());
             }
             catch (TargetParameterCountException ex)
             {
@@ -59,7 +68,7 @@ public class ConsoleController : MonoBehaviour
             }
         }
 
-        //Checks if there is too many messages and deletes them
+        //Delete messages
         if (messages.Count > 20)
         {
             Destroy(messages[0].gameObject);
@@ -70,29 +79,47 @@ public class ConsoleController : MonoBehaviour
         chatInput.ActivateInputField();
     }
 
-    private void SendCommand(string commandName, params object[] parameters)
+    private void SendCommand(string commandName, params string[] parameters)
     {
         Type consoleCommandsType = typeof(ConsoleCommands);
-        MethodInfo methodInfo = consoleCommandsType.GetMethod(commandName);
+        MethodInfo method = consoleCommandsType.GetMethod(commandName);
 
-        if (methodInfo != null)
+        ParameterInfo[] methodParams = method.GetParameters();
+
+        if (methodParams.Length == parameters.Length)
         {
-            methodInfo.Invoke(commandName, parameters);
+            object[] convertedParams = new object[parameters.Length];
+            bool allMatch = true;
+
+            for (int i = 0; i < methodParams.Length; i++)
+            {
+                try
+                {
+                    convertedParams[i] = Convert.ChangeType(parameters[i], methodParams[i].ParameterType, CultureInfo.InvariantCulture);
+                }
+                catch
+                {
+                    allMatch = false;
+                    break;
+                }
+            }
+
+            if (allMatch)
+            {
+                method.Invoke(_commands, convertedParams);
+                return;
+            }
         }
-        else
-            ChatMessage(SenderType.System, $"There is no such command as: {commandName}", OutputType.Error);
+
+        ChatMessage(SenderType.System, $"No matching command found for: {commandName} with {parameters.Length} arguments", OutputType.Error);
     }
 
     public void ChatMessage(SenderType sender, string message, OutputType outputType = OutputType.Normal)
     {
-        //Creating new message
         TMP_Text newText = Instantiate(chatTextPrefab, chatParent);
 
-        string senderName = "";
-        if ((int)sender != 2)
-            senderName = sender.ToString();
-
-        newText.text = $"{senderName}: {message}";
+        string senderName = (int)sender != 2 ? sender.ToString() : string.Empty;
+        newText.text = $"<color=yellow><b>{senderName}:</b></color> {message}";
 
         switch (outputType)
         {
@@ -121,7 +148,7 @@ public class ConsoleController : MonoBehaviour
 
     private string GetCommand()
     {
-        string[] splittedString = chatInput.text[1..].Split(" ");
+        string[] splittedString = chatInput.text[1..].Split(' ');
         commandAttributes.Clear();
         commandAttributes.AddRange(splittedString[1..]);
 
