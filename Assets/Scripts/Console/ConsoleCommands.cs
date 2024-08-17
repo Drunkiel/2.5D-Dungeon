@@ -16,4 +16,10 @@ public class ConsoleCommands : MonoBehaviour
     {
         _consoleController.ChatMessage(SenderType.System, text);
     }
+
+    public void ReloadItems()
+    {
+        ItemHolder.instance.UnLoadStuff();
+        ItemHolder.instance.LoadStuff();
+    }
 }

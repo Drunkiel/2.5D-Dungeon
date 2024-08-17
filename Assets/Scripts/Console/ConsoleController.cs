@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum OutputType
 {
@@ -23,16 +24,44 @@ public class ConsoleController : MonoBehaviour
 {
     [SerializeField] private TMP_InputField chatInput;
     [SerializeField] private Transform chatParent;
-    [SerializeField] private TMP_Text chatTextPrefab;
-    [SerializeField] private ConsoleCommands _commands;
+    [SerializeField] private ScrollRect scrollRect;
     public List<TMP_Text> messages = new();
+    public List<string> previousMessages = new();
+    private int previousMessagesIndex;
     [SerializeField] private string commandName = "";
     [SerializeField] private List<string> commandAttributes = new();
 
+    [SerializeField] private TMP_Text chatTextPrefab;
+    [SerializeField] private ConsoleCommands _commands;
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backslash) && !chatInput.isFocused)
+        if (Input.GetKeyDown(KeyCode.Slash) && !chatInput.isFocused)
             GetComponent<OpenCloseUI>().OpenClose();
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (previousMessages.Count == 0)
+                return;
+
+            previousMessagesIndex++;
+            if (previousMessagesIndex >= previousMessages.Count)
+                previousMessagesIndex = previousMessages.Count - 1;
+            
+            chatInput.text = previousMessages[previousMessagesIndex];
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (previousMessages.Count == 0)
+                return;
+
+            previousMessagesIndex--;
+            if (previousMessagesIndex < 0)
+                previousMessagesIndex = 0;
+            
+            chatInput.text = previousMessages[previousMessagesIndex];
+        }
     }
 
     public void SendToChat()
@@ -41,10 +70,13 @@ public class ConsoleController : MonoBehaviour
         if (string.IsNullOrEmpty(chatInput.text))
             return;
 
+        //Add new message to previous messages
+        previousMessages.Add(chatInput.text);
+        previousMessagesIndex = previousMessages.Count - 1;
+
+        //Check if message is command or text
         if (chatInput.text[0] != '/')
-        {
             ChatMessage(SenderType.Player, chatInput.text);
-        }
         else
         {
             commandName = GetCommand();
@@ -75,6 +107,7 @@ public class ConsoleController : MonoBehaviour
             messages.RemoveAt(0);
         }
 
+        scrollRect.verticalNormalizedPosition = -1;
         chatInput.text = "";
         chatInput.ActivateInputField();
     }
@@ -138,6 +171,7 @@ public class ConsoleController : MonoBehaviour
     public void EnterChatMode()
     {
         PlayerController.instance.isStopped = true;
+        previousMessagesIndex = previousMessages.Count - 1;
     }
 
     public void ExitChatMode()

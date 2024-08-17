@@ -5,15 +5,26 @@ using Unity.VisualScripting;
 
 public class ItemHolder : SaveLoadSystem
 {
+    public static ItemHolder instance;
+
     public List<ItemID> _allItems = new();
     public List<ItemID> _weaponItems = new();
     public List<ItemID> _armorItems = new();
     public List<ItemID> _collectableItems = new();
     public List<GameObject> itemPrefabs = new();
 
+    void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
-        // Save(itemsSavePath);
+        LoadStuff();
+    }
+
+    public void LoadStuff()
+    {
         Load(itemsSavePath + "Weapons/Warrior");
         Load(itemsSavePath + "Weapons/Archer");
         Load(itemsSavePath + "Weapons/Mage");
@@ -27,6 +38,17 @@ public class ItemHolder : SaveLoadSystem
         _allItems.AddRange(_weaponItems);
         _allItems.AddRange(_armorItems);
         _allItems.AddRange(_collectableItems);
+    }
+
+    public void UnLoadStuff()
+    {
+        foreach(ItemID _itemID in _allItems)
+            Destroy(_itemID.gameObject);
+
+        _allItems.Clear();
+        _weaponItems.Clear();
+        _armorItems.Clear();
+        _collectableItems.Clear();
     }
 
     public override void Load(string path)
@@ -80,7 +102,7 @@ public class ItemHolder : SaveLoadSystem
     private ItemID CreateWeaponItem(WeaponData _weaponData, string path)
     {
         //Creating new item
-        ItemID _itemID = Instantiate(itemPrefabs[0], new Vector2(0, -2), Quaternion.identity).GetComponent<ItemID>();
+        ItemID _itemID = Instantiate(itemPrefabs[0], new Vector2(0, -2), Quaternion.identity, transform).GetComponent<ItemID>();
         WeaponItem _weaponItem = _itemID._weaponItem;
 
         //Load values
@@ -116,7 +138,7 @@ public class ItemHolder : SaveLoadSystem
     private ItemID CreateArmorItem(ArmorData _armorData, string path)
     {
         //Creating new item
-        ItemID _itemID = Instantiate(itemPrefabs[1], new Vector2(0, -2), Quaternion.identity).GetComponent<ItemID>();
+        ItemID _itemID = Instantiate(itemPrefabs[1], new Vector2(0, -2), Quaternion.identity, transform).GetComponent<ItemID>();
         ArmorItem _armorItem = _itemID._armorItem;
 
         //Load values
@@ -138,7 +160,7 @@ public class ItemHolder : SaveLoadSystem
     private ItemID CreateCollectableItem(CollectableData _collectableData, string path)
     {
         //Creating new item
-        ItemID _itemID = Instantiate(itemPrefabs[2], new Vector2(0, -2), Quaternion.identity).GetComponent<ItemID>();
+        ItemID _itemID = Instantiate(itemPrefabs[2], new Vector2(0, -2), Quaternion.identity, transform).GetComponent<ItemID>();
         CollectableItem _collectableItem = _itemID._collectableItem;
 
         //Load values

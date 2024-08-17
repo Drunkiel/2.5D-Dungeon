@@ -2045,7 +2045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &221848912
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20086,7 +20086,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -270}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2095602630
 MonoBehaviour:
@@ -20479,7 +20479,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2127031423}
-  - component: {fileID: 2127031424}
   m_Layer: 0
   m_Name: Game_Controller
   m_TagString: Untagged
@@ -20507,18 +20506,6 @@ Transform:
   - {fileID: 1172781365}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2127031424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2127031422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1752e79f1eea983458d5f03f40f7690f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2129514127 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 408610947764513660, guid: c87939e846de226479484f32a4943fd1,
@@ -20590,12 +20577,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chatInput: {fileID: 757337904}
   chatParent: {fileID: 2095602627}
+  scrollRect: {fileID: 460878985}
+  messages: []
+  previousMessages: []
+  commandName: 
+  commandAttributes: []
   chatTextPrefab: {fileID: 8198119149994399923, guid: 24f04279355e4d12fa2c89687d19ffb8,
     type: 3}
   _commands: {fileID: 2133669217}
-  messages: []
-  commandName: 
-  commandAttributes: []
 --- !u!114 &2133669217
 MonoBehaviour:
   m_ObjectHideFlags: 0
