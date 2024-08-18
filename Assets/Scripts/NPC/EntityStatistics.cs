@@ -50,7 +50,7 @@ public class EntityStatistics
         if (health < 0)
         {
             health = 0;
-            Debug.Log("Enemy died ;<");
+            ConsoleController.instance.ChatMessage(SenderType.System, "Entity is dead :p");
         }
     }
 
@@ -116,9 +116,7 @@ public class EntityStatistics
 
     private int CalculateManaUsage(float amount)
     {
-        float manaOutput = amount;
-
-        return Mathf.FloorToInt(manaOutput);
+        return Mathf.FloorToInt(amount);
     }
 
     public void ResetStatistics()
@@ -149,14 +147,40 @@ public class EntityStatistics
         ResetStatistics();
 
         //Getting weapons
-        ItemID _weaponLeft = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Left_Hand).GetComponent<ItemID>();
-        ItemID _weaponRight = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Right_Hand).GetComponent<ItemID>();
-        ItemID _weaponBoth = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Both_Hands).GetComponent<ItemID>();
+        WeaponItem _weaponItemLeft = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Left_Hand);
+        WeaponItem _weaponItemRight = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Right_Hand);
+        WeaponItem _weaponItemBoth = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Both_Hands);
+
+        ItemID _weaponLeft = null;
+        ItemID _weaponRight = null;;
+        ItemID _weaponBoth = null;;
+
+        if (_weaponItemLeft != null)
+            _weaponLeft = _weaponItemLeft.GetComponent<ItemID>();
+
+        if (_weaponItemRight != null)
+            _weaponRight = _weaponItemRight.GetComponent<ItemID>();
+
+        if (_weaponItemBoth != null)
+            _weaponBoth = _weaponItemBoth.GetComponent<ItemID>();
 
         //Getting armor
-        ItemID _armorHead = _gearHolder.GetHoldingArmor(ArmorType.Helmet).GetComponent<ItemID>();
-        ItemID _armorChestplate = _gearHolder.GetHoldingArmor(ArmorType.Chestplate).GetComponent<ItemID>();
-        ItemID _armorBoots = _gearHolder.GetHoldingArmor(ArmorType.Boots).GetComponent<ItemID>();
+        ArmorItem _armorItemHead = _gearHolder.GetHoldingArmor(ArmorType.Helmet);
+        ArmorItem _armorItemChestplate = _gearHolder.GetHoldingArmor(ArmorType.Chestplate);
+        ArmorItem _armorItemBoots = _gearHolder.GetHoldingArmor(ArmorType.Boots);
+
+        ItemID _armorHead = null;
+        ItemID _armorChestplate = null;
+        ItemID _armorBoots = null;
+
+        if (_armorItemHead != null)
+            _armorHead = _armorItemHead.GetComponent<ItemID>();
+
+        if (_armorItemChestplate != null)
+            _armorChestplate = _armorItemChestplate.GetComponent<ItemID>();
+
+        if (_armorItemBoots != null)
+            _armorBoots = _armorItemBoots.GetComponent<ItemID>();
 
         List<Attributes> _allAttributes = new();
         List<ItemBuff> _allBuffs = new();

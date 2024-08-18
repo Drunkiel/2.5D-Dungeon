@@ -9351,7 +9351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &910727400
 Animator:
   serializedVersion: 5
@@ -9665,8 +9665,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isStopped: 0
   _statistics:
-    health: 5
-    maxHealth: 5
+    health: 50
+    maxHealth: 100
     healthRegeneration: 0
     mana: 5
     maxMana: 5
@@ -9736,7 +9736,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillHolder:
-    _skillDatas: []
+    _skillDatas:
+    - {fileID: 11400000, guid: fed1baa378998014991a6b81452b9c03, type: 2}
+    - {fileID: 11400000, guid: fed1baa378998014991a6b81452b9c03, type: 2}
+    - {fileID: 11400000, guid: fed1baa378998014991a6b81452b9c03, type: 2}
+    - {fileID: 11400000, guid: fed1baa378998014991a6b81452b9c03, type: 2}
+    - {fileID: 11400000, guid: fed1baa378998014991a6b81452b9c03, type: 2}
+    - {fileID: 11400000, guid: fed1baa378998014991a6b81452b9c03, type: 2}
 --- !u!1 &911288832
 GameObject:
   m_ObjectHideFlags: 0

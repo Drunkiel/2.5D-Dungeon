@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
@@ -22,6 +23,8 @@ public enum SenderType
 
 public class ConsoleController : MonoBehaviour
 {
+    public static ConsoleController instance;
+
     [SerializeField] private TMP_InputField chatInput;
     [SerializeField] private Transform chatParent;
     [SerializeField] private ScrollRect scrollRect;
@@ -33,6 +36,11 @@ public class ConsoleController : MonoBehaviour
 
     [SerializeField] private TMP_Text chatTextPrefab;
     [SerializeField] private ConsoleCommands _commands;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Update()
     {
@@ -182,10 +190,44 @@ public class ConsoleController : MonoBehaviour
 
     private string GetCommand()
     {
-        string[] splittedString = chatInput.text[1..].Split(' ');
-        commandAttributes.Clear();
-        commandAttributes.AddRange(splittedString[1..]);
+        string input = chatInput.text[1..]; 
+        List<string> args = new();
+        bool insideQuotes = false;
+        string currentArg = "";
 
-        return splittedString[0];
+        //Here is the check if command contains more complex string
+        for (int i = 0; i < input.Length; i++)
+        {
+            char c = input[i];
+
+            if (c == '"')
+            {
+                insideQuotes = !insideQuotes;
+                if (!insideQuotes && currentArg.Length > 0)
+                {
+                    args.Add(currentArg);
+                    currentArg = "";
+                }
+            }
+            else if (c == ' ' && !insideQuotes)
+            {
+                if (currentArg.Length > 0)
+                {
+                    args.Add(currentArg);
+                    currentArg = "";
+                }
+            }
+            else
+                currentArg += c;
+        }
+
+        //Here add all args
+        if (currentArg.Length > 0)
+            args.Add(currentArg);
+
+        commandAttributes.Clear();
+        commandAttributes.AddRange(args.Skip(1));
+
+        return args[0];
     }
 }

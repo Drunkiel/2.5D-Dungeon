@@ -14,7 +14,7 @@ public class GearHolder
     public Transform rightFeetTransform;
     public Transform leftFeetTransform;
 
-    [Header("Currently holded Items")]
+    [Header("Currently holden Items")]
     public WeaponItem _weaponRight;
     public WeaponItem _weaponLeft;
     public WeaponItem _weaponBoth;

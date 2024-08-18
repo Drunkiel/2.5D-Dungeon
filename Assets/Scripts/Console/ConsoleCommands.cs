@@ -22,4 +22,17 @@ public class ConsoleCommands : MonoBehaviour
         ItemHolder.instance.UnLoadStuff();
         ItemHolder.instance.LoadStuff();
     }
+
+    public void ReloadStatistics()
+    {
+        PlayerController _playerController = PlayerController.instance;
+
+        _playerController._statistics.ResetStatistics();
+        _playerController._statistics.RecalculateStatistics(_playerController._holdingController._itemController._gearHolder);
+    }
+
+    public void GetItem(string itemName)
+    {
+        ItemHolder.instance.GetItemByName(itemName);
+    }
 }

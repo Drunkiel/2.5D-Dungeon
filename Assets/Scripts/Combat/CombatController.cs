@@ -51,10 +51,55 @@ public class CombatController : MonoBehaviour
         CombatEntities _combatEntities = CombatEntities.instance;
         if (_combatEntities.player.GetComponent<PlayerController>()._statistics.health <= 0 || 
             _combatEntities.enemy.GetComponent<EnemyController>()._statistics.health <= 0)
+        {
             EndCombat();
+            return;
+        }
 
         //Ending turn
         isPlayerTurn = !isPlayerTurn;
+
+        if (!isPlayerTurn)
+            TakeTurn(() => 
+            {
+                EntityStatistics _enemyStatistics = CombatEntities.instance.enemy.GetComponent<EnemyController>()._statistics;
+                EntityStatistics _playerStatistics = PlayerController.instance._statistics;
+
+                SkillHolder _skillHolder = CombatEntities.instance.enemy.GetComponent<EnemyController>()._holdingController._skillsController._skillHolder;
+                SkillData _skillData = _skillHolder._skillDatas[UnityEngine.Random.Range(0, _skillHolder._skillDatas.Count)];
+                
+                int skillDamage = _combatUI.GetSkillModifier(_skillData, new() { AttributeTypes.MeleeDamage, AttributeTypes.RangeDamage, AttributeTypes.MagicDamage });
+                int protection = _combatUI.GetSkillModifier(_skillData, new() { AttributeTypes.AllProtection, AttributeTypes.MeleeProtection, AttributeTypes.RangeProtection, AttributeTypes.MagicProtection });
+                int manaUsage = _combatUI.GetSkillModifier(_skillData, new() { AttributeTypes.ManaUsage });
+
+                //Checks if player has enough mana to cast skill
+                if (_enemyStatistics.mana * _enemyStatistics.manaUsageMultiplier < manaUsage)
+                {
+                    print($"Not enough mana: {Mathf.Abs(_enemyStatistics.mana - manaUsage)}");
+                    return;
+                }
+
+                //Do stuff
+                Attributes _attributes = _skillData._skillAttributes[0];
+                int enemyDamage = 0;
+                switch (_attributes.attributeType)
+                {
+                    case AttributeTypes.MeleeDamage:
+                        enemyDamage = _enemyStatistics.meleeDamage;
+                        break;
+                    
+                    case AttributeTypes.RangeDamage:
+                        enemyDamage = _enemyStatistics.rangeDamage;
+                        break;
+
+                    case AttributeTypes.MagicDamage:
+                        enemyDamage = _enemyStatistics.magicDamage;
+                        break;
+                }
+
+                _playerStatistics.TakeDamage((skillDamage + enemyDamage) * _enemyStatistics.damageMultiplier, _attributes.attributeType, _attributes.elementalTypes);
+                _enemyStatistics.TakeMana(manaUsage);
+            });
     }
 
     public bool IsPlayerTurn()

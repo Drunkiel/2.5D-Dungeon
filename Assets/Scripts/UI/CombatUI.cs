@@ -37,10 +37,10 @@ public class CombatUI : MonoBehaviour
 
                 //Checks if player has enough mana to cast skill
                 if (_playerStatistics.mana * _playerStatistics.manaUsageMultiplier < manaUsage)
-                    {
-                        print($"Not enough mana: {Mathf.Abs(_playerStatistics.mana - manaUsage)}");
-                        return;
-                    }
+                {
+                    print($"Not enough mana: {Mathf.Abs(_playerStatistics.mana - manaUsage)}");
+                    return;
+                }
 
                 //Do stuff
                 Attributes _attributes = _skillData._skillAttributes[0];
@@ -83,7 +83,7 @@ public class CombatUI : MonoBehaviour
         }
     }
 
-    private int GetSkillModifier(SkillData _skillData, List<AttributeTypes> attributeTypes)
+    public int GetSkillModifier(SkillData _skillData, List<AttributeTypes> attributeTypes)
     {
         for (int i = 0; i < _skillData._skillAttributes.Count; i++)
         {
