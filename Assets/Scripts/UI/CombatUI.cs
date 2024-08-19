@@ -72,8 +72,8 @@ public class CombatUI : MonoBehaviour
     {
         for (int i = 0; i < skillButtons.Count; i++)
         {
-            skillButtons[i].transform.GetChild(0).GetComponent<Image>().sprite = _skillData.skillIconSprite;
-            skillButtons[i].transform.GetChild(1).GetComponent<TMP_Text>().text = _skillData.skillName;
+            skillButtons[i].transform.GetChild(0).GetComponent<Image>().sprite = null;
+            skillButtons[i].transform.GetChild(1).GetComponent<TMP_Text>().text = _skillData.displayedName;
             //Damage
             skillButtons[i].transform.GetChild(2).GetComponent<TMP_Text>().text = $"{skillDamage}";
             //Mana

@@ -3,9 +3,9 @@ using UnityEngine;
 using Newtonsoft.Json;
 using Unity.VisualScripting;
 
-public class ItemHolder : SaveLoadSystem
+public class ItemContainer : SaveLoadSystem
 {
-    public static ItemHolder instance;
+    public static ItemContainer instance;
 
     public List<ItemID> _allItems = new();
     public List<ItemID> _weaponItems = new();

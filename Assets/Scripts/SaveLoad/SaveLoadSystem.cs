@@ -9,6 +9,7 @@ public class SaveLoadSystem : MonoBehaviour
     public static readonly string savePath = mainPath + "/Saves/";
     public static readonly string mapSavePath = mainPath + "/Maps/";
     public static readonly string itemsSavePath = mainPath + "/Items/";
+    public static readonly string skillsSavePath = mainPath + "/Skills/";
 
     void Awake()
     {
@@ -16,6 +17,7 @@ public class SaveLoadSystem : MonoBehaviour
         {
             Directory.CreateDirectory(mainPath + "/Maps");
             Directory.CreateDirectory(mainPath + "/Saves");
+            Directory.CreateDirectory(mainPath + "/Skills");
 
             //Creating items directory
             Directory.CreateDirectory(itemsSavePath);

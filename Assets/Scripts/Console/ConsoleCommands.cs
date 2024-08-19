@@ -19,8 +19,8 @@ public class ConsoleCommands : MonoBehaviour
 
     public void ReloadItems()
     {
-        ItemHolder.instance.UnLoadStuff();
-        ItemHolder.instance.LoadStuff();
+        ItemContainer.instance.UnLoadStuff();
+        ItemContainer.instance.LoadStuff();
     }
 
     public void ReloadStatistics()
@@ -33,6 +33,6 @@ public class ConsoleCommands : MonoBehaviour
 
     public void GetItem(string itemName)
     {
-        ItemHolder.instance.GetItemByName(itemName);
+        ItemContainer.instance.GetItemByName(itemName);
     }
 }
