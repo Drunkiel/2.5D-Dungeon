@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CombatController : MonoBehaviour
@@ -66,13 +67,21 @@ public class CombatController : MonoBehaviour
                 EntityStatistics _playerStatistics = PlayerController.instance._statistics;
 
                 SkillHolder _skillHolder = CombatEntities.instance.enemy.GetComponent<EnemyController>()._holdingController._skillsController._skillHolder;
-                SkillData _skillData = _skillHolder._skillDatas[UnityEngine.Random.Range(0, _skillHolder._skillDatas.Count)];
+
+                //Random pick enemy skill
+                List<int> usableSkills = new();
+                for (int i = 0; i < _skillHolder._skillDatas.Count; i++)
+                {
+                    if (_skillHolder._skillDatas[i] != null)
+                        usableSkills.Add(i);
+                }
+                SkillData _skillData = _skillHolder._skillDatas[usableSkills[UnityEngine.Random.Range(0, usableSkills.Count)]]._skillData;
                 
                 int skillDamage = _combatUI.GetSkillModifier(_skillData, new() { AttributeTypes.MeleeDamage, AttributeTypes.RangeDamage, AttributeTypes.MagicDamage });
                 int protection = _combatUI.GetSkillModifier(_skillData, new() { AttributeTypes.AllProtection, AttributeTypes.MeleeProtection, AttributeTypes.RangeProtection, AttributeTypes.MagicProtection });
                 int manaUsage = _combatUI.GetSkillModifier(_skillData, new() { AttributeTypes.ManaUsage });
 
-                //Checks if player has enough mana to cast skill
+                //Checks if enemy has enough mana to cast skill
                 if (_enemyStatistics.mana * _enemyStatistics.manaUsageMultiplier < manaUsage)
                 {
                     print($"Not enough mana: {Mathf.Abs(_enemyStatistics.mana - manaUsage)}");
@@ -125,7 +134,16 @@ public class CombatController : MonoBehaviour
     {
         //Set player skills
         for (int i = 0; i < 6; i++)
-            _combatUI.SetSkillToBTN(i, PlayerController.instance._holdingController._skillsController._skillHolder._skillDatas[i]);
+        {
+            SkillDataParser _skillDataParser = PlayerController.instance._holdingController._skillsController._skillHolder._skillDatas[i];
+            if (_skillDataParser != null)
+            {
+                _combatUI.SetSkillToBTN(i, _skillDataParser);
+                _combatUI.skillButtons[i].interactable = true;
+            }
+            else
+                _combatUI.skillButtons[i].interactable = false;
+        }
 
         yield return new WaitForSeconds(2);
 

@@ -12,10 +12,6 @@ public class SkillContainer : SaveLoadSystem
     private void Awake()
     {
         instance = this;
-    }
-
-    private void Start()
-    {
         Load(skillsSavePath);
     }
 
@@ -36,5 +32,16 @@ public class SkillContainer : SaveLoadSystem
             _skillDataParser.iconSprite = _skillData.GetSprite(itemsSavePath + "Collectable/" + _skillData.spriteIconPath, 20f);
             _allSkills.Add(_skillDataParser);
         }
+    }
+
+    public SkillDataParser GetSkillByName(string skillName)
+    {
+        for (int i = 0; i < _allSkills.Count; i++)
+        {
+            if (_allSkills[i]._skillData.displayedName == skillName)
+                return _allSkills[i];
+        }
+
+        return null;
     }
 }

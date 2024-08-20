@@ -37,4 +37,12 @@ public class Attributes
 public class SkillController : MonoBehaviour
 {
 	public SkillHolder _skillHolder;
+
+    void Start()
+    {
+        for (int i = 0; i < _skillHolder.skillNames.Count; i++)
+        {
+            _skillHolder._skillDatas[i] = SkillContainer.instance.GetSkillByName(_skillHolder.skillNames[i]);
+        }
+    }
 }

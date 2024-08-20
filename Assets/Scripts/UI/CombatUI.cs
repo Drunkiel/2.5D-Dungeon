@@ -8,19 +8,11 @@ public class CombatUI : MonoBehaviour
     public List<Button> skillButtons = new();
     public List<Button> optionsButtons = new();
 
-    public void SetSkillToBTN(int buttonIndex, SkillData _skillData)
+    public void SetSkillToBTN(int buttonIndex, SkillDataParser _skillDataParser)
     {
-        if (_skillData == null)
-        {
-            skillButtons[buttonIndex].interactable = false;
-            return;
-        }
-        else
-            skillButtons[buttonIndex].interactable = true;
-
-        int skillDamage = GetSkillModifier(_skillData, new() { AttributeTypes.MeleeDamage, AttributeTypes.RangeDamage, AttributeTypes.MagicDamage });
-        int protection = GetSkillModifier(_skillData, new() { AttributeTypes.AllProtection, AttributeTypes.MeleeProtection, AttributeTypes.RangeProtection, AttributeTypes.MagicProtection });
-        int manaUsage = GetSkillModifier(_skillData, new() { AttributeTypes.ManaUsage });
+        int skillDamage = GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.MeleeDamage, AttributeTypes.RangeDamage, AttributeTypes.MagicDamage });
+        int protection = GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.AllProtection, AttributeTypes.MeleeProtection, AttributeTypes.RangeProtection, AttributeTypes.MagicProtection });
+        int manaUsage = GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.ManaUsage });
 
         skillButtons[buttonIndex].onClick.RemoveAllListeners();
         skillButtons[buttonIndex].onClick.AddListener(() =>
@@ -42,8 +34,8 @@ public class CombatUI : MonoBehaviour
                     return;
                 }
 
-                //Do stuff
-                Attributes _attributes = _skillData._skillAttributes[0];
+                //Checks what type of damage to deal
+                Attributes _attributes = _skillDataParser._skillData._skillAttributes[0];
                 int playerDamage = 0;
                 switch (_attributes.attributeType)
                 {
@@ -65,22 +57,26 @@ public class CombatUI : MonoBehaviour
             });
         });
 
-        SetSkillBTNData(_skillData, skillDamage, protection, manaUsage);
+        SetSkillBTNData(buttonIndex, _skillDataParser, skillDamage, protection, manaUsage);
     }
 
-    private void SetSkillBTNData(SkillData _skillData, int skillDamage, int protection, int manaUsage)
+    private void SetSkillBTNData(int i, SkillDataParser _skillDataParser, int skillDamage, int protection, int manaUsage)
     {
-        for (int i = 0; i < skillButtons.Count; i++)
+        skillButtons[i].transform.GetChild(0).GetComponent<Image>().sprite = _skillDataParser.iconSprite;
+        skillButtons[i].transform.GetChild(1).GetComponent<TMP_Text>().text = _skillDataParser._skillData.displayedName;
+        //Check if damage or protection
+        string info()
         {
-            skillButtons[i].transform.GetChild(0).GetComponent<Image>().sprite = null;
-            skillButtons[i].transform.GetChild(1).GetComponent<TMP_Text>().text = _skillData.displayedName;
-            //Damage
-            skillButtons[i].transform.GetChild(2).GetComponent<TMP_Text>().text = $"{skillDamage}";
-            //Mana
-            skillButtons[i].transform.GetChild(3).GetComponent<TMP_Text>().text = $"{manaUsage}";
-            //Elemental type
-            skillButtons[i].transform.GetChild(4).GetComponent<TMP_Text>().text = $"{_skillData._skillAttributes[0].elementalTypes}";   
+            if (skillDamage == 0)
+                return protection.ToString();
+            else
+                return skillDamage.ToString();
         }
+        skillButtons[i].transform.GetChild(2).GetComponent<TMP_Text>().text = $"{info()}";
+        //Mana
+        skillButtons[i].transform.GetChild(3).GetComponent<TMP_Text>().text = $"{manaUsage}";
+        //Elemental type
+        skillButtons[i].transform.GetChild(4).GetComponent<TMP_Text>().text = $"{_skillDataParser._skillData._skillAttributes[0].elementalTypes}";   
     }
 
     public int GetSkillModifier(SkillData _skillData, List<AttributeTypes> attributeTypes)
