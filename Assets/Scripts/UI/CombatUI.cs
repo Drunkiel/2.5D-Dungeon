@@ -62,8 +62,8 @@ public class CombatUI : MonoBehaviour
 
     private void SetSkillBTNData(int i, SkillDataParser _skillDataParser, int skillDamage, int protection, int manaUsage)
     {
-        skillButtons[i].transform.GetChild(0).GetComponent<Image>().sprite = _skillDataParser.iconSprite;
-        skillButtons[i].transform.GetChild(1).GetComponent<TMP_Text>().text = _skillDataParser._skillData.displayedName;
+        skillButtons[i].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = _skillDataParser.iconSprite;
+        skillButtons[i].transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = _skillDataParser._skillData.displayedName;
         //Check if damage or protection
         string info()
         {
@@ -72,11 +72,11 @@ public class CombatUI : MonoBehaviour
             else
                 return skillDamage.ToString();
         }
-        skillButtons[i].transform.GetChild(2).GetComponent<TMP_Text>().text = $"{info()}";
+        skillButtons[i].transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().text = $"{info()}";
         //Mana
-        skillButtons[i].transform.GetChild(3).GetComponent<TMP_Text>().text = $"{manaUsage}";
+        skillButtons[i].transform.GetChild(0).GetChild(3).GetComponent<TMP_Text>().text = $"{manaUsage}";
         //Elemental type
-        skillButtons[i].transform.GetChild(4).GetComponent<TMP_Text>().text = $"{_skillDataParser._skillData._skillAttributes[0].elementalTypes}";   
+        skillButtons[i].transform.GetChild(0).GetChild(4).GetComponent<TMP_Text>().text = $"{_skillDataParser._skillData._skillAttributes[0].elementalTypes}";   
     }
 
     public int GetSkillModifier(SkillData _skillData, List<AttributeTypes> attributeTypes)

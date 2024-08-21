@@ -43,6 +43,9 @@ public class CombatController : MonoBehaviour
 
     public void TakeTurn(Action action)
     {
+        if (!inCombat)
+            return;
+
         //Do some animation stuff
 
         //Taking action
@@ -120,6 +123,7 @@ public class CombatController : MonoBehaviour
     {
         //Some effects before starting battle
         PlayerController.instance.isStopped = true;
+        CombatEntities.instance.enemy.GetComponent<EnemyController>().isStopped = true;
         StartCoroutine(CameraController.instance.ZoomTo(20, 1f));
 
         yield return new WaitForSeconds(1);
@@ -139,10 +143,16 @@ public class CombatController : MonoBehaviour
             if (_skillDataParser != null)
             {
                 _combatUI.SetSkillToBTN(i, _skillDataParser);
+                _combatUI.skillButtons[i].transform.GetChild(0).gameObject.SetActive(true);
+                _combatUI.skillButtons[i].transform.GetChild(1).gameObject.SetActive(false);
                 _combatUI.skillButtons[i].interactable = true;
             }
             else
+            {
+                _combatUI.skillButtons[i].transform.GetChild(0).gameObject.SetActive(false);
+                _combatUI.skillButtons[i].transform.GetChild(1).gameObject.SetActive(true);
                 _combatUI.skillButtons[i].interactable = false;
+            }
         }
 
         yield return new WaitForSeconds(2);

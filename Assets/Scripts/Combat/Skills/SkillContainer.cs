@@ -7,7 +7,6 @@ public class SkillContainer : SaveLoadSystem
     public static SkillContainer instance;
 
     public List<SkillDataParser> _allSkills = new();
-    public SkillData skillData;
 
     private void Awake()
     {
