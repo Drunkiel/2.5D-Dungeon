@@ -38,19 +38,19 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isStopped)
-            return;
-
         //Movement, jump and animations control
         isMoving = movement.magnitude > 0.1f;
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, whatIsGround);
 
-        //anim.SetFloat("Movement", movement.magnitude);
-        /*
-                if (isMoving)
-                {
-                    particle.Play();
-                }*/
+        anim.SetFloat("Movement", isStopped ? 0 : movement.magnitude);
+
+        if (isStopped)
+            return;
+
+        // if (isMoving)
+        // {
+        //     particle.Play();
+        // }
 
         //Clamping movement speed
         newVelocityXZ = new(rgBody.velocity.x, rgBody.velocity.z);
