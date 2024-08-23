@@ -16,10 +16,6 @@ public class ItemContainer : SaveLoadSystem
     void Awake()
     {
         instance = this;
-    }
-
-    void Start()
-    {
         LoadStuff();
     }
 

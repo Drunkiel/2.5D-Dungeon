@@ -167,7 +167,10 @@ public class ItemController : SaveLoadSystem
         GameObject armorCopy = Instantiate(_itemID.gameObject, newParent);
         armorCopy.name = _itemID.name;
         armorCopy.transform.localScale = Vector3.one;
-        armorCopy.transform.localPosition = Vector3.zero;
+        if (_itemID._armorItem.armorType != ArmorType.Boots)
+            armorCopy.transform.localPosition = Vector3.zero;
+        else
+            armorCopy.transform.localPosition = new(0, -0.17f, 0);
 
         return armorCopy.GetComponent<ItemID>()._armorItem;
     }
