@@ -12,6 +12,8 @@ public class InventoryController : MonoBehaviour
     [SerializeField] private GameObject slotPrefab;
     public Transform slotParent;
 
+    public PlayerPreview _playerPreview;
+
     private void Start()
     {
         for (int i = 0; i < countOfSlots; i++)
@@ -53,6 +55,7 @@ public class InventoryController : MonoBehaviour
             
             case ItemType.Armor:
                 slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemID._armorItem.iconSprite;
+                _playerPreview.UpdateArmorLook(_itemID._armorItem.armorType, _itemID._armorItem.itemSprite);
                 break;
         }
     }

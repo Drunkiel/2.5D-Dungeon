@@ -148,6 +148,7 @@ public class ItemContainer : SaveLoadSystem
         _itemID._itemData = _weaponData._itemData;
         _weaponItem.weaponType = _weaponData.weaponType;
         _weaponItem.holdingType = _weaponData.holdingType;
+        _weaponItem.resizable = _weaponData.resizable;
         _weaponItem.transform.localScale = new(_weaponData.size.x, _weaponData.size.y, 1);
         _itemID.name = _weaponData._itemData.displayedName;
 
@@ -168,7 +169,7 @@ public class ItemContainer : SaveLoadSystem
                 break;
         }
 
-        LoadTexture(_weaponItem, $"{path}/{_weaponData._itemData.spritePath}", orderInLayer, 20f);
+        _weaponItem.itemSprite = LoadTexture(_weaponItem, $"{path}/{_weaponData._itemData.spritePath}", orderInLayer, 20f);
         _weaponItem.iconSprite = _itemID._itemData.GetSprite($"{path}/{_weaponData._itemData.spriteIconPath}", 20f);
 
         return _itemID;
@@ -190,7 +191,7 @@ public class ItemContainer : SaveLoadSystem
         if (_armorItem.armorType == ArmorType.Chestplate)
             orderInLayer = 3;
 
-        LoadTexture(_armorItem, $"{path}/{_armorData._itemData.spritePath}", orderInLayer, 100f);
+        _armorItem.itemSprite = LoadTexture(_armorItem, $"{path}/{_armorData._itemData.spritePath}", orderInLayer, 100f);
         _armorItem.iconSprite = _itemID._itemData.GetSprite($"{path}/{_armorData._itemData.spriteIconPath}", 20f);
 
         return _itemID;
@@ -207,16 +208,19 @@ public class ItemContainer : SaveLoadSystem
         _itemID.name = _collectableData._itemData.displayedName;
 
         //Create a sprite
-        LoadTexture(_collectableItem, $"{path}/{_collectableData._itemData.spritePath}", 5, 20f);
+        _collectableItem.itemSprite = LoadTexture(_collectableItem, $"{path}/{_collectableData._itemData.spritePath}", 5, 20f);
         _collectableItem.iconSprite = _itemID._itemData.GetSprite($"{path}/{_collectableData._itemData.spriteIconPath}", 20f);
 
         return _itemID;
     }
 
-    private void LoadTexture(Object itemObject, string path, int orderInLayer, float pixelsPerUnit)
+    private Sprite LoadTexture(Object itemObject, string path, int orderInLayer, float pixelsPerUnit)
     {
         SpriteRenderer spriteRenderer = itemObject.GetComponent<Transform>().GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = itemObject.GetComponent<ItemID>()._itemData.GetSprite(path, pixelsPerUnit);
+        Sprite sprite = itemObject.GetComponent<ItemID>()._itemData.GetSprite(path, pixelsPerUnit);
+        spriteRenderer.sprite = sprite;
         spriteRenderer.sortingOrder = orderInLayer;
+
+        return sprite;
     }
 }

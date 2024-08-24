@@ -8,5 +8,5 @@ public class WeaponData : ScriptableObject
     public Vector2 size;
     public WeaponType weaponType;
     public WeaponHoldingType holdingType;
-    public bool resizable = true;
+    public bool resizable;
 }
