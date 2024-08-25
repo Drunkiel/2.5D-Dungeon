@@ -2,29 +2,35 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum PlayerPartType
-{
-    Head,
-    Body,
-    Feet
-}
-
 [Serializable]
 public class PlayerPreview 
 {
     //Player body textures
-    [SerializeField] private Image headImage;
-    [SerializeField] private Image bodyImage;
-    [SerializeField] private Image feetLeftImage;
-    [SerializeField] private Image feetRightImage;
+    [Header("Head")]
+    public Image headImage;
 
-    //Armor textures
+    [Header("Body")]
+    public Image bodyImage;
+
+    [Header("Arms")]
+    public Image armLeftImage;
+    public Image armRightImage;
+
+    [Header("Hands")]
+    public Image handLeftImage;
+    public Image handRightImage;
+
+    [Header("Legs")]
+    public Image legLeftImage;
+    public Image legRightImage;
+
+    [Header("Armor")]
     [SerializeField] private Image helmetImage;
     [SerializeField] private Image chestplateImage;
     [SerializeField] private Image bootLeftImage;
     [SerializeField] private Image bootRightImage;
 
-    public void UpdatePlayerLook(PlayerPartType partType, Sprite sprite)
+    public void UpdatePlayerPreviewLook(PlayerPartType partType, Sprite sprite)
     {
         if (sprite == null)
             return;
@@ -38,10 +44,20 @@ public class PlayerPreview
             case PlayerPartType.Body:
                 bodyImage.sprite = sprite;
                 break;
+            
+            case PlayerPartType.Arms:
+                armLeftImage.sprite = sprite;
+                armRightImage.sprite = sprite;
+                break;
 
-            case PlayerPartType.Feet:
-                feetLeftImage.sprite = sprite;
-                feetRightImage.sprite = sprite;
+            case PlayerPartType.Hands:
+                handLeftImage.sprite = sprite;
+                handRightImage.sprite = sprite;
+                break;
+
+            case PlayerPartType.Legs:
+                legLeftImage.sprite = sprite;
+                legRightImage.sprite = sprite;
                 break;
         }
     }

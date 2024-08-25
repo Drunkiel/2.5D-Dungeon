@@ -10,6 +10,7 @@ public class SaveLoadSystem : MonoBehaviour
     public static readonly string mapSavePath = mainPath + "/Maps/";
     public static readonly string itemsSavePath = mainPath + "/Items/";
     public static readonly string skillsSavePath = mainPath + "/Skills/";
+    public static readonly string skinsSavePath = mainPath + "/Skins/";
 
     void Awake()
     {
@@ -90,6 +91,26 @@ public class SaveLoadSystem : MonoBehaviour
         }
 
         return foundedFiles;
+    }
+
+    public Sprite GetSprite(string path, float pixelsPerUnit)
+    {
+        //Create new texture
+        byte[] spriteData = File.ReadAllBytes(path);
+        Texture2D texture = new(2, 2)
+        {
+            filterMode = FilterMode.Point
+        };
+
+        //Assigning data
+        if (texture.LoadImage(spriteData))
+        {
+            //Convert texture to sprite
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
+            return sprite;
+        }
+
+        return null;
     }
 
     public static void SaveTextureToFile(Texture2D texture, string path)
