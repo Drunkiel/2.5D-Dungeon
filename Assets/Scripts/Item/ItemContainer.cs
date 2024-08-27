@@ -157,7 +157,7 @@ public class ItemContainer : SaveLoadSystem
         switch(_weaponItem.holdingType)
         {
             case WeaponHoldingType.Right_Hand:
-                orderInLayer = 5;
+                orderInLayer = 6;
                 break;
 
             case WeaponHoldingType.Left_Hand:
