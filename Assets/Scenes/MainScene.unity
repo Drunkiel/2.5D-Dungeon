@@ -20989,7 +20989,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d7a80f8a8f3ff6e9765f5dbb55dd26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogData: {fileID: 0}
+  _dialogData: {fileID: 11400000, guid: e95fe6657abe843ed9b993e6d9151b64, type: 2}
+  _currentDialog:
+    text: 
+    responses: []
   _playerPreview:
     headImage: {fileID: 0}
     bodyImage: {fileID: 0}
@@ -21016,6 +21019,12 @@ MonoBehaviour:
     chestplateImage: {fileID: 0}
     bootLeftImage: {fileID: 0}
     bootRightImage: {fileID: 0}
+  dialogText: {fileID: 1954898700}
+  buttons:
+  - {fileID: 250767647}
+  - {fileID: 2098284114}
+  - {fileID: 339713635}
+  - {fileID: 1653320091}
 --- !u!4 &1575217420 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2876712979293569254, guid: 6adf0cab710e97949a1333ff9bdd84ad,
