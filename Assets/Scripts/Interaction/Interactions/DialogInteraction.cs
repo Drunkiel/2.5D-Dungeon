@@ -6,6 +6,6 @@ public class DialogInteraction : MonoBehaviour
 
     public void StartDialog()
     {
-        
+        DialogController.instance.StartDialog(_dialogData);
     }
 }
