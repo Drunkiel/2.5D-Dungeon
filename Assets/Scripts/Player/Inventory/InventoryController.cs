@@ -12,7 +12,7 @@ public class InventoryController : MonoBehaviour
     [SerializeField] private GameObject slotPrefab;
     public Transform slotParent;
 
-    public PlayerPreview _playerPreview;
+    public EntityPreview _entityPreview;
 
     private void Start()
     {
@@ -23,6 +23,8 @@ public class InventoryController : MonoBehaviour
             slot.slotID = i;
             _inventorySlots.Add(slot);
         }
+
+        _entityPreview.UpdateAllByEntity(PlayerController.instance.GetComponent<EntityLookController>()._entityLook);
 
         instance = this;
     }
@@ -55,7 +57,7 @@ public class InventoryController : MonoBehaviour
             
             case ItemType.Armor:
                 slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemID._armorItem.iconSprite;
-                _playerPreview.UpdateArmorLook(_itemID._armorItem.armorType, _itemID._armorItem.itemSprite);
+                _entityPreview.UpdateArmorLook(_itemID._armorItem.armorType, _itemID._armorItem.itemSprite);
                 break;
         }
     }

@@ -19,6 +19,7 @@ public class SaveLoadSystem : MonoBehaviour
             Directory.CreateDirectory(mainPath + "/Maps");
             Directory.CreateDirectory(mainPath + "/Saves");
             Directory.CreateDirectory(mainPath + "/Skills");
+            Directory.CreateDirectory(mainPath + "/Skins");
 
             //Creating items directory
             Directory.CreateDirectory(itemsSavePath);

@@ -85,7 +85,10 @@ public class PlayerController : MonoBehaviour
         Vector2 inputValue = context.ReadValue<Vector2>();
 
         if (isStopped)
+        {
+            movement = Vector2.zero;
             return;
+        }
 
         //Flipping player to direction they are going
         if (inputValue.x < 0 && !isFlipped)

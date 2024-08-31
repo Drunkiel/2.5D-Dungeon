@@ -1,9 +1,8 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 [Serializable]
-public class PlayerLook
+public class EntityLook
 {
     [Header("Head")]
     public SpriteRenderer headImage;

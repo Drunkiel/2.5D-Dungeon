@@ -13,5 +13,11 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   dialogs:
-  - Hello stupid
+  - "Spr\xF3buj teraz uruchomi\u0107 ten kod. Je\u015Bli nadal wyst\u0105pi\u0105
+    problemy, sprawd\u017A, czy liczba przycisk\xF3w w buttons odpowiada liczbie
+    odpowiedzi w dialog.responses, poniewa\u017C mo\u017Ce to by\u0107 przyczyn\u0105
+    problemu."
   - jadojasd
+  onEndDialogEvent:
+    m_PersistentCalls:
+      m_Calls: []

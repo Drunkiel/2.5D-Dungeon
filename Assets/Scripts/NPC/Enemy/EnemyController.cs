@@ -77,7 +77,7 @@ public class EnemyController : MonoBehaviour
         SetNewPosition();
     }
 
-    private void GoTo(Vector3 position)
+    public void GoTo(Vector3 position)
     {
         Vector3 direction = position - transform.position;
         movement = new Vector2(

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [Serializable]
-public class PlayerPreview 
+public class EntityPreview 
 {
     //Player body textures
     [Header("Head")]
@@ -30,32 +30,32 @@ public class PlayerPreview
     [SerializeField] private Image bootLeftImage;
     [SerializeField] private Image bootRightImage;
 
-    public void UpdatePlayerPreviewLook(PlayerPartType partType, Sprite sprite)
+    public void UpdateEntityPreviewLook(EntityPartType partType, Sprite sprite)
     {
         if (sprite == null)
             return;
 
         switch (partType)
         {
-            case PlayerPartType.Head:
+            case EntityPartType.Head:
                 headImage.sprite = sprite;
                 break;
             
-            case PlayerPartType.Body:
+            case EntityPartType.Body:
                 bodyImage.sprite = sprite;
                 break;
             
-            case PlayerPartType.Arms:
+            case EntityPartType.Arms:
                 armLeftImage.sprite = sprite;
                 armRightImage.sprite = sprite;
                 break;
 
-            case PlayerPartType.Hands:
+            case EntityPartType.Hands:
                 handLeftImage.sprite = sprite;
                 handRightImage.sprite = sprite;
                 break;
 
-            case PlayerPartType.Legs:
+            case EntityPartType.Legs:
                 legLeftImage.sprite = sprite;
                 legRightImage.sprite = sprite;
                 break;
@@ -89,5 +89,23 @@ public class PlayerPreview
                 bootRightImage.sprite = sprite;
                 break;
         }
+    }
+
+    public void UpdateAllByEntity(EntityLook _entityLook)
+    {   
+        if (headImage != null)
+            UpdateEntityPreviewLook(EntityPartType.Head, _entityLook.headImage.sprite);
+
+        if (bodyImage != null)
+            UpdateEntityPreviewLook(EntityPartType.Body, _entityLook.bodyImage.sprite);
+
+        if (armLeftImage != null && armRightImage != null)
+            UpdateEntityPreviewLook(EntityPartType.Arms, _entityLook.armLeftImage.sprite);
+
+        if (handLeftImage != null && handRightImage != null)
+            UpdateEntityPreviewLook(EntityPartType.Hands, _entityLook.handLeftImage.sprite);
+
+        if (legLeftImage != null && legRightImage != null)
+            UpdateEntityPreviewLook(EntityPartType.Legs, _entityLook.legLeftImage.sprite);
     }
 }

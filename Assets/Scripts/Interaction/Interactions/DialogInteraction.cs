@@ -6,6 +6,9 @@ public class DialogInteraction : MonoBehaviour
 
     public void StartDialog()
     {
-        DialogController.instance.StartDialog(_dialogData);
+        if (TryGetComponent(out EnemyController _enemyController))
+            DialogController.instance.StartDialog(_dialogData, _enemyController);
+        else
+            DialogController.instance.StartDialog(_dialogData);
     }
 }
