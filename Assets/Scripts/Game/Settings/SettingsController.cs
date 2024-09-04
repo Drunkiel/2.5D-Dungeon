@@ -1,11 +1,15 @@
 using System.IO;
+using Newtonsoft.Json;
 
 public class SettingsController : SaveLoadSystem
 {
     public static SettingsController instance;
 
+    public SettingsData _settingsData;
     public GraphicsSettings _graphicsSettings;
     //public VolumeController _volumeController;
+
+    public OpenCloseUI _openCloseUI;
 
     private void Awake()
     {
@@ -22,49 +26,48 @@ public class SettingsController : SaveLoadSystem
     }
 
     public override void Save(string path)
-    {
-        path = savePath + "settings.json";
-        
-        //Creating or open file
-        FileStream saveFile = new(path, FileMode.OpenOrCreate);
+    {   
+        _settingsData.isFullscreen = _graphicsSettings.isFullscreen;
+        _settingsData.resolutionIndex = _graphicsSettings.resolutionIndex;
+        _settingsData.qualityIndex = _graphicsSettings.qualityIndex;
+        _settingsData.fpsLimit = _graphicsSettings.fpsLimit;
+        _settingsData.isVSync = _graphicsSettings.isVSync;
 
-        //Overrite data to save
-        //Save graphics data
-        // _settingsData.resolutionIndex = resolutionDropdown.value;
-        // _settingsData.fullscreenOn = fullscreenToggle.isOn;
-        // _settingsData.maxFPS = int.Parse(fpsInput.text);
-        // _settingsData.vSync = vSyncToggle.isOn;
-        // _settingsData.qualityIndex = qualityDropdown.value;
+        //Here save data to file
+        string jsonData = JsonConvert.SerializeObject(_settingsData, Formatting.Indented, new JsonSerializerSettings
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            PreserveReferencesHandling = PreserveReferencesHandling.None
+        });
 
-        // //Save volume data
-        // _settingsData.backgroundVolume = _volumeController.backgroundVolumeSlider.value;
-        // _settingsData.effectsVolume = _volumeController.effectsVolumeSlider.value;
-
-        // //Saving data
-        // string jsonData = JsonUtility.ToJson(_settingsData, true);
-
-        saveFile.Close();
-        //File.WriteAllText(path, jsonData);
+        File.WriteAllText(path, jsonData);
     }
 
     public override void Load(string path)
     {
-        path = savePath + "settings.json";
-
-        //Load data from file
+        //Here load data from file
         string saveFile = ReadFromFile(path);
-        // JsonUtility.FromJsonOverwrite(saveFile, _settingsData);
+            
+        // Deserialize
+        JsonConvert.PopulateObject(saveFile, _settingsData);
 
-        // //Load graphics data
-        // resolutionDropdown.value = _settingsData.resolutionIndex;
-        // fullscreenToggle.isOn = _settingsData.fullscreenOn;
-        // fpsInput.text = _settingsData.maxFPS.ToString();
-        // vSyncToggle.isOn = _settingsData.vSync;
-        // qualityDropdown.value = _settingsData.qualityIndex;
+        //Here override game data
+        _graphicsSettings.isFullscreen = _settingsData.isFullscreen;
+        _graphicsSettings.resolutionIndex = _settingsData.resolutionIndex;
+        _graphicsSettings.qualityIndex = _settingsData.qualityIndex;
+        _graphicsSettings.fpsLimit = _settingsData.fpsLimit;
+        _graphicsSettings.isVSync = _settingsData.isVSync;
 
-        // //Load volume data
-        // _volumeController.backgroundVolumeSlider.value = _settingsData.backgroundVolume;
-        // _volumeController.UpdateBackgroundVolume();
-        // _volumeController.effectsVolumeSlider.value = _settingsData.effectsVolume;
+        _graphicsSettings.UpdateFullscreen(true);
+        _graphicsSettings.UpdateResolution(true);
+        _graphicsSettings.UpdateQuality(true);
+        _graphicsSettings.UpdateVSync(true);
+    }
+
+    public void ManagePauseUI()
+    {
+        _openCloseUI.OpenClose();
+        GameController.isPaused = !_openCloseUI.isOpen;
     }
 }

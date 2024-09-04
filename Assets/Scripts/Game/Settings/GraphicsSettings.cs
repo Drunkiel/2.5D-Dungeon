@@ -21,14 +21,6 @@ public class GraphicsSettings : MonoBehaviour
     private readonly List<Vector2Int> screenResolutions = new() { new(3840, 2160), new(2560, 1440), new(1920, 1080), new(1280, 720) };
     private readonly List<string> quality = new() { "Low", "Medium", "High" };
 
-    public OpenCloseUI _openCloseUI;
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            _openCloseUI.OpenClose();
-    }
-
     public void UpdateQuality(bool skip = false)
     {
         if (!skip)

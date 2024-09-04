@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OpenCloseUI : MonoBehaviour
 {
-    private bool isOpen;
+    public bool isOpen;
     public GameObject UI;
 
     public void OpenClose()

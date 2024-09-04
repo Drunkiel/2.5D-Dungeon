@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public enum OutputType
@@ -42,34 +43,43 @@ public class ConsoleController : MonoBehaviour
         instance = this;
     }
 
-    private void Update()
+    public void ManageChat(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.Slash) && !chatInput.isFocused)
+        if (!context.performed)
+            return;
+
+        if (!chatInput.isFocused && !GameController.isPaused)
             GetComponent<OpenCloseUI>().OpenClose();
+    }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (previousMessages.Count == 0)
-                return;
+    public void IndexDownMessage(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+            return;
 
-            previousMessagesIndex++;
-            if (previousMessagesIndex >= previousMessages.Count)
-                previousMessagesIndex = previousMessages.Count - 1;
+        if (previousMessages.Count == 0 || GameController.isPaused)
+            return;
+
+        previousMessagesIndex++;
+        if (previousMessagesIndex >= previousMessages.Count)
+            previousMessagesIndex = previousMessages.Count - 1;
             
-            chatInput.text = previousMessages[previousMessagesIndex];
-        }
+        chatInput.text = previousMessages[previousMessagesIndex];
+    }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (previousMessages.Count == 0)
-                return;
+    public void IndexUpMessage(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+            return;
 
-            previousMessagesIndex--;
-            if (previousMessagesIndex < 0)
-                previousMessagesIndex = 0;
+        if (previousMessages.Count == 0 || GameController.isPaused)
+            return;
+
+        previousMessagesIndex--;
+        if (previousMessagesIndex < 0)
+            previousMessagesIndex = 0;
             
-            chatInput.text = previousMessages[previousMessagesIndex];
-        }
+        chatInput.text = previousMessages[previousMessagesIndex];
     }
 
     public void SendToChat()

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
@@ -29,9 +30,12 @@ public class InventoryController : MonoBehaviour
         instance = this;
     }
 
-    public void OpenCloseInventory()
+    public void ManageInventory(InputAction.CallbackContext context)
     {
-        if (!PlayerController.instance.isStopped)
+        if (!context.performed)
+            return;
+
+        if (!PlayerController.instance.isStopped && !GameController.isPaused)
             GetComponent<OpenCloseUI>().OpenClose();
     }
 

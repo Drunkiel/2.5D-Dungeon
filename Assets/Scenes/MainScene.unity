@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 915871871}
 --- !u!1 &6631997
 GameObject:
@@ -11353,6 +11354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 1057081460}
 --- !u!1 &597703916
 GameObject:
@@ -11760,6 +11762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 903924096}
 --- !u!1 &629138088
 GameObject:
@@ -15917,6 +15920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 833300089}
 --- !u!1 &796290686 stripped
 GameObject:
@@ -17943,6 +17947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 485377251}
 --- !u!114 &910727411
 MonoBehaviour:
@@ -20579,6 +20584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 68412704}
 --- !u!1 &1056797858 stripped
 GameObject:
@@ -20991,6 +20997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 2129808037}
 --- !u!1001 &1086086634
 PrefabInstance:
@@ -23646,6 +23653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 231035048}
 --- !u!114 &1278137782
 MonoBehaviour:
@@ -26916,6 +26924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 1718347322}
 --- !u!114 &1474277148
 MonoBehaviour:
@@ -29152,6 +29161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 300606285}
 --- !u!4 &1575217420 stripped
 Transform:
@@ -31181,6 +31191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 415969056}
 --- !u!1 &1682583514
 GameObject:
@@ -34111,6 +34122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 772362702}
 --- !u!114 &1875079418
 MonoBehaviour:
@@ -34162,8 +34174,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1875079416}
         m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
-        m_MethodName: OpenCloseInventory
-        m_Mode: 1
+        m_MethodName: ManageInventory
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -34174,6 +34186,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1adfeedf-6cb6-4539-93ec-5d1796dd9b86
     m_ActionName: Player/Inventory[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7113e6d4-0e61-46da-ac53-70d8a02ecb14
+    m_ActionName: Player/PauseMenu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fd078b41-9436-4411-8c29-2ce2d2075ca8
+    m_ActionName: Console/Console[/Keyboard/slash]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a9e6e103-d918-4824-9853-29ee6b5ee0b2
+    m_ActionName: Console/IndexUp[/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e5c51ffc-9acc-4ac8-a5b7-0412e382ea31
+    m_ActionName: Console/IndexDown[/Keyboard/downArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -35413,6 +35441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 234891584}
 --- !u!1 &1948754358
 GameObject:
@@ -38199,8 +38228,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2127031423}
+  - component: {fileID: 2127031428}
   - component: {fileID: 2127031425}
   - component: {fileID: 2127031426}
+  - component: {fileID: 2127031427}
   m_Layer: 0
   m_Name: Game_Controller
   m_TagString: Untagged
@@ -38242,7 +38273,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 249bd6a2ab52968519469312e7c856b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settingsData:
+    isFullscreen: 1
+    resolutionIndex: 0
+    qualityIndex: 0
+    fpsLimit: 60
+    isVSync: 1
+    backgroundVolume: 50
+    effectsVolume: 50
   _graphicsSettings: {fileID: 2127031426}
+  _openCloseUI: {fileID: 1948179832}
 --- !u!114 &2127031426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38265,7 +38305,89 @@ MonoBehaviour:
   qualityText: {fileID: 19855371}
   vSyncText: {fileID: 1172012409}
   fpsInput: {fileID: 1344271595}
-  _openCloseUI: {fileID: 1948179832}
+--- !u!114 &2127031427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127031422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: cb9a707a1d7738f4595fb3bffbb2f47f,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 16f58633-598a-4ca9-b4a2-3afe9528f1f2
+    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 831694be-a454-4287-ad55-739d6410f3c3
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1adfeedf-6cb6-4539-93ec-5d1796dd9b86
+    m_ActionName: Player/Inventory[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2127031425}
+        m_TargetAssemblyTypeName: SettingsController, Assembly-CSharp
+        m_MethodName: ManagePauseUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7113e6d4-0e61-46da-ac53-70d8a02ecb14
+    m_ActionName: Player/PauseMenu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 056278de-51ac-4042-8aa7-8a86656317f9
+    m_ActionName: Actions/Click[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0d66854d-d6eb-495f-8b8f-4c70f58190c0
+    m_ActionName: Actions/Hold[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: faedcc63-300f-45bd-b6e1-6df6bbbf888d
+    m_ActionName: Actions/End[/Keyboard/f]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &2127031428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127031422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1752e79f1eea983458d5f03f40f7690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2129514127 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 408610947764513660, guid: c87939e846de226479484f32a4943fd1,
@@ -38361,6 +38483,7 @@ GameObject:
   - component: {fileID: 2133669216}
   - component: {fileID: 2133669217}
   - component: {fileID: 2133669218}
+  - component: {fileID: 2133669219}
   m_Layer: 5
   m_Name: Console
   m_TagString: Untagged
@@ -38435,7 +38558,115 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27336d9f32636064894c560a26c2b58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpen: 0
   UI: {fileID: 221848911}
+--- !u!114 &2133669219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133669214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: cb9a707a1d7738f4595fb3bffbb2f47f,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 16f58633-598a-4ca9-b4a2-3afe9528f1f2
+    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 831694be-a454-4287-ad55-739d6410f3c3
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1adfeedf-6cb6-4539-93ec-5d1796dd9b86
+    m_ActionName: Player/Inventory[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7113e6d4-0e61-46da-ac53-70d8a02ecb14
+    m_ActionName: Player/PauseMenu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 056278de-51ac-4042-8aa7-8a86656317f9
+    m_ActionName: Actions/Click[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0d66854d-d6eb-495f-8b8f-4c70f58190c0
+    m_ActionName: Actions/Hold[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: faedcc63-300f-45bd-b6e1-6df6bbbf888d
+    m_ActionName: Actions/End[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2133669216}
+        m_TargetAssemblyTypeName: ConsoleController, Assembly-CSharp
+        m_MethodName: ManageChat
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fd078b41-9436-4411-8c29-2ce2d2075ca8
+    m_ActionName: Console/Console[/Keyboard/slash]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2133669216}
+        m_TargetAssemblyTypeName: ConsoleController, Assembly-CSharp
+        m_MethodName: IndexUpMessage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a9e6e103-d918-4824-9853-29ee6b5ee0b2
+    m_ActionName: Console/IndexUp[/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2133669216}
+        m_TargetAssemblyTypeName: ConsoleController, Assembly-CSharp
+        m_MethodName: IndexDownMessage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e5c51ffc-9acc-4ac8-a5b7-0412e382ea31
+    m_ActionName: Console/IndexDown[/Keyboard/downArrow]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Console
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &2138916277
 GameObject:
   m_ObjectHideFlags: 0
