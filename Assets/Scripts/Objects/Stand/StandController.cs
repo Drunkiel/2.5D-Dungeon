@@ -14,7 +14,10 @@ public class StandController : MonoBehaviour
         ItemID _itemCopy = ItemContainer.instance.GetItemByNameAndType(itemName, itemType);
 
         if (_itemCopy == null)
+        {
             ConsoleController.instance.ChatMessage(SenderType.System, $"There is no item with name: {itemName} and type: {itemType}");
+            return;
+        }
 
         ItemID _newItem = Instantiate(_itemCopy, parentTransform);
         _newItem.transform.localPosition = Vector3.zero;

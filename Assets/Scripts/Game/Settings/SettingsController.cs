@@ -68,6 +68,6 @@ public class SettingsController : SaveLoadSystem
     public void ManagePauseUI()
     {
         _openCloseUI.OpenClose();
-        GameController.isPaused = !_openCloseUI.isOpen;
+        GameController.isPaused = _openCloseUI.isOpen;
     }
 }

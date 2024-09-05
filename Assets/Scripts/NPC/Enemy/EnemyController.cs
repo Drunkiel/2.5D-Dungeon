@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour
     {
         isMoving = movement.magnitude > 0.01f;
 
-        if (isStopped)
+        if (isStopped || GameController.isPaused)
             return;
 
         if (Vector3.Distance(transform.position, positionToGo) < 0.2f)
@@ -58,7 +58,7 @@ public class EnemyController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (isStopped)
+        if (isStopped|| GameController.isPaused)
             return;
 
         Vector3 move = new Vector3(movement.x, 0, movement.y).normalized;

@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
         anim.SetFloat("Movement", isStopped ? 0 : movement.magnitude);
 
-        if (isStopped)
+        if (isStopped || GameController.isPaused)
             return;
 
         // if (isMoving)
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y < -10f)
             PortalController.instance.TeleportToPosition(lastGroundedPosition);
 
-        if (isStopped)
+        if (isStopped || GameController.isPaused)
             return;
 
         if (grounded)
@@ -84,9 +84,9 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 inputValue = context.ReadValue<Vector2>();
 
-        if (isStopped)
+        if (isStopped || GameController.isPaused)
         {
-            movement = Vector2.zero;
+            ResetMovement();
             return;
         }
 
@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
 
     public void JumpInput(InputAction.CallbackContext context)
     {
-        if (isStopped)
+        if (isStopped || GameController.isPaused)
             return;
 
         if (context.performed)
