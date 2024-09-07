@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     public bool isMoving;
 
     [SerializeField] private Rigidbody rgBody;
+    public Animator anim;
 
     [SerializeField] private Vector3 startPosition;
     [SerializeField] private float wanderingDistance;

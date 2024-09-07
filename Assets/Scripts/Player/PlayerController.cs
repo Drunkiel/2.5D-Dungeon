@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     public HoldingController _holdingController;
     [SerializeField] private Rigidbody rgBody;
-    [SerializeField] private Animator anim;
+    public Animator anim;
     [SerializeField] private ParticleSystem particle;
 
     private AudioSource moveSoundSource;
