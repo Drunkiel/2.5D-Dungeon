@@ -8,6 +8,9 @@ public class CombatUI : MonoBehaviour
     public List<Button> skillButtons = new();
     public List<Button> optionsButtons = new();
 
+    public PlayerStatsController _playerStats;
+    public PlayerStatsController _enemyStats;
+
     public void SetSkillToBTN(int buttonIndex, SkillDataParser _skillDataParser)
     {
         int skillDamage = GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.MeleeDamage, AttributeTypes.RangeDamage, AttributeTypes.MagicDamage });
@@ -22,39 +25,7 @@ public class CombatUI : MonoBehaviour
                 return;
 
             //Taking turn
-            _combatController.TakeTurn(() =>
-            {
-                EntityStatistics _enemyStatistics = CombatEntities.instance.enemy.GetComponent<EnemyController>()._statistics;
-                EntityStatistics _playerStatistics = PlayerController.instance._statistics;
-
-                //Checks if player has enough mana to cast skill
-                if (_playerStatistics.mana * _playerStatistics.manaUsageMultiplier < manaUsage)
-                {
-                    print($"Not enough mana: {Mathf.Abs(_playerStatistics.mana - manaUsage)}");
-                    return;
-                }
-
-                //Checks what type of damage to deal
-                Attributes _attributes = _skillDataParser._skillData._skillAttributes[0];
-                int playerDamage = 0;
-                switch (_attributes.attributeType)
-                {
-                    case AttributeTypes.MeleeDamage:
-                        playerDamage = _playerStatistics.meleeDamage;
-                        break;
-                    
-                    case AttributeTypes.RangeDamage:
-                        playerDamage = _playerStatistics.rangeDamage;
-                        break;
-
-                    case AttributeTypes.MagicDamage:
-                        playerDamage = _playerStatistics.magicDamage;
-                        break;
-                }
-
-                _enemyStatistics.TakeDamage((skillDamage + playerDamage) * _playerStatistics.damageMultiplier, _attributes.attributeType, _attributes.elementalTypes);
-                _playerStatistics.TakeMana(manaUsage);
-            });
+            _combatController.TakeTurn(() => _combatController.PlayerTurn(_skillDataParser, skillDamage, protection, manaUsage));
         });
 
         SetSkillBTNData(buttonIndex, _skillDataParser, skillDamage, protection, manaUsage);
@@ -64,6 +35,7 @@ public class CombatUI : MonoBehaviour
     {
         skillButtons[i].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = _skillDataParser.iconSprite;
         skillButtons[i].transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = _skillDataParser._skillData.displayedName;
+
         //Check if damage or protection
         string info()
         {

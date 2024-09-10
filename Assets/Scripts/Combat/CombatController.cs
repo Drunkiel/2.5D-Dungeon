@@ -27,7 +27,7 @@ public class CombatController : MonoBehaviour
 
         _playerController._statistics.RecalculateStatistics(_playerController._holdingController._itemController._gearHolder);
         _combatEntities.playerPreviousPosition = _playerController.transform.position;
-        _combatEntities.playerXScale = _playerController.transform.localScale.x;
+        _combatEntities.playerXScale = _playerController.transform.GetChild(0).localScale.x;
         isPlayerTurn = true;
         inCombat = true;
 
@@ -119,6 +119,7 @@ public class CombatController : MonoBehaviour
         CameraController.instance.ResetZoom();
         CameraController.instance.SetCamera(1);
         _openCloseUI.Open();
+        UpdateSliders(PlayerController.instance._statistics, _combatEntities.enemy.GetComponent<EnemyController>()._statistics, true);
     }
 
     IEnumerator WaitAndReset()
@@ -143,6 +144,9 @@ public class CombatController : MonoBehaviour
 
     private IEnumerator PlayAnimationAndWait(CombatEntities _combatEntities, Animator animator, string animationName, Action action)
     {
+        EntityStatistics _playerStatistics = PlayerController.instance._statistics;
+        EntityStatistics _enemyStatistics = _combatEntities.enemy.GetComponent<EnemyController>()._statistics;
+
         // Play the animation
         animator.Play(animationName);
 
@@ -151,10 +155,11 @@ public class CombatController : MonoBehaviour
 
         //Taking action
         action();
+        UpdateSliders(_playerStatistics, _enemyStatistics, false);
 
         //Checks
-        if (_combatEntities.player.GetComponent<PlayerController>()._statistics.health <= 0 || 
-            _combatEntities.enemy.GetComponent<EnemyController>()._statistics.health <= 0)
+        if (_playerStatistics.health <= 0 || 
+            _enemyStatistics.health <= 0)
         {
             EndCombat();
             yield return null; 
@@ -165,6 +170,39 @@ public class CombatController : MonoBehaviour
 
         if (!isPlayerTurn)
             TakeTurn(EnemyTurn);
+    }
+
+    public void PlayerTurn(SkillDataParser _skillDataParser, int skillDamage, int protection, int manaUsage)
+    {
+        EntityStatistics _enemyStatistics = CombatEntities.instance.enemy.GetComponent<EnemyController>()._statistics;
+        EntityStatistics _playerStatistics = PlayerController.instance._statistics;
+        //Checks if player has enough mana to cast skill
+        if (_playerStatistics.mana * _playerStatistics.manaUsageMultiplier < manaUsage)
+        {
+            print($"Not enough mana: {Mathf.Abs(_playerStatistics.mana - manaUsage)}");
+            return;
+        }
+        
+        //Checks what type of damage to deal
+        Attributes _attributes = _skillDataParser._skillData._skillAttributes[0];
+        int playerDamage = 0;
+        switch (_attributes.attributeType)
+        {
+            case AttributeTypes.MeleeDamage:
+                playerDamage = _playerStatistics.meleeDamage;
+                break;
+            
+            case AttributeTypes.RangeDamage:
+                playerDamage = _playerStatistics.rangeDamage;
+                break;
+
+            case AttributeTypes.MagicDamage:
+                playerDamage = _playerStatistics.magicDamage;
+                break;
+        }
+
+        _enemyStatistics.TakeDamage((skillDamage + playerDamage) * _playerStatistics.damageMultiplier, _attributes.attributeType, _attributes.elementalTypes);
+        _playerStatistics.TakeMana(manaUsage);
     }
 
     private void EnemyTurn()
@@ -214,5 +252,14 @@ public class CombatController : MonoBehaviour
 
         _playerStatistics.TakeDamage((skillDamage + enemyDamage) * _enemyStatistics.damageMultiplier, _attributes.attributeType, _attributes.elementalTypes);
         _enemyStatistics.TakeMana(manaUsage);
+    }
+
+    private void UpdateSliders(EntityStatistics _playerStatistics, EntityStatistics _enemyStatistics, bool firstLoad)
+    {
+        _combatUI._playerStats.UpdateHealthSlider((float)_playerStatistics.health / _playerStatistics.maxHealth, true, firstLoad);
+        _combatUI._playerStats.UpdateManaSlider((float)_playerStatistics.mana / _playerStatistics.maxMana, true, firstLoad);
+
+        _combatUI._enemyStats.UpdateHealthSlider((float)_enemyStatistics.health / _enemyStatistics.maxHealth, true, firstLoad);
+        _combatUI._enemyStats.UpdateManaSlider((float)_enemyStatistics.mana / _enemyStatistics.maxMana, true, firstLoad);
     }
 }

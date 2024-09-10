@@ -1,41 +1,69 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerStatsController : MonoBehaviour
 {
-    public static PlayerStatsController instance;
-
     public Slider healthSlider;
+    [SerializeField] private float previousHealthStatus;
     public Slider manaSlider;
+    [SerializeField] private float previousManaStatus;
+    [SerializeField] private Transform displayParent;
+    [SerializeField] private GameObject statusDisplayObject;
 
-    private void Awake()
+    public void UpdateHealthSlider(float newValue, bool hide = false, bool firstLoad = false)
     {
-        instance = this;
+        if (newValue == 1 || newValue == previousHealthStatus)
+            return;
+
+        if (!firstLoad)
+        {
+            TMP_Text statusDisplayText = Instantiate(statusDisplayObject, displayParent).GetComponent<TMP_Text>();
+            healthSlider.gameObject.SetActive(true);
+
+            string stringOperator()
+            {
+                if (previousHealthStatus > newValue)
+                    return "-";
+                else
+                    return "+";
+            }
+
+            statusDisplayText.text = $"{stringOperator()}{Mathf.Round((previousHealthStatus - newValue) * 100)}HP";
+        }
+
+        previousHealthStatus = newValue;
+        StartCoroutine(HideSlider(healthSlider, newValue, hide));
     }
 
-    private void Start()
+    public void UpdateManaSlider(float newValue, bool hide = false, bool firstLoad = false)
     {
-        UpdateHealthSlider(PlayerController.instance._statistics.maxHealth);
-        UpdateManaSlider(PlayerController.instance._statistics.maxMana);
+        if (newValue == 1 || newValue == previousHealthStatus)
+            return;
+
+        if (!firstLoad)
+        {
+            TMP_Text statusDisplayText = Instantiate(statusDisplayObject, displayParent).GetComponent<TMP_Text>();
+            manaSlider.gameObject.SetActive(true);
+
+            string stringOperator()
+            {
+                if (previousManaStatus > newValue)
+                    return "-";
+                else
+                    return "+";
+            }
+
+            statusDisplayText.text = $"{stringOperator()}{Mathf.Round((previousManaStatus - newValue) * 100)}MN";
+        }
+
+        previousManaStatus = newValue;
+        StartCoroutine(HideSlider(manaSlider, newValue, hide));
     }
 
-    public void UpdateHealthSlider(float newValue)
-    {
-        healthSlider.gameObject.SetActive(true);
 
-        StartCoroutine(HideSlider(healthSlider, newValue / PlayerController.instance._statistics.maxHealth));
-    }
-
-    public void UpdateManaSlider(float newValue)
-    {
-        manaSlider.gameObject.SetActive(true);
-
-        StartCoroutine(HideSlider(manaSlider, newValue / PlayerController.instance._statistics.maxMana));
-    }
-
-
-    IEnumerator HideSlider(Slider slider, float newValue)
+    IEnumerator HideSlider(Slider slider, float newValue, bool hide = false)
     {
         float startValue = slider.value;
         float time = 0f;
@@ -46,6 +74,9 @@ public class PlayerStatsController : MonoBehaviour
             slider.value = Mathf.Lerp(startValue, newValue, time / 0.5f);
             yield return null;
         }
+
+        if (hide)
+            yield break;
 
         yield return new WaitForSeconds(10);
 
