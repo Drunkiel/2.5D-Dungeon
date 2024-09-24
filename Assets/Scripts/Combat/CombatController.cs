@@ -147,11 +147,8 @@ public class CombatController : MonoBehaviour
         EntityStatistics _playerStatistics = PlayerController.instance._statistics;
         EntityStatistics _enemyStatistics = _combatEntities.enemy.GetComponent<EnemyController>()._statistics;
 
-        // Play the animation
-        animator.Play(animationName);
-
         // Wait until the animation is done
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(PlayAnimation(animator, animationName));
 
         //Taking action
         action();
@@ -172,9 +169,17 @@ public class CombatController : MonoBehaviour
             TakeTurn(EnemyTurn);
     }
 
+    public float PlayAnimation(Animator animator, string animationName)
+    {
+        // Play the animation and return how long animation takes
+        animator.Play(animationName);
+        return animator.GetCurrentAnimatorStateInfo(0).length;
+    }
+
     public void PlayerTurn(SkillDataParser _skillDataParser, int skillDamage, int protection, int manaUsage)
     {
-        EntityStatistics _enemyStatistics = CombatEntities.instance.enemy.GetComponent<EnemyController>()._statistics;
+        EnemyController _enemyController = CombatEntities.instance.enemy.GetComponent<EnemyController>();
+        EntityStatistics _enemyStatistics = _enemyController._statistics;
         EntityStatistics _playerStatistics = PlayerController.instance._statistics;
         //Checks if player has enough mana to cast skill
         if (_playerStatistics.mana * _playerStatistics.manaUsageMultiplier < manaUsage)
@@ -202,6 +207,7 @@ public class CombatController : MonoBehaviour
         }
 
         _enemyStatistics.TakeDamage((skillDamage + playerDamage) * _playerStatistics.damageMultiplier, _attributes.attributeType, _attributes.elementalTypes);
+        PlayAnimation(_enemyController.anim, "TakeDamage");
         _playerStatistics.TakeMana(manaUsage);
     }
 
@@ -251,6 +257,7 @@ public class CombatController : MonoBehaviour
         }
 
         _playerStatistics.TakeDamage((skillDamage + enemyDamage) * _enemyStatistics.damageMultiplier, _attributes.attributeType, _attributes.elementalTypes);
+        PlayAnimation(PlayerController.instance.anim, "TakeDamage");
         _enemyStatistics.TakeMana(manaUsage);
     }
 
