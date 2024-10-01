@@ -76,8 +76,12 @@ public class PlayerController : MonoBehaviour
         if (grounded)
             lastGroundedPosition = transform.position;
 
+        //Make movement depend on direction player is facing
         Vector3 move = new Vector3(movement.x, 0, movement.y).normalized;
-        rgBody.AddForce(move * _statistics.speedForce, ForceMode.Acceleration);
+        Vector3 rotatedMovement = transform.TransformDirection(move);
+
+        //Move player
+        rgBody.AddForce(rotatedMovement * _statistics.speedForce, ForceMode.Acceleration);
     }
 
     public void MovementInput(InputAction.CallbackContext context)
