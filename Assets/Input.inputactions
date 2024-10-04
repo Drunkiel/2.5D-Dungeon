@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "Hold",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "RightClick",
+                    "type": "Button",
+                    "id": "17e50818-2807-4f10-ba14-51865a047062",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -230,7 +239,40 @@
                 },
                 {
                     "name": "",
-                    "id": "7762e613-1b0c-4893-a572-e81447ca7811",
+                    "id": "0a87471d-018e-40b1-a9a9-904b92f28524",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94de542b-6efa-4e0c-985b-531b9f521518",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ca44f596-879d-42db-aa06-a6f3f1691964",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraRotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83faa6f5-ee95-4eed-813f-efe8f01df9e6",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
@@ -238,39 +280,6 @@
                     "action": "CameraRotate",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "One Modifier",
-                    "id": "9f8a952e-cf88-4af4-8967-e53daa705f63",
-                    "path": "OneModifier",
-                    "interactions": "Hold",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CameraRotate",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "bcd92e2d-29be-4253-9b90-bfda776e5ac9",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CameraRotate",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "382dd61f-a2b4-49d3-8ee4-e38558efdc87",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CameraRotate",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         },

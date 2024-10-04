@@ -17,11 +17,12 @@ public class CameraController : MonoBehaviour
     //Distance from camera
     private float minDistance = 0.8f;
     private float maxDistance = 2f;
-    private float distanceFromTarget = 1f;
+    private float distanceFromTarget = 2f;
     private float zoomSpeed = 2f;
 
     private float currentXRotation = 0f;
     [SerializeField] private float currentYRotation = 30f;
+    private bool rightClick;
 
     private void Awake()
     {
@@ -34,9 +35,18 @@ public class CameraController : MonoBehaviour
         SetCamera();
     }
 
+    public void RightClick(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            rightClick = true;
+
+        if (context.canceled)
+            rightClick = false;
+    }
+
     public void HandleRotation(InputAction.CallbackContext context)
     {
-        if (!context.performed)
+        if (!rightClick)
             return;
 
         //Get Input
