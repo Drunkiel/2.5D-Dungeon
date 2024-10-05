@@ -19,7 +19,7 @@ public class StandController : MonoBehaviour
             return;
         }
 
-        ItemID _newItem = Instantiate(_itemCopy, parentTransform);
+        ItemID _newItem = Instantiate(_itemCopy, parentTransform.GetChild(0));
         _newItem.transform.localPosition = Vector3.zero;
 
         _pickInteraction._itemID = _newItem;

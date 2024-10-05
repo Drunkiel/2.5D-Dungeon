@@ -97,13 +97,6 @@ public class EnemyController : MonoBehaviour
             transform.GetChild(0).localScale = new(1, 1, 1);
             isFlipped = false;
         }
-
-        //Rotate towards position
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2f);
-        }
     }
 
     private Vector3 GetRandomPosition()

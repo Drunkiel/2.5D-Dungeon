@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
 {
     public static CameraController instance;
 
-    private int currentCamera;
+    public int currentCamera;
     public CinemachineVirtualCamera[] virtualCameras;
     public Transform targetObject;
 
