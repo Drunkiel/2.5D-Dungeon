@@ -7,6 +7,7 @@ public enum WeaponHoldingType
     Both_Hands,
 }
 
+[System.Flags]
 public enum WeaponType
 {
     Sword,

@@ -2381,6 +2381,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 717573261603681906, guid: 9157d9bc90092504591646f0403dc98d,
         type: 3}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: itemRestriction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: weaponTypes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: weaponTypes.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4868893987044455467, guid: 1f73596385072104788c9ec99cf1606f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2832,7 +2847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Shield
-  itemType: 0
+  itemType: 1
   parentPositionY: 0.4
   parentTransform: {fileID: 139017967}
   _pickInteraction: {fileID: 139017969}
@@ -3265,6 +3280,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 717573261603681906, guid: 9157d9bc90092504591646f0403dc98d,
         type: 3}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: itemRestriction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: weaponTypes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: weaponTypes.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4868893987044455467, guid: 1f73596385072104788c9ec99cf1606f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -7618,6 +7648,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 717573261603681906, guid: 9157d9bc90092504591646f0403dc98d,
         type: 3}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: itemRestriction
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4868893987044455467, guid: 1f73596385072104788c9ec99cf1606f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -11681,7 +11716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Warrior boots
-  itemType: 1
+  itemType: 2
   parentPositionY: 0.4
   parentTransform: {fileID: 573113150}
   _pickInteraction: {fileID: 573113152}
@@ -14253,7 +14288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Mage ch
-  itemType: 1
+  itemType: 2
   parentPositionY: 0.4
   parentTransform: {fileID: 1328596923}
   _pickInteraction: {fileID: 1640176501}
@@ -14493,7 +14528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Warrior cch
-  itemType: 1
+  itemType: 2
   parentPositionY: 0.4
   parentTransform: {fileID: 692928675}
   _pickInteraction: {fileID: 692928677}
@@ -17144,7 +17179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Sword of shit
-  itemType: 0
+  itemType: 1
   parentPositionY: 0.4
   parentTransform: {fileID: 423079190}
   _pickInteraction: {fileID: 1902421408}
@@ -18543,7 +18578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Wand of shiet
-  itemType: 0
+  itemType: 1
   parentPositionY: 0.5
   parentTransform: {fileID: 1035988291}
   _pickInteraction: {fileID: 1960299210}
@@ -20423,7 +20458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Mage boots
-  itemType: 1
+  itemType: 2
   parentPositionY: 0.4
   parentTransform: {fileID: 624443522}
   _pickInteraction: {fileID: 1571765837}
@@ -24756,7 +24791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Warrior ha5
-  itemType: 1
+  itemType: 2
   parentPositionY: 0.4
   parentTransform: {fileID: 1269522705}
   _pickInteraction: {fileID: 1269522707}
@@ -26936,6 +26971,26 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 717573261603681906, guid: 9157d9bc90092504591646f0403dc98d,
         type: 3}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: itemRestriction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: weaponTypes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: weaponTypes.Array.data[0]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: weaponTypes.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4868893987044455467, guid: 1f73596385072104788c9ec99cf1606f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -32358,7 +32413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Mage hat
-  itemType: 1
+  itemType: 2
   parentPositionY: 0.4
   parentTransform: {fileID: 1357098269}
   _pickInteraction: {fileID: 788366492}
@@ -36242,10 +36297,20 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
         type: 3}
+      propertyPath: armorType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
       propertyPath: itemPlacePrefab
       value: 
       objectReference: {fileID: 717573261603681906, guid: 9157d9bc90092504591646f0403dc98d,
         type: 3}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: itemRestriction
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4868893987044455467, guid: 1f73596385072104788c9ec99cf1606f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -38511,10 +38576,20 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
         type: 3}
+      propertyPath: armorType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
       propertyPath: itemPlacePrefab
       value: 
       objectReference: {fileID: 717573261603681906, guid: 9157d9bc90092504591646f0403dc98d,
         type: 3}
+    - target: {fileID: 1047789662836306128, guid: 1f73596385072104788c9ec99cf1606f,
+        type: 3}
+      propertyPath: itemRestriction
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4868893987044455467, guid: 1f73596385072104788c9ec99cf1606f,
         type: 3}
       propertyPath: m_Pivot.x
