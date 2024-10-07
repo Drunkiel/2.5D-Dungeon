@@ -10,7 +10,6 @@ public class GearHolder
 
     public Transform headTransform;
     public Transform bodyTransform;
-
     public Transform rightFeetTransform;
     public Transform leftFeetTransform;
 

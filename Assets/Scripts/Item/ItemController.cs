@@ -29,60 +29,6 @@ public class ItemController : SaveLoadSystem
         GameObject itemClone = Instantiate(_itemID.gameObject, _inventoryController._inventorySlots[availableSlot].transform);
         _inventoryController.AddToInventory(itemClone.GetComponent<ItemID>(), availableSlot);
 
-        //switch (_itemID._itemData.itemType)
-        //{
-        //    case ItemType.Weapon:
-        //        if (!CanPickWeapon(_itemID._weaponItem.holdingType))
-        //        {
-        //            ReplaceItem(_itemID);
-        //            return false;
-        //        }
-
-        //        SetWeapon(_itemID);
-
-        //        //If npc then do nothing
-        //        if (!isPlayer)
-        //            break;
-
-        //        //Cloning item to founded slot and adding it to inventory
-        //        int weaponSlotIndex = (int)_itemID._weaponItem.holdingType + 3;
-        //        _inventoryController.AddToGearInventory(_itemID, weaponSlotIndex);
-        //        break;
-
-        //    case ItemType.Armor:
-        //        if (!CanPickArmor(_itemID._armorItem.armorType))
-        //        {
-        //            ReplaceItem(_itemID);
-        //            return false;
-        //        }
-
-        //        SetArmor(_itemID);
-
-        //        //If npc then do nothing
-        //        if (!isPlayer)
-        //            break;
-
-        //        //Cloning item to founded slot and adding it to inventory
-        //        int armorSlotIndex = (int)_itemID._armorItem.armorType;
-        //        _inventoryController.AddToGearInventory(_itemID, armorSlotIndex);
-        //        break;
-
-        //    case ItemType.Collectable:
-        //        //If npc then do nothing
-        //        if (!isPlayer)
-        //            break;
-
-        //        //Looking for available slot in inventory
-        //        int availableSlot = _inventoryController.GetAvailableSlotIndex();
-        //        if (availableSlot == -1)
-        //            return false;
-
-        //        //Cloning item to founded slot and adding it to inventory
-        //        GameObject itemClone = Instantiate(_itemID.gameObject, _inventoryController._inventorySlots[availableSlot].transform);
-        //        _inventoryController.AddToInventory(itemClone.GetComponent<ItemID>(), availableSlot);
-        //        break;
-        //}
-
         Destroy(_itemID.gameObject);
         return true;
     }
@@ -127,7 +73,7 @@ public class ItemController : SaveLoadSystem
         return weaponCopy.GetComponent<ItemID>()._weaponItem;
     }
 
-    private void SetWeapon(ItemID _itemID)
+    public void SetWeapon(ItemID _itemID)
     {
         switch (_itemID._weaponItem.holdingType)
         {
@@ -192,7 +138,7 @@ public class ItemController : SaveLoadSystem
         return armorCopy.GetComponent<ItemID>()._armorItem;
     }
 
-    private void SetArmor(ItemID _itemID)
+    public void SetArmor(ItemID _itemID)
     {
         switch (_itemID._armorItem.armorType)
         {

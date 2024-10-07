@@ -64,26 +64,28 @@ public class EntityPreview
 
     public void UpdateArmorLook(ArmorType partType, Sprite sprite)
     {
-        if (sprite == null)
-            return;
-
         switch (partType)
         {
             case ArmorType.Helmet:
-                helmetImage.GetComponent<RectTransform>().sizeDelta = sprite.rect.size / 100;
+                if (sprite != null)
+                    helmetImage.GetComponent<RectTransform>().sizeDelta = sprite.rect.size / 100;
 
                 helmetImage.sprite = sprite;
                 break;
             
             case ArmorType.Chestplate:
-                chestplateImage.GetComponent<RectTransform>().sizeDelta = sprite.rect.size / 100;
+                if (sprite != null)
+                    chestplateImage.GetComponent<RectTransform>().sizeDelta = sprite.rect.size / 100;
 
                 chestplateImage.sprite = sprite;
                 break;
 
             case ArmorType.Boots:
-                bootLeftImage.GetComponent<RectTransform>().sizeDelta = sprite.rect.size / 100;
-                bootRightImage.GetComponent<RectTransform>().sizeDelta = sprite.rect.size / 100;
+                if (sprite != null)
+                {
+                    bootLeftImage.GetComponent<RectTransform>().sizeDelta = sprite.rect.size / 100;
+                    bootRightImage.GetComponent<RectTransform>().sizeDelta = sprite.rect.size / 100;
+                }
 
                 bootLeftImage.sprite = sprite;
                 bootRightImage.sprite = sprite;

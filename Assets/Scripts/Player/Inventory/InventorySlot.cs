@@ -15,15 +15,21 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         if (itemRestriction != ItemType.None && eventData.pointerDrag.transform.GetChild(1).GetComponent<ItemID>()._itemData.itemType != itemRestriction)
             return;
 
+        ItemController _itemController = PlayerController.instance._holdingController._itemController;
         switch (itemRestriction)
         {
             case ItemType.Weapon:
                 bool isFound = false;
                 for (int i = 0; i < weaponTypes.Length; i++)
                 {
-                    if (eventData.pointerDrag.transform.GetChild(1).GetComponent<ItemID>()._weaponItem.weaponType == weaponTypes[i])
+                    ItemID _weaponItemID = eventData.pointerDrag.transform.GetChild(1).GetComponent<ItemID>();
+                    if (_weaponItemID._weaponItem.weaponType == weaponTypes[i])
                     {
                         isFound = true;
+                        if (!_itemController.CanPickWeapon(_weaponItemID._weaponItem.holdingType))
+                            _itemController.ReplaceItem(_weaponItemID);
+
+                        _itemController.SetWeapon(_weaponItemID);
                         break;
                     }
                 }
@@ -31,12 +37,20 @@ public class InventorySlot : MonoBehaviour, IDropHandler
                 //If weapon is not correct then return
                 if (!isFound)
                     return;
-
                 break;
 
             case ItemType.Armor:
-                if (eventData.pointerDrag.transform.GetChild(1).GetComponent<ItemID>()._armorItem.armorType != armorType)
+                ItemID _armorItemID = eventData.pointerDrag.transform.GetChild(1).GetComponent<ItemID>();
+                if (_armorItemID._armorItem.armorType != armorType)
                     return;
+                else
+                {
+                    if (!_itemController.CanPickArmor(_armorItemID._armorItem.armorType))
+                        _itemController.ReplaceItem(_armorItemID);
+
+                    _itemController.SetArmor(_armorItemID);
+                    InventoryController.instance._entityPreview.UpdateArmorLook(_armorItemID._armorItem.armorType, _armorItemID._armorItem.itemSprite);
+                }
                 break;
         }
 

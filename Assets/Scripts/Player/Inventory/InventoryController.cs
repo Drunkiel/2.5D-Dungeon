@@ -14,6 +14,7 @@ public class InventoryController : MonoBehaviour
     public Transform slotParent;
 
     public EntityPreview _entityPreview;
+    public Sprite sprite;
 
     private void Start()
     {
@@ -67,15 +68,26 @@ public class InventoryController : MonoBehaviour
     public void AddToGearInventory(ItemID _itemID, int slotIndex)
     {
         GameObject slot = Instantiate(_gearSlots[slotIndex].itemPlacePrefab, _gearSlots[slotIndex].transform);
-        switch(_itemID._itemData.itemType)
+        ItemController _itemController = PlayerController.instance._holdingController._itemController;
+
+        switch (_itemID._itemData.itemType)
         {
             case ItemType.Weapon:
                 slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemID._weaponItem.iconSprite;
+
+                if (!_itemController.CanPickWeapon(_itemID._weaponItem.holdingType))
+                    _itemController.ReplaceItem(_itemID);
+
+                _itemController.SetWeapon(_itemID);
                 break;
             
             case ItemType.Armor:
                 slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemID._armorItem.iconSprite;
-                _entityPreview.UpdateArmorLook(_itemID._armorItem.armorType, _itemID._armorItem.itemSprite);
+
+                if (!_itemController.CanPickArmor(_itemID._armorItem.armorType))
+                    _itemController.ReplaceItem(_itemID);
+
+                _itemController.SetArmor(_itemID);
                 break;
         }
     }

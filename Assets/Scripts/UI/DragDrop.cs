@@ -16,6 +16,50 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (currentSlot._itemID != null)
+        {
+            GearHolder _gearHolder = PlayerController.instance._holdingController._itemController._gearHolder;
+
+            if (currentSlot._itemID._armorItem != null)
+            {
+                //Find armor piece
+                ArmorItem _armorItem = _gearHolder.GetHoldingArmor(currentSlot._itemID._armorItem.armorType);
+
+                //If not null then destroy
+                if (_armorItem != null)
+                {
+                    //Destroy armor piece
+                    Destroy(_armorItem);
+                    switch (currentSlot._itemID._armorItem.armorType)
+                    {
+                        case ArmorType.Helmet:
+                            Destroy(_gearHolder.headTransform.GetChild(0).gameObject);
+                            break;
+                        case ArmorType.Chestplate:
+                            Destroy(_gearHolder.bodyTransform.GetChild(0).gameObject);
+                            break;
+                        case ArmorType.Boots:
+                            Destroy(_gearHolder.leftFeetTransform.GetChild(1).gameObject);
+                            Destroy(_gearHolder.rightFeetTransform.GetChild(1).gameObject);
+                            break;
+                    }
+                }
+
+                //Update inventory preview
+                InventoryController.instance._entityPreview.UpdateArmorLook(currentSlot._itemID._armorItem.armorType, InventoryController.instance.sprite);
+            }
+
+            if (currentSlot._itemID._weaponItem != null)
+            {
+                //Find weapon
+                WeaponItem _weaponItem = _gearHolder.GetHoldingWeapon(currentSlot._itemID._weaponItem.holdingType);
+
+                //Destroy current holding weapon
+                if (_weaponItem != null)
+                    Destroy(_weaponItem.gameObject);
+            }
+        }
+
         currentSlot._itemID = null;
 
         canvasGroup.interactable = false;
