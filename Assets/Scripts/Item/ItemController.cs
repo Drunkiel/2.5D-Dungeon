@@ -17,7 +17,7 @@ public class ItemController : SaveLoadSystem
         InventoryController _inventoryController = InventoryController.instance;
 
         //If npc then do nothing
-        if (!isPlayer)
+        if (!isPlayer || _itemID == null)
             return false;
 
         //Looking for available slot in inventory

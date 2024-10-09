@@ -20,30 +20,30 @@ public class InventorySlotEditor : Editor
         //Show the WeaponType array if the Weapon flag is set
         if (script.itemRestriction.HasFlag(ItemType.Weapon))
         {
-            EditorGUILayout.LabelField("Weapon Types");
+            EditorGUILayout.LabelField("Weapon Holding Types");
 
             //Draw the array for WeaponType
-            if (script.weaponTypes != null)
+            if (script.holdingTypes != null)
             {
-                for (int i = 0; i < script.weaponTypes.Length; i++)
-                    script.weaponTypes[i] = (WeaponType)EditorGUILayout.EnumPopup($"Weapon Type {i}", script.weaponTypes[i]);
+                for (int i = 0; i < script.holdingTypes.Length; i++)
+                    script.holdingTypes[i] = (WeaponHoldingType)EditorGUILayout.EnumPopup($"Weapon Holding Type {i}", script.holdingTypes[i]);
             }
 
             //Add button to allow adding new WeaponType elements
-            if (GUILayout.Button("Add Weapon Type"))
+            if (GUILayout.Button("Add Weapon Holding Type"))
             {
                 //Resize the array and add a new element
-                int newSize = (script.weaponTypes != null) ? script.weaponTypes.Length + 1 : 1;
-                System.Array.Resize(ref script.weaponTypes, newSize);
-                script.weaponTypes[newSize - 1] = WeaponType.Sword; // Default new entry to a valid enum value
+                int newSize = (script.holdingTypes != null) ? script.holdingTypes.Length + 1 : 1;
+                System.Array.Resize(ref script.holdingTypes, newSize);
+                script.holdingTypes[newSize - 1] = WeaponHoldingType.Right_Hand; // Default new entry to a valid enum value
             }
 
             //Add button to allow removing the last WeaponType element
-            if (script.weaponTypes != null && script.weaponTypes.Length > 0 && GUILayout.Button("Remove Weapon Type"))
+            if (script.holdingTypes != null && script.holdingTypes.Length > 0 && GUILayout.Button("Remove Weapon Holding Type"))
             {
                 //Resize the array to remove the last element
-                int newSize = script.weaponTypes.Length - 1;
-                System.Array.Resize(ref script.weaponTypes, newSize);
+                int newSize = script.holdingTypes.Length - 1;
+                System.Array.Resize(ref script.holdingTypes, newSize);
             }
         }
 

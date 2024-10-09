@@ -16,7 +16,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (currentSlot._itemID != null)
+        if (currentSlot._itemID != null && currentSlot.itemRestriction != ItemType.None)
         {
             GearHolder _gearHolder = PlayerController.instance._holdingController._itemController._gearHolder;
 
@@ -73,6 +73,10 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        //Check if pointer is over any UI element
+        if (!EventSystem.current.IsPointerOverGameObject())
+            currentSlot.OnDrop(eventData);
+
         rectTransform.SetParent(currentSlot.transform);
         rectTransform.localPosition = Vector3.zero;
         currentSlot._itemID = transform.GetChild(1).GetComponent<ItemID>();
