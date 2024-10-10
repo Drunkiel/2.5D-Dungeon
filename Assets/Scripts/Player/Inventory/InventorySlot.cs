@@ -26,8 +26,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler
                     if (_weaponItemID._weaponItem.holdingType == holdingTypes[i])
                     {
                         isFound = true;
-                        //if (!_itemController.CanPickWeapon(_weaponItemID._weaponItem.holdingType))
-                        //    _itemController.ReplaceItem(_weaponItemID);
 
                         _itemController.SetWeapon(_weaponItemID);
                         break;
@@ -45,9 +43,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler
                     return;
                 else
                 {
-                    //if (!_itemController.CanPickArmor(_armorItemID._armorItem.armorType))
-                    //    _itemController.ReplaceItem(_armorItemID);
-
                     _itemController.SetArmor(_armorItemID);
                     InventoryController.instance._entityPreview.UpdateArmorLook(_armorItemID._armorItem.armorType, _armorItemID._armorItem.itemSprite);
                 }

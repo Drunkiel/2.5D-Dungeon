@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,6 +16,8 @@ public class InventoryController : MonoBehaviour
 
     public EntityPreview _entityPreview;
     public Sprite sprite;
+
+    public bool isMovingItem;
 
     private void Start()
     {
@@ -36,7 +39,7 @@ public class InventoryController : MonoBehaviour
         if (!context.performed)
             return;
 
-        if (!PlayerController.instance.isStopped && !GameController.isPaused)
+        if (!PlayerController.instance.isStopped && !GameController.isPaused && !isMovingItem)
             GetComponent<OpenCloseUI>().OpenClose();
     }
 

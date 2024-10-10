@@ -16,6 +16,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        InventoryController.instance.isMovingItem = true;
+
         if (currentSlot._itemID != null && currentSlot.itemRestriction != ItemType.None)
         {
             GearHolder _gearHolder = PlayerController.instance._holdingController._itemController._gearHolder;
@@ -73,13 +75,26 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        ItemID _itemID = transform.GetChild(1).GetComponent<ItemID>();
+
         //Check if pointer is over any UI element
-        if (!EventSystem.current.IsPointerOverGameObject())
-            currentSlot.OnDrop(eventData);
+        if (!EventSystem.current.gameObject.TryGetComponent(out InventorySlot _inventorySlot) || _itemID._itemData.itemType != _inventorySlot.itemRestriction)
+        {
+            GearHolder _gearHolder = PlayerController.instance._holdingController._itemController._gearHolder;
+
+            //Checks if there is any armor equipped
+            if (_itemID._armorItem != null && _gearHolder.GetHoldingArmor(transform.GetChild(1).GetComponent<ItemID>()._armorItem.armorType) == null)
+                currentSlot.OnDrop(eventData);
+
+            //Checks if there is any weapon equipped
+            if (_itemID._weaponItem != null && _gearHolder.GetHoldingWeapon(transform.GetChild(1).GetComponent<ItemID>()._weaponItem.holdingType) == null)
+                currentSlot.OnDrop(eventData);
+        }
 
         rectTransform.SetParent(currentSlot.transform);
         rectTransform.localPosition = Vector3.zero;
         currentSlot._itemID = transform.GetChild(1).GetComponent<ItemID>();
+        InventoryController.instance.isMovingItem = false;
 
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
