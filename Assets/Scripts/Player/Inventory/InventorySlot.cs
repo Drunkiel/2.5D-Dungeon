@@ -50,8 +50,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         }
 
         RectTransform rectTransform = eventData.pointerDrag.GetComponent<RectTransform>();
-        rectTransform.GetComponent<DragDrop>().currentSlot = this;
-        rectTransform.SetParent(rectTransform.GetComponent<DragDrop>().currentSlot.transform);
+        rectTransform.GetComponent<DragDropSlot>().currentSlot = this;
+        rectTransform.SetParent(rectTransform.GetComponent<DragDropSlot>().currentSlot.transform);
         rectTransform.localPosition = Vector3.zero;
     }
 }

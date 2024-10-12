@@ -35,49 +35,19 @@ public class ComparisonController : MonoBehaviour
         switch (_otherItemID._itemData.itemType)
         {
             case ItemType.Weapon:
-                switch (_otherItemID._weaponItem.holdingType)
-                {
-                    case WeaponHoldingType.Right_Hand:
-                        if (_gearHolder._weaponRight == null)
-                            return null;
+                WeaponItem _weaponItem = _gearHolder.GetHoldingWeapon(_otherItemID._weaponItem.holdingType);
 
-                        return _gearHolder._weaponRight.GetComponent<ItemID>();
-
-                    case WeaponHoldingType.Left_Hand:
-                        if (_gearHolder._weaponLeft == null)
-                            return null;
-
-                        return _gearHolder._weaponLeft.GetComponent<ItemID>();
-
-                    case WeaponHoldingType.Both_Hands:
-                        if (_gearHolder._weaponBoth == null)
-                            return null;
-
-                        return _gearHolder._weaponBoth.GetComponent<ItemID>();
-                }
+                //If weapon is found then return it
+                if (_weaponItem != null)
+                    return _weaponItem.GetComponent<ItemID>();
                 break;
 
             case ItemType.Armor:
-                switch (_otherItemID._armorItem.armorType)
-                {
-                    case ArmorType.Helmet:
-                        if (_gearHolder._armorHead == null)
-                            return null;
+                ArmorItem _armorItem = _gearHolder.GetHoldingArmor(_otherItemID._armorItem.armorType);
 
-                        return _gearHolder._armorHead.GetComponent<ItemID>();
-
-                    case ArmorType.Chestplate:
-                        if (_gearHolder._armorChestplate == null)
-                            return null;
-
-                        return _gearHolder._armorChestplate.GetComponent<ItemID>();
-
-                    case ArmorType.Boots:
-                        if (_gearHolder._armorBoots == null)
-                            return null;
-
-                        return _gearHolder._armorBoots.GetComponent<ItemID>();
-                }
+                //If armor is found then return it
+                if (_armorItem != null)
+                    return _armorItem.GetComponent<ItemID>();
                 break;
         }
 

@@ -55,15 +55,15 @@ public class InventoryController : MonoBehaviour
         switch (_itemID._itemData.itemType)
         {
             case ItemType.Weapon:
-                slot.GetComponent<DragDrop>().image.sprite = _itemID._weaponItem.iconSprite;
+                slot.GetComponent<DragDropSlot>().image.sprite = _itemID._weaponItem.iconSprite;
                 break;
 
             case ItemType.Armor:
-                slot.GetComponent<DragDrop>().image.sprite = _itemID._armorItem.iconSprite;
+                slot.GetComponent<DragDropSlot>().image.sprite = _itemID._armorItem.iconSprite;
                 break;
 
             case ItemType.Collectable:
-                slot.GetComponent<DragDrop>().image.sprite = _itemID._collectableItem.iconSprite;
+                slot.GetComponent<DragDropSlot>().image.sprite = _itemID._collectableItem.iconSprite;
                 break;
         }
     }
