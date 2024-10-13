@@ -14,10 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 0
   displayedName: Wand of shiet
-  sprite: {fileID: 21300000, guid: b241bd52eb2889447bb66ab2521bd6dc, type: 3}
-  iconSprite: {fileID: 21300000, guid: 841208bffb9971e48bb241c0508277c2, type: 3}
+  itemType: 1
+  spritePath: 
+  spriteIconPath: 
   _attributes:
   - attributeType: 2
     elementalTypes: 0
     amount: 69
-  _itemBuffs: []
+  _itemBuffs:
+  - itemBuffs: 7
+    amount: -2

@@ -141,7 +141,7 @@ public class ItemContainer : SaveLoadSystem
     private ItemID CreateWeaponItem(WeaponData _weaponData, string path)
     {
         //Creating new item
-        ItemID _itemID = Instantiate(itemPrefabs[0], new Vector2(0, 10), Quaternion.identity, transform).GetComponent<ItemID>();
+        ItemID _itemID = Instantiate(itemPrefabs[0], new Vector2(0, -10), Quaternion.identity, transform).GetComponent<ItemID>();
         WeaponItem _weaponItem = _itemID._weaponItem;
 
         //Load values
@@ -178,7 +178,7 @@ public class ItemContainer : SaveLoadSystem
     private ItemID CreateArmorItem(ArmorData _armorData, string path)
     {
         //Creating new item
-        ItemID _itemID = Instantiate(itemPrefabs[1], new Vector2(0, 10), Quaternion.identity, transform).GetComponent<ItemID>();
+        ItemID _itemID = Instantiate(itemPrefabs[1], new Vector2(1, -10), Quaternion.identity, transform).GetComponent<ItemID>();
         ArmorItem _armorItem = _itemID._armorItem;
 
         //Load values
@@ -200,7 +200,7 @@ public class ItemContainer : SaveLoadSystem
     private ItemID CreateCollectableItem(CollectableData _collectableData, string path)
     {
         //Creating new item
-        ItemID _itemID = Instantiate(itemPrefabs[2], new Vector2(0, 10), Quaternion.identity, transform).GetComponent<ItemID>();
+        ItemID _itemID = Instantiate(itemPrefabs[2], new Vector2(-1, -10), Quaternion.identity, transform).GetComponent<ItemID>();
         CollectableItem _collectableItem = _itemID._collectableItem;
 
         //Load values

@@ -3,6 +3,7 @@ using UnityEngine;
 public class RotateToCamera : MonoBehaviour
 {
     private CameraController _cameraController;
+    private float rotationDistanceThreshold = 5f;
 
     private void Start()
     {
@@ -11,7 +12,11 @@ public class RotateToCamera : MonoBehaviour
 
     private void Update()
     {
-        RotateObject();
+        //Check distance between object and camera
+        float distanceToCamera = Vector3.Distance(_cameraController.virtualCameras[_cameraController.currentCamera].transform.position, transform.position);
+
+        if (distanceToCamera <= rotationDistanceThreshold)
+            RotateObject();
     }
 
     private void RotateObject()

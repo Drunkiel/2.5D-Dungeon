@@ -105,6 +105,9 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         if (currentSlot == null)
             currentSlot = eventData.pointerEnter.transform.parent.parent.GetComponent<InventorySlot>();
 
+        if (eventData.button == PointerEventData.InputButton.Right)
+            ComparisonController.instance.MakeComparison(currentSlot._itemID);
+
         rectTransform.SetParent(InventoryController.instance.slotParent.parent);
     }
 

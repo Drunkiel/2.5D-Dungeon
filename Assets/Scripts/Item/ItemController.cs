@@ -245,7 +245,6 @@ public class ItemController : SaveLoadSystem
                 break;
         }
 
-        ComparisonController.instance.MakeComparison(_pickInteraction._itemID, false);
         Destroy(_itemID.gameObject);
     }
 }
