@@ -37,7 +37,7 @@ public class RotateToCamera : MonoBehaviour
             targetRotation *= Quaternion.Euler(0, 180f, 0);
 
             //Smoothly rotate towards the target rotation on the Y-axis
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 1);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 1.5f);
         }
     }
 }

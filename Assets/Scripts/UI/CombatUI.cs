@@ -6,29 +6,29 @@ using UnityEngine.UI;
 public class CombatUI : MonoBehaviour
 {
     public List<Button> skillButtons = new();
-    public List<Button> optionsButtons = new();
+    public AttackController _attackController;
 
     public PlayerStatsController _playerStats;
     public PlayerStatsController _enemyStats;
 
+    private void Start()
+    {
+        SetSkillToBTN(0, PlayerController.instance.GetComponent<SkillController>()._skillHolder._skillDatas[0]);
+    }
+
     public void SetSkillToBTN(int buttonIndex, SkillDataParser _skillDataParser)
     {
-        int skillDamage = GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.MeleeDamage, AttributeTypes.RangeDamage, AttributeTypes.MagicDamage });
-        int protection = GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.AllProtection, AttributeTypes.MeleeProtection, AttributeTypes.RangeProtection, AttributeTypes.MagicProtection });
-        int manaUsage = GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.ManaUsage });
-
         skillButtons[buttonIndex].onClick.RemoveAllListeners();
         skillButtons[buttonIndex].onClick.AddListener(() =>
         {
             CombatController _combatController = CombatController.instance;
-            if (!_combatController.IsPlayerTurn())
-                return;
 
-            //Taking turn
-            _combatController.TakeTurn(() => _combatController.PlayerTurn(_skillDataParser, skillDamage, protection, manaUsage));
+            print('a');
+
+            _combatController.CastSkill(_skillDataParser, _attackController);
         });
 
-        SetSkillBTNData(buttonIndex, _skillDataParser, skillDamage, protection, manaUsage);
+        //SetSkillBTNData(buttonIndex, _skillDataParser, skillDamage, protection, manaUsage);
     }
 
     private void SetSkillBTNData(int i, SkillDataParser _skillDataParser, int skillDamage, int protection, int manaUsage)
