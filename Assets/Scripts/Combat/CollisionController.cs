@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackController : MonoBehaviour
+public class CollisionController : MonoBehaviour
 {
     public string entityTag;
     public List<GameObject> targets = new();

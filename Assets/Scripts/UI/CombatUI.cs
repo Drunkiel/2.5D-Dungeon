@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CombatUI : MonoBehaviour
 {
     public List<Button> skillButtons = new();
-    public AttackController _attackController;
+    public CollisionController _collisionController;
 
     public PlayerStatsController _playerStats;
     public PlayerStatsController _enemyStats;
@@ -23,9 +23,7 @@ public class CombatUI : MonoBehaviour
         {
             CombatController _combatController = CombatController.instance;
 
-            print('a');
-
-            _combatController.CastSkill(_skillDataParser, _attackController);
+            _combatController.CastSkill(_skillDataParser, _collisionController);
         });
 
         //SetSkillBTNData(buttonIndex, _skillDataParser, skillDamage, protection, manaUsage);

@@ -16,26 +16,57 @@ public class CombatController : MonoBehaviour
         instance = this;
     }
 
-    public void CastSkill(SkillDataParser _skillDataParser, AttackController _attackController)
+    public void CastSkill(SkillDataParser _skillDataParser, CollisionController _collisionController)
     {
-        if (_attackController.targets.Count <= 0)
+        if (_collisionController.targets.Count <= 0)
             return;
 
-        EnemyController _enemyController = _attackController.targets[0].transform.GetComponent<EnemyController>();
-        EntityStatistics _enemyStatistics = _enemyController._statistics;
-        EntityStatistics _playerStatistics = PlayerController.instance._statistics;
+        //Get caster
+        EntityStatistics _casterStatistics = null;
+        //Check if caster is player
+        if (_collisionController.transform.parent.parent.parent.TryGetComponent(out PlayerController _player))
+            _casterStatistics = _player._statistics;
+        //If not then check if enemy
+        else if (_collisionController.transform.parent.parent.parent.TryGetComponent(out EnemyController _enemy))
+            _casterStatistics = _enemy._statistics;
+
+        //If still null then return
+        if (_casterStatistics == null)
+        {
+            ConsoleController.instance.ChatMessage(SenderType.System, $"Caster is unknown: {_collisionController.transform.parent.parent.parent.name}", OutputType.Error);
+            return;
+        }
+
+        //Checks if player has enough mana to cast skill
+        int manaUsage = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.ManaUsage });
+        if (_casterStatistics.mana * _casterStatistics.manaUsageMultiplier < manaUsage)
+        {
+            ConsoleController.instance.ChatMessage(SenderType.Hidden, "Not enough mana to cast spell", OutputType.Warning);
+            return;
+        }
+
+        //Get current target
+        List<EntityStatistics> _targetsStatistics = new();
+        List<EnemyController> _enemyTargets = new();
+        PlayerController _playerTarget = null;
+        foreach (GameObject target in _collisionController.targets)
+        {
+            if (target.TryGetComponent(out EnemyController _enemyComponent))
+            {
+                _targetsStatistics.Add(_enemyComponent._statistics);
+                _enemyTargets.Add(_enemyComponent);
+            }
+            else if (target.TryGetComponent(out PlayerController _playerComponent))
+            {
+                _targetsStatistics.Add(_playerComponent._statistics);
+                _playerTarget = _playerComponent;
+            }
+            else
+                ConsoleController.instance.ChatMessage(SenderType.System, $"Target: {target.name} does not have a controller script attached", OutputType.Error);
+        }
 
         //Get stats
         int skillDamage = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.MeleeDamage, AttributeTypes.RangeDamage, AttributeTypes.MagicDamage });
-        int protection = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.AllProtection, AttributeTypes.MeleeProtection, AttributeTypes.RangeProtection, AttributeTypes.MagicProtection });
-        int manaUsage = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.ManaUsage });
-
-        //Checks if player has enough mana to cast skill
-        if (_playerStatistics.mana * _playerStatistics.manaUsageMultiplier < manaUsage)
-        {
-            print($"Not enough mana: {Mathf.Abs(_playerStatistics.mana - manaUsage)}");
-            return;
-        }
 
         //Checks what type of damage to deal
         Attributes _attributes = _skillDataParser._skillData._skillAttributes[0];
@@ -43,21 +74,37 @@ public class CombatController : MonoBehaviour
         switch (_attributes.attributeType)
         {
             case AttributeTypes.MeleeDamage:
-                damageToDeal = _playerStatistics.meleeDamage;
+                damageToDeal = _casterStatistics.meleeDamage;
                 break;
 
             case AttributeTypes.RangeDamage:
-                damageToDeal = _playerStatistics.rangeDamage;
+                damageToDeal = _casterStatistics.rangeDamage;
                 break;
 
             case AttributeTypes.MagicDamage:
-                damageToDeal = _playerStatistics.magicDamage;
+                damageToDeal = _casterStatistics.magicDamage;
                 break;
         }
 
-        _enemyStatistics.TakeDamage((skillDamage + damageToDeal) * _playerStatistics.damageMultiplier, _attributes.attributeType, _attributes.elementalTypes);
-        PlayAnimation(_enemyController.anim, "TakeDamage");
-        _playerStatistics.TakeMana(manaUsage);
+        for (int i = 0; i < _targetsStatistics.Count; i++)
+        {
+            _targetsStatistics[i].TakeDamage((skillDamage + damageToDeal) * _casterStatistics.damageMultiplier, _attributes.attributeType, _attributes.elementalTypes);
+            if (_playerTarget != null)
+                PlayAnimation(_playerTarget.anim, "TakeDamage");
+            else
+                PlayAnimation(_enemyTargets[i].anim, "TakeDamage");
+        }
+        _casterStatistics.TakeMana(manaUsage);
+    }
+
+    private void AttackSkill(SkillDataParser _skillDataParser)
+    {
+
+    }
+
+    private void BuffSkill(SkillDataParser _skillDataParser)
+    {
+        int protection = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.AllProtection, AttributeTypes.MeleeProtection, AttributeTypes.RangeProtection, AttributeTypes.MagicProtection });
     }
 
     private void EnemyAttack()

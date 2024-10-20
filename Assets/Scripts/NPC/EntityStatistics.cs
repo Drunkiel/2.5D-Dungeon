@@ -108,10 +108,7 @@ public class EntityStatistics
     {
         mana -= CalculateManaUsage(amount * manaUsageMultiplier);
         if (mana < 0)
-        {
             mana = 0;
-            Debug.Log("Player has no more mana ;<");
-        }
     }
 
     private int CalculateManaUsage(float amount)
