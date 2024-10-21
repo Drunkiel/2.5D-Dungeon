@@ -45,6 +45,12 @@ public class CombatController : MonoBehaviour
             return;
         }
 
+        AttackSkill(_skillDataParser, _collisionController, _casterStatistics);
+        _casterStatistics.TakeMana(manaUsage);
+    }
+
+    private void AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics)
+    {
         //Get current target
         List<EntityStatistics> _targetsStatistics = new();
         List<EnemyController> _enemyTargets = new();
@@ -94,12 +100,6 @@ public class CombatController : MonoBehaviour
             else
                 PlayAnimation(_enemyTargets[i].anim, "TakeDamage");
         }
-        _casterStatistics.TakeMana(manaUsage);
-    }
-
-    private void AttackSkill(SkillDataParser _skillDataParser)
-    {
-
     }
 
     private void BuffSkill(SkillDataParser _skillDataParser)

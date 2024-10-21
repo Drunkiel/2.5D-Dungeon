@@ -21,9 +21,18 @@ public enum AttributeTypes
     MeleeProtection,
     RangeProtection,
     MagicProtection,
+    
+    //Cooldown
+    Cooldown,
 
     //Mana
     ManaUsage,
+}
+
+public enum SkillType
+{
+    Attack,
+    Defence,
 }
 
 [System.Serializable]
@@ -41,8 +50,6 @@ public class SkillController : MonoBehaviour
     void Start()
     {
         for (int i = 0; i < _skillHolder.skillNames.Count; i++)
-        {
             _skillHolder._skillDatas[i] = SkillContainer.instance.GetSkillByName(_skillHolder.skillNames[i]);
-        }
     }
 }

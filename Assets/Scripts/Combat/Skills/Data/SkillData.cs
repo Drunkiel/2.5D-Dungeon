@@ -10,6 +10,8 @@ public class SkillData : ScriptableObject
     public string displayedName;
     public string spritePath;
     public string spriteIconPath;
+    public string animationName;
+    public SkillType type;
     public List<Attributes> _skillAttributes = new();
 
     public Sprite GetSprite(string path, float pixelsPerUnit)

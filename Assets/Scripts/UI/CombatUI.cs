@@ -1,12 +1,21 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
+public class SkillInfo
+{
+    public Button skillButton;
+    public CollisionController _collisionController;
+    public bool canBeCasted = true;
+}
+
 public class CombatUI : MonoBehaviour
 {
-    public List<Button> skillButtons = new();
-    public CollisionController _collisionController;
+    public List<SkillInfo> skillInfos = new();
 
     public PlayerStatsController _playerStats;
     public PlayerStatsController _enemyStats;
@@ -18,12 +27,11 @@ public class CombatUI : MonoBehaviour
 
     public void SetSkillToBTN(int buttonIndex, SkillDataParser _skillDataParser)
     {
-        skillButtons[buttonIndex].onClick.RemoveAllListeners();
-        skillButtons[buttonIndex].onClick.AddListener(() =>
+        skillInfos[buttonIndex].skillButton.onClick.RemoveAllListeners();
+        skillInfos[buttonIndex].skillButton.onClick.AddListener(() =>
         {
-            CombatController _combatController = CombatController.instance;
-
-            _combatController.CastSkill(_skillDataParser, _collisionController);
+            if (skillInfos[buttonIndex].canBeCasted)
+                StartCoroutine(Cast(buttonIndex, _skillDataParser));
         });
 
         //SetSkillBTNData(buttonIndex, _skillDataParser, skillDamage, protection, manaUsage);
@@ -31,8 +39,8 @@ public class CombatUI : MonoBehaviour
 
     private void SetSkillBTNData(int i, SkillDataParser _skillDataParser, int skillDamage, int protection, int manaUsage)
     {
-        skillButtons[i].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = _skillDataParser.iconSprite;
-        skillButtons[i].transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = _skillDataParser._skillData.displayedName;
+        skillInfos[i].skillButton.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = _skillDataParser.iconSprite;
+        skillInfos[i].skillButton.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = _skillDataParser._skillData.displayedName;
 
         //Check if damage or protection
         string info()
@@ -42,11 +50,23 @@ public class CombatUI : MonoBehaviour
             else
                 return skillDamage.ToString();
         }
-        skillButtons[i].transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().text = $"{info()}";
+        skillInfos[i].skillButton.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().text = $"{info()}";
         //Mana
-        skillButtons[i].transform.GetChild(0).GetChild(3).GetComponent<TMP_Text>().text = $"{manaUsage}";
+        skillInfos[i].skillButton.transform.GetChild(0).GetChild(3).GetComponent<TMP_Text>().text = $"{manaUsage}";
         //Elemental type
-        skillButtons[i].transform.GetChild(0).GetChild(4).GetComponent<TMP_Text>().text = $"{_skillDataParser._skillData._skillAttributes[0].elementalTypes}";   
+        skillInfos[i].skillButton.transform.GetChild(0).GetChild(4).GetComponent<TMP_Text>().text = $"{_skillDataParser._skillData._skillAttributes[0].elementalTypes}";   
+    }
+
+    private IEnumerator Cast(int buttonIndex, SkillDataParser _skillDataParser)
+    {
+        CombatController _combatController = CombatController.instance;
+        _combatController.CastSkill(_skillDataParser, skillInfos[buttonIndex]._collisionController);
+        skillInfos[buttonIndex].canBeCasted = false;
+
+        // Wait until the animation is done
+        yield return new WaitForSeconds(GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Cooldown }));
+
+        skillInfos[buttonIndex].canBeCasted = true;
     }
 
     public int GetSkillModifier(SkillData _skillData, List<AttributeTypes> attributeTypes)
