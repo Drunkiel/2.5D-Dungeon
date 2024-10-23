@@ -62,11 +62,13 @@ public class CombatUI : MonoBehaviour
         CombatController _combatController = CombatController.instance;
         _combatController.CastSkill(_skillDataParser, skillInfos[buttonIndex]._collisionController);
         skillInfos[buttonIndex].canBeCasted = false;
+        skillInfos[buttonIndex].skillButton.interactable = false;
 
         // Wait until the animation is done
         yield return new WaitForSeconds(GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Cooldown }));
 
         skillInfos[buttonIndex].canBeCasted = true;
+        skillInfos[buttonIndex].skillButton.interactable = true;
     }
 
     public int GetSkillModifier(SkillData _skillData, List<AttributeTypes> attributeTypes)

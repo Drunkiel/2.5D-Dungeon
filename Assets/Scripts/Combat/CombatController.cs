@@ -23,12 +23,16 @@ public class CombatController : MonoBehaviour
 
         //Get caster
         EntityStatistics _casterStatistics = null;
+        EnemyController _enemyController = null;
         //Check if caster is player
         if (_collisionController.transform.parent.parent.parent.TryGetComponent(out PlayerController _player))
             _casterStatistics = _player._statistics;
         //If not then check if enemy
         else if (_collisionController.transform.parent.parent.parent.TryGetComponent(out EnemyController _enemy))
+        {
             _casterStatistics = _enemy._statistics;
+            _enemyController = _enemy;
+        }
 
         //If still null then return
         if (_casterStatistics == null)
@@ -45,7 +49,28 @@ public class CombatController : MonoBehaviour
             return;
         }
 
-        AttackSkill(_skillDataParser, _collisionController, _casterStatistics);
+        //Check if animation exists
+        string animName = _skillDataParser._skillData.animationName;
+        if (string.IsNullOrEmpty(animName))
+            animName = "TakeDamage";
+
+        //Play animation
+        if (_player != null)
+            PlayAnimation(_player.anim, animName);
+        else if (_enemyController != null)
+            PlayAnimation(_enemyController.anim, animName);
+
+
+        switch (_skillDataParser._skillData.type)
+        {
+            case SkillType.Attack:
+                AttackSkill(_skillDataParser, _collisionController, _casterStatistics);
+                break;
+
+            case SkillType.Defence:
+                BuffSkill(_skillDataParser);
+                break;
+        }
         _casterStatistics.TakeMana(manaUsage);
     }
 
