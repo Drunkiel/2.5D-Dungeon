@@ -68,7 +68,7 @@ public class CombatController : MonoBehaviour
                 break;
 
             case SkillType.Defence:
-                BuffSkill(_skillDataParser);
+                BuffSkill(_skillDataParser, _casterStatistics);
                 break;
         }
         _casterStatistics.TakeMana(manaUsage);
@@ -127,9 +127,10 @@ public class CombatController : MonoBehaviour
         }
     }
 
-    private void BuffSkill(SkillDataParser _skillDataParser)
+    private void BuffSkill(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics)
     {
-        int protection = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.AllProtection, AttributeTypes.MeleeProtection, AttributeTypes.RangeProtection, AttributeTypes.MagicProtection });
+        _casterStatistics._activeBuffs.Add(new("Ala", 5f, Buffs.MaxSpeed, 100));
+        _casterStatistics.RecalculateStatistics(PlayerController.instance._holdingController._itemController._gearHolder);
     }
 
     private void EnemyAttack()

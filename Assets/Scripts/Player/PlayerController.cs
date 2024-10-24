@@ -47,6 +47,9 @@ public class PlayerController : MonoBehaviour
         if (isStopped || GameController.isPaused)
             return;
 
+        //Updating buffs
+        _statistics.UpdateBuffs(_holdingController._itemController._gearHolder);
+
         // if (isMoving)
         // {
         //     particle.Play();

@@ -33,6 +33,10 @@ public class EnemyController : MonoBehaviour
         if (isStopped || GameController.isPaused)
             return;
 
+        //Updating buffs
+        _statistics.UpdateBuffs(_holdingController._itemController._gearHolder);
+
+        //Checking distance to new position
         if (Vector3.Distance(transform.position, positionToGo) < 0.2f)
         {
             if (!isNewPositionFound)

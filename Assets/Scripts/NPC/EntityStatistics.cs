@@ -42,6 +42,9 @@ public class EntityStatistics
     public float jumpForce;
     public List<bool> additionalJumps = new();
 
+    [Header("Active Buffs")]
+    public List<Buff> _activeBuffs = new();
+
     public void TakeDamage(float amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes)
     {
         int damageToDeal = CalculateDamage(amount * damageMultiplier, attributeTypes, elementalTypes);
@@ -116,6 +119,26 @@ public class EntityStatistics
         return Mathf.FloorToInt(amount);
     }
 
+    public void UpdateBuffs(GearHolder _gearHolder)
+    {
+        bool buffExpired = false;
+
+        // Przechodzimy przez listê Buffów
+        for (int i = _activeBuffs.Count - 1; i >= 0; i--)
+        {
+            Buff buff = _activeBuffs[i];
+            // Jeœli Buff siê skoñczy³, usuwamy go
+            if (!buff.UpdateBuff())
+            {
+                _activeBuffs.RemoveAt(i);
+                buffExpired = true;
+            }
+        }
+
+        if (buffExpired)
+            RecalculateStatistics(_gearHolder);
+    }
+
     public void ResetStatistics()
     {
         maxHealth = 100;
@@ -137,6 +160,7 @@ public class EntityStatistics
         magicProtection = 0;
 
         speedForce = 30;
+        maxSpeed = 1.2f;
     }
 
     public void RecalculateStatistics(GearHolder _gearHolder)
@@ -180,43 +204,43 @@ public class EntityStatistics
             _armorBoots = _armorItemBoots.GetComponent<ItemID>();
 
         List<Attributes> _allAttributes = new();
-        List<ItemBuff> _allBuffs = new();
+        List<ItemBuff> _allItemBuffs = new();
 
         //Checks if any variable is empty
         if (_weaponLeft != null)
         {
             _allAttributes.AddRange(_weaponLeft._itemData._attributes);
-            _allBuffs.AddRange(_weaponLeft._itemData._itemBuffs);
+            _allItemBuffs.AddRange(_weaponLeft._itemData._itemBuffs);
         }
 
         if (_weaponRight != null)
         {
             _allAttributes.AddRange(_weaponRight._itemData._attributes);
-            _allBuffs.AddRange(_weaponRight._itemData._itemBuffs);
+            _allItemBuffs.AddRange(_weaponRight._itemData._itemBuffs);
         }
 
         if (_weaponBoth != null)
         {
             _allAttributes.AddRange(_weaponBoth._itemData._attributes);
-            _allBuffs.AddRange(_weaponBoth._itemData._itemBuffs);
+            _allItemBuffs.AddRange(_weaponBoth._itemData._itemBuffs);
         }
 
         if (_armorHead != null)
         {
             _allAttributes.AddRange(_armorHead._itemData._attributes);
-            _allBuffs.AddRange(_armorHead._itemData._itemBuffs);
+            _allItemBuffs.AddRange(_armorHead._itemData._itemBuffs);
         }
 
         if (_armorChestplate != null)
         {
             _allAttributes.AddRange(_armorChestplate._itemData._attributes);
-            _allBuffs.AddRange(_armorChestplate._itemData._itemBuffs);
+            _allItemBuffs.AddRange(_armorChestplate._itemData._itemBuffs);
         }
 
         if (_armorBoots != null)
         {
             _allAttributes.AddRange(_armorBoots._itemData._attributes);
-            _allBuffs.AddRange(_armorBoots._itemData._itemBuffs);
+            _allItemBuffs.AddRange(_armorBoots._itemData._itemBuffs);
         }
 
         //Setting all data
@@ -254,44 +278,71 @@ public class EntityStatistics
             }
         }
 
-        for (int i = 0; i < _allBuffs.Count; i++)
+        for (int i = 0; i < _allItemBuffs.Count; i++)
         {
-            switch(_allBuffs[i].itemBuffs)
+            switch(_allItemBuffs[i].itemBuffs)
             {
                 case ItemBuffs.Damage:
-                    damageMultiplier += _allBuffs[i].amount;
+                    damageMultiplier += _allItemBuffs[i].amount;
                     break;
 
                 case ItemBuffs.AllProtection:
-                    allProtectionMultiplier += _allBuffs[i].amount;
+                    allProtectionMultiplier += _allItemBuffs[i].amount;
                     break;
 
                 case ItemBuffs.ElementalProtection:
-                    elementalProtectionMultiplier += _allBuffs[i].amount;
+                    elementalProtectionMultiplier += _allItemBuffs[i].amount;
                     break;
 
                 case ItemBuffs.MaxHealth:
-                    maxHealth += Mathf.FloorToInt(_allBuffs[i].amount);
+                    maxHealth += Mathf.FloorToInt(_allItemBuffs[i].amount);
                     break;
 
                 case ItemBuffs.HealthRegeneration:
-                    healthRegeneration += _allBuffs[i].amount;
+                    healthRegeneration += _allItemBuffs[i].amount;
                     break;
 
                 case ItemBuffs.MaxMana:
-                    maxMana += Mathf.FloorToInt(_allBuffs[i].amount);
+                    maxMana += Mathf.FloorToInt(_allItemBuffs[i].amount);
                     break;
 
                 case ItemBuffs.ManaRegeneration:
-                    manaRegeneration += _allBuffs[i].amount;
+                    manaRegeneration += _allItemBuffs[i].amount;
                     break;
 
                 case ItemBuffs.ManaUsage:
-                    manaUsageMultiplier += _allBuffs[i].amount;
+                    manaUsageMultiplier += _allItemBuffs[i].amount;
                     break;
 
                 case ItemBuffs.Speed:
-                    speedForce += _allBuffs[i].amount;
+                    speedForce += _allItemBuffs[i].amount;
+                    break;
+            }
+        }
+
+        //Adding buffs
+        for (int i = 0; i < _activeBuffs.Count; i++)
+        {
+            switch (_activeBuffs[i].buffType)
+            {
+                case Buffs.MaxHealth:
+                    maxHealth *= _activeBuffs[i].buffMultiplier;
+                    break;
+
+                case Buffs.MaxMana:
+                    maxMana *= _activeBuffs[i].buffMultiplier;
+                    break;
+
+                case Buffs.Damage:
+                    damageMultiplier *= _activeBuffs[i].buffMultiplier;
+                    break;
+
+                case Buffs.Protection:
+                    allProtectionMultiplier *= _activeBuffs[i].buffMultiplier;
+                    break;
+
+                case Buffs.MaxSpeed:
+                    maxSpeed *= _activeBuffs[i].buffMultiplier;
                     break;
             }
         }
