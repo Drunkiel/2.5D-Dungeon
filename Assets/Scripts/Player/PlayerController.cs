@@ -71,7 +71,10 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         if (transform.position.y < -10f)
+        {
             PortalController.instance.TeleportToPosition(lastGroundedPosition);
+            ResetMovement();
+        }
 
         if (isStopped || GameController.isPaused)
             return;

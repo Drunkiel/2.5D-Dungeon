@@ -44,6 +44,7 @@ public class EntityStatistics
 
     [Header("Active Buffs")]
     public List<Buff> _activeBuffs = new();
+    [SerializeField] private EntityStatsController _statsController;
 
     public void TakeDamage(float amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes)
     {

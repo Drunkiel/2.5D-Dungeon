@@ -17,9 +17,6 @@ public class CombatUI : MonoBehaviour
 {
     public List<SkillInfo> skillInfos = new();
 
-    public PlayerStatsController _playerStats;
-    public PlayerStatsController _enemyStats;
-
     private void Start()
     {
         SetSkillToBTN(0, PlayerController.instance.GetComponent<SkillController>()._skillHolder._skillDatas[0]);
