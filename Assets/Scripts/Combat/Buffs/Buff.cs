@@ -16,6 +16,7 @@ public class Buff
     public float duration; 
     public float timer;
     public Buffs buffType;
+    public Sprite sprite;
     public int buffMultiplier;
     public bool isPermanent = false;
 
@@ -24,6 +25,7 @@ public class Buff
         this.name = name;
         this.duration = duration;
         this.buffType = buffType;
+        this.sprite = null;
         this.buffMultiplier = buffMultiplier;
         this.isPermanent = isPermanent;
         this.timer = 0f;

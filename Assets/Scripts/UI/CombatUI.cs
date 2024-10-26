@@ -19,7 +19,8 @@ public class CombatUI : MonoBehaviour
 
     private void Start()
     {
-        SetSkillToBTN(0, PlayerController.instance.GetComponent<SkillController>()._skillHolder._skillDatas[0]);
+        for (int i = 0; i < skillInfos.Count; i++)
+            SetSkillToBTN(i, PlayerController.instance.GetComponent<SkillController>()._skillHolder._skillDatas[i]);
     }
 
     public void SetSkillToBTN(int buttonIndex, SkillDataParser _skillDataParser)

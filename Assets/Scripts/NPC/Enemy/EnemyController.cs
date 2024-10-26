@@ -22,6 +22,11 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
+        //Setting sliders value
+        _statistics._statsController.UpdateHealthSlider(_statistics.health);
+        _statistics._statsController.UpdateManaSlider(_statistics.mana);
+
+        //Setting new first position to go
         startPosition = transform.position;
         SetNewPosition();
     }

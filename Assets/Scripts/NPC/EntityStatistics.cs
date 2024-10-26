@@ -44,13 +44,14 @@ public class EntityStatistics
 
     [Header("Active Buffs")]
     public List<Buff> _activeBuffs = new();
-    [SerializeField] private EntityStatsController _statsController;
+    public EntityStatsController _statsController;
 
     public void TakeDamage(float amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes)
     {
         int damageToDeal = CalculateDamage(amount * damageMultiplier, attributeTypes, elementalTypes);
 
         health -= damageToDeal;
+        _statsController.UpdateHealthSlider(health);
         if (health < 0)
         {
             health = 0;
@@ -111,6 +112,7 @@ public class EntityStatistics
     public void TakeMana(int amount)
     {
         mana -= CalculateManaUsage(amount * manaUsageMultiplier);
+        _statsController.UpdateManaSlider(mana);
         if (mana < 0)
             mana = 0;
     }
@@ -167,6 +169,7 @@ public class EntityStatistics
     public void RecalculateStatistics(GearHolder _gearHolder)
     {
         ResetStatistics();
+        _statsController.RemoveBuffImages();
 
         //Getting weapons
         WeaponItem _weaponItemLeft = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Left_Hand);
@@ -346,6 +349,8 @@ public class EntityStatistics
                     maxSpeed *= _activeBuffs[i].buffMultiplier;
                     break;
             }
+
+            _statsController.AddNewBuffImage(_activeBuffs[i].sprite);
         }
     }
 }

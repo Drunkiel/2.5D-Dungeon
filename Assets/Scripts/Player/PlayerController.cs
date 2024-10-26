@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         moveSoundSource = GetComponent<AudioSource>();
+        _statistics._statsController.UpdateHealthSlider(_statistics.health);
+        _statistics._statsController.UpdateManaSlider(_statistics.mana);
         instance = this;
     }
 
