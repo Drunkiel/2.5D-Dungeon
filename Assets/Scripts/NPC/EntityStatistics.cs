@@ -51,7 +51,7 @@ public class EntityStatistics
         int damageToDeal = CalculateDamage(amount * damageMultiplier, attributeTypes, elementalTypes);
 
         health -= damageToDeal;
-        _statsController.UpdateHealthSlider(health);
+        _statsController.UpdateHealthSlider(health, maxHealth);
         if (health < 0)
         {
             health = 0;
@@ -112,7 +112,7 @@ public class EntityStatistics
     public void TakeMana(int amount)
     {
         mana -= CalculateManaUsage(amount * manaUsageMultiplier);
-        _statsController.UpdateManaSlider(mana);
+        _statsController.UpdateManaSlider(mana, maxMana);
         if (mana < 0)
             mana = 0;
     }

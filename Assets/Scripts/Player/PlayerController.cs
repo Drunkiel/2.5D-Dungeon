@@ -32,17 +32,17 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         moveSoundSource = GetComponent<AudioSource>();
-        _statistics._statsController.UpdateHealthSlider(_statistics.health);
-        _statistics._statsController.UpdateManaSlider(_statistics.mana);
+        _statistics._statsController.UpdateHealthSlider(_statistics.health, _statistics.maxHealth);
+        _statistics._statsController.UpdateManaSlider(_statistics.mana, _statistics.maxMana);
         instance = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Movement, jump and animations control
+        //Checks if player is moving and touching ground
         isMoving = movement.magnitude > 0.1f;
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, whatIsGround);
+        grounded = Physics.Raycast(transform.position + new Vector3(0.05f, 0), Vector3.down, playerHeight, whatIsGround) || Physics.Raycast(transform.position + new Vector3(-0.05f, 0), Vector3.down, playerHeight, whatIsGround);
 
         anim.SetFloat("Movement", isStopped ? 0 : movement.magnitude);
 

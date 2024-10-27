@@ -8,20 +8,15 @@ public class EntityStatsController : MonoBehaviour
     private float previousHealthStatus;
     public Slider manaSlider;
     private float previousManaStatus;
-    [SerializeField] private Transform displayParent;
     [SerializeField] private GameObject statusDisplayObject;
     [SerializeField] private Transform buffsParent;
     [SerializeField] private Image buffImage;
 
-    public void UpdateHealthSlider(float newValue)
+    public void UpdateHealthSlider(float newValue, float maxValue)
     {
-        if (newValue == 1 || newValue == previousHealthStatus)
-            return;
-
-        //Checks if first time load
         if (previousHealthStatus != 0)
         {
-            TMP_Text statusDisplayText = Instantiate(statusDisplayObject, displayParent).GetComponent<TMP_Text>();
+            TMP_Text statusDisplayText = Instantiate(statusDisplayObject, transform.position, transform.rotation).transform.GetChild(0).GetComponent<TMP_Text>();
 
             string stringOperator()
             {
@@ -31,22 +26,20 @@ public class EntityStatsController : MonoBehaviour
                     return "+";
             }
 
-            statusDisplayText.text = $"{stringOperator()}{Mathf.Round((previousHealthStatus - newValue) * 100)}HP";
+            statusDisplayText.color = Color.red;
+            statusDisplayText.text = $"{stringOperator()}{Mathf.Round(previousHealthStatus - newValue)}HP";
+            statusDisplayText.GetComponent<Animator>().Play($"Random_{Random.Range(1, 4)}");
         }
 
         previousHealthStatus = newValue;
-        healthSlider.value = newValue;
+        healthSlider.value = newValue / maxValue;
     }
 
-    public void UpdateManaSlider(float newValue)
+    public void UpdateManaSlider(float newValue, float maxValue)
     {
-        if (newValue == 1 || newValue == previousHealthStatus)
-            return;
-
-        //Checks if first time load
         if (previousManaStatus != 0)
         {
-            TMP_Text statusDisplayText = Instantiate(statusDisplayObject, displayParent).GetComponent<TMP_Text>();
+            TMP_Text statusDisplayText = Instantiate(statusDisplayObject, transform.position, transform.rotation).transform.GetChild(0).GetComponent<TMP_Text>();
 
             string stringOperator()
             {
@@ -56,11 +49,13 @@ public class EntityStatsController : MonoBehaviour
                     return "+";
             }
 
-            statusDisplayText.text = $"{stringOperator()}{Mathf.Round((previousManaStatus - newValue) * 100)}MN";
+            statusDisplayText.color = Color.blue;
+            statusDisplayText.text = $"{stringOperator()}{Mathf.Round(previousManaStatus - newValue)}MN";
+            statusDisplayText.GetComponent<Animator>().Play($"Random_{Random.Range(1, 4)}");
         }
 
         previousManaStatus = newValue;
-        manaSlider.value = newValue;
+        manaSlider.value = newValue / maxValue;
     }
 
     public void AddNewBuffImage(Sprite buffSprite)
