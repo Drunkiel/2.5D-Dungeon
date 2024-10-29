@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
 public class EntityStatsController : MonoBehaviour
@@ -12,9 +13,12 @@ public class EntityStatsController : MonoBehaviour
     [SerializeField] private Transform buffsParent;
     [SerializeField] private Image buffImage;
 
-    public void UpdateHealthSlider(float newValue, float maxValue)
+    public void UpdateHealthSlider(float newValue, float maxValue, bool ignore = false)
     {
-        if (previousHealthStatus != 0)
+        if (previousHealthStatus == newValue) 
+            return;
+
+        if (previousHealthStatus != 0 && !ignore)
         {
             TMP_Text statusDisplayText = Instantiate(statusDisplayObject, transform.position, transform.rotation).transform.GetChild(0).GetComponent<TMP_Text>();
 
@@ -35,9 +39,12 @@ public class EntityStatsController : MonoBehaviour
         healthSlider.value = newValue / maxValue;
     }
 
-    public void UpdateManaSlider(float newValue, float maxValue)
+    public void UpdateManaSlider(float newValue, float maxValue, bool ignore = false)
     {
-        if (previousManaStatus != 0)
+        if (previousManaStatus == newValue)
+            return;
+
+        if (previousManaStatus != 0 && !ignore)
         {
             TMP_Text statusDisplayText = Instantiate(statusDisplayObject, transform.position, transform.rotation).transform.GetChild(0).GetComponent<TMP_Text>();
 

@@ -11,6 +11,8 @@ public enum ElementalTypes
 
 public enum AttributeTypes
 {
+    Buff,
+
     //Damage
     MeleeDamage,
     RangeDamage,
@@ -40,6 +42,7 @@ public class Attributes
 {
     public AttributeTypes attributeType;
     public ElementalTypes elementalTypes;
+    public Buffs buffTypes;
     public int amount;
 }
 

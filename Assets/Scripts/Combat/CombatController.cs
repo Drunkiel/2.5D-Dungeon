@@ -40,7 +40,7 @@ public class CombatController : MonoBehaviour
         }
 
         //Checks if player has enough mana to cast skill
-        int manaUsage = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.ManaUsage });
+        float manaUsage = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.ManaUsage });
         if (_casterStatistics.mana * _casterStatistics.manaUsageMultiplier < manaUsage)
         {
             ConsoleController.instance.ChatMessage(SenderType.Hidden, "Not enough mana to cast spell", OutputType.Warning);
@@ -95,7 +95,7 @@ public class CombatController : MonoBehaviour
         }
 
         //Get stats
-        int skillDamage = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.MeleeDamage, AttributeTypes.RangeDamage, AttributeTypes.MagicDamage });
+        float skillDamage = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.MeleeDamage, AttributeTypes.RangeDamage, AttributeTypes.MagicDamage });
 
         //Checks what type of damage to deal
         Attributes _attributes = _skillDataParser._skillData._skillAttributes[0];
@@ -127,7 +127,7 @@ public class CombatController : MonoBehaviour
 
     private void BuffSkill(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics)
     {
-        _casterStatistics._activeBuffs.Add(new("Ala", 5f, Buffs.MaxSpeed, 100));
+        _casterStatistics._activeBuffs.Add(new(_skillDataParser._skillData.displayedName, _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Cooldown }), _combatUI.GetBuff(_skillDataParser), (int)_combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Buff })));
         _casterStatistics.RecalculateStatistics(PlayerController.instance._holdingController._itemController._gearHolder);
     }
 

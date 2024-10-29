@@ -5,17 +5,26 @@
   "spriteIconPath": "Heart.png",
   "animationName": "Test_CastingSpell",
   "type": 1,
+  "duration": 5,
   "_skillAttributes": [
     {
-      "attributeType": 2,
-      "elementalTypes": 1,
+      "attributeType": 0,
+      "elementalTypes": 0,
+      "buffTypes": 5,
       "amount": 5
     },
     {
-      "attributeType": 7,
-      "elementalTypes": 1,
+      "attributeType": 8,
+      "elementalTypes": 0,
+      "buffTypes": 0,
+      "amount": 500
+    },
+    {
+      "attributeType": 9,
+      "elementalTypes": 0,
+      "buffTypes": 0,
       "amount": 5
     }
   ],
-  "name": "FireBallSkill"
+  "name": "SpeedSkill"
 }

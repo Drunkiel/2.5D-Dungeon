@@ -69,17 +69,34 @@ public class CombatUI : MonoBehaviour
         skillInfos[buttonIndex].skillButton.interactable = true;
     }
 
-    public int GetSkillModifier(SkillData _skillData, List<AttributeTypes> attributeTypes)
+    public float GetSkillModifier(SkillData _skillData, List<AttributeTypes> attributeTypes)
     {
         for (int i = 0; i < _skillData._skillAttributes.Count; i++)
         {
             for (int j = 0; j < attributeTypes.Count; j++)
             {
                 if (_skillData._skillAttributes[i].attributeType == attributeTypes[j])
-                    return _skillData._skillAttributes[i].amount;
+                {
+                    //Check if cooldown
+                    if (_skillData._skillAttributes[i].attributeType != AttributeTypes.Cooldown)
+                        return _skillData._skillAttributes[i].amount;
+                    else
+                        return _skillData._skillAttributes[i].amount / 100f;
+                }
             }
         }
 
         return 0;
+    }
+
+    public Buffs GetBuff(SkillDataParser _skillDataParser)
+    {
+        for (int i = 0; i < _skillDataParser._skillData._skillAttributes.Count; i++)
+        {
+            if (_skillDataParser._skillData._skillAttributes[i].buffTypes != Buffs.None)
+                return _skillDataParser._skillData._skillAttributes[i].buffTypes;
+        }
+
+        return Buffs.None;  
     }
 }

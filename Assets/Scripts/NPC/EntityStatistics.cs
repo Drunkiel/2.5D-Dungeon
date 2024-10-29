@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Experimental;
 using UnityEngine;
 
 [System.Serializable]
@@ -46,17 +47,26 @@ public class EntityStatistics
     public List<Buff> _activeBuffs = new();
     public EntityStatsController _statsController;
 
-    public void TakeDamage(float amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes)
+    public void TakeDamage(float amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes, bool ignore = false)
     {
-        int damageToDeal = CalculateDamage(amount * damageMultiplier, attributeTypes, elementalTypes);
+        int damageToDeal;
+
+        if (!ignore)
+            damageToDeal = CalculateDamage(amount * damageMultiplier, attributeTypes, elementalTypes);
+        else
+            damageToDeal = (int)amount;
 
         health -= damageToDeal;
-        _statsController.UpdateHealthSlider(health, maxHealth);
+        _statsController.UpdateHealthSlider(health, maxHealth, ignore);
+
         if (health < 0)
         {
             health = 0;
             ConsoleController.instance.ChatMessage(SenderType.System, "Entity is dead :p");
         }
+
+        if (health > maxHealth)
+            health = maxHealth;
     }
 
     public int CalculateDamage(float amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes)
@@ -109,12 +119,20 @@ public class EntityStatistics
         return Mathf.FloorToInt(damageOutput);
     }
 
-    public void TakeMana(int amount)
+    public void TakeMana(float amount, bool ignore = false)
     {
-        mana -= CalculateManaUsage(amount * manaUsageMultiplier);
-        _statsController.UpdateManaSlider(mana, maxMana);
+        if (!ignore)
+            mana -= CalculateManaUsage(amount * manaUsageMultiplier);
+        else    
+            mana -= (int)amount;
+
+        _statsController.UpdateManaSlider(mana, maxMana, ignore);
+
         if (mana < 0)
             mana = 0;
+
+        if (mana > maxMana)
+            mana = maxMana;
     }
 
     private int CalculateManaUsage(float amount)

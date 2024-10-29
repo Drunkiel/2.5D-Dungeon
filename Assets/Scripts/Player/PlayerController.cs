@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool grounded;
     private bool isFlipped;
 
-    private Vector3 lastGroundedPosition;
+    [SerializeField] private Vector3 lastGroundedPosition;
 
     private Vector2 movement;
     private Vector2 newVelocityXZ;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
         _statistics._statsController.UpdateHealthSlider(_statistics.health, _statistics.maxHealth);
         _statistics._statsController.UpdateManaSlider(_statistics.mana, _statistics.maxMana);
         instance = this;
+        StartCoroutine(AutoRegen());
     }
 
     // Update is called once per frame
@@ -81,15 +83,18 @@ public class PlayerController : MonoBehaviour
         if (isStopped || GameController.isPaused)
             return;
 
-        if (grounded)
-            lastGroundedPosition = transform.position;
-
         //Make movement depend on direction player is facing
         Vector3 move = new Vector3(movement.x, 0, movement.y).normalized;
         Vector3 rotatedMovement = transform.TransformDirection(move);
 
         //Move player
         rgBody.AddForce(rotatedMovement * _statistics.speedForce, ForceMode.Acceleration);
+    }
+
+    private void LateUpdate()
+    {
+        if (grounded)
+            lastGroundedPosition = transform.position;
     }
 
     public void MovementInput(InputAction.CallbackContext context)
@@ -169,5 +174,20 @@ public class PlayerController : MonoBehaviour
     public void ResetMovement()
     {
         movement = Vector2.zero;
+        rgBody.velocity = Vector3.zero;
+    }
+
+    private IEnumerator AutoRegen()
+    {
+        //Wait 0.5s then regen some hp and mana
+        yield return new WaitForSeconds(1f);
+
+        if (_statistics.health < _statistics.maxHealth)
+            _statistics.TakeDamage(-_statistics.healthRegeneration, AttributeTypes.Buff, ElementalTypes.NoElement, true);
+
+        if (_statistics.mana < _statistics.maxMana)
+            _statistics.TakeMana(-_statistics.manaRegeneration, true);
+
+        StartCoroutine(AutoRegen());
     }
 }
