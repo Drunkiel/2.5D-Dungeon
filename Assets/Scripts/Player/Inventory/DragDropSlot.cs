@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
     public InventorySlot currentSlot;
+    public bool lockedUp;
     public Image image;
     [SerializeField] private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
@@ -16,6 +17,9 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (lockedUp)
+            return;
+
         InventoryController.instance.isMovingItem = true;
 
         if (currentSlot._itemID != null && currentSlot.itemRestriction != ItemType.None)
@@ -70,11 +74,17 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (lockedUp)
+            return;
+
         rectTransform.anchoredPosition += eventData.delta / 1.5f;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (lockedUp)
+            return;
+
         ItemID _itemID = transform.GetChild(1).GetComponent<ItemID>();
 
         //Check if pointer is over any UI element
@@ -102,6 +112,9 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (lockedUp)
+            return;
+
         if (currentSlot == null)
             currentSlot = eventData.pointerEnter.transform.parent.parent.GetComponent<InventorySlot>();
 

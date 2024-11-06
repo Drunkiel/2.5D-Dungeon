@@ -6,6 +6,7 @@ public enum ItemType
     Weapon,
     Armor,
     Collectable,
+    Spell,
 }
 
 public class ItemController : SaveLoadSystem
