@@ -126,6 +126,9 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (lockedUp)
+            return;
+
         rectTransform.SetParent(currentSlot.transform);
         rectTransform.localPosition = Vector3.zero;
     }

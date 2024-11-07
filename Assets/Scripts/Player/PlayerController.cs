@@ -182,11 +182,14 @@ public class PlayerController : MonoBehaviour
         //Wait 0.5s then regen some hp and mana
         yield return new WaitForSeconds(1f);
 
-        if (_statistics.health < _statistics.maxHealth)
-            _statistics.TakeDamage(-_statistics.healthRegeneration, AttributeTypes.Buff, ElementalTypes.NoElement, true);
+        if (!CombatController.instance.inCombat)
+        {
+            if (_statistics.health < _statistics.maxHealth)
+                _statistics.TakeDamage(-_statistics.healthRegeneration, AttributeTypes.Buff, ElementalTypes.NoElement, true);
 
-        if (_statistics.mana < _statistics.maxMana)
-            _statistics.TakeMana(-_statistics.manaRegeneration, true);
+            if (_statistics.mana < _statistics.maxMana)
+                _statistics.TakeMana(-_statistics.manaRegeneration, true);
+        }
 
         StartCoroutine(AutoRegen());
     }

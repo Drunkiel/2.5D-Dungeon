@@ -15,6 +15,13 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         if (itemRestriction != ItemType.None && eventData.pointerDrag.transform.GetChild(1).GetComponent<ItemID>()._itemData.itemType != itemRestriction)
             return;
 
+        RectTransform rectTransform = eventData.pointerDrag.GetComponent<RectTransform>();
+        DragDropSlot _dragDropSlot = rectTransform.GetComponent<DragDropSlot>();
+
+        //Check if slot is locked
+        if (_dragDropSlot.lockedUp)
+            return;
+
         ItemController _itemController = PlayerController.instance._holdingController._itemController;
         switch (itemRestriction)
         {
@@ -49,8 +56,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
                 break;
         }
 
-        RectTransform rectTransform = eventData.pointerDrag.GetComponent<RectTransform>();
-        rectTransform.GetComponent<DragDropSlot>().currentSlot = this;
+        _dragDropSlot.currentSlot = this;
         rectTransform.SetParent(rectTransform.GetComponent<DragDropSlot>().currentSlot.transform);
         rectTransform.localPosition = Vector3.zero;
     }
