@@ -106,6 +106,10 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         currentSlot._itemID = transform.GetChild(1).GetComponent<ItemID>();
         InventoryController.instance.isMovingItem = false;
 
+        //Checks if item is dropped on quick inventory  
+        if (transform.parent.parent.parent.TryGetComponent(out QuickInventoryController _quickInventory))
+            lockedUp = _quickInventory.GetLockedState();
+
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
     }
