@@ -31,6 +31,7 @@ public class QuickInventoryController : MonoBehaviour
                 backgroundImage.SetActive(!lockedUp);
                 continue;
             }
+
             lockImage.sprite = lockStateSprites[lockedUp ? 0 : 1];
             _slot._itemID.transform.parent.GetComponent<DragDropSlot>().lockedUp = lockedUp;
         }
