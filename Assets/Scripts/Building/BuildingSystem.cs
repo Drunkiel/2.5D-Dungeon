@@ -23,6 +23,12 @@ public class BuildingSystem : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            grid.transform.parent.position += Vector3.up;
+
+        if (Input.GetKeyDown(KeyCode.DownArrow) && grid.transform.parent.position.y > 0)
+            grid.transform.parent.position += Vector3.down;
+
         if (!_objectToPlace)
             return;
 
@@ -41,8 +47,6 @@ public class BuildingSystem : MonoBehaviour
     {
         inBuildingMode = !inBuildingMode;
         buildingUI.SetActive(inBuildingMode);
-
-        //CameraController.instance.ChangeCameraTarget(inBuildingMode ? 1 : 0);
     }
 
     public static Vector3 GetMouseWorldPosition()
@@ -67,7 +71,7 @@ public class BuildingSystem : MonoBehaviour
             ) return SnapCoordinateToGrid(Vector3.zero);
 
         position = grid.GetCellCenterWorld(cellPosition);
-        return new(position.x, _objectToPlace.transform.position.y, position.z);
+        return position;
     }
 
     public void InitializeWithObject(GameObject prefab)
