@@ -346,6 +346,183 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35360897}
   m_CullTransparentMesh: 1
+--- !u!1 &140643020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 140643021}
+  - component: {fileID: 140643023}
+  - component: {fileID: 140643022}
+  - component: {fileID: 140643024}
+  m_Layer: 0
+  m_Name: CameraTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &140643021
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140643020}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1708548913}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &140643022
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140643020}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 4
+  m_CollisionDetection: 0
+--- !u!114 &140643023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140643020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608f55aa008280a429eac92ff530b25a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virtualCamera: {fileID: 1179424985}
+  target: {fileID: 140643021}
+  rotationSpeed: 500
+  zoomSpeed: 10
+  minZoom: 20
+  maxZoom: 80
+  distanceFromTarget: 10
+  minVerticalAngle: -10
+  maxVerticalAngle: 80
+  movement: {x: 0, y: 0}
+  isMoving: 0
+  rgBody: {fileID: 140643022}
+  movementDamping: 5
+--- !u!114 &140643024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140643020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: cb9a707a1d7738f4595fb3bffbb2f47f,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 140643023}
+        m_TargetAssemblyTypeName: BuilderCamera, Assembly-CSharp
+        m_MethodName: MovementInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 16f58633-598a-4ca9-b4a2-3afe9528f1f2
+    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 831694be-a454-4287-ad55-739d6410f3c3
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1adfeedf-6cb6-4539-93ec-5d1796dd9b86
+    m_ActionName: Player/Inventory[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7113e6d4-0e61-46da-ac53-70d8a02ecb14
+    m_ActionName: Player/PauseMenu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4a0fdf93-c8da-4d0b-a3ba-dcc0ac6e5472
+    m_ActionName: Player/CameraRotate[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5d2b3af0-84ce-44e5-8661-3d89b35f2c18
+    m_ActionName: Player/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 056278de-51ac-4042-8aa7-8a86656317f9
+    m_ActionName: Actions/Click[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0d66854d-d6eb-495f-8b8f-4c70f58190c0
+    m_ActionName: Actions/Hold[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: faedcc63-300f-45bd-b6e1-6df6bbbf888d
+    m_ActionName: Actions/End[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fd078b41-9436-4411-8c29-2ce2d2075ca8
+    m_ActionName: Console/Console[/Keyboard/slash]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a9e6e103-d918-4824-9853-29ee6b5ee0b2
+    m_ActionName: Console/IndexUp[/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e5c51ffc-9acc-4ac8-a5b7-0412e382ea31
+    m_ActionName: Console/IndexDown[/Keyboard/downArrow]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &143010076
 GameObject:
   m_ObjectHideFlags: 0
@@ -1826,8 +2003,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 1708548913}
-  m_Follow: {fileID: 1708548913}
+  m_LookAt: {fileID: 140643021}
+  m_Follow: {fileID: 140643021}
   m_Lens:
     FieldOfView: 60.000004
     OrthographicSize: 5
@@ -2548,7 +2725,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1708548913}
   m_Layer: 0
-  m_Name: CameraTarget
+  m_Name: Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2569,6 +2746,7 @@ Transform:
   m_Children:
   - {fileID: 575300093}
   - {fileID: 1908526707}
+  - {fileID: 140643021}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1908526706
