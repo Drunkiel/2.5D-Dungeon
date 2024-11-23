@@ -1,5 +1,6 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class BuilderCamera : MonoBehaviour
@@ -31,11 +32,7 @@ public class BuilderCamera : MonoBehaviour
     {
         // Set initial position based on the target's position
         if (target != null)
-        {
             HandleRotation();
-            transform.position = target.position - transform.forward * distanceFromTarget;
-            virtualCamera.transform.LookAt(target);
-        }
     }
 
     private void Update()
@@ -50,10 +47,8 @@ public class BuilderCamera : MonoBehaviour
 
         // If not moving, dampen the velocity
         if (!isMoving)
-        {
             // Smoothly reduce velocity to zero when no movement input is provided
             rgBody.velocity = Vector3.Lerp(rgBody.velocity, Vector3.zero, Time.deltaTime * movementDamping);
-        }
 
         // Clamping movement speed
         newVelocityXZ = new Vector2(rgBody.velocity.x, rgBody.velocity.z);
@@ -61,24 +56,37 @@ public class BuilderCamera : MonoBehaviour
         if (newVelocityXZ.magnitude > 1.5f)
             newVelocityXZ = Vector2.ClampMagnitude(newVelocityXZ, 1.5f);
 
-        rgBody.velocity = new Vector3(newVelocityXZ.x, rgBody.velocity.y, newVelocityXZ.y);
+        rgBody.velocity = new Vector3(newVelocityXZ.x, 0, newVelocityXZ.y);
     }
 
-    private void FixedUpdate()
+private void FixedUpdate()
+{
+    if (target != null)
     {
-        // Calculate movement direction based on camera's forward and right vectors
-        if (target != null)
+        // Ustaw pozycjê celu w p³aszczyŸnie XZ
+        target.localPosition = new Vector3(target.position.x, 0, target.position.z);
+
+        // SprawdŸ, czy pozycja celu przekracza granice mapy
+        if (Mathf.Abs(target.position.x) > BuildingSystem.instance.mapSize.x ||
+            Mathf.Abs(target.position.z) > BuildingSystem.instance.mapSize.y)
         {
-            Vector3 forward = target.forward;
-            Vector3 right = target.right;
+            // Oblicz wektor powrotu do punktu (0, 0, 0)
+            Vector3 returnDirection = (Vector3.zero - target.position).normalized;
 
-            // Normalize the movement vector and apply it based on camera's orientation
-            Vector3 moveDirection = (movement.x * right + movement.y * forward).normalized;
+            // Wymuœ ruch gracza w stronê (0, 0, 0)
+            rgBody.AddForce(returnDirection * 50, ForceMode.Impulse);
 
-            // Apply the calculated movement direction to the Rigidbody
-            rgBody.AddForce(moveDirection * 10, ForceMode.Acceleration);
+            return;
         }
+
+        // Oblicz kierunek ruchu na podstawie orientacji kamery
+        Vector3 moveDirection = (movement.x * target.right + movement.y * target.forward).normalized;
+
+        // Zastosuj si³ê w kierunku ruchu
+        rgBody.AddForce(moveDirection * 10, ForceMode.Acceleration);
     }
+}
+
 
     public void MovementInput(InputAction.CallbackContext context)
     {
@@ -109,7 +117,6 @@ public class BuilderCamera : MonoBehaviour
             Vector3 direction = rotation * Vector3.back * distanceFromTarget;
             virtualCamera.transform.position = target.position + direction;
 
-            //virtualCamera.transform.LookAt(target);
             target.rotation = Quaternion.Euler(currentRotationX, currentRotationY, 0);
         }
     }

@@ -6,6 +6,8 @@ public class BuildingUI : MonoBehaviour
     public List<GameObject> allBuildings = new();
     [SerializeField] private Transform parent;
     [SerializeField] private BuildingCard buildingCardPrefab;
+    private bool isOpen;
+    public Animator animator;
 
     void Start()
     {
@@ -14,11 +16,21 @@ public class BuildingUI : MonoBehaviour
 
     public void SpawnCards()
     {
-        foreach (GameObject building in allBuildings)
+        for (int i = 0; i < allBuildings.Count; i++)
         {
             BuildingCard _singleCard = Instantiate(buildingCardPrefab, parent);
-            BuildingID _buildingID = building.GetComponent<BuildingID>();
-            _singleCard.AssignData(_buildingID.showcaseImage, _buildingID.buildingName, () => BuildingSystem.instance.InitializeWithObject(building));
+            BuildingID _buildingID = allBuildings[i].GetComponent<BuildingID>();
+            int index = i;
+            _singleCard.AssignData(_buildingID.showcaseImage, _buildingID.buildingName, () => BuildingSystem.instance.InitializeWithObject(allBuildings[index]));
         }
+    }
+
+    public void PlayAnimation()
+    {
+        isOpen = !isOpen;
+        if (isOpen)
+            animator.Play("CloseMenu");
+        else
+            animator.Play("OpenMenu");
     }
 }
