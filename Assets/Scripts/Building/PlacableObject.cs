@@ -17,6 +17,7 @@ public class PlacableObject : MonoBehaviour
         Destroy(GetComponent<ObjectDrag>());
         Destroy(GetComponent<TriggerController>());
         transform.GetComponentInChildren<AutoSize>().AutoDestroy();
+        transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
         BuildingSystem.instance._objectToPlace = null;
 
         if (objectToManipulate != null)
@@ -35,12 +36,22 @@ public class PlacableObject : MonoBehaviour
         isPlaced = false;
         BuildingSystem.instance._objectToPlace = this;
         BuildingSystem.instance.OpenUI(false);
+        transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
 
         if (objectToManipulate != null)
             objectToManipulate.SetActive(false);
 
         gameObject.AddComponent<ObjectDrag>();
+        TriggerController triggerController = gameObject.AddComponent<TriggerController>();
+        triggerController.objectsTag = new string[1] { "Finish" };
+        triggerController.isTriggered = true;
+        triggerController.reverseReturn = true;
         Instantiate(BuildingSystem.instance.buildingMaterial, transform);
+    }
+
+    public virtual void Destroy()
+    {
+        Destroy(gameObject);
     }
 
     public void Rotate(int angle)

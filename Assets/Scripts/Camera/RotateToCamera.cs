@@ -13,7 +13,7 @@ public class RotateToCamera : MonoBehaviour
     private void Update()
     {
         //Check distance between object and camera
-        float distanceToCamera = Vector3.Distance(_cameraController.virtualCameras[_cameraController.currentCamera].transform.position, transform.position);
+        float distanceToCamera = Vector3.Distance(Camera.main.transform.position, transform.position);
 
         if (distanceToCamera <= rotationDistanceThreshold)
             RotateObject();
@@ -22,7 +22,7 @@ public class RotateToCamera : MonoBehaviour
     private void RotateObject()
     {
         //Calculate direction to the camera but only consider the horizontal plane (Y axis rotation)
-        Vector3 directionToCamera = _cameraController.virtualCameras[_cameraController.currentCamera].transform.position - transform.position;
+        Vector3 directionToCamera = Camera.main.transform.position - transform.position;
 
         //Zero out the Y-axis in the direction vector so rotation happens only around Y
         directionToCamera.y = 0f;

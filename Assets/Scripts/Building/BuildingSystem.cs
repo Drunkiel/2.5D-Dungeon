@@ -7,6 +7,7 @@ public class BuildingSystem : MonoBehaviour
     public static bool inBuildingMode;
 
     [SerializeField] private Grid grid;
+    public Transform parent;
     public Vector2 mapSize;
 
     public GameObject buildingMaterial;
@@ -81,7 +82,8 @@ public class BuildingSystem : MonoBehaviour
 
         inBuildingMode = true;
 
-        GameObject newObject = Instantiate(prefab, prefab.transform.position, Quaternion.identity);
+        GameObject newObject = Instantiate(prefab, prefab.transform.position, Quaternion.identity, parent);
+        newObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
         _objectToPlace = newObject.GetComponent<PlacableObject>();
         newObject.transform.position = SnapCoordinateToGrid(transform.position);
         Instantiate(buildingMaterial, newObject.transform);
@@ -110,13 +112,7 @@ public class BuildingSystem : MonoBehaviour
                 inBuildingMode = false;
             });
         else
-        {
-            Vector3 oldPosition = _objectToPlace.transform.position;
-            UI.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() =>
-            {
-                _objectToPlace.transform.position = oldPosition; PlaceButton();
-            });
-        }
+            UI.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => PlaceButton());
     }
 
     public void PlaceButton()

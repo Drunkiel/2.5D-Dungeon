@@ -4,7 +4,7 @@ using UnityEngine;
 public class TriggerController : MonoBehaviour
 {
     public bool isTriggered;
-    [SerializeField] private bool reverseReturn;
+    public bool reverseReturn;
     public string[] objectsTag;
     public HashSet<string> objectsTagsSet;
 

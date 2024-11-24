@@ -33,4 +33,19 @@ public class BuildingUI : MonoBehaviour
         else
             animator.Play("OpenMenu");
     }
+
+    public void Finish()
+    {
+        BuildingSystem _buildingSystem = BuildingSystem.instance;
+
+        for (int i = 0; i < _buildingSystem.parent.childCount; i++)
+        {
+            GameObject part = _buildingSystem.parent.transform.GetChild(i).gameObject;
+            Destroy(part.transform.GetChild(0).gameObject);
+            Destroy(part.GetComponent<Rigidbody>());
+            Destroy(part.GetComponent<BuildingID>());
+            Destroy(part.GetComponent<PlacableObject>());
+            Destroy(part.GetComponent<BoxCollider>());
+        }
+    }
 }
