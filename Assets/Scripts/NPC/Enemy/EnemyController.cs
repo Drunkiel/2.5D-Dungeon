@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (isStopped|| GameController.isPaused)
+        if (isStopped || GameController.isPaused)
             return;
 
         Vector3 move = new Vector3(movement.x, 0, movement.y).normalized;

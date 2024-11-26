@@ -10,10 +10,7 @@ public class HintEvent : MonoBehaviour
     {
         bool Check()
         {
-            if (dontAdd)
-                return false;
-            else
-                return addOne;
+            return !dontAdd && addOne;
         }
 
         int index = addOne && eventIndex != 0 ? (Check() ? eventIndex + 1 : eventIndex) : eventIndex;
