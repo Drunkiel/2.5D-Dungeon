@@ -5,8 +5,6 @@ using UnityEngine;
 public class CombatController : MonoBehaviour
 {
     public static CombatController instance;
-    public bool inCombat;
-    public float timeToResetCombat;
 
     public CombatUI _combatUI;
     [SerializeField] private OpenCloseUI _openCloseUI;
@@ -56,9 +54,15 @@ public class CombatController : MonoBehaviour
 
         //Play animation
         if (_player != null)
+        {
             PlayAnimation(_player.anim, animName);
+            _player.GetComponent<EntityCombat>().ManageCombat();
+        }
         else if (_enemyController != null)
+        {
             PlayAnimation(_enemyController.anim, animName);
+            _enemyController.GetComponent<EntityCombat>().ManageCombat();
+        }
 
 
         switch (_skillDataParser._skillData.type)
@@ -71,14 +75,6 @@ public class CombatController : MonoBehaviour
                 BuffSkill(_skillDataParser, _casterStatistics);
                 break;
         }
-
-        if (!inCombat)
-        {
-            StartCoroutine(ResetCombat());
-            inCombat = true;
-        }
-        else
-            timeToResetCombat = 0;
 
         _casterStatistics.TakeMana(manaUsage);
     }
@@ -95,11 +91,13 @@ public class CombatController : MonoBehaviour
             {
                 _targetsStatistics.Add(_enemyComponent._statistics);
                 _enemyTargets.Add(_enemyComponent);
+                _enemyComponent.GetComponent<EntityCombat>().ManageCombat();
             }
             else if (target.TryGetComponent(out PlayerController _playerComponent))
             {
                 _targetsStatistics.Add(_playerComponent._statistics);
                 _playerTarget = _playerComponent;
+                _playerTarget.GetComponent<EntityCombat>().ManageCombat();
             }
             else
                 ConsoleController.instance.ChatMessage(SenderType.System, $"Target: {target.name} does not have a controller script attached", OutputType.Error);
@@ -147,15 +145,5 @@ public class CombatController : MonoBehaviour
         // Play the animation and return how long animation takes
         animator.Play(animationName);
         return animator.GetCurrentAnimatorStateInfo(0).length;
-    }
-
-    private IEnumerator ResetCombat()
-    {
-        timeToResetCombat += Time.deltaTime;
-
-        //Wait 5s to reset combat
-        yield return new WaitUntil(() => timeToResetCombat < 5);
-
-        inCombat = false;
     }
 }

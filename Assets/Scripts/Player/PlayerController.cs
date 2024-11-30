@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
         //Wait 0.5s then regen some hp and mana
         yield return new WaitForSeconds(1f);
 
-        if (!CombatController.instance.inCombat)
+        if (!GetComponent<EntityCombat>().inCombat)
         {
             if (_statistics.health < _statistics.maxHealth)
                 _statistics.TakeDamage(-_statistics.healthRegeneration, AttributeTypes.Buff, ElementalTypes.NoElement, true);

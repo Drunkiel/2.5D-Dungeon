@@ -37,8 +37,8 @@ public class DialogController : MonoBehaviour
         PlayerController.instance.isStopped = true;
         if (_enemyController != null)
         {
-            _enemyController.isStopped = true;
-            _enemyController.GoTo(PlayerController.instance.transform.position);
+            _enemyController._enemyWalk.isStopped = true;
+            _enemyController._enemyWalk.GoTo(PlayerController.instance.transform.position);
             _npcPreview.UpdateAllByEntity(_enemyController.GetComponent<EntityLookController>()._entityLook);
         }
         _openCloseUI.Open();
@@ -50,7 +50,7 @@ public class DialogController : MonoBehaviour
     {
         PlayerController.instance.isStopped = false;
         if (_enemyController != null)
-            _enemyController.isStopped = false;
+            _enemyController._enemyWalk.isStopped = false;
 
         _dialogData.onEndDialogEvent.Invoke();
         _openCloseUI.Close();

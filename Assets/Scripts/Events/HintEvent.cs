@@ -14,7 +14,8 @@ public class HintEvent : MonoBehaviour
         }
 
         int index = addOne && eventIndex != 0 ? (Check() ? eventIndex + 1 : eventIndex) : eventIndex;
-        if (currentHint == index) return;
+        if (currentHint == index) 
+            return;
 
         currentHint = index;
         HintController.instance.UpdateText(index);

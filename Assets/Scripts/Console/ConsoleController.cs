@@ -194,7 +194,7 @@ public class ConsoleController : MonoBehaviour
 
     public void ExitChatMode()
     {
-        if (!CombatController.instance.inCombat)
+        if (!PlayerController.instance.GetComponent<EntityCombat>().inCombat)
             PlayerController.instance.isStopped = false;
     }
 
