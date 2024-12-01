@@ -24,7 +24,7 @@ public class EnemyWalk : MonoBehaviour
 
         //Setting new first position to go
         startPosition = transform.position;
-        SetNewPosition();
+        SetNewPosition(wanderingDistance);
     }
 
     private void Update()
@@ -66,16 +66,27 @@ public class EnemyWalk : MonoBehaviour
             GoTo(positionToGo);
     }
 
-    private void SetNewPosition()
+    public void RandomRun()
     {
-        positionToGo = GetRandomPosition();
+        //Checking distance to new position
+        if (Vector3.Distance(transform.position, positionToGo) < 1f)
+        {
+            SetNewPosition(wanderingDistance * 2);
+        }
+        else
+            GoTo(positionToGo);
+    }
+
+    private void SetNewPosition(float distance)
+    {
+        positionToGo = GetRandomPosition(distance);
     }
 
     private IEnumerator PauseBeforeNewPosition()
     {
         yield return new WaitForSeconds(Random.Range(2, 5));
         isNewPositionFound = false;
-        SetNewPosition();
+        SetNewPosition(wanderingDistance);
     }
 
     public void GoTo(Vector3 position)
@@ -99,11 +110,11 @@ public class EnemyWalk : MonoBehaviour
         }
     }
 
-    private Vector3 GetRandomPosition()
+    private Vector3 GetRandomPosition(float distance)
     {
         //Getting random position on X and Z axis
-        float deltaX = Random.Range(-wanderingDistance, wanderingDistance);
-        float deltaZ = Random.Range(-wanderingDistance, wanderingDistance);
+        float deltaX = Random.Range(-distance, distance);
+        float deltaZ = Random.Range(-distance, distance);
 
         //New position
         Vector3 newPosition = new(startPosition.x + deltaX, startPosition.y, startPosition.z + deltaZ);

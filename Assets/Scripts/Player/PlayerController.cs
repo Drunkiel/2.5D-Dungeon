@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _statistics.SaveStats();
         moveSoundSource = GetComponent<AudioSource>();
         _statistics._statsController.UpdateHealthSlider(_statistics.health, _statistics.maxHealth);
         _statistics._statsController.UpdateManaSlider(_statistics.mana, _statistics.maxMana);

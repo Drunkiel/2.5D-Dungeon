@@ -20,7 +20,8 @@ public class CombatUI : MonoBehaviour
     private void Start()
     {
         for (int i = 0; i < skillInfos.Count; i++)
-            SetSkillToBTN(i, PlayerController.instance.GetComponent<SkillController>()._skillHolder._skillDatas[i]);
+            if (skillInfos[i].skillButton != null)
+                SetSkillToBTN(i, PlayerController.instance.GetComponent<SkillController>()._skillHolder._skillDatas[i]);
     }
 
     public void SetSkillToBTN(int buttonIndex, SkillDataParser _skillDataParser)
@@ -55,18 +56,20 @@ public class CombatUI : MonoBehaviour
         skillInfos[i].skillButton.transform.GetChild(0).GetChild(4).GetComponent<TMP_Text>().text = $"{_skillDataParser._skillData._skillAttributes[0].elementalTypes}";   
     }
 
-    private IEnumerator Cast(int buttonIndex, SkillDataParser _skillDataParser)
+    public IEnumerator Cast(int buttonIndex, SkillDataParser _skillDataParser)
     {
         CombatController _combatController = CombatController.instance;
         _combatController.CastSkill(_skillDataParser, skillInfos[buttonIndex]._collisionController);
         skillInfos[buttonIndex].canBeCasted = false;
-        skillInfos[buttonIndex].skillButton.interactable = false;
+        if (skillInfos[buttonIndex].skillButton != null)
+            skillInfos[buttonIndex].skillButton.interactable = false;
 
         // Wait until the animation is done
         yield return new WaitForSeconds(GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Cooldown }));
 
         skillInfos[buttonIndex].canBeCasted = true;
-        skillInfos[buttonIndex].skillButton.interactable = true;
+        if (skillInfos[buttonIndex].skillButton != null)
+            skillInfos[buttonIndex].skillButton.interactable = true;
     }
 
     public float GetSkillModifier(SkillData _skillData, List<AttributeTypes> attributeTypes)

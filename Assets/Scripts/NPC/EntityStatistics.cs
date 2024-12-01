@@ -1,10 +1,37 @@
+using System;
 using System.Collections.Generic;
-using UnityEditor.Experimental;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
+public class BasicStatistics
+{
+    public int maxHealth;
+
+    public float healthRegeneration;
+    public float manaRegeneration;
+
+    public float damageMultiplier;
+    public float allProtectionMultiplier;
+    public float elementalProtectionMultiplier;
+    public float manaUsageMultiplier;
+
+    public int meleeDamage;
+    public int rangeDamage;
+    public int magicDamage;
+    public int allProtection;
+    public int meleeProtection;
+    public int rangeProtection;
+    public int magicProtection;
+
+    public float speedForce;
+    public float maxSpeed;
+}
+
+[Serializable]
 public class EntityStatistics
 {
+    [HideInInspector] public BasicStatistics _stats;
+
     [Header("Health / Mana")]
     public int health;
     public int maxHealth;
@@ -46,6 +73,30 @@ public class EntityStatistics
     [Header("Active Buffs")]
     public List<Buff> _activeBuffs = new();
     public EntityStatsController _statsController;
+
+    public void SaveStats()
+    {
+        _stats.maxHealth = maxHealth;
+
+        _stats.healthRegeneration = healthRegeneration;
+        _stats.manaRegeneration = manaRegeneration;
+
+        _stats.damageMultiplier = damageMultiplier;
+        _stats.allProtectionMultiplier = allProtectionMultiplier;
+        _stats.elementalProtectionMultiplier = elementalProtectionMultiplier;
+        _stats.manaUsageMultiplier = manaUsageMultiplier;
+
+        _stats.meleeDamage = meleeDamage;
+        _stats.rangeDamage = rangeDamage;
+        _stats.magicDamage = magicDamage;
+        _stats.allProtection = allProtection;
+        _stats.meleeProtection = meleeProtection;
+        _stats.rangeProtection = rangeProtection;
+        _stats.magicProtection = magicProtection;
+
+        _stats.speedForce = speedForce;
+        _stats.maxSpeed = maxSpeed;
+    }
 
     public void TakeDamage(float amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes, bool ignore = false)
     {
@@ -162,26 +213,26 @@ public class EntityStatistics
 
     public void ResetStatistics()
     {
-        maxHealth = 100;
+        maxHealth = _stats.maxHealth;
 
-        healthRegeneration = 1;
-        manaRegeneration = 1;
+        healthRegeneration = _stats.healthRegeneration;
+        manaRegeneration = _stats.manaRegeneration;
 
-        damageMultiplier = 1;
-        allProtectionMultiplier = 1;
-        elementalProtectionMultiplier = 1;
-        manaUsageMultiplier = 1;
+        damageMultiplier = _stats.damageMultiplier;
+        allProtectionMultiplier = _stats.allProtectionMultiplier;
+        elementalProtectionMultiplier = _stats.elementalProtectionMultiplier;
+        manaUsageMultiplier = _stats.manaUsageMultiplier;
 
-        meleeDamage = 0;
-        rangeDamage = 0;
-        magicDamage = 0;
-        allProtection = 0;
-        meleeProtection = 0;
-        rangeProtection = 0;
-        magicProtection = 0;
+        meleeDamage = _stats.meleeDamage;
+        rangeDamage = _stats.rangeDamage;
+        magicDamage = _stats.magicDamage;
+        allProtection = _stats.allProtection;
+        meleeProtection = _stats.meleeProtection;
+        rangeProtection = _stats.rangeProtection;
+        magicProtection = _stats.magicProtection;
 
-        speedForce = 30;
-        maxSpeed = 1.2f;
+        speedForce = _stats.speedForce;
+        maxSpeed = _stats.maxSpeed;
     }
 
     public void RecalculateStatistics(GearHolder _gearHolder)
