@@ -13,7 +13,7 @@ public class EntityCombat : MonoBehaviour
         if (!inCombat)
         {
             StartCoroutine(ResetCombat());
-            if (TryGetComponent(out EnemyController _enemyController)) 
+            if (TryGetComponent(out EnemyController _enemyController))
                 _enemyController.currentState = State.Attacking;
 
             inCombat = true;
@@ -22,8 +22,8 @@ public class EntityCombat : MonoBehaviour
 
     private IEnumerator ResetCombat()
     {
-        //Wait 5s then set inCombat to false
-        while (timeToResetCombat < 5)
+        // Czekanie przez okreœlony czas, a nastêpnie wyjœcie z trybu walki
+        while (timeToResetCombat < 100)
         {
             timeToResetCombat += 1;
             yield return new WaitForSeconds(1f);
