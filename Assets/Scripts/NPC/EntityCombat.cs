@@ -23,7 +23,7 @@ public class EntityCombat : MonoBehaviour
     private IEnumerator ResetCombat()
     {
         // Czekanie przez okreœlony czas, a nastêpnie wyjœcie z trybu walki
-        while (timeToResetCombat < 100)
+        while (timeToResetCombat < 5)
         {
             timeToResetCombat += 1;
             yield return new WaitForSeconds(1f);
