@@ -7,13 +7,14 @@ public class EnemyWalk : MonoBehaviour
 
     private Vector3 startPosition;
     [SerializeField] private float wanderingDistance;
-    private Vector3 positionToGo;
+    [SerializeField] private Vector3 positionToGo;
 
     public Vector2 movement;
     public bool isMoving;
 
     private bool isFlipped;
     private bool isNewPositionFound;
+    public float a;
 
     [HideInInspector] public Vector3 move;
     private EnemyController _controller;
@@ -31,8 +32,8 @@ public class EnemyWalk : MonoBehaviour
     {
         isMoving = movement.magnitude > 0.01f;
 
-        if (isStopped || GameController.isPaused)
-            return;
+        //if (isStopped || GameController.isPaused)
+        //    return;
     }
 
     private void FixedUpdate()
@@ -52,7 +53,7 @@ public class EnemyWalk : MonoBehaviour
     public void Patrolling()
     {
         //Checking distance to new position
-        if (Vector3.Distance(transform.position, positionToGo) < 0.2f)
+        if (Vector3.Distance(transform.position, new(positionToGo.x, transform.position.y, positionToGo.z)) < 0.2f)
         {
             if (!isNewPositionFound)
             {
@@ -63,7 +64,7 @@ public class EnemyWalk : MonoBehaviour
                 movement = Vector2.zero;
         }
         else
-            GoTo(positionToGo);
+            GoTo(positionToGo, positionToGo);
     }
 
     //Make it to be depended by skill
@@ -80,7 +81,7 @@ public class EnemyWalk : MonoBehaviour
         else
             positionToGo = transform.position;
 
-        GoTo(positionToGo);
+        GoTo(positionToGo, playerPosition);
     }
 
     public void FleeFromPlayer()
@@ -98,7 +99,7 @@ public class EnemyWalk : MonoBehaviour
         else
             positionToGo = transform.position;
 
-        GoTo(positionToGo);
+        GoTo(positionToGo, positionToGo);
     }
 
     public void RandomRun()
@@ -107,7 +108,7 @@ public class EnemyWalk : MonoBehaviour
         if (Vector3.Distance(transform.position, positionToGo) < 1f)
             SetNewPosition(wanderingDistance * 2);
         else
-            GoTo(positionToGo);
+            GoTo(positionToGo, positionToGo);
     }
 
     private void SetNewPosition(float distance)
@@ -122,21 +123,22 @@ public class EnemyWalk : MonoBehaviour
         SetNewPosition(wanderingDistance);
     }
 
-    public void GoTo(Vector3 position)
+    public void GoTo(Vector3 position, Vector3 faceDirection)
     {
         Vector3 direction = position - transform.position;
+        float newFaceDirection = (faceDirection - transform.position).x;
         movement = new Vector2(
             direction.x * _controller._statistics.speedForce,
             direction.z * _controller._statistics.speedForce
         );
 
         //Flipping Enemy to direction they are going
-        if (movement.x < 0 && !isFlipped)
+        if (newFaceDirection < 0 && !isFlipped)
         {
             transform.GetChild(0).localScale = new(-1, 1, 1);
             isFlipped = true;
         }
-        else if (movement.x > 0 && isFlipped)
+        else if (newFaceDirection > 0 && isFlipped)
         {
             transform.GetChild(0).localScale = new(1, 1, 1);
             isFlipped = false;

@@ -12,6 +12,8 @@ public class SkillData : ScriptableObject
     public string spriteIconPath;
     public string animationName;
     public SkillType type;
+    public bool worksOnSelf;
+    public bool worksOnOthers;
     public List<Attributes> _skillAttributes = new();
 
     public Sprite GetSprite(string path, float pixelsPerUnit)

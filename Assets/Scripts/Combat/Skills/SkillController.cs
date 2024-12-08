@@ -50,11 +50,19 @@ public class SkillController : MonoBehaviour
 {
 	public SkillHolder _skillHolder;
     public CombatUI _combatUI;
+    public Transform skillsParent;
 
     void Start()
     {
         for (int i = 0; i < _skillHolder.skillNames.Count; i++)
+        {
             _skillHolder._skillDatas[i] = SkillContainer.instance.GetSkillByName(_skillHolder.skillNames[i]);
+            skillsParent.GetChild(i).GetComponent<CollisionController>().Configure(
+                TryGetComponent(out PlayerController _),
+                _skillHolder._skillDatas[i]._skillData.worksOnSelf,
+                _skillHolder._skillDatas[i]._skillData.worksOnOthers
+            );
+        }
     }
 
     public void CastSkill(int index)

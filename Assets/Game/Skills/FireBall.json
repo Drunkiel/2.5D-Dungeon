@@ -5,7 +5,8 @@
   "spriteIconPath": "Heart.png",
   "animationName": "Test_CastingSpell",
   "type": 0,
-  "duration": 0,
+  "worksOnSelf": false,
+  "worksOnOthers": true,
   "_skillAttributes": [
     {
       "attributeType": 2,
@@ -17,7 +18,7 @@
       "attributeType": 8,
       "elementalTypes": 0,
       "buffTypes": 0,
-      "amount": 45
+      "amount": 55
     }
   ],
   "name": "FireBallSkill"

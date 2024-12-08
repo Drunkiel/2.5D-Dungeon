@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: TestSkill
   m_EditorClassIdentifier: 
   ID: 0
-  displayedNameName: Fire ball
+  displayedName: 
   spritePath: Heart.png
   spriteIconPath: 
+  animationName: 
+  type: 0
   _skillAttributes:
   - attributeType: 2
     elementalTypes: 1
+    buffTypes: 0
+    workOnSelf: 0
+    workOnOthers: 0
     amount: 5
