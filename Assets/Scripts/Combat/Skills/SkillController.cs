@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using System.IO;
 using UnityEngine;
 
 public enum ElementalTypes
@@ -51,6 +53,7 @@ public class SkillController : MonoBehaviour
 	public SkillHolder _skillHolder;
     public CombatUI _combatUI;
     public Transform skillsParent;
+    //public SkillData skillData;
 
     void Start()
     {
@@ -59,10 +62,11 @@ public class SkillController : MonoBehaviour
             _skillHolder._skillDatas[i] = SkillContainer.instance.GetSkillByName(_skillHolder.skillNames[i]);
             skillsParent.GetChild(i).GetComponent<CollisionController>().Configure(
                 TryGetComponent(out PlayerController _),
-                _skillHolder._skillDatas[i]._skillData.worksOnSelf,
-                _skillHolder._skillDatas[i]._skillData.worksOnOthers
+                _skillHolder._skillDatas[i]._skillData
             );
         }
+
+        //Save("");
     }
 
     public void CastSkill(int index)
@@ -70,4 +74,18 @@ public class SkillController : MonoBehaviour
         if (_combatUI.skillInfos[index].canBeCasted)
             StartCoroutine(_combatUI.Cast(index, _skillHolder._skillDatas[index]));
     }
+
+    //public virtual void Save(string path)
+    //{
+    //    //EXAMPLE
+    //    //Here save data to file
+    //    string jsonData = JsonConvert.SerializeObject(skillData, Formatting.Indented, new JsonSerializerSettings
+    //    {
+    //        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+    //        TypeNameHandling = TypeNameHandling.Auto,
+    //        PreserveReferencesHandling = PreserveReferencesHandling.None
+    //    });
+
+    //    File.WriteAllText(Application.dataPath + "/Game/ala.json", jsonData);
+    //}
 }

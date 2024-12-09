@@ -6,20 +6,26 @@ public class CollisionController : MonoBehaviour
     public string entityTag;
     public List<GameObject> targets = new();
 
-    public void Configure(bool isPlayer, bool worksOnSelf, bool worksOnOthers)
+    public void Configure(bool isPlayer, SkillData _skillData)
     {
-        if (!worksOnSelf && !worksOnOthers)
+        if (!_skillData.worksOnSelf && !_skillData.worksOnOthers)
         {
             ConsoleController.instance.ChatMessage(SenderType.System, $"Collision controller is must detect something", OutputType.Error);
             return;
         }
 
-        if (worksOnOthers && !worksOnSelf)
+        //Resize collider and set center
+        BoxCollider boxCollider = GetComponent<BoxCollider>();
+        boxCollider.size = _skillData.size;
+        boxCollider.center = _skillData.center;
+
+        //Set what tag to check
+        if (_skillData.worksOnOthers && !_skillData.worksOnSelf)
             entityTag = isPlayer ? "Enemy" : "Player";
-        else if (worksOnOthers && worksOnSelf)
+        else if (_skillData.worksOnOthers && _skillData.worksOnSelf)
             entityTag = isPlayer ? "Player" : "Enemy";
 
-        if (worksOnSelf)
+        if (_skillData.worksOnSelf)
             targets.Add(transform.parent.parent.parent.gameObject);
     }
 

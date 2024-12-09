@@ -11,6 +11,8 @@ public class SkillData : ScriptableObject
     public string spritePath;
     public string spriteIconPath;
     public string animationName;
+    public Vector3 size;
+    public Vector3 center;
     public SkillType type;
     public bool worksOnSelf;
     public bool worksOnOthers;
