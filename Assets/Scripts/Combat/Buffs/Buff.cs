@@ -21,12 +21,12 @@ public class Buff
     public int buffMultiplier;
     public bool isPermanent = false;
 
-    public Buff(string name, float duration, Buffs buffType, int buffMultiplier, bool isPermanent = false)
+    public Buff(string name, float duration, Sprite sprite, Buffs buffType, int buffMultiplier, bool isPermanent = false)
     {
         this.name = name;
         this.duration = duration;
         this.buffType = buffType;
-        this.sprite = null;
+        this.sprite = sprite;
         this.buffMultiplier = buffMultiplier;
         this.isPermanent = isPermanent;
         this.timer = 0f;

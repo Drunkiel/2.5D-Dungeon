@@ -10,7 +10,7 @@ public class TeleportEvent : MonoBehaviour
 
     public void TeleportToPosition(int positionIndex)
     {
-        if (isOnCooldown)
+        if (isOnCooldown || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
             return;
 
         StartCoroutine(PauseBeforeTeleport(() =>
@@ -22,7 +22,7 @@ public class TeleportEvent : MonoBehaviour
 
     public void TeleportToObject(Transform objectTransform)
     {
-        if (isOnCooldown)
+        if (isOnCooldown || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
             return;
 
         StartCoroutine(PauseBeforeTeleport(() =>

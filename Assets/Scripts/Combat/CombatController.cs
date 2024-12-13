@@ -135,7 +135,7 @@ public class CombatController : MonoBehaviour
 
     private void BuffSkill(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics)
     {
-        _casterStatistics._activeBuffs.Add(new(_skillDataParser._skillData.displayedName, _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Cooldown }), _combatUI.GetBuff(_skillDataParser), (int)_combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Buff })));
+        _casterStatistics._activeBuffs.Add(new(_skillDataParser._skillData.displayedName, _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Cooldown }), _skillDataParser.iconSprite, _combatUI.GetBuff(_skillDataParser), (int)_combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Buff })));
         _casterStatistics.RecalculateStatistics(PlayerController.instance._holdingController._itemController._gearHolder);
     }
 

@@ -1,10 +1,10 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
 public class EntityStatsController : MonoBehaviour
 {
+    public TMP_Text nameText;
     public Slider healthSlider;
     private float previousHealthStatus;
     public Slider manaSlider;
@@ -12,6 +12,31 @@ public class EntityStatsController : MonoBehaviour
     [SerializeField] private GameObject statusDisplayObject;
     [SerializeField] private Transform buffsParent;
     [SerializeField] private Image buffImage;
+
+    public void SetName(string newName)
+    {
+        nameText.text = newName;
+    }
+
+    public void SetSliderColor(Behaviour behaviour)
+    {
+        Image sliderImage = healthSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+
+        switch (behaviour)
+        {
+            case Behaviour.Passive:
+                sliderImage.color = Color.green;
+                break;
+
+            case Behaviour.Neutral:
+                sliderImage.color = Color.red;
+                break;
+
+            case Behaviour.Aggresive:
+                sliderImage.color = Color.red;
+                break;
+        }
+    }
 
     public void UpdateHealthSlider(float newValue, float maxValue, bool ignore = false)
     {

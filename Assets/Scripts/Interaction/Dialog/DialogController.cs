@@ -11,6 +11,7 @@ public class DialogController : MonoBehaviour
     private bool finishedSpelling;
     private bool isTalking;
 
+    public TMP_Text nameText;
     public TMP_Text dialogText;
     public EntityPreview _npcPreview;
     private EnemyController _enemyController;
@@ -42,6 +43,7 @@ public class DialogController : MonoBehaviour
             _enemyController._enemyWalk.isStopped = true;
             _enemyController._enemyWalk.GoTo(_playerController.transform.position, _playerController.transform.position);
             _npcPreview.UpdateAllByEntity(_enemyController.GetComponent<EntityLookController>()._entityLook);
+            nameText.text = _enemyController._entityInfo.name;
         }
         _openCloseUI.Open();
         UpdateDialog();

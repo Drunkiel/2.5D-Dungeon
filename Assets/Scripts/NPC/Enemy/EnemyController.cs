@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum Behaviour
+{
+    Passive,
+    Neutral,
+    Aggresive
+}
+
 public enum State
 {
     Standing,
@@ -20,6 +27,7 @@ public class BehaviourState
 
 public class EnemyController : MonoBehaviour
 {
+    public EntityInfo _entityInfo;
     public EntityStatistics _statistics;
     public HoldingController _holdingController;
 
@@ -34,6 +42,10 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         _statistics.SaveStats();
+
+        //Setting basic info of entity
+        _statistics._statsController.SetName(_entityInfo.name);
+        _statistics._statsController.SetSliderColor(_entityInfo.behaviour);
 
         //Setting sliders value
         _statistics._statsController.UpdateHealthSlider(_statistics.health, _statistics.maxHealth);
