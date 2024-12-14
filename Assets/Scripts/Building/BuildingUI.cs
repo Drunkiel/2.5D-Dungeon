@@ -1,9 +1,13 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BuildingUI : MonoBehaviour
 {
     public List<GameObject> allBuildings = new();
+    [SerializeField] private TMP_InputField xInput; 
+    [SerializeField] private TMP_InputField yInput; 
+    [SerializeField] private TMP_InputField zInput; 
     [SerializeField] private Transform parent;
     [SerializeField] private BuildingCard buildingCardPrefab;
     private bool isOpen;
@@ -47,5 +51,27 @@ public class BuildingUI : MonoBehaviour
             Destroy(part.GetComponent<PlacableObject>());
             Destroy(part.GetComponent<BoxCollider>());
         }
+    }
+
+    public Vector3 GetRotation()
+    {
+        if (!int.TryParse(xInput.text, out int x))
+            x = 0;
+
+        if (!int.TryParse(yInput.text, out int y))
+            y = 0;
+
+        if (!int.TryParse(zInput.text, out int z))
+            z = 0;
+
+        return new(x, y, z);
+    }
+
+    public void UpdateObjectRotation()
+    {
+        BuildingSystem _buildingSystem = BuildingSystem.instance;
+
+        if (_buildingSystem._objectToPlace != null)
+            _buildingSystem._objectToPlace.transform.eulerAngles = GetRotation();
     }
 }

@@ -16,6 +16,7 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private GameObject UI;
     [SerializeField] private GameObject buildingUI;
     public PlacableObject _objectToPlace;
+    [HideInInspector] public Vector3 objectRotation;
 
     void Awake()
     {
@@ -85,6 +86,7 @@ public class BuildingSystem : MonoBehaviour
         GameObject newObject = Instantiate(prefab, prefab.transform.position, Quaternion.identity, parent);
         newObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
         _objectToPlace = newObject.GetComponent<PlacableObject>();
+        _objectToPlace.transform.eulerAngles = UI.transform.parent.GetChild(1).GetComponent<BuildingUI>().GetRotation();
         newObject.transform.position = SnapCoordinateToGrid(transform.position);
         Instantiate(buildingMaterial, newObject.transform);
         newObject.AddComponent<ObjectDrag>();
