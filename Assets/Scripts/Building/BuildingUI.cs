@@ -70,8 +70,6 @@ public class BuildingUI : MonoBehaviour
     public void UpdateObjectRotation()
     {
         BuildingSystem _buildingSystem = BuildingSystem.instance;
-
-        if (_buildingSystem._objectToPlace != null)
-            _buildingSystem._objectToPlace.transform.eulerAngles = GetRotation();
+        _buildingSystem.grid.transform.eulerAngles = GetRotation();
     }
 }

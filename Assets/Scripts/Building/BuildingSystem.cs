@@ -6,7 +6,7 @@ public class BuildingSystem : MonoBehaviour
     public static BuildingSystem instance;
     public static bool inBuildingMode;
 
-    [SerializeField] private Grid grid;
+    public Grid grid;
     public Transform parent;
     public Vector2 mapSize;
 
