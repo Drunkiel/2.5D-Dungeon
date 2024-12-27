@@ -38,9 +38,10 @@ public class TeleportEvent : MonoBehaviour
 
     private IEnumerator PauseBeforeTeleport(Action action)
     {
+        yield return new WaitForSeconds(0.2f);
         anim.Play("Teleport");
         PlayerController.instance.isStopped = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.8f);
         action();
     }
 
