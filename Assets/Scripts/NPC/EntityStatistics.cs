@@ -195,11 +195,11 @@ public class EntityStatistics
     {
         bool buffExpired = false;
 
-        // Przechodzimy przez listê Buffów
+        //Check if any buff expired
         for (int i = _activeBuffs.Count - 1; i >= 0; i--)
         {
             Buff buff = _activeBuffs[i];
-            // Jeœli Buff siê skoñczy³, usuwamy go
+            //If yes delete
             if (!buff.UpdateBuff())
             {
                 _activeBuffs.RemoveAt(i);
