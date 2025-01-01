@@ -18,6 +18,16 @@ public class Requirement
     public short targetID;
     public int progressCurrent;
     public int progressNeeded;
+
+    public void UpdateStatus(short id)
+    {
+        if (id != targetID)
+            return;
+
+        progressCurrent += 1;
+        if (progressCurrent >= progressNeeded)
+            ConsoleController.instance.ChatMessage(SenderType.Hidden, "Passed");
+    }
 }
 
 public enum RequirementType

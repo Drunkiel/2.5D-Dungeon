@@ -24,4 +24,9 @@ public class QuestUI : MonoBehaviour
         TMP_Text titleText = newQuest.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>();
         titleText.text = _quest.title;
     }
+
+    public void UpdateQuestUI(int questIndex, int requirementIndex, Quest _quest)
+    {
+        parent.GetChild(questIndex).GetChild(1).GetChild(requirementIndex).GetChild(2).GetComponent<TMP_Text>().text = $"{_quest._requirements[requirementIndex].progressCurrent} / {_quest._requirements[requirementIndex].progressNeeded}";
+    }
 }

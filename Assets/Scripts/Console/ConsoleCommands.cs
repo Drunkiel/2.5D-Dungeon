@@ -35,4 +35,15 @@ public class ConsoleCommands : MonoBehaviour
     {
         ItemContainer.instance.GetItemByName(itemName);
     }
+
+    public void KillEvent(string id)
+    {
+        if (!short.TryParse(id, out short targetID))
+        {
+            ConsoleController.instance.ChatMessage(SenderType.System, $"'{id}' can't be parsed to number", OutputType.Error);
+            return;
+        }
+
+        QuestController.instance.InvokeKillEvent(targetID);
+    }
 }
