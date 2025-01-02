@@ -60,6 +60,13 @@ public class SkillController : MonoBehaviour
         for (int i = 0; i < _skillHolder.skillNames.Count; i++)
         {
             _skillHolder._skillDatas[i] = SkillContainer.instance.GetSkillByName(_skillHolder.skillNames[i]);
+            
+            if (_skillHolder._skillDatas[i] == null)
+            {
+                ConsoleController.instance.ChatMessage(SenderType.System, $"There is no command like: {_skillHolder.skillNames[i]}");
+                continue;
+            }
+
             skillsParent.GetChild(i).GetComponent<CollisionController>().Configure(
                 TryGetComponent(out PlayerController _),
                 _skillHolder._skillDatas[i]._skillData

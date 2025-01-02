@@ -14,7 +14,6 @@ public class EnemyWalk : MonoBehaviour
 
     private bool isFlipped;
     private bool isNewPositionFound;
-    public float a;
 
     [HideInInspector] public Vector3 move;
     private EnemyController _controller;

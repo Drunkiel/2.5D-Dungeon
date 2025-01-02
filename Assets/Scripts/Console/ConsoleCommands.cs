@@ -40,7 +40,7 @@ public class ConsoleCommands : MonoBehaviour
     {
         if (!short.TryParse(id, out short targetID))
         {
-            ConsoleController.instance.ChatMessage(SenderType.System, $"'{id}' can't be parsed to number", OutputType.Error);
+            ConsoleController.instance.ChatMessage(SenderType.System, $"'<color=yellow>{id}</color>' can't be parsed to number", OutputType.Error);
             return;
         }
 

@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class DialogInteraction : MonoBehaviour
 {
-    public DialogData _dialogData;
+    public int dialogIndex;
 
     public void StartDialog()
     {
         if (TryGetComponent(out EnemyController _enemyController))
-            DialogController.instance.StartDialog(_dialogData, _enemyController);
+            DialogController.instance.StartDialog(dialogIndex, _enemyController);
         else
-            DialogController.instance.StartDialog(_dialogData);
+            DialogController.instance.StartDialog(dialogIndex);
     }
 }
