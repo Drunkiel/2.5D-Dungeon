@@ -44,6 +44,9 @@ public class DialogController : MonoBehaviour
             _enemyController._enemyWalk.GoTo(_playerController.transform.position, _playerController.transform.position);
             _dialogUI._npcPreview.UpdateAllByEntity(_enemyController.GetComponent<EntityLookController>()._entityLook);
             _dialogUI.nameText.text = _enemyController._entityInfo.name;
+
+            //Checking if player is talking to right npc
+            QuestController.instance.InvokeTalkEvent(_enemyController._entityInfo.ID);
         }
         _openCloseUI.Open();
         _dialogUI.UpdateDialog(_dialogs[dialogIndex]);

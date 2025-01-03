@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 [Serializable]
 public class Quest
@@ -8,6 +9,18 @@ public class Quest
     public string title;
     public string description;
     public List<Requirement> _requirements;
+    public UnityEvent onFinishEvent;
+
+    public bool CheckIfFinished()
+    {
+        for (int i = 0; i < _requirements.Count; i++)
+        {
+            if (_requirements[i].progressCurrent < _requirements[i].progressNeeded)
+                return false;
+        }
+
+        return true;
+    }
 }
 
 [Serializable]

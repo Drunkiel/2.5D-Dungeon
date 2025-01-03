@@ -31,7 +31,9 @@ public class DialogUI : MonoBehaviour
             //Set text to button
             newOptionButton.transform.GetChild(0).GetComponent<TMP_Text>().text = _dialog.endOptions[i].displayText;
         }
-        StartCoroutine(nameof(TextWriting), _dialog.text);
+
+        if (gameObject.activeSelf)
+            StartCoroutine(nameof(TextWriting), _dialog.text);
     }
 
     public void SpeedUpDialog(string dialog)

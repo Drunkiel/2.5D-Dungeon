@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuestUI : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class QuestUI : MonoBehaviour
     public void AddQuestToUI(Quest _quest)
     {
         GameObject newQuest = Instantiate(questPrefab, parent);
+        newQuest.transform.name = _quest.id.ToString();
         for (int i = 0; i < _quest._requirements.Count; i++)
         {
             GameObject newRequirement = Instantiate(requirementPrefab, newQuest.transform.GetChild(1));
@@ -23,10 +25,28 @@ public class QuestUI : MonoBehaviour
         //Set title
         TMP_Text titleText = newQuest.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>();
         titleText.text = _quest.title;
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(parent.GetComponent<RectTransform>());
+    }
+
+    public void RemoveQuestUI(int questIndex)
+    {
+        Destroy(parent.GetChild(GetQuestIndex(questIndex)).gameObject);
     }
 
     public void UpdateQuestUI(int questIndex, int requirementIndex, Quest _quest)
     {
-        parent.GetChild(questIndex).GetChild(1).GetChild(requirementIndex).GetChild(2).GetComponent<TMP_Text>().text = $"{_quest._requirements[requirementIndex].progressCurrent} / {_quest._requirements[requirementIndex].progressNeeded}";
+        parent.GetChild(GetQuestIndex(questIndex)).GetChild(1).GetChild(requirementIndex).GetChild(2).GetComponent<TMP_Text>().text = $"{_quest._requirements[requirementIndex].progressCurrent} / {_quest._requirements[requirementIndex].progressNeeded}";
+    }
+
+    public int GetQuestIndex(int questIndex)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            if (int.TryParse(parent.GetChild(i).name, out int index) && questIndex == index)
+                return i;
+        }
+
+        return -1;
     }
 }
