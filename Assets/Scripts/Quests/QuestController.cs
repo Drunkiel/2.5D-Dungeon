@@ -33,6 +33,7 @@ public class QuestController : MonoBehaviour
         _currentQuestsIndex.Add(questIndex);
         _questUI.AddQuestToUI(_allQuests[questIndex]);
 
+        //Set listeners
         for (int i = 0; i < _allQuests[questIndex]._requirements.Count; i++)
         {
             switch (_allQuests[questIndex]._requirements[i].type)
@@ -54,12 +55,17 @@ public class QuestController : MonoBehaviour
 
     private void FinishQuest(int questIndex)
     {
+        //Removing quest
         _questUI.RemoveQuestUI(questIndex);
         _currentQuestsIndex.Remove(questIndex);
         _allQuests[questIndex].onFinishEvent.Invoke();
 
         for (int i = 0; i < _allQuests[questIndex]._requirements.Count; i++)
         {
+            //Reset progress
+            _allQuests[questIndex]._requirements[i].progressCurrent = 0;
+
+            //Remove from listeners
             switch (_allQuests[questIndex]._requirements[i].type)
             {
                 case RequirementType.Kill:
@@ -77,15 +83,6 @@ public class QuestController : MonoBehaviour
         }
     }
 
-    private void EventListener(int questIndex, int i)
-    {
-        _allQuests[questIndex]._requirements[i].UpdateStatus(idToCheck);
-        _questUI.UpdateQuestUI(questIndex, i, _allQuests[questIndex]);
-
-        if (_allQuests[questIndex].CheckIfFinished())
-            FinishQuest(questIndex);
-    }
-
     public void InvokeKillEvent(short id)
     {
         idToCheck = id;
@@ -99,10 +96,11 @@ public class QuestController : MonoBehaviour
             var requirements = _allQuests[killQuestIndexes[i]]._requirements;
             for (int j = 0; j < requirements.Count; j++)
             {
-                if (requirements[j].type != RequirementType.Talk)
+                if (requirements[j].type != RequirementType.Kill)
                     continue;
 
                 EventListener(killQuestIndexes[i], j);
+                break;
             }
         }
     }
@@ -120,10 +118,11 @@ public class QuestController : MonoBehaviour
             var requirements = _allQuests[collectQuestIndexes[i]]._requirements;
             for (int j = 0; j < requirements.Count; j++)
             {
-                if (requirements[j].type != RequirementType.Talk)
+                if (requirements[j].type != RequirementType.Collect)
                     continue;
 
                 EventListener(collectQuestIndexes[i], j);
+                break;
             }
         }
     }
@@ -145,7 +144,19 @@ public class QuestController : MonoBehaviour
                     continue;
 
                 EventListener(talkQuestIndexes[i], j);
+                break;
             }
         }
+    }
+
+    private void EventListener(int questIndex, int i)
+    {
+        //Update ui
+        _allQuests[questIndex]._requirements[i].UpdateStatus(idToCheck);
+        _questUI.UpdateQuestUI(questIndex, i, _allQuests[questIndex]);
+
+        //Check if quest is finished
+        if (_allQuests[questIndex].CheckIfFinished())
+            FinishQuest(questIndex);
     }
 }

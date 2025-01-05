@@ -11,7 +11,7 @@ public class DialogUI : MonoBehaviour
     public Transform parent;
     public Button optionBTN;
 
-    private bool finishedSpelling;
+    public bool finishedSpelling;
 
     public void UpdateDialog(Dialog _dialog)
     {
@@ -38,12 +38,8 @@ public class DialogUI : MonoBehaviour
 
     public void SpeedUpDialog(string dialog)
     {
-        if (!finishedSpelling)
-        {
-            dialogText.text = dialog;
-            finishedSpelling = true;
-            return;
-        }
+        dialogText.text = dialog;
+        finishedSpelling = true;
     }
 
     IEnumerator TextWriting(string dialog)
@@ -53,7 +49,7 @@ public class DialogUI : MonoBehaviour
         foreach (char singleCharacter in dialog)
         {
             if (finishedSpelling)
-                break;
+                yield break;
 
             dialogText.text += singleCharacter;
             yield return new WaitForSeconds(0.02f);

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyWalk : MonoBehaviour
+public class EntityWalk : MonoBehaviour
 {
     public bool isStopped;
 
@@ -16,11 +16,11 @@ public class EnemyWalk : MonoBehaviour
     private bool isNewPositionFound;
 
     [HideInInspector] public Vector3 move;
-    private EnemyController _controller;
+    private EntityController _controller;
 
     private void Start()
     {
-        _controller = GetComponent<EnemyController>();
+        _controller = GetComponent<EntityController>();
 
         //Setting new first position to go
         startPosition = transform.position;

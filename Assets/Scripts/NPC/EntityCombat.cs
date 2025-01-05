@@ -13,8 +13,8 @@ public class EntityCombat : MonoBehaviour
         if (!inCombat)
         {
             StartCoroutine(ResetCombat());
-            if (TryGetComponent(out EnemyController _enemyController))
-                _enemyController.currentState = State.Attacking;
+            if (TryGetComponent(out EntityController _entityController))
+                _entityController.currentState = State.Attacking;
 
             inCombat = true;
         }
@@ -29,8 +29,8 @@ public class EntityCombat : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
 
-        if (TryGetComponent(out EnemyController _enemyController))
-            _enemyController.currentState = State.Patroling;
+        if (TryGetComponent(out EntityController _entityController))
+            _entityController.currentState = State.Patroling;
 
         inCombat = false;
     }

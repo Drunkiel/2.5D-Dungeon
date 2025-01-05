@@ -20,15 +20,15 @@ public class CombatController : MonoBehaviour
 
         //Get caster
         EntityStatistics _casterStatistics = null;
-        EnemyController _enemyController = null;
+        EntityController _entityController = null;
         //Check if caster is player
         if (_collisionController.transform.parent.parent.parent.TryGetComponent(out PlayerController _player))
             _casterStatistics = _player._statistics;
         //If not then check if enemy
-        else if (_collisionController.transform.parent.parent.parent.TryGetComponent(out EnemyController _enemy))
+        else if (_collisionController.transform.parent.parent.parent.TryGetComponent(out EntityController _enemy))
         {
             _casterStatistics = _enemy._statistics;
-            _enemyController = _enemy;
+            _entityController = _enemy;
         }
 
         //If still null then return
@@ -57,10 +57,10 @@ public class CombatController : MonoBehaviour
             PlayAnimation(_player.anim, animName);
             _player.GetComponent<EntityCombat>().ManageCombat();
         }
-        else if (_enemyController != null)
+        else if (_entityController != null)
         {
-            PlayAnimation(_enemyController.anim, animName);
-            _enemyController.GetComponent<EntityCombat>().ManageCombat();
+            PlayAnimation(_entityController.anim, animName);
+            _entityController.GetComponent<EntityCombat>().ManageCombat();
         }
 
 
@@ -82,11 +82,11 @@ public class CombatController : MonoBehaviour
     {
         //Get current target
         List<EntityStatistics> _targetsStatistics = new();
-        List<EnemyController> _enemyTargets = new();
+        List<EntityController> _enemyTargets = new();
         PlayerController _playerTarget = null;
         foreach (GameObject target in _collisionController.targets)
         {
-            if (target.TryGetComponent(out EnemyController _enemyComponent))
+            if (target.TryGetComponent(out EntityController _enemyComponent))
             {
                 _targetsStatistics.Add(_enemyComponent._statistics);
                 _enemyTargets.Add(_enemyComponent);

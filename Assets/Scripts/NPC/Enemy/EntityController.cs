@@ -25,7 +25,7 @@ public class BehaviourState
     public UnityEvent acton;
 }
 
-public class EnemyController : MonoBehaviour
+public class EntityController : MonoBehaviour
 {
     public EntityInfo _entityInfo;
     public EntityStatistics _statistics;
@@ -37,7 +37,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Rigidbody rgBody;
     public Animator anim;
 
-    public EnemyWalk _enemyWalk;
+    public EntityWalk _entityWalk;
 
     private void Start()
     {
@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (_enemyWalk.isStopped || GameController.isPaused)
+        if (_entityWalk.isStopped || GameController.isPaused)
             return;
 
         switch (currentState)
@@ -84,10 +84,10 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_enemyWalk.isStopped || GameController.isPaused)
+        if (_entityWalk.isStopped || GameController.isPaused)
             return;
 
-        rgBody.AddForce(_enemyWalk.move * (_statistics.speedForce * rgBody.mass), ForceMode.Force);
+        rgBody.AddForce(_entityWalk.move * (_statistics.speedForce * rgBody.mass), ForceMode.Force);
     }
 
     private IEnumerator AutoRegen()

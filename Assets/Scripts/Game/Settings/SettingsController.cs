@@ -1,5 +1,6 @@
 using System.IO;
 using Newtonsoft.Json;
+using UnityEngine;
 
 public class SettingsController : SaveLoadSystem
 {
@@ -69,5 +70,10 @@ public class SettingsController : SaveLoadSystem
     {
         _openCloseUI.OpenClose();
         GameController.isPaused = _openCloseUI.isOpen;
+    }
+    
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

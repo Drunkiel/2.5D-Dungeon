@@ -7,10 +7,10 @@ public class DialogController : MonoBehaviour
 
     [SerializeField] private List<Dialog> _dialogs = new();
     private int dialogIndex;
-    private bool isTalking;
+    public bool isTalking;
 
     public DialogUI _dialogUI;
-    private EnemyController _enemyController;
+    private EntityController _entityController;
     [SerializeField] private OpenCloseUI _openCloseUI;
 
     private void Awake()
@@ -20,10 +20,10 @@ public class DialogController : MonoBehaviour
 
     public void StartDialog(int index)
     {
-        StartDialog(index, _enemyController);
+        StartDialog(index, _entityController);
     }
 
-    public void StartDialog(int index, EnemyController _enemyController = null)
+    public void StartDialog(int index, EntityController _entityController = null)
     {
         PlayerController _playerController = PlayerController.instance;
 
@@ -34,20 +34,21 @@ public class DialogController : MonoBehaviour
         }
 
         //Assigning values
-        this._enemyController = _enemyController;
+        this._entityController = _entityController;
         dialogIndex = index;
         _playerController.isStopped = true;
 
-        if (_enemyController != null)
+        if (_entityController != null)
         {
-            _enemyController._enemyWalk.isStopped = true;
-            _enemyController._enemyWalk.GoTo(_playerController.transform.position, _playerController.transform.position);
-            _dialogUI._npcPreview.UpdateAllByEntity(_enemyController.GetComponent<EntityLookController>()._entityLook);
-            _dialogUI.nameText.text = _enemyController._entityInfo.name;
+            _entityController._entityWalk.isStopped = true;
+            _entityController._entityWalk.GoTo(_playerController.transform.position, _playerController.transform.position);
+            _dialogUI._npcPreview.UpdateAllByEntity(_entityController.GetComponent<EntityLookController>()._entityLook);
+            _dialogUI.nameText.text = _entityController._entityInfo.name;
 
             //Checking if player is talking to right npc
-            QuestController.instance.InvokeTalkEvent(_enemyController._entityInfo.ID);
+            QuestController.instance.InvokeTalkEvent(_entityController._entityInfo.ID);
         }
+
         _openCloseUI.Open();
         _dialogUI.UpdateDialog(_dialogs[dialogIndex]);
         isTalking = true;
@@ -55,6 +56,12 @@ public class DialogController : MonoBehaviour
 
     public void ChangeDialog(int index)
     {
+        if (!_dialogUI.finishedSpelling)
+        {
+            _dialogUI.SpeedUpDialog(_dialogs[dialogIndex].text);
+            return;
+        }
+
         dialogIndex = index;
         _dialogUI.UpdateDialog(_dialogs[dialogIndex]);
     }
@@ -62,8 +69,8 @@ public class DialogController : MonoBehaviour
     public void EndDialog()
     {
         PlayerController.instance.isStopped = false;
-        if (_enemyController != null)
-            _enemyController._enemyWalk.isStopped = false;
+        if (_entityController != null)
+            _entityController._entityWalk.isStopped = false;
 
         _openCloseUI.Close();
         isTalking = false;
