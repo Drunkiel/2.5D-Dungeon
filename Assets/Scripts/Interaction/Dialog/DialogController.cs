@@ -68,6 +68,12 @@ public class DialogController : MonoBehaviour
 
     public void EndDialog()
     {
+        if (!_dialogUI.finishedSpelling)
+        {
+            _dialogUI.SpeedUpDialog(_dialogs[dialogIndex].text);
+            return;
+        }
+
         PlayerController.instance.isStopped = false;
         if (_entityController != null)
             _entityController._entityWalk.isStopped = false;
