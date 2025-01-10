@@ -15,11 +15,11 @@ public class ItemController : SaveLoadSystem
 
     public bool PickItem(ItemID _itemID, bool isPlayer = true)
     {
-        InventoryController _inventoryController = InventoryController.instance;
-
         //If npc then do nothing
         if (!isPlayer || _itemID == null)
             return false;
+
+        InventoryController _inventoryController = InventoryController.instance;
 
         //Looking for available slot in inventory
         int availableSlot = _inventoryController.GetAvailableSlotIndex();
