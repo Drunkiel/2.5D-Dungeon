@@ -1,5 +1,6 @@
 using Cinemachine;
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,8 +22,10 @@ public class CameraController : MonoBehaviour
     private float zoomSpeed = 2f;
 
     private float currentXRotation = 0f;
-    [SerializeField] private float currentYRotation = 30f;
+    private float currentYRotation = 30f;
     private bool rightClick;
+
+    public Vector2 cameraRotation;
 
     private void Awake()
     {
@@ -35,13 +38,32 @@ public class CameraController : MonoBehaviour
         SetCamera();
     }
 
+    private void FixedUpdate()
+    {
+        //Rotate camera
+        currentXRotation += cameraRotation.x * rotationSpeed * Time.deltaTime;
+        currentYRotation -= cameraRotation.y * rotationSpeed / 4 * Time.deltaTime;
+        currentYRotation = Mathf.Clamp(currentYRotation, 15, 45);
+    }
+
     public void RightClick(InputAction.CallbackContext context)
     {
-        if (context.started)
-            rightClick = true;
+        if (GameController.isPC)
+        {
+            if (context.started)
+                rightClick = true;
 
-        if (context.canceled)
-            rightClick = false;
+            if (context.canceled)
+            {
+                rightClick = false;
+                cameraRotation = Vector2.zero;
+            }
+        }
+        else
+        {
+            if (context.performed)
+                rightClick = !rightClick;
+        }
     }
 
     public void HandleRotation(InputAction.CallbackContext context)
@@ -51,8 +73,10 @@ public class CameraController : MonoBehaviour
 
         //Get Input
         float mouseX = context.ReadValue<Vector2>().x;
+        float mouseY = context.ReadValue<Vector2>().y;
         mouseX = Mathf.Clamp(mouseX, -1, 1);
-        currentXRotation += mouseX * rotationSpeed * Time.deltaTime;
+        mouseY = Mathf.Clamp(mouseY, -1, 1);
+        cameraRotation = new(mouseX, mouseY);
     }
 
     private void HandleZoom()
