@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PortalController : MonoBehaviour
 {
@@ -15,7 +17,10 @@ public class PortalController : MonoBehaviour
         if (GameController.isPaused)
             return;
 
-        StartCoroutine(WaitAndTeleport(position));
+        StartCoroutine(WaitAndTeleport(() =>
+        {
+            PlayerController.instance.transform.position = position;
+        }));
     }
 
     public void TeleportToObject(Transform objectTransform)
@@ -23,10 +28,27 @@ public class PortalController : MonoBehaviour
         if (GameController.isPaused)
             return;
 
-        StartCoroutine(WaitAndTeleport(objectTransform.position));
+        StartCoroutine(WaitAndTeleport(() =>
+        {
+            PlayerController.instance.transform.position = objectTransform.position;
+        }));
     }
 
-    IEnumerator WaitAndTeleport(Vector3 position)
+    public void TeleportToScene(int sceneIndex)
+    {
+        if (GameController.isPaused)
+            return;
+
+        StartCoroutine(WaitAndTeleport(() =>
+        {
+            if (SceneManager.sceneCount < sceneIndex)
+                return;
+
+            SceneManager.LoadScene(sceneIndex);
+        }));
+    }
+
+    IEnumerator WaitAndTeleport(Action action)
     {
         //Some effects before teleportation
         StartCoroutine(CameraController.instance.ZoomTo(20, 1f));
@@ -37,7 +59,7 @@ public class PortalController : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         //Teleporting player
-        PlayerController.instance.transform.position = position;
+        action();
         PlayerController.instance.ResetMovement();
         PlayerController.instance.isStopped = false;
         CameraController.instance.ResetZoom();

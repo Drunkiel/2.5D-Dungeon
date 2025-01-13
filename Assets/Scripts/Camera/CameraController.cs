@@ -36,10 +36,7 @@ public class CameraController : MonoBehaviour
     {
         HandleZoom();
         SetCamera();
-    }
 
-    private void FixedUpdate()
-    {
         //Rotate camera
         currentXRotation += cameraRotation.x * rotationSpeed * Time.deltaTime;
         currentYRotation -= cameraRotation.y * rotationSpeed / 4 * Time.deltaTime;

@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TeleportEvent : MonoBehaviour
 {
     [SerializeField] private bool isOnCooldown;
+    [SerializeField] private float cooldownToTeleport = 2f;
     public Vector3[] positions;
     [SerializeField] private Animator anim;
 
@@ -36,12 +38,25 @@ public class TeleportEvent : MonoBehaviour
         }));
     }
 
+    public void TeleportToScene(int sceneIndex)
+    {
+        if (isOnCooldown || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
+            return;
+
+        StartCoroutine(PauseBeforeTeleport(() =>
+        {
+            PortalController.instance.TeleportToScene(sceneIndex);
+            SetCooldown();
+        }));
+    }
+
     private IEnumerator PauseBeforeTeleport(Action action)
     {
-        yield return new WaitForSeconds(0.2f);
-        anim.Play("Teleport");
+        yield return new WaitForSeconds(cooldownToTeleport * 0.1f);
+        if (anim != null)
+            anim.Play("Teleport");
         PlayerController.instance.isStopped = true;
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(cooldownToTeleport * 0.9f);
         action();
     }
 
