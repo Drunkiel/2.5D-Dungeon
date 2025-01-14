@@ -38,14 +38,14 @@ public class TeleportEvent : MonoBehaviour
         }));
     }
 
-    public void TeleportToScene(int sceneIndex)
+    public void TeleportToScene(string sceneName)
     {
         if (isOnCooldown || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
             return;
 
         StartCoroutine(PauseBeforeTeleport(() =>
         {
-            PortalController.instance.TeleportToScene(sceneIndex);
+            PortalController.instance.TeleportToScene(sceneName);
             SetCooldown();
         }));
     }
