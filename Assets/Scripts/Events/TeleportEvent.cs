@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class TeleportEvent : MonoBehaviour
 {
@@ -45,7 +44,18 @@ public class TeleportEvent : MonoBehaviour
 
         StartCoroutine(PauseBeforeTeleport(() =>
         {
-            PortalController.instance.TeleportToScene(sceneName);
+            //Basic string verificacion
+            if (string.IsNullOrEmpty(sceneName))
+            {
+                ConsoleController.instance.ChatMessage(SenderType.System, $"Scene named: {sceneName} is not found");
+                return;
+            }
+
+            //Check if position exists
+            if (positions.Length < 1)
+                positions = new Vector3[1] { Vector3.zero };
+
+            PortalController.instance.TeleportToScene(sceneName, positions[0]);
             SetCooldown();
         }));
     }

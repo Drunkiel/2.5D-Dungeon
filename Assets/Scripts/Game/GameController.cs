@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -14,5 +16,21 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+
+    public IEnumerator LoadAsyncScene(string sceneName)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+
+        //Wait until scene is loaded
+        while (!asyncLoad.isDone)
+            yield return null;
+
+        //Move objects to other scene
+        for (int i = 0; i < objectsToTeleportMust.Count; i++)
+            SceneManager.MoveGameObjectToScene(objectsToTeleportMust[i], SceneManager.GetSceneByName(sceneName));
+
+        SceneManager.UnloadSceneAsync(currentScene);
     }
 }

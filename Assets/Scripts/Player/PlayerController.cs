@@ -29,6 +29,11 @@ public class PlayerController : MonoBehaviour
 
     private AudioSource moveSoundSource;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +41,6 @@ public class PlayerController : MonoBehaviour
         moveSoundSource = GetComponent<AudioSource>();
         _statistics._statsController.UpdateHealthSlider(_statistics.health, _statistics.maxHealth);
         _statistics._statsController.UpdateManaSlider(_statistics.mana, _statistics.maxMana);
-        instance = this;
         StartCoroutine(AutoRegen());
     }
 

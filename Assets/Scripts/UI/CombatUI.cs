@@ -32,8 +32,6 @@ public class CombatUI : MonoBehaviour
             if (skillInfos[buttonIndex].canBeCasted)
                 StartCoroutine(Cast(buttonIndex, _skillDataParser));
         });
-
-        //SetSkillBTNData(buttonIndex, _skillDataParser, skillDamage, protection, manaUsage);
     }
 
     private void SetSkillBTNData(int i, SkillDataParser _skillDataParser, int skillDamage, int protection, int manaUsage)

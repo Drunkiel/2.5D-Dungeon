@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class PortalController : MonoBehaviour
 {
@@ -34,14 +35,15 @@ public class PortalController : MonoBehaviour
         }));
     }
 
-    public void TeleportToScene(string sceneName)
+    public void TeleportToScene(string sceneName, Vector3 playerPosition)
     {
         if (GameController.isPaused)
             return;
 
         StartCoroutine(WaitAndTeleport(() =>
         {
-            StartCoroutine(LoadAsyncScene(sceneName));
+            StartCoroutine(GameController.instance.LoadAsyncScene(sceneName));
+            PlayerController.instance.transform.position = playerPosition;
         }));
     }
 
@@ -60,23 +62,5 @@ public class PortalController : MonoBehaviour
         PlayerController.instance.ResetMovement();
         PlayerController.instance.isStopped = false;
         CameraController.instance.ResetZoom();
-    }
-
-    IEnumerator LoadAsyncScene(string sceneName)
-    {
-        GameController _gameController = GameController.instance;
-
-        Scene currentScene = SceneManager.GetActiveScene();
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-
-        //Wait until scene is loaded
-        while (!asyncLoad.isDone)
-            yield return null;
-
-        //Move objects to other scene
-        for (int i = 0; i < _gameController.objectsToTeleportMust.Count; i++)
-            SceneManager.MoveGameObjectToScene(_gameController.objectsToTeleportMust[i], SceneManager.GetSceneByName(sceneName));
-
-        SceneManager.UnloadSceneAsync(currentScene);
     }
 }

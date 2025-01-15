@@ -55,7 +55,7 @@ public class SkillController : MonoBehaviour
     public Transform skillsParent;
     //public SkillData skillData;
 
-    void Start()
+    void Awake()
     {
         for (int i = 0; i < _skillHolder.skillNames.Count; i++)
         {
