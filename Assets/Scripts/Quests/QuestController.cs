@@ -32,6 +32,7 @@ public class QuestController : MonoBehaviour
         //Add quest
         _currentQuestsIndex.Add(questIndex);
         _questUI.AddQuestToUI(_allQuests[questIndex]);
+        PopUpController.instance.CreatePopUp(PopUpInfo.QuestAccepted, _allQuests[questIndex].title);
 
         //Set listeners
         for (int i = 0; i < _allQuests[questIndex]._requirements.Count; i++)
@@ -59,6 +60,7 @@ public class QuestController : MonoBehaviour
         _questUI.RemoveQuestUI(questIndex);
         _currentQuestsIndex.Remove(questIndex);
         _allQuests[questIndex].onFinishEvent.Invoke();
+        PopUpController.instance.CreatePopUp(PopUpInfo.QuestCompleted, _allQuests[questIndex].title);
 
         for (int i = 0; i < _allQuests[questIndex]._requirements.Count; i++)
         {

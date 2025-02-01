@@ -46,4 +46,14 @@ public class ConsoleCommands : MonoBehaviour
 
         QuestController.instance.InvokeKillEvent(targetID);
     }
+
+    public void PopUp(string text)
+    {
+        PopUpController.instance.CreatePopUp(PopUpInfo.QuestCompleted, text);
+    }
+
+    public void Teleport(string sceneName)
+    {
+        PortalController.instance.TeleportToScene(sceneName, Vector3.up);
+    }
 }

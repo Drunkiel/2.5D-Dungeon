@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public class PortalController : MonoBehaviour
 {
@@ -43,6 +41,7 @@ public class PortalController : MonoBehaviour
         StartCoroutine(WaitAndTeleport(() =>
         {
             StartCoroutine(GameController.instance.LoadAsyncScene(sceneName));
+            PopUpController.instance.CreatePopUp(PopUpInfo.VisitPlace, sceneName);
             PlayerController.instance.transform.position = playerPosition;
         }));
     }
