@@ -52,7 +52,8 @@ public class ConsoleCommands : MonoBehaviour
         PopUpController.instance.CreatePopUp(PopUpInfo.QuestCompleted, text);
     }
 
-    public void Teleport(string sceneName)
+    //Teleport
+    public void Tp(string sceneName)
     {
         PortalController.instance.TeleportToScene(sceneName, Vector3.up);
     }

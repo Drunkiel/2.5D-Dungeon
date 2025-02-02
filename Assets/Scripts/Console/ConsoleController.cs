@@ -97,6 +97,9 @@ public class ConsoleController : MonoBehaviour
             ChatMessage(SenderType.Player, chatInput.text);
         else
         {
+            if (chatInput.text.Length == 1)
+                return;
+
             commandName = GetCommand();
             commandName = char.ToUpper(commandName[0]) + commandName[1..];
 
