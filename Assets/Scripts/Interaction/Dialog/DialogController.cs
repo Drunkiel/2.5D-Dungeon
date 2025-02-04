@@ -42,7 +42,7 @@ public class DialogController : MonoBehaviour
         {
             _entityController._entityWalk.isStopped = true;
             _entityController._entityWalk.GoTo(_playerController.transform.position, _playerController.transform.position);
-            _dialogUI._npcPreview.UpdateAllByEntity(_entityController.GetComponent<EntityLookController>()._entityLook);
+            _dialogUI._npcPreview.UpdateAllByEntity(_entityController.GetComponent<EntityLookController>()._entityLook, _entityController._holdingController._itemController._gearHolder);
             _dialogUI.nameText.text = _entityController._entityInfo.name;
 
             //Checking if player is talking to right npc

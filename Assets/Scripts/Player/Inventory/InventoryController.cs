@@ -28,7 +28,7 @@ public class InventoryController : MonoBehaviour
             _inventorySlots.Add(slot);
         }
 
-        _entityPreview.UpdateAllByEntity(PlayerController.instance.GetComponent<EntityLookController>()._entityLook);
+        _entityPreview.UpdateAllByEntity(PlayerController.instance.GetComponent<EntityLookController>()._entityLook, PlayerController.instance._holdingController._itemController._gearHolder);
 
         instance = this;
     }

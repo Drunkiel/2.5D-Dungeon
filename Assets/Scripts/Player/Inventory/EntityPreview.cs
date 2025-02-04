@@ -93,7 +93,7 @@ public class EntityPreview
         }
     }
 
-    public void UpdateAllByEntity(EntityLook _entityLook)
+    public void UpdateAllByEntity(EntityLook _entityLook, GearHolder _gearHolder)
     {   
         if (headImage != null)
             UpdateEntityPreviewLook(EntityPartType.Head, _entityLook.headImage.sprite);
@@ -109,5 +109,15 @@ public class EntityPreview
 
         if (legLeftImage != null && legRightImage != null)
             UpdateEntityPreviewLook(EntityPartType.Legs, _entityLook.legLeftImage.sprite);
+
+        //Armor
+        if (helmetImage != null && _gearHolder._armorHead != null)
+            UpdateArmorLook(ArmorType.Helmet, _gearHolder._armorHead.itemSprite);
+
+        if (chestplateImage != null && _gearHolder._armorChestplate != null)
+            UpdateArmorLook(ArmorType.Chestplate, _gearHolder._armorChestplate.itemSprite);
+
+        if (bootLeftImage != null && bootRightImage != null && _gearHolder._armorBoots != null)
+            UpdateArmorLook(ArmorType.Boots, _gearHolder._armorBoots.itemSprite);
     }
 }
