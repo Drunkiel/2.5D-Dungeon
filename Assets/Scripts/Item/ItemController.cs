@@ -91,6 +91,7 @@ public class ItemController : SaveLoadSystem
                     rotation = Quaternion.identity;
 
                 _gearHolder._weaponLeft = PickWeapon(_itemID, rotation, _gearHolder.leftHandTransform);
+                _gearHolder._weaponLeft.transform.localScale = new(-1, 1, 1);
                 break;
 
             //Picking weapon to both hands

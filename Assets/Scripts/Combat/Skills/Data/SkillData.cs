@@ -13,6 +13,8 @@ public class SkillData : ScriptableObject
     public string animationName;
     public Vector3 size;
     public Vector3 center;
+    public float delay;
+    public bool stopMovement;
     public SkillType type;
     public bool worksOnSelf;
     public bool worksOnOthers;

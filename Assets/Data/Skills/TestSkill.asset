@@ -17,11 +17,19 @@ MonoBehaviour:
   spritePath: Heart.png
   spriteIconPath: 
   animationName: 
+  size: {x: 0, y: 0, z: 0}
+  center: {x: 0, y: 0, z: 0}
+  delay: 0
+  stopMovement: 0
   type: 0
+  worksOnSelf: 0
+  worksOnOthers: 0
   _skillAttributes:
+  - attributeType: 1
+    elementalTypes: 0
+    buffTypes: 0
+    amount: 5
   - attributeType: 2
     elementalTypes: 1
     buffTypes: 0
-    workOnSelf: 0
-    workOnOthers: 0
     amount: 5

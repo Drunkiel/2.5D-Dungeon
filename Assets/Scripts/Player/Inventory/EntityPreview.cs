@@ -39,25 +39,44 @@ public class EntityPreview
         {
             case EntityPartType.Head:
                 headImage.sprite = sprite;
+                headImage.SetNativeSize();
+                headImage.rectTransform.sizeDelta = new Vector2(headImage.rectTransform.sizeDelta.x / 100, headImage.rectTransform.sizeDelta.y / 100);
                 break;
             
             case EntityPartType.Body:
                 bodyImage.sprite = sprite;
+                bodyImage.SetNativeSize();
+                bodyImage.rectTransform.sizeDelta = new Vector2(bodyImage.rectTransform.sizeDelta.x / 100, bodyImage.rectTransform.sizeDelta.y / 100);
                 break;
             
             case EntityPartType.Arms:
                 armLeftImage.sprite = sprite;
                 armRightImage.sprite = sprite;
+
+                armLeftImage.SetNativeSize();
+                armLeftImage.rectTransform.sizeDelta = new Vector2(armLeftImage.rectTransform.sizeDelta.x / 100, armLeftImage.rectTransform.sizeDelta.y / 100);
+                armRightImage.SetNativeSize();
+                armRightImage.rectTransform.sizeDelta = new Vector2(armRightImage.rectTransform.sizeDelta.x / 100, armRightImage.rectTransform.sizeDelta.y / 100);
                 break;
 
             case EntityPartType.Hands:
                 handLeftImage.sprite = sprite;
                 handRightImage.sprite = sprite;
+
+                handLeftImage.SetNativeSize();
+                handLeftImage.rectTransform.sizeDelta = new Vector2(handLeftImage.rectTransform.sizeDelta.x / 100, handLeftImage.rectTransform.sizeDelta.y / 100);
+                handRightImage.SetNativeSize();
+                handRightImage.rectTransform.sizeDelta = new Vector2(handRightImage.rectTransform.sizeDelta.x / 100, handRightImage.rectTransform.sizeDelta.y / 100);
                 break;
 
             case EntityPartType.Legs:
                 legLeftImage.sprite = sprite;
                 legRightImage.sprite = sprite;
+
+                legLeftImage.SetNativeSize();
+                legLeftImage.rectTransform.sizeDelta = new Vector2(legLeftImage.rectTransform.sizeDelta.x / 100, legLeftImage.rectTransform.sizeDelta.y / 100);
+                legRightImage.SetNativeSize();
+                legRightImage.rectTransform.sizeDelta = new Vector2(legRightImage.rectTransform.sizeDelta.x / 100, legRightImage.rectTransform.sizeDelta.y / 100);
                 break;
         }
     }

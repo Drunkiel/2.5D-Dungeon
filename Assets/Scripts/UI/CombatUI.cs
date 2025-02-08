@@ -57,7 +57,7 @@ public class CombatUI : MonoBehaviour
     public IEnumerator Cast(int buttonIndex, SkillDataParser _skillDataParser)
     {
         CombatController _combatController = CombatController.instance;
-        _combatController.CastSkill(_skillDataParser, skillInfos[buttonIndex]._collisionController);
+        StartCoroutine(_combatController.CastSkill(_skillDataParser, skillInfos[buttonIndex]._collisionController));
         skillInfos[buttonIndex].canBeCasted = false;
         if (skillInfos[buttonIndex].skillButton != null)
             skillInfos[buttonIndex].skillButton.interactable = false;

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,29 +14,24 @@ public class CombatController : MonoBehaviour
         instance = this;
     }
 
-    public void CastSkill(SkillDataParser _skillDataParser, CollisionController _collisionController)
+    public IEnumerator CastSkill(SkillDataParser _skillDataParser, CollisionController _collisionController)
     {
         if (_collisionController.targets.Count <= 0)
-            return;
+            yield break;
 
         //Get caster
-        EntityStatistics _casterStatistics = null;
-        EntityController _entityController = null;
-        //Check if caster is player
-        if (_collisionController.transform.parent.parent.parent.TryGetComponent(out PlayerController _player))
-            _casterStatistics = _player._statistics;
-        //If not then check if enemy
-        else if (_collisionController.transform.parent.parent.parent.TryGetComponent(out EntityController _enemy))
-        {
-            _casterStatistics = _enemy._statistics;
-            _entityController = _enemy;
-        }
+        Transform casterTransform = _collisionController.transform.parent.parent.parent;
+        PlayerController _player = casterTransform.GetComponent<PlayerController>();
+        EntityController _entityController = _player == null ? casterTransform.GetComponent<EntityController>() : null;
+
+        EntityStatistics _casterStatistics = _player != null ? _player._statistics :
+                                            _entityController != null ? _entityController._statistics : null;
 
         //If still null then return
         if (_casterStatistics == null)
         {
             ConsoleController.instance.ChatMessage(SenderType.System, $"Caster is unknown: {_collisionController.transform.parent.parent.parent.name}", OutputType.Error);
-            return;
+            yield break; 
         }
 
         //Checks if player has enough mana to cast skill
@@ -43,13 +39,13 @@ public class CombatController : MonoBehaviour
         if (_casterStatistics.mana * _casterStatistics.manaUsageMultiplier < manaUsage)
         {
             ConsoleController.instance.ChatMessage(SenderType.Hidden, "Not enough mana to cast spell", OutputType.Warning);
-            return;
+            yield break; 
         }
 
         //Check if animation exists
-        string animName = _skillDataParser._skillData.animationName;
-        if (string.IsNullOrEmpty(animName))
-            animName = "TakeDamage";
+        string animName = string.IsNullOrEmpty(_skillDataParser._skillData.animationName)
+                                ? "TakeDamage"
+                                : _skillDataParser._skillData.animationName;
 
         //Play animation
         if (_player != null)
@@ -63,6 +59,11 @@ public class CombatController : MonoBehaviour
             _entityController.GetComponent<EntityCombat>().ManageCombat();
         }
 
+        //Stop caster from moving
+        if (_skillDataParser._skillData.stopMovement)
+            SetMovementState(_player, _entityController, true);
+
+        yield return new WaitForSeconds(_skillDataParser._skillData.delay); 
 
         switch (_skillDataParser._skillData.type)
         {
@@ -76,6 +77,18 @@ public class CombatController : MonoBehaviour
         }
 
         _casterStatistics.TakeMana(manaUsage);
+
+        //Allow movement
+        if (_skillDataParser._skillData.stopMovement)
+            SetMovementState(_player, _entityController, false);
+    }
+
+    private void SetMovementState(PlayerController player, EntityController enemyController, bool state)
+    {
+        if (enemyController == null)
+            player.isStopped = state;
+        else
+            enemyController._entityWalk.isStopped = state;
     }
 
     private void AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics)
@@ -107,21 +120,14 @@ public class CombatController : MonoBehaviour
 
         //Checks what type of damage to deal
         Attributes _attributes = _skillDataParser._skillData._skillAttributes[0];
-        int damageToDeal = 0;
-        switch (_attributes.attributeType)
+        int damageToDeal = _attributes.attributeType switch
         {
-            case AttributeTypes.MeleeDamage:
-                damageToDeal = _casterStatistics.meleeDamage;
-                break;
+            AttributeTypes.MeleeDamage => _casterStatistics.meleeDamage,
+            AttributeTypes.RangeDamage => _casterStatistics.rangeDamage,
+            AttributeTypes.MagicDamage => _casterStatistics.magicDamage,
+            _ => 0
+        };
 
-            case AttributeTypes.RangeDamage:
-                damageToDeal = _casterStatistics.rangeDamage;
-                break;
-
-            case AttributeTypes.MagicDamage:
-                damageToDeal = _casterStatistics.magicDamage;
-                break;
-        }
 
         for (int i = 0; i < _targetsStatistics.Count; i++)
         {
@@ -135,7 +141,14 @@ public class CombatController : MonoBehaviour
 
     private void BuffSkill(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics)
     {
-        _casterStatistics._activeBuffs.Add(new(_skillDataParser._skillData.displayedName, _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Cooldown }), _skillDataParser.iconSprite, _combatUI.GetBuff(_skillDataParser), (int)_combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Buff })));
+        _casterStatistics._activeBuffs.Add(new Buff(
+            _skillDataParser._skillData.displayedName,
+            _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Cooldown }),
+            _skillDataParser.iconSprite,
+            _combatUI.GetBuff(_skillDataParser),
+            (int)_combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Buff })
+        ));
+
         _casterStatistics.RecalculateStatistics(PlayerController.instance._holdingController._itemController._gearHolder);
     }
 

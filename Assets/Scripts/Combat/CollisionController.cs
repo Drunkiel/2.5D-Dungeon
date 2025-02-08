@@ -10,7 +10,7 @@ public class CollisionController : MonoBehaviour
     {
         if (!_skillData.worksOnSelf && !_skillData.worksOnOthers)
         {
-            ConsoleController.instance.ChatMessage(SenderType.System, $"Collision controller is must detect something", OutputType.Error);
+            ConsoleController.instance.ChatMessage(SenderType.System, $"Collision controller must detect something", OutputType.Error);
             return;
         }
 
