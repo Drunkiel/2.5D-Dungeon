@@ -56,6 +56,8 @@ public class CombatController : MonoBehaviour
         else if (_entityController != null)
         {
             PlayAnimation(_entityController.anim, animName);
+            if (_skillDataParser._skillData.allowedDistance != 0)
+                _entityController._entityWalk.allowedDistance = _skillDataParser._skillData.allowedDistance;
             _entityController.GetComponent<EntityCombat>().ManageCombat();
         }
 
@@ -83,12 +85,12 @@ public class CombatController : MonoBehaviour
             SetMovementState(_player, _entityController, false);
     }
 
-    private void SetMovementState(PlayerController player, EntityController enemyController, bool state)
+    private void SetMovementState(PlayerController _player, EntityController _enemyController, bool state)
     {
-        if (enemyController == null)
-            player.isStopped = state;
+        if (_enemyController == null)
+            _player.isStopped = state;
         else
-            enemyController._entityWalk.isStopped = state;
+            _enemyController._entityWalk.isStopped = state;
     }
 
     private void AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics)

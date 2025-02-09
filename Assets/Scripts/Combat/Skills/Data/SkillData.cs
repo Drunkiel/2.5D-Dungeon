@@ -15,6 +15,7 @@ public class SkillData : ScriptableObject
     public Vector3 center;
     public float delay;
     public bool stopMovement;
+    public float allowedDistance;
     public SkillType type;
     public bool worksOnSelf;
     public bool worksOnOthers;

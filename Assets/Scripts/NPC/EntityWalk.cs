@@ -8,6 +8,7 @@ public class EntityWalk : MonoBehaviour
     private Vector3 startPosition;
     [SerializeField] private float wanderingDistance;
     [SerializeField] private Vector3 positionToGo;
+    public float allowedDistance;
 
     public Vector2 movement;
     public bool isMoving;
@@ -66,16 +67,12 @@ public class EntityWalk : MonoBehaviour
             GoTo(positionToGo, positionToGo);
     }
 
-    //Make it to be depended by skill
-    private const float AllowedDistance = 1.0f;
-    private const float TooCloseDistance = 0.5f;
-
     public void ApproachPlayer()
     {
         Vector3 playerPosition = PlayerController.instance.transform.position;
         float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
 
-        if (distanceToPlayer > AllowedDistance)
+        if (distanceToPlayer > allowedDistance)
             positionToGo = playerPosition;
         else
             positionToGo = transform.position;
@@ -88,11 +85,11 @@ public class EntityWalk : MonoBehaviour
         Vector3 playerPosition = PlayerController.instance.transform.position;
         float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
 
-        if (distanceToPlayer < TooCloseDistance)
+        if (distanceToPlayer < allowedDistance)
         {
             Vector3 directionAwayFromPlayer = (transform.position - playerPosition).normalized;
 
-            Vector3 newPosition = transform.position + directionAwayFromPlayer * (TooCloseDistance - distanceToPlayer);
+            Vector3 newPosition = transform.position + directionAwayFromPlayer * (allowedDistance - distanceToPlayer);
             positionToGo = newPosition;
         }
         else
@@ -125,13 +122,18 @@ public class EntityWalk : MonoBehaviour
     public void GoTo(Vector3 position, Vector3 faceDirection)
     {
         Vector3 direction = position - transform.position;
-        float newFaceDirection = (faceDirection - transform.position).x;
+        Vector3 cameraRight = Camera.main.transform.right;
+        cameraRight.y = 0;
+        cameraRight.Normalize();
+
+        float newFaceDirection = Vector3.Dot(cameraRight, faceDirection - transform.position);
+
         movement = new Vector2(
             direction.x * _controller._statistics.speedForce,
             direction.z * _controller._statistics.speedForce
         );
 
-        //Flipping Enemy to direction they are going
+        //Flipping Enemy to direction they are going based on camera view
         if (newFaceDirection < 0 && !isFlipped)
         {
             transform.GetChild(0).localScale = new(-1, 1, 1);
