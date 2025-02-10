@@ -49,7 +49,8 @@ public class PlayerController : MonoBehaviour
     {
         //Checks if player is moving and touching ground
         isMoving = movement.magnitude > 0.1f;
-        grounded = Physics.Raycast(transform.position + new Vector3(0.05f, 0), Vector3.down, playerHeight, whatIsGround) || Physics.Raycast(transform.position + new Vector3(-0.05f, 0), Vector3.down, playerHeight, whatIsGround);
+        grounded = Physics.Raycast(transform.position + new Vector3(0.05f, 0), Vector3.down, playerHeight, whatIsGround) || 
+            Physics.Raycast(transform.position + new Vector3(-0.05f, 0), Vector3.down, playerHeight, whatIsGround);
 
         anim.SetFloat("Movement", isStopped ? 0 : movement.magnitude);
 
