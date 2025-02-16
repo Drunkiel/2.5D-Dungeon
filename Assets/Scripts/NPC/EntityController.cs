@@ -4,11 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum Entity
+{
+    Friendly,
+    Enemy,
+}
+
 public enum Behaviour
 {
     Passive,
     Neutral,
-    Aggresive
+    Aggresive,
 }
 
 public enum State

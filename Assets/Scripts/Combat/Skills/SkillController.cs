@@ -68,7 +68,7 @@ public class SkillController : MonoBehaviour
             }
 
             skillsParent.GetChild(i).GetComponent<CollisionController>().Configure(
-                TryGetComponent(out PlayerController _),
+                TryGetComponent(out PlayerController _) || GetComponent<EntityController>()._entityInfo.entity == Entity.Friendly,
                 _skillHolder._skillDatas[i]._skillData
             );
         }
