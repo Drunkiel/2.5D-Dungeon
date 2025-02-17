@@ -18,22 +18,18 @@ public class EntityStatsController : MonoBehaviour
         nameText.text = newName;
     }
 
-    public void SetSliderColor(Behaviour behaviour)
+    public void SetSliderColor(Entity behaviour)
     {
         Image sliderImage = healthSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>();
 
         switch (behaviour)
         {
-            case Behaviour.Passive:
+            case Entity.Enemy:
+                sliderImage.color = Color.red;
+                break;
+
+            case Entity.Friendly:
                 sliderImage.color = Color.green;
-                break;
-
-            case Behaviour.Neutral:
-                sliderImage.color = Color.red;
-                break;
-
-            case Behaviour.Aggresive:
-                sliderImage.color = Color.red;
                 break;
         }
     }

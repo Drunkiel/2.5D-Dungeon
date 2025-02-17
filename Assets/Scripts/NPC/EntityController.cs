@@ -51,7 +51,7 @@ public class EntityController : MonoBehaviour
 
         //Setting basic info of entity
         _statistics._statsController.SetName(_entityInfo.name);
-        _statistics._statsController.SetSliderColor(_entityInfo.behaviour);
+        _statistics._statsController.SetSliderColor(_entityInfo.entity);
 
         //Setting sliders value
         _statistics._statsController.UpdateHealthSlider(_statistics.health, _statistics.maxHealth);
