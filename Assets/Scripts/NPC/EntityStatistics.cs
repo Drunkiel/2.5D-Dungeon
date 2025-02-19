@@ -126,7 +126,7 @@ public class EntityStatistics
 
         damageOutput -= allProtection * (1.5f * allProtectionMultiplier);
 
-        switch(attributeTypes)
+        switch (attributeTypes)
         {
             case AttributeTypes.MeleeDamage:
                 damageOutput -= meleeProtection * (1.2f * allProtectionMultiplier);
@@ -164,6 +164,7 @@ public class EntityStatistics
                 break;
         }
 
+        //Check if damage is negative to not heal entity
         if (damageOutput <= 0)
             damageOutput = 1;
 

@@ -18,11 +18,11 @@ public class EntityStatsController : MonoBehaviour
         nameText.text = newName;
     }
 
-    public void SetSliderColor(Entity behaviour)
+    public void SetSliderColor(Entity entity)
     {
         Image sliderImage = healthSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>();
 
-        switch (behaviour)
+        switch (entity)
         {
             case Entity.Enemy:
                 sliderImage.color = Color.red;
