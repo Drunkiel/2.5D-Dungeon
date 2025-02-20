@@ -952,9 +952,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1830054579}
-  - {fileID: 450787838}
+  m_Children: []
   m_Father: {fileID: 496803769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &77875803
@@ -9353,74 +9351,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445287437}
   m_CullTransparentMesh: 1
---- !u!1 &450787835
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 450787838}
-  - component: {fileID: 450787837}
-  - component: {fileID: 450787836}
-  m_Layer: 0
-  m_Name: Buff
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &450787836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 450787835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a18709065a3d984685cc82e323c33dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entityTag: 
-  targets: []
---- !u!65 &450787837
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 450787835}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 0.1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &450787838
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 450787835}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 71293149}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &455580623
 GameObject:
   m_ObjectHideFlags: 0
@@ -21705,7 +21635,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04555e0b65334054b5a02fba2fcb291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allSkills: []
+  _allSkills:
+  - _skillData: {fileID: 11400000, guid: ca29881e11bd0f74aa7e6921d64c16b1, type: 2}
+    sprite: {fileID: 0}
+    iconSprite: {fileID: 0}
+    skillPrefab: {fileID: 5028960475928897205, guid: 1520d036f1efc354c88e444a1f5adb22,
+      type: 3}
+  - _skillData: {fileID: 11400000, guid: 3f655d6eea87e9f4bb5a4fe21f530ebc, type: 2}
+    sprite: {fileID: 0}
+    iconSprite: {fileID: 0}
+    skillPrefab: {fileID: 5028960475928897205, guid: cb6212a04b1b1c347af53bbc1dedafab,
+      type: 3}
 --- !u!1 &1166132794
 GameObject:
   m_ObjectHideFlags: 0
@@ -32781,74 +32721,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1829196098}
   m_CullTransparentMesh: 1
---- !u!1 &1830054578
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1830054579}
-  - component: {fileID: 1830054580}
-  - component: {fileID: 1830054581}
-  m_Layer: 0
-  m_Name: Attack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1830054579
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1830054578}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 71293149}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1830054580
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1830054578}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.3, y: 0.1, z: 0.2}
-  m_Center: {x: 0.3, y: 0, z: 0}
---- !u!114 &1830054581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1830054578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a18709065a3d984685cc82e323c33dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entityTag: 
-  targets: []
 --- !u!1 &1835177641
 GameObject:
   m_ObjectHideFlags: 0
@@ -34672,12 +34544,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb8e39a096831044ca87c16ea10e4317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillInfos:
+  _skillInfos:
   - skillButton: {fileID: 154008886}
-    _collisionController: {fileID: 1830054581}
+    _collisionController: {fileID: 0}
     canBeCasted: 1
   - skillButton: {fileID: 224432592}
-    _collisionController: {fileID: 450787836}
+    _collisionController: {fileID: 0}
     canBeCasted: 1
 --- !u!4 &1945480475
 Transform:
@@ -34926,11 +34798,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillHolder:
     skillNames:
-    - Fire ball
+    - Basic Attack
     - Speed
     _skillDatas:
-    - {fileID: 0}
-    - {fileID: 0}
+    - _skillData: {fileID: 0}
+      sprite: {fileID: 0}
+      iconSprite: {fileID: 0}
+      skillPrefab: {fileID: 0}
+    - _skillData: {fileID: 0}
+      sprite: {fileID: 0}
+      iconSprite: {fileID: 0}
+      skillPrefab: {fileID: 0}
   _combatUI: {fileID: 0}
   skillsParent: {fileID: 71293149}
 --- !u!114 &1966873454
@@ -35037,6 +34915,8 @@ MonoBehaviour:
       meleeProtection: 0
       rangeProtection: 0
       magicProtection: 0
+      divineResistance: 0
+      demonicResistance: 0
       speedForce: 0
       maxSpeed: 0
     health: 50
@@ -35056,10 +34936,8 @@ MonoBehaviour:
     meleeProtection: 0
     rangeProtection: 0
     magicProtection: 0
-    fireResistance: 0
-    waterResistance: 0
-    earthResistance: 0
-    airResistance: 0
+    divineResistance: 0
+    demonicResistance: 0
     speedForce: 30
     maxSpeed: 1.2
     jumpForce: 4

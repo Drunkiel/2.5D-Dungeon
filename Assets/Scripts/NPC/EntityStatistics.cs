@@ -23,6 +23,9 @@ public class BasicStatistics
     public int rangeProtection;
     public int magicProtection;
 
+    public int divineResistance;
+    public int demonicResistance;
+
     public float speedForce;
     public float maxSpeed;
 }
@@ -58,10 +61,8 @@ public class EntityStatistics
     public int magicProtection;
 
     [Header("Elemental Protection")]
-    public int fireResistance;
-    public int waterResistance;
-    public int earthResistance;
-    public int airResistance;
+    public int divineResistance;
+    public int demonicResistance;
 
     [Header("Movement")]
     public float speedForce;
@@ -93,6 +94,9 @@ public class EntityStatistics
         _stats.meleeProtection = meleeProtection;
         _stats.rangeProtection = rangeProtection;
         _stats.magicProtection = magicProtection;
+
+        _stats.divineResistance = divineResistance;
+        _stats.demonicResistance = demonicResistance;
 
         _stats.speedForce = speedForce;
         _stats.maxSpeed = maxSpeed;
@@ -129,14 +133,17 @@ public class EntityStatistics
         switch (attributeTypes)
         {
             case AttributeTypes.MeleeDamage:
+                damageOutput += meleeDamage / 2;
                 damageOutput -= meleeProtection * (1.2f * allProtectionMultiplier);
                 break;
 
             case AttributeTypes.RangeDamage:
+                damageOutput += rangeDamage / 2;
                 damageOutput -= rangeProtection * (1.2f * allProtectionMultiplier);
                 break;
 
             case AttributeTypes.MagicDamage:
+                damageOutput += magicDamage / 2;
                 damageOutput -= magicProtection * (1.2f * allProtectionMultiplier);
                 break;
         }
@@ -147,20 +154,12 @@ public class EntityStatistics
                 damageOutput -= 0;
                 break;
 
-            case ElementalTypes.Fire:
-                damageOutput -= fireResistance * (2 * elementalProtectionMultiplier);
+            case ElementalTypes.Divine:
+                damageOutput -= divineResistance * (2 * elementalProtectionMultiplier);
                 break;
 
-            case ElementalTypes.Water:
-                damageOutput -= waterResistance * (2 * elementalProtectionMultiplier);
-                break;
-
-            case ElementalTypes.Earth:
-                damageOutput -= earthResistance * (2 * elementalProtectionMultiplier);
-                break;
-
-            case ElementalTypes.Air:
-                damageOutput -= airResistance * (1.25f * elementalProtectionMultiplier);
+            case ElementalTypes.Demonic:
+                damageOutput -= demonicResistance * (2 * elementalProtectionMultiplier);
                 break;
         }
 

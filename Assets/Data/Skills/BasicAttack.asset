@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3abc020636c80a746bd244bafa864eec, type: 3}
+  m_Name: BasicAttack
+  m_EditorClassIdentifier: 
+  ID: 0
+  displayedName: Basic Attack
+  spritePath: Heart.png
+  spriteIconPath: Heart.png
+  animationName: Test_CastingSpell
+  size: {x: 0.3, y: 0.1, z: 0.3}
+  center: {x: 0.3, y: 0, z: 0}
+  delay: 0
+  stopMovement: 0
+  allowedDistance: 0.1
+  type: 0
+  worksOnSelf: 0
+  worksOnOthers: 1
+  _skillAttributes:
+  - attributeType: 1
+    elementalTypes: 0
+    buffTypes: 0
+    amount: 1
+  - attributeType: 8
+    elementalTypes: 0
+    buffTypes: 0
+    amount: 55
