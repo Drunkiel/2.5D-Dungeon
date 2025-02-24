@@ -73,6 +73,13 @@ public class SkillController : MonoBehaviour
 
     public void CastSkill(int index)
     {
+        print($"{index}, {_combatUI._skillInfos.Count}");
+        if (_combatUI._skillInfos[index] == null)
+        {
+            print('a');
+            return;
+        }
+
         if (_combatUI._skillInfos[index].canBeCasted)
             StartCoroutine(_combatUI.Cast(index, _skillHolder._skillDatas[index]));
     }

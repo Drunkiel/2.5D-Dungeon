@@ -61,6 +61,11 @@ public class CombatController : MonoBehaviour
             _entityController.GetComponent<EntityCombat>().ManageCombat();
         }
 
+        EffectPlayer _effectPlayer = _collisionController.GetComponent<EffectPlayer>();
+        _effectPlayer.PlayAnimation();
+        _effectPlayer.PlayParticle();
+
+
         //Stop caster from moving
         if (_skillDataParser._skillData.stopMovement)
             SetMovementState(_player, _entityController, true);

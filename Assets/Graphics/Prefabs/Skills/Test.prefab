@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1495720534398566232}
   - component: {fileID: 6264012877345273824}
   - component: {fileID: 907464602111158090}
+  - component: {fileID: -4552877664801788360}
   m_Layer: 0
   m_Name: Test
   m_TagString: Untagged
@@ -68,3 +69,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityTag: 
   targets: []
+--- !u!114 &-4552877664801788360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5028960475928897205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ce1490fdc34ed49a9a18a07b55e3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: 
+  particle: {fileID: 0}
