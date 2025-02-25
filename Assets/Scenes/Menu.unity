@@ -933,6 +933,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 71293149}
+  - component: {fileID: 71293150}
   m_Layer: 0
   m_Name: Skills
   m_TagString: Untagged
@@ -955,6 +956,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 496803769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &71293150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71293148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb8e39a096831044ca87c16ea10e4317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillInfos:
+  - skillButton: {fileID: 154008886}
+    _collisionController: {fileID: 0}
+    canBeCasted: 1
+  - skillButton: {fileID: 224432592}
+    _collisionController: {fileID: 0}
+    canBeCasted: 1
 --- !u!1 &77875803
 GameObject:
   m_ObjectHideFlags: 0
@@ -34495,7 +34515,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1945480475}
   - component: {fileID: 1945480472}
-  - component: {fileID: 1945480474}
   - component: {fileID: 1945480473}
   m_Layer: 0
   m_Name: Combat_System
@@ -34516,7 +34535,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcac19e060ccfd548a30bb647f117513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _combatUI: {fileID: 1945480474}
   _openCloseUI: {fileID: 1945480473}
 --- !u!114 &1945480473
 MonoBehaviour:
@@ -34532,25 +34550,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isOpen: 0
   UI: {fileID: 2093971598}
---- !u!114 &1945480474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945480471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb8e39a096831044ca87c16ea10e4317, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillInfos:
-  - skillButton: {fileID: 154008886}
-    _collisionController: {fileID: 0}
-    canBeCasted: 1
-  - skillButton: {fileID: 224432592}
-    _collisionController: {fileID: 0}
-    canBeCasted: 1
 --- !u!4 &1945480475
 Transform:
   m_ObjectHideFlags: 0
@@ -34800,16 +34799,8 @@ MonoBehaviour:
     skillNames:
     - Basic Attack
     - Speed
-    _skillDatas:
-    - _skillData: {fileID: 0}
-      sprite: {fileID: 0}
-      iconSprite: {fileID: 0}
-      skillPrefab: {fileID: 0}
-    - _skillData: {fileID: 0}
-      sprite: {fileID: 0}
-      iconSprite: {fileID: 0}
-      skillPrefab: {fileID: 0}
-  _combatUI: {fileID: 0}
+    _skillDatas: []
+  _combatUI: {fileID: 71293150}
   skillsParent: {fileID: 71293149}
 --- !u!114 &1966873454
 MonoBehaviour:

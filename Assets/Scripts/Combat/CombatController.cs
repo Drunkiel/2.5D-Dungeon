@@ -6,7 +6,6 @@ public class CombatController : MonoBehaviour
 {
     public static CombatController instance;
 
-    public CombatUI _combatUI;
     [SerializeField] private OpenCloseUI _openCloseUI;
 
     private void Awake()
@@ -14,7 +13,7 @@ public class CombatController : MonoBehaviour
         instance = this;
     }
 
-    public IEnumerator CastSkill(SkillDataParser _skillDataParser, CollisionController _collisionController)
+    public IEnumerator CastSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, CombatUI _combatUI)
     {
         if (_collisionController.targets.Count <= 0)
             yield break;
@@ -75,11 +74,11 @@ public class CombatController : MonoBehaviour
         switch (_skillDataParser._skillData.type)
         {
             case SkillType.Attack:
-                AttackSkill(_skillDataParser, _collisionController, _casterStatistics);
+                AttackSkill(_skillDataParser, _collisionController, _casterStatistics, _combatUI);
                 break;
 
             case SkillType.Defence:
-                BuffSkill(_skillDataParser, _casterStatistics);
+                BuffSkill(_skillDataParser, _casterStatistics, _combatUI);
                 break;
         }
 
@@ -98,7 +97,7 @@ public class CombatController : MonoBehaviour
             _enemyController._entityWalk.isStopped = state;
     }
 
-    private void AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics)
+    private void AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics, CombatUI _combatUI)
     {
         //Get current target
         List<EntityStatistics> _targetsStatistics = new();
@@ -146,7 +145,7 @@ public class CombatController : MonoBehaviour
         }
     }
 
-    private void BuffSkill(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics)
+    private void BuffSkill(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics, CombatUI _combatUI)
     {
         _casterStatistics._activeBuffs.Add(new Buff(
             _skillDataParser._skillData.displayedName,

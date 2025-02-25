@@ -300,6 +300,8 @@ MonoBehaviour:
       meleeProtection: 0
       rangeProtection: 0
       magicProtection: 0
+      divineResistance: 0
+      demonicResistance: 0
       speedForce: 0
       maxSpeed: 0
     health: 50
@@ -319,10 +321,8 @@ MonoBehaviour:
     meleeProtection: 0
     rangeProtection: 0
     magicProtection: 0
-    fireResistance: 0
-    waterResistance: 0
-    earthResistance: 0
-    airResistance: 0
+    divineResistance: 0
+    demonicResistance: 0
     speedForce: 18
     maxSpeed: 0.5
     jumpForce: 5
@@ -493,8 +493,7 @@ MonoBehaviour:
   _skillHolder:
     skillNames:
     - Speed
-    _skillDatas:
-    - {fileID: 0}
+    _skillDatas: []
   _combatUI: {fileID: 2188388283335968423}
   skillsParent: {fileID: 9064172160109199589}
 --- !u!114 &6131611469941005280
@@ -1420,10 +1419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb8e39a096831044ca87c16ea10e4317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillInfos:
-  - skillButton: {fileID: 0}
-    _collisionController: {fileID: 4587665593357405734}
-    canBeCasted: 1
+  _skillInfos: []
 --- !u!1001 &1318354393991696153
 PrefabInstance:
   m_ObjectHideFlags: 0

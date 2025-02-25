@@ -54,7 +54,7 @@ public class SkillController : MonoBehaviour
     {
         for (int i = 0; i < _skillHolder.skillNames.Count; i++)
         {
-            _skillHolder._skillDatas[i] = SkillContainer.instance.GetSkillByName(_skillHolder.skillNames[i]);
+            _skillHolder._skillDatas.Add(SkillContainer.instance.GetSkillByName(_skillHolder.skillNames[i]));
             
             if (_skillHolder._skillDatas[i] == null)
             {
@@ -62,9 +62,10 @@ public class SkillController : MonoBehaviour
                 continue;
             }
 
-            Instantiate(_skillHolder._skillDatas[i].skillPrefab, skillsParent);
+            CollisionController _collisionController = Instantiate(_skillHolder._skillDatas[i].skillPrefab, skillsParent).GetComponent<CollisionController>();
+            _combatUI._skillInfos.Add(new() { canBeCasted = true, _collisionController = _collisionController });
 
-            skillsParent.GetChild(i).GetComponent<CollisionController>().Configure(
+            _collisionController.Configure(
                 TryGetComponent(out PlayerController _) || GetComponent<EntityController>()._entityInfo.entity == Entity.Friendly,
                 _skillHolder._skillDatas[i]._skillData
             );
@@ -73,7 +74,6 @@ public class SkillController : MonoBehaviour
 
     public void CastSkill(int index)
     {
-        print($"{index}, {_combatUI._skillInfos.Count}");
         if (_combatUI._skillInfos[index] == null)
         {
             print('a');

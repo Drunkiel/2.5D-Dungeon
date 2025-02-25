@@ -20,10 +20,7 @@ public class CombatUI : MonoBehaviour
     {
         for (int i = 0; i < _skillInfos.Count; i++)
             if (_skillInfos[i].skillButton != null)
-            {
                 SetSkillToBTN(i, PlayerController.instance.GetComponent<SkillController>()._skillHolder._skillDatas[i]);
-                _skillInfos[i]._collisionController = PlayerController.instance.GetComponent<SkillController>().skillsParent.GetChild(i).GetComponent<CollisionController>();
-            }
     }
 
     public void SetSkillToBTN(int buttonIndex, SkillDataParser _skillDataParser)
@@ -39,7 +36,7 @@ public class CombatUI : MonoBehaviour
     public IEnumerator Cast(int buttonIndex, SkillDataParser _skillDataParser)
     {
         CombatController _combatController = CombatController.instance;
-        StartCoroutine(_combatController.CastSkill(_skillDataParser, _skillInfos[buttonIndex]._collisionController));
+        StartCoroutine(_combatController.CastSkill(_skillDataParser, _skillInfos[buttonIndex]._collisionController, this));
         _skillInfos[buttonIndex].canBeCasted = false;
         if (_skillInfos[buttonIndex].skillButton != null)
             _skillInfos[buttonIndex].skillButton.interactable = false;
