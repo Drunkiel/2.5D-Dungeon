@@ -31,7 +31,8 @@ public enum AttributeTypes
 
 public enum SkillType
 {
-    Attack,
+    AttackMelee,
+    AttackRange,
     Defence,
 }
 
@@ -63,7 +64,10 @@ public class SkillController : MonoBehaviour
             }
 
             CollisionController _collisionController = Instantiate(_skillHolder._skillDatas[i].skillPrefab, skillsParent).GetComponent<CollisionController>();
-            _combatUI._skillInfos.Add(new() { canBeCasted = true, _collisionController = _collisionController });
+            if (_combatUI._skillInfos.Count == _skillHolder.skillNames.Count)
+                _combatUI._skillInfos[i]._collisionController = _collisionController;
+            else
+                _combatUI._skillInfos.Add(new() { canBeCasted = true, _collisionController = _collisionController });
 
             _collisionController.Configure(
                 TryGetComponent(out PlayerController _) || GetComponent<EntityController>()._entityInfo.entity == Entity.Friendly,

@@ -30,7 +30,7 @@ public class CombatController : MonoBehaviour
         if (_casterStatistics == null)
         {
             ConsoleController.instance.ChatMessage(SenderType.System, $"Caster is unknown: {_collisionController.transform.parent.parent.parent.name}", OutputType.Error);
-            yield break; 
+            yield break;
         }
 
         //Checks if player has enough mana to cast skill
@@ -38,7 +38,7 @@ public class CombatController : MonoBehaviour
         if (_casterStatistics.mana * _casterStatistics.manaUsageMultiplier < manaUsage)
         {
             ConsoleController.instance.ChatMessage(SenderType.Hidden, "Not enough mana to cast spell", OutputType.Warning);
-            yield break; 
+            yield break;
         }
 
         //Check if animation exists
@@ -61,19 +61,22 @@ public class CombatController : MonoBehaviour
         }
 
         EffectPlayer _effectPlayer = _collisionController.GetComponent<EffectPlayer>();
-        _effectPlayer.PlayAnimation();
+        PlayAnimation(_effectPlayer.anim, _effectPlayer.animationName);
         _effectPlayer.PlayParticle();
-
 
         //Stop caster from moving
         if (_skillDataParser._skillData.stopMovement)
             SetMovementState(_player, _entityController, true);
 
-        yield return new WaitForSeconds(_skillDataParser._skillData.delay); 
+        yield return new WaitForSeconds(_skillDataParser._skillData.delay);
 
         switch (_skillDataParser._skillData.type)
         {
-            case SkillType.Attack:
+            case SkillType.AttackMelee:
+                AttackSkill(_skillDataParser, _collisionController, _casterStatistics, _combatUI);
+                break;
+
+            case SkillType.AttackRange:
                 AttackSkill(_skillDataParser, _collisionController, _casterStatistics, _combatUI);
                 break;
 
@@ -134,7 +137,6 @@ public class CombatController : MonoBehaviour
             _ => 0
         };
 
-
         for (int i = 0; i < _targetsStatistics.Count; i++)
         {
             _targetsStatistics[i].TakeDamage((skillDamage + damageToDeal) * _casterStatistics.damageMultiplier, _attributes.attributeType, _attributes.elementalTypes);
@@ -160,6 +162,9 @@ public class CombatController : MonoBehaviour
 
     public float PlayAnimation(Animator animator, string animationName)
     {
+        if (string.IsNullOrEmpty(animationName))
+            return 0f;
+
         // Play the animation and return how long animation takes
         animator.Play(animationName);
         return animator.GetCurrentAnimatorStateInfo(0).length;

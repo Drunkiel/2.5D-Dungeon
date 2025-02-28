@@ -12,7 +12,8 @@ public class EventTriggerController : MonoBehaviour
 
     private void Awake()
     {
-        objectTag = GetComponent<TriggerController>().objectsTag[0];
+        if (TryGetComponent(out TriggerController _controller))
+            objectTag = _controller.objectsTag[0];
     }
 
     void OnTriggerEnter(Collider collider)
