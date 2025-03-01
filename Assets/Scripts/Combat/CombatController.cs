@@ -15,7 +15,7 @@ public class CombatController : MonoBehaviour
 
     public IEnumerator CastSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, CombatUI _combatUI)
     {
-        if (_collisionController.targets.Count <= 0)
+        if (_collisionController.targets.Count <= 0 && _skillDataParser._skillData.type != SkillType.AttackRange)
             yield break;
 
         //Get caster
@@ -77,7 +77,13 @@ public class CombatController : MonoBehaviour
                 break;
 
             case SkillType.AttackRange:
-                AttackSkill(_skillDataParser, _collisionController, _casterStatistics, _combatUI);
+                EventTriggerController _eventTriggerController = _collisionController.transform.GetChild(0).GetComponent<EventTriggerController>();
+                CollisionController _collision = _eventTriggerController.GetComponent<CollisionController>();
+                _collision.entityTag = _collisionController.entityTag;
+                _eventTriggerController.GetComponentInParent<Projectile>().unityEvent.AddListener(
+                    () => AttackSkill(_skillDataParser, _collision, _casterStatistics, _combatUI)
+                );
+                _eventTriggerController.SetTag(_collisionController.entityTag);
                 break;
 
             case SkillType.Defence:
@@ -102,6 +108,7 @@ public class CombatController : MonoBehaviour
 
     private void AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics, CombatUI _combatUI)
     {
+        print(_collisionController);
         //Get current target
         List<EntityStatistics> _targetsStatistics = new();
         List<EntityController> _enemyTargets = new();

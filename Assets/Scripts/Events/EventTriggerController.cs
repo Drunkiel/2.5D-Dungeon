@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class EventTriggerController : MonoBehaviour
 {
-    private string objectTag;
+    [SerializeField] private string objectTag;
     public bool canBeShown = true;
 
     public UnityEvent enterEvent;
@@ -13,7 +13,7 @@ public class EventTriggerController : MonoBehaviour
     private void Awake()
     {
         if (TryGetComponent(out TriggerController _controller))
-            objectTag = _controller.objectsTag[0];
+            SetTag(_controller.objectsTag[0]);
     }
 
     void OnTriggerEnter(Collider collider)
@@ -41,5 +41,10 @@ public class EventTriggerController : MonoBehaviour
             events.Invoke();
             return;
         }
+    }
+
+    public void SetTag(string tag)
+    {
+        objectTag = tag;
     }
 }
