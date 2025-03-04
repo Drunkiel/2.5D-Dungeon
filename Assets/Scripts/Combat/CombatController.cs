@@ -18,7 +18,6 @@ public class CombatController : MonoBehaviour
         if (_collisionController.targets.Count <= 0 && _skillDataParser._skillData.type != SkillType.AttackRange)
             yield break;
 
-        //Get caster
         Transform casterTransform = _collisionController.transform.parent.parent.parent;
         PlayerController _player = casterTransform.GetComponent<PlayerController>();
         EntityController _entityController = _player == null ? casterTransform.GetComponent<EntityController>() : null;
@@ -26,14 +25,12 @@ public class CombatController : MonoBehaviour
         EntityStatistics _casterStatistics = _player != null ? _player._statistics :
                                             _entityController != null ? _entityController._statistics : null;
 
-        //If still null then return
         if (_casterStatistics == null)
         {
             ConsoleController.instance.ChatMessage(SenderType.System, $"Caster is unknown: {_collisionController.transform.parent.parent.parent.name}", OutputType.Error);
             yield break;
         }
 
-        //Checks if player has enough mana to cast skill
         float manaUsage = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.ManaUsage });
         if (_casterStatistics.mana * _casterStatistics.manaUsageMultiplier < manaUsage)
         {
@@ -41,12 +38,7 @@ public class CombatController : MonoBehaviour
             yield break;
         }
 
-        //Check if animation exists
-        string animName = string.IsNullOrEmpty(_skillDataParser._skillData.animationName)
-                                ? "TakeDamage"
-                                : _skillDataParser._skillData.animationName;
-
-        //Play animation
+        string animName = string.IsNullOrEmpty(_skillDataParser._skillData.animationName) ? "TakeDamage" : _skillDataParser._skillData.animationName;
         if (_player != null)
         {
             PlayAnimation(_player.anim, animName);
@@ -64,7 +56,6 @@ public class CombatController : MonoBehaviour
         PlayAnimation(_effectPlayer.anim, _effectPlayer.animationName);
         _effectPlayer.PlayParticle();
 
-        //Stop caster from moving
         if (_skillDataParser._skillData.stopMovement)
             SetMovementState(_player, _entityController, true);
 
@@ -77,13 +68,15 @@ public class CombatController : MonoBehaviour
                 break;
 
             case SkillType.AttackRange:
-                EventTriggerController _eventTriggerController = _collisionController.transform.GetChild(0).GetComponent<EventTriggerController>();
-                CollisionController _collision = _eventTriggerController.GetComponent<CollisionController>();
-                _collision.entityTag = _collisionController.entityTag;
-                _eventTriggerController.GetComponentInParent<Projectile>().unityEvent.AddListener(
-                    () => AttackSkill(_skillDataParser, _collision, _casterStatistics, _combatUI)
-                );
-                _eventTriggerController.SetTag(_collisionController.entityTag);
+                Projectile _projectile = _collisionController.transform.GetChild(0).GetComponentInParent<Projectile>();
+                _projectile._collisionController.entityTag = _collisionController.entityTag;
+                _projectile._triggerController.SetTag(_collisionController.entityTag);
+                _projectile.unityEvent.AddListener(() =>
+                {
+                    AttackSkill(_skillDataParser, _projectile._collisionController, _casterStatistics, _combatUI);
+                    print(_projectile._collisionController);
+                });
+                
                 break;
 
             case SkillType.Defence:
@@ -92,8 +85,6 @@ public class CombatController : MonoBehaviour
         }
 
         _casterStatistics.TakeMana(manaUsage);
-
-        //Allow movement
         if (_skillDataParser._skillData.stopMovement)
             SetMovementState(_player, _entityController, false);
     }
@@ -106,13 +97,16 @@ public class CombatController : MonoBehaviour
             _enemyController._entityWalk.isStopped = state;
     }
 
-    private void AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics, CombatUI _combatUI)
+    private bool AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics, CombatUI _combatUI)
     {
-        print(_collisionController);
         //Get current target
         List<EntityStatistics> _targetsStatistics = new();
         List<EntityController> _enemyTargets = new();
         PlayerController _playerTarget = null;
+
+        if (_collisionController.targets.Count <= 0)
+            return false;
+
         foreach (GameObject target in _collisionController.targets)
         {
             if (target.TryGetComponent(out EntityController _enemyComponent))
@@ -128,7 +122,10 @@ public class CombatController : MonoBehaviour
                 _playerTarget.GetComponent<EntityCombat>().ManageCombat();
             }
             else
+            {
                 ConsoleController.instance.ChatMessage(SenderType.System, $"Target: {target.name} does not have a controller script attached", OutputType.Error);
+                return false;
+            }
         }
 
         //Get stats
@@ -152,6 +149,8 @@ public class CombatController : MonoBehaviour
             else
                 PlayAnimation(_enemyTargets[i].anim, "TakeDamage");
         }
+
+        return true;
     }
 
     private void BuffSkill(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics, CombatUI _combatUI)

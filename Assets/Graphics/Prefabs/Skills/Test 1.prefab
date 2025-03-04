@@ -66,7 +66,6 @@ GameObject:
   - component: {fileID: 907464602111158090}
   - component: {fileID: 7237521904898223932}
   - component: {fileID: 8791887152452771975}
-  - component: {fileID: 9201883610711355232}
   m_Layer: 0
   m_Name: Test 1
   m_TagString: Untagged
@@ -107,7 +106,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.3, y: 0.1, z: 0.2}
   m_Center: {x: 0.3, y: 0, z: 0}
@@ -161,23 +160,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &9201883610711355232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5028960475928897205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 210451b9ecfb1e7439fefa8b93236dd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: 500
-  useGravity: 1
-  unityEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &9117754975036506617
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,6 +173,7 @@ GameObject:
   - component: {fileID: 7154727613366583696}
   - component: {fileID: 5217601069750499358}
   - component: {fileID: 6439975140855240444}
+  - component: {fileID: 4319862515131425109}
   - component: {fileID: 5466850315905799133}
   - component: {fileID: 903253747616110240}
   m_Layer: 8
@@ -314,6 +297,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4319862515131425109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9117754975036506617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 210451b9ecfb1e7439fefa8b93236dd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: 500
+  useGravity: 1
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  _collisionController: {fileID: 903253747616110240}
+  _triggerController: {fileID: 5466850315905799133}
 --- !u!114 &5466850315905799133
 MonoBehaviour:
   m_ObjectHideFlags: 0

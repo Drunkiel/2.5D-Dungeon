@@ -11,4 +11,9 @@ public class EffectPlayer : MonoBehaviour
         if (particle != null)
             particle.Play();
     }
+
+    public void Ala()
+    {
+        transform.GetChild(0).GetComponent<Projectile>().Shoot();
+    }
 }
