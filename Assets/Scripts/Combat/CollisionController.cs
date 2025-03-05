@@ -31,7 +31,7 @@ public class CollisionController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (entityTag.Length == 0)
+        if (string.IsNullOrEmpty(entityTag))
             return;
 
         if (other.CompareTag(entityTag) && !other.isTrigger)
@@ -40,7 +40,7 @@ public class CollisionController : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (entityTag.Length == 0)
+        if (string.IsNullOrEmpty(entityTag))
             return;
 
         if (other.CompareTag(entityTag))

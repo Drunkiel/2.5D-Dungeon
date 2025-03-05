@@ -1,13 +1,16 @@
 using UnityEngine;
-using UnityEngine.Events;
+using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
     public float force;
     public bool useGravity;
-    public UnityEvent unityEvent;
-    public CollisionController _collisionController;
-    public EventTriggerController _triggerController;
+    public string entityTag;
+    private SkillDataParser _skillDataParser;
+    [SerializeField] private CollisionController _collisionController;
+    private EntityStatistics _casterStatistics;
+    private CombatUI _combatUI;
+    private bool disable;
 
     public void Shoot()
     {
@@ -16,7 +19,30 @@ public class Projectile : MonoBehaviour
         skillCopyObject.transform.GetChild(0).gameObject.SetActive(true);
         skillCopyRgBody.useGravity = useGravity;
         skillCopyRgBody.constraints = RigidbodyConstraints.FreezeRotation;
-        skillCopyRgBody.AddForce(Vector3.forward * force);
-        _triggerController.stayEvent = unityEvent;
+        skillCopyRgBody.AddForce(transform.forward * force);
+    }
+
+    public void SetData(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics, CombatUI _combatUI, string entityTag)
+    {
+        this._skillDataParser = _skillDataParser;
+        this._casterStatistics = _casterStatistics;
+        this._combatUI = _combatUI;
+        this.entityTag = entityTag;
+        _collisionController.entityTag = this.entityTag;
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag(entityTag) && !disable)
+            StartCoroutine(TryAttackUntilSuccess());
+    }
+
+    private IEnumerator TryAttackUntilSuccess()
+    {
+        disable = true; 
+        while (!CombatController.instance.AttackSkill(_skillDataParser, _collisionController, _casterStatistics, _combatUI))
+            yield return null;
+
+        Destroy(gameObject);
     }
 }

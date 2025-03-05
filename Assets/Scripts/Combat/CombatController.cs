@@ -69,14 +69,7 @@ public class CombatController : MonoBehaviour
 
             case SkillType.AttackRange:
                 Projectile _projectile = _collisionController.transform.GetChild(0).GetComponentInParent<Projectile>();
-                _projectile._collisionController.entityTag = _collisionController.entityTag;
-                _projectile._triggerController.SetTag(_collisionController.entityTag);
-                _projectile.unityEvent.AddListener(() =>
-                {
-                    AttackSkill(_skillDataParser, _projectile._collisionController, _casterStatistics, _combatUI);
-                    print(_projectile._collisionController);
-                });
-                
+                _projectile.SetData(_skillDataParser, _casterStatistics, _combatUI, _collisionController.entityTag);
                 break;
 
             case SkillType.Defence:
@@ -97,7 +90,7 @@ public class CombatController : MonoBehaviour
             _enemyController._entityWalk.isStopped = state;
     }
 
-    private bool AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics, CombatUI _combatUI)
+    public bool AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics, CombatUI _combatUI)
     {
         //Get current target
         List<EntityStatistics> _targetsStatistics = new();

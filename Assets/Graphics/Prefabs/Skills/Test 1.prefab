@@ -174,7 +174,6 @@ GameObject:
   - component: {fileID: 5217601069750499358}
   - component: {fileID: 6439975140855240444}
   - component: {fileID: 4319862515131425109}
-  - component: {fileID: 5466850315905799133}
   - component: {fileID: 903253747616110240}
   m_Layer: 8
   m_Name: Cube
@@ -311,34 +310,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 500
   useGravity: 1
-  unityEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  entityTag: 
   _collisionController: {fileID: 903253747616110240}
-  _triggerController: {fileID: 5466850315905799133}
---- !u!114 &5466850315905799133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9117754975036506617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c9e4ea5df7517b498af3444840766b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectTag: 
-  canBeShown: 1
-  enterEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  stayEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  exitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &903253747616110240
 MonoBehaviour:
   m_ObjectHideFlags: 0
