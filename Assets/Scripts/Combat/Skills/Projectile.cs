@@ -6,11 +6,11 @@ public class Projectile : MonoBehaviour
     public float force;
     public bool useGravity;
     public string entityTag;
-    private SkillDataParser _skillDataParser;
+    [SerializeField] private SkillDataParser _skillDataParser;
     [SerializeField] private CollisionController _collisionController;
-    private EntityStatistics _casterStatistics;
-    private CombatUI _combatUI;
-    private bool disable;
+    [SerializeField] private EntityStatistics _casterStatistics;
+    [SerializeField] private CombatUI _combatUI;
+    private bool disable = true;
 
     public void Shoot()
     {
@@ -19,7 +19,13 @@ public class Projectile : MonoBehaviour
         skillCopyObject.transform.GetChild(0).gameObject.SetActive(true);
         skillCopyRgBody.useGravity = useGravity;
         skillCopyRgBody.constraints = RigidbodyConstraints.FreezeRotation;
-        skillCopyRgBody.AddForce(transform.forward * force);
+        Vector3 randomOffset = new(
+            Random.Range(-1f, 1f),
+            Random.Range(-1f, 1f),
+            Random.Range(-1f, 1f)
+        );
+        skillCopyRgBody.AddForce((entityTag[0] != 'P' ? transform.forward : -(transform.position - PlayerController.instance.transform.position)).normalized + randomOffset * force);
+        skillCopyObject.GetComponent<Projectile>().disable = false;
     }
 
     public void SetData(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics, CombatUI _combatUI, string entityTag)
