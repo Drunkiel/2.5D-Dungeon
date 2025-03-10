@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3abc020636c80a746bd244bafa864eec, type: 3}
-  m_Name: BasicAttack
+  m_Name: RangeAttack
   m_EditorClassIdentifier: 
   ID: 0
-  displayedName: Basic Attack
+  displayedName: Range Attack
   spritePath: Heart.png
   spriteIconPath: Heart.png
   animationName: Test_CastingSpell
-  size: {x: 0.3, y: 0.1, z: 0.3}
-  center: {x: 0.3, y: 0, z: 0}
+  size: {x: 5, y: 0.1, z: 5}
+  center: {x: 0, y: 0, z: 0}
   delay: 0
   stopMovement: 0
   allowedDistance: 0.1
-  type: 0
+  type: 1
   worksOnSelf: 0
   worksOnOthers: 1
   _skillAttributes:
-  - attributeType: 1
+  - attributeType: 2
     elementalTypes: 0
     buffTypes: 0
     amount: 1

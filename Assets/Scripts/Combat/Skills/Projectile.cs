@@ -20,11 +20,11 @@ public class Projectile : MonoBehaviour
         skillCopyRgBody.useGravity = useGravity;
         skillCopyRgBody.constraints = RigidbodyConstraints.FreezeRotation;
         Vector3 randomOffset = new(
-            Random.Range(-1f, 1f),
-            Random.Range(-1f, 1f),
-            Random.Range(-1f, 1f)
+            Random.Range(-0.05f, 0.05f),
+            Random.Range(-0.05f, 0.05f),
+            Random.Range(-0.05f, 0.05f)
         );
-        skillCopyRgBody.AddForce((entityTag[0] != 'P' ? transform.forward : -(transform.position - PlayerController.instance.transform.position)).normalized + randomOffset * force);
+        skillCopyRgBody.AddForce(entityTag[0] != 'P' ? transform.forward * force : (-(transform.position - PlayerController.instance.transform.position).normalized + randomOffset).normalized * force);
         skillCopyObject.GetComponent<Projectile>().disable = false;
     }
 
