@@ -15,9 +15,10 @@ public class CombatController : MonoBehaviour
 
     public IEnumerator CastSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, CombatUI _combatUI)
     {
-        if (_collisionController.targets.Count <= 0 && _skillDataParser._skillData.type != SkillType.AttackRange)
+        if (_collisionController.targets.Count <= 0)
             yield break;
 
+        //Determine who is caster
         Transform casterTransform = _collisionController.transform.parent.parent.parent;
         PlayerController _player = casterTransform.GetComponent<PlayerController>();
         EntityController _entityController = _player == null ? casterTransform.GetComponent<EntityController>() : null;
@@ -52,13 +53,16 @@ public class CombatController : MonoBehaviour
             _entityController.GetComponent<EntityCombat>().ManageCombat();
         }
 
+        //Display skill effects
         EffectPlayer _effectPlayer = _collisionController.GetComponent<EffectPlayer>();
         PlayAnimation(_effectPlayer.anim, _effectPlayer.animationName);
         _effectPlayer.PlayParticle();
 
+        //Check if entity needs to be stopped
         if (_skillDataParser._skillData.stopMovement)
             SetMovementState(_player, _entityController, true);
 
+        //Delay cast
         yield return new WaitForSeconds(_skillDataParser._skillData.delay);
 
         switch (_skillDataParser._skillData.type)

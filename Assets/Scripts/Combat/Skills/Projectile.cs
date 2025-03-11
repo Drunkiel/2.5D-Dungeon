@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     public bool useGravity;
     public string entityTag;
     [SerializeField] private SkillDataParser _skillDataParser;
+    [SerializeField] private CollisionController _parentCollisionController;
     [SerializeField] private CollisionController _collisionController;
     [SerializeField] private EntityStatistics _casterStatistics;
     [SerializeField] private CombatUI _combatUI;

@@ -311,7 +311,59 @@ MonoBehaviour:
   force: 500
   useGravity: 1
   entityTag: 
+  _skillDataParser:
+    _skillData: {fileID: 0}
+    sprite: {fileID: 0}
+    iconSprite: {fileID: 0}
+    skillPrefab: {fileID: 0}
+  _parentCollisionController: {fileID: 907464602111158090}
   _collisionController: {fileID: 903253747616110240}
+  _casterStatistics:
+    _stats:
+      maxHealth: 0
+      healthRegeneration: 0
+      manaRegeneration: 0
+      damageMultiplier: 0
+      allProtectionMultiplier: 0
+      elementalProtectionMultiplier: 0
+      manaUsageMultiplier: 0
+      meleeDamage: 0
+      rangeDamage: 0
+      magicDamage: 0
+      allProtection: 0
+      meleeProtection: 0
+      rangeProtection: 0
+      magicProtection: 0
+      divineResistance: 0
+      demonicResistance: 0
+      speedForce: 0
+      maxSpeed: 0
+    health: 0
+    maxHealth: 0
+    healthRegeneration: 0
+    mana: 0
+    maxMana: 0
+    manaRegeneration: 0
+    damageMultiplier: 1
+    allProtectionMultiplier: 1
+    elementalProtectionMultiplier: 1
+    manaUsageMultiplier: 1
+    meleeDamage: 0
+    rangeDamage: 0
+    magicDamage: 0
+    allProtection: 0
+    meleeProtection: 0
+    rangeProtection: 0
+    magicProtection: 0
+    divineResistance: 0
+    demonicResistance: 0
+    speedForce: 0
+    maxSpeed: 1.2
+    jumpForce: 0
+    additionalJumps: 
+    _activeBuffs: []
+    _statsController: {fileID: 0}
+  _combatUI: {fileID: 0}
 --- !u!114 &903253747616110240
 MonoBehaviour:
   m_ObjectHideFlags: 0
