@@ -31880,6 +31880,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1047587455327668846, guid: 8f3292d4de5f5fc4181949ec489e6242,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[2].acton.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ApproachTarget
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047587455327668846, guid: 8f3292d4de5f5fc4181949ec489e6242,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[2].acton.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EntityWalk, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2242784241959230794, guid: 8f3292d4de5f5fc4181949ec489e6242,
         type: 3}
       propertyPath: _skillHolder.skillNames.Array.data[0]

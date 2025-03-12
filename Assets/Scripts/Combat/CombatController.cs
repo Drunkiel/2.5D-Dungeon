@@ -43,14 +43,14 @@ public class CombatController : MonoBehaviour
         if (_player != null)
         {
             PlayAnimation(_player.anim, animName);
-            _player.GetComponent<EntityCombat>().ManageCombat();
+            _player.GetComponent<EntityCombat>().ManageCombat(casterTransform);
         }
         else if (_entityController != null)
         {
             PlayAnimation(_entityController.anim, animName);
             if (_skillDataParser._skillData.allowedDistance != 0)
                 _entityController._entityWalk.allowedDistance = _skillDataParser._skillData.allowedDistance;
-            _entityController.GetComponent<EntityCombat>().ManageCombat();
+            _entityController.GetComponent<EntityCombat>().ManageCombat(casterTransform);
         }
 
         //Display skill effects
@@ -68,12 +68,12 @@ public class CombatController : MonoBehaviour
         switch (_skillDataParser._skillData.type)
         {
             case SkillType.AttackMelee:
-                AttackSkill(_skillDataParser, _collisionController, _casterStatistics, _combatUI);
+                AttackSkill(_skillDataParser, _collisionController, casterTransform, _casterStatistics, _combatUI);
                 break;
 
             case SkillType.AttackRange:
                 Projectile _projectile = _collisionController.transform.GetChild(0).GetComponentInParent<Projectile>();
-                _projectile.SetData(_skillDataParser, _casterStatistics, _combatUI, _collisionController.entityTag);
+                _projectile.SetData(_skillDataParser, _casterStatistics, casterTransform, _combatUI, _collisionController.entityTag);
                 break;
 
             case SkillType.Defence:
@@ -94,7 +94,7 @@ public class CombatController : MonoBehaviour
             _enemyController._entityWalk.isStopped = state;
     }
 
-    public bool AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics, CombatUI _combatUI)
+    public bool AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, Transform casterTransform, EntityStatistics _casterStatistics, CombatUI _combatUI)
     {
         //Get current target
         List<EntityStatistics> _targetsStatistics = new();
@@ -110,13 +110,13 @@ public class CombatController : MonoBehaviour
             {
                 _targetsStatistics.Add(_enemyComponent._statistics);
                 _enemyTargets.Add(_enemyComponent);
-                _enemyComponent.GetComponent<EntityCombat>().ManageCombat();
+                _enemyComponent.GetComponent<EntityCombat>().ManageCombat(casterTransform);
             }
             else if (target.TryGetComponent(out PlayerController _playerComponent))
             {
                 _targetsStatistics.Add(_playerComponent._statistics);
                 _playerTarget = _playerComponent;
-                _playerTarget.GetComponent<EntityCombat>().ManageCombat();
+                _playerTarget.GetComponent<EntityCombat>().ManageCombat(casterTransform);
             }
             else
             {

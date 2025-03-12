@@ -6,9 +6,11 @@ public class Projectile : MonoBehaviour
     public float force;
     public bool useGravity;
     public string entityTag;
+    public float destroyDelay = 1;
     [SerializeField] private SkillDataParser _skillDataParser;
     [SerializeField] private CollisionController _parentCollisionController;
     [SerializeField] private CollisionController _collisionController;
+    [SerializeField] private Transform casterTransform;
     [SerializeField] private EntityStatistics _casterStatistics;
     [SerializeField] private CombatUI _combatUI;
     private bool disable = true;
@@ -27,19 +29,24 @@ public class Projectile : MonoBehaviour
         );
         skillCopyRgBody.AddForce(entityTag[0] != 'P' ? transform.forward * force : (-(transform.position - PlayerController.instance.transform.position).normalized + randomOffset).normalized * force);
         skillCopyObject.GetComponent<Projectile>().disable = false;
+        Destroy(skillCopyObject, destroyDelay);
     }
 
-    public void SetData(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics, CombatUI _combatUI, string entityTag)
+    public void SetData(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics, Transform casterTransform, CombatUI _combatUI, string entityTag)
     {
         this._skillDataParser = _skillDataParser;
         this._casterStatistics = _casterStatistics;
         this._combatUI = _combatUI;
+        this.casterTransform = casterTransform;
         this.entityTag = entityTag;
         _collisionController.entityTag = this.entityTag;
     }
 
     void OnTriggerEnter(Collider collider)
     {
+        if (string.IsNullOrEmpty(entityTag))
+            return;
+
         if (collider.CompareTag(entityTag) && !disable)
             StartCoroutine(TryAttackUntilSuccess());
     }
@@ -47,7 +54,7 @@ public class Projectile : MonoBehaviour
     private IEnumerator TryAttackUntilSuccess()
     {
         disable = true; 
-        while (!CombatController.instance.AttackSkill(_skillDataParser, _collisionController, _casterStatistics, _combatUI))
+        while (!CombatController.instance.AttackSkill(_skillDataParser, _collisionController, casterTransform, _casterStatistics, _combatUI))
             yield return null;
 
         Destroy(gameObject);

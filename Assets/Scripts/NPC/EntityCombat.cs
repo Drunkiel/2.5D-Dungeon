@@ -6,7 +6,7 @@ public class EntityCombat : MonoBehaviour
     public bool inCombat;
     public float timeToResetCombat;
 
-    public void ManageCombat()
+    public void ManageCombat(Transform transform)
     {
         timeToResetCombat = 0;
 
@@ -14,7 +14,10 @@ public class EntityCombat : MonoBehaviour
         {
             StartCoroutine(ResetCombat());
             if (TryGetComponent(out EntityController _entityController))
+            {
                 _entityController.currentState = State.Attacking;
+                _entityController._entityWalk.targetTransform = transform;
+            }
 
             inCombat = true;
         }

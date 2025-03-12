@@ -9,6 +9,7 @@ public class EntityWalk : MonoBehaviour
     [SerializeField] private float wanderingDistance;
     [SerializeField] private Vector3 positionToGo;
     public float allowedDistance;
+    public Transform targetTransform;
 
     public Vector2 movement;
     public bool isMoving;
@@ -67,27 +68,27 @@ public class EntityWalk : MonoBehaviour
             GoTo(positionToGo, positionToGo);
     }
 
-    public void ApproachPlayer()
+    public void ApproachTarget()
     {
-        Vector3 playerPosition = PlayerController.instance.transform.position;
-        float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
+        Vector3 targetPosition = targetTransform != null ? targetTransform.position : PlayerController.instance.transform.position;
+        float distanceToPlayer = Vector3.Distance(transform.position, targetPosition);
 
         if (distanceToPlayer > allowedDistance)
-            positionToGo = playerPosition;
+            positionToGo = targetPosition;
         else
             positionToGo = transform.position;
 
-        GoTo(positionToGo, playerPosition);
+        GoTo(positionToGo, targetPosition);
     }
 
-    public void FleeFromPlayer()
+    public void FleeFromTarget()
     {
-        Vector3 playerPosition = PlayerController.instance.transform.position;
-        float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
+        Vector3 targetPosition = targetTransform != null ? targetTransform.position : PlayerController.instance.transform.position;
+        float distanceToPlayer = Vector3.Distance(transform.position, targetPosition);
 
         if (distanceToPlayer < allowedDistance)
         {
-            Vector3 directionAwayFromPlayer = (transform.position - playerPosition).normalized;
+            Vector3 directionAwayFromPlayer = (transform.position - targetPosition).normalized;
 
             Vector3 newPosition = transform.position + directionAwayFromPlayer * (allowedDistance - distanceToPlayer);
             positionToGo = newPosition;
