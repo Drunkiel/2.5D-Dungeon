@@ -73,7 +73,7 @@ public class CombatController : MonoBehaviour
 
             case SkillType.AttackRange:
                 Projectile _projectile = _collisionController.transform.GetChild(0).GetComponentInParent<Projectile>();
-                _projectile.SetData(_skillDataParser, _casterStatistics, casterTransform, _combatUI, _collisionController.entityTag);
+                _projectile.SetData(_skillDataParser, _casterStatistics, casterTransform, _combatUI, _collisionController.entityTags);
                 break;
 
             case SkillType.Defence:

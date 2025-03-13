@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class CollisionController : MonoBehaviour
 {
-    public string entityTag;
     public List<GameObject> targets = new();
+
+    public string[] entityTags;
 
     public void Configure(bool isPlayer, SkillData _skillData)
     {
@@ -21,29 +22,35 @@ public class CollisionController : MonoBehaviour
 
         //Set what tag to check
         if (_skillData.worksOnOthers && !_skillData.worksOnSelf)
-            entityTag = isPlayer ? "Enemy" : "Player";
+            entityTags = isPlayer ? new string[] { "Enemy" } : new string[] { "Player", "Friend" };
         else if (_skillData.worksOnOthers && _skillData.worksOnSelf)
-            entityTag = isPlayer ? "Player" : "Enemy";
+            entityTags = isPlayer ? new string[] { "Player", "Friend" } : new string[] { "Enemy" };
 
         if (_skillData.worksOnSelf)
             targets.Add(transform.parent.parent.parent.gameObject);
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider collider)
     {
-        if (string.IsNullOrEmpty(entityTag))
-            return;
-
-        if (other.CompareTag(entityTag) && !other.isTrigger)
-            targets.Add(other.gameObject);
+        CheckCollision(collider, true);
     }
 
-    void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider collider)
     {
-        if (string.IsNullOrEmpty(entityTag))
-            return;
+        CheckCollision(collider, false);
+    }
 
-        if (other.CompareTag(entityTag))
-            targets.Remove(other.gameObject);
+    void CheckCollision(Collider collider, bool addTarget)
+    {
+        foreach (string entityTag in entityTags)
+        {
+            if (collider.CompareTag(entityTag))
+            {
+                if (addTarget)
+                    targets.Add(collider.gameObject);
+                else
+                    targets.Remove(collider.gameObject);
+            }
+        }
     }
 }

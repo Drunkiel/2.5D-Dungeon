@@ -122,8 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a18709065a3d984685cc82e323c33dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityTag: 
   targets: []
+  entityTags: []
 --- !u!114 &7237521904898223932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,8 +310,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 500
   useGravity: 1
-  entityTag: 
-  destroyDelay: 1
+  entityTags: []
+  destroyDelay: 5
   _skillDataParser:
     _skillData: {fileID: 0}
     sprite: {fileID: 0}
@@ -319,6 +319,7 @@ MonoBehaviour:
     skillPrefab: {fileID: 0}
   _parentCollisionController: {fileID: 907464602111158090}
   _collisionController: {fileID: 903253747616110240}
+  casterTransform: {fileID: 0}
   _casterStatistics:
     _stats:
       maxHealth: 0
@@ -377,5 +378,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a18709065a3d984685cc82e323c33dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityTag: 
   targets: []
+  entityTags: []

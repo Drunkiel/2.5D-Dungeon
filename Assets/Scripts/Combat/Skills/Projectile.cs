@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour
 {
     public float force;
     public bool useGravity;
-    public string entityTag;
+    public string[] entityTags;
     public float destroyDelay = 1;
     [SerializeField] private SkillDataParser _skillDataParser;
     [SerializeField] private CollisionController _parentCollisionController;
@@ -27,33 +27,36 @@ public class Projectile : MonoBehaviour
             Random.Range(-0.05f, 0.05f),
             Random.Range(-0.05f, 0.05f)
         );
-        skillCopyRgBody.AddForce(entityTag[0] != 'P' ? transform.forward * force : (-(transform.position - PlayerController.instance.transform.position).normalized + randomOffset).normalized * force);
+        skillCopyRgBody.AddForce(entityTags[0][0] != 'P' ? transform.forward * force : (-(transform.position - PlayerController.instance.transform.position).normalized + randomOffset).normalized * force);
         skillCopyObject.GetComponent<Projectile>().disable = false;
         Destroy(skillCopyObject, destroyDelay);
     }
 
-    public void SetData(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics, Transform casterTransform, CombatUI _combatUI, string entityTag)
+    public void SetData(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics, Transform casterTransform, CombatUI _combatUI, string[] entityTags)
     {
         this._skillDataParser = _skillDataParser;
         this._casterStatistics = _casterStatistics;
         this._combatUI = _combatUI;
         this.casterTransform = casterTransform;
-        this.entityTag = entityTag;
-        _collisionController.entityTag = this.entityTag;
+        this.entityTags = entityTags;
+        _collisionController.entityTags = this.entityTags;
     }
 
     void OnTriggerEnter(Collider collider)
     {
-        if (string.IsNullOrEmpty(entityTag))
-            return;
+        foreach (string entityTag in entityTags)
+        {
+            if (string.IsNullOrEmpty(entityTag))
+                return;
 
-        if (collider.CompareTag(entityTag) && !disable)
-            StartCoroutine(TryAttackUntilSuccess());
+            if (collider.CompareTag(entityTag) && !disable)
+                StartCoroutine(TryAttackUntilSuccess());
+        }
     }
 
     private IEnumerator TryAttackUntilSuccess()
     {
-        disable = true; 
+        disable = true;
         while (!CombatController.instance.AttackSkill(_skillDataParser, _collisionController, casterTransform, _casterStatistics, _combatUI))
             yield return null;
 
