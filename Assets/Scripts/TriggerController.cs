@@ -5,13 +5,7 @@ public class TriggerController : MonoBehaviour
 {
     public bool isTriggered;
     public bool reverseReturn;
-    public string[] objectsTag;
-    public HashSet<string> objectsTagsSet;
-
-    void Awake()
-    {
-        objectsTagsSet = new HashSet<string>(objectsTag);
-    }
+    public List<string> objectsTag = new();
 
     void OnTriggerEnter(Collider collider)
     {
@@ -30,10 +24,7 @@ public class TriggerController : MonoBehaviour
 
     void CheckCollision(Collider collider, bool enter = true)
     {
-        if (objectsTagsSet == null)
-            return;
-
-        if (objectsTagsSet.Contains(collider.tag))
+        if (objectsTag.Contains(collider.tag))
         {
             isTriggered = reverseReturn ? !enter : enter;
             return;

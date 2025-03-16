@@ -3,11 +3,15 @@ using UnityEngine;
 
 public class EntityCombat : MonoBehaviour
 {
+    public bool canCombat = true; 
     public bool inCombat;
     public float timeToResetCombat;
 
     public void ManageCombat(Transform transform)
     {
+        if (!canCombat)
+            return;
+
         timeToResetCombat = 0;
 
         if (!inCombat)

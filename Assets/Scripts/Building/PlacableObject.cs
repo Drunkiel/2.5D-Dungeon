@@ -43,7 +43,7 @@ public class PlacableObject : MonoBehaviour
 
         gameObject.AddComponent<ObjectDrag>();
         TriggerController triggerController = gameObject.AddComponent<TriggerController>();
-        triggerController.objectsTag = new string[1] { "Finish" };
+        triggerController.objectsTag = new() { "Finish" };
         triggerController.isTriggered = true;
         triggerController.reverseReturn = true;
         Instantiate(BuildingSystem.instance.buildingMaterial, transform);

@@ -58,18 +58,24 @@ public class EntityController : MonoBehaviour
         _statistics._statsController.UpdateManaSlider(_statistics.mana, _statistics.maxMana);
 
         //Check behaviour type
-        if (_entityInfo.behaviour == Behaviour.Aggresive)
+        switch (_entityInfo.behaviour)
         {
-            GetComponent<EventTriggerController>().stayEvent.AddListener(() =>
-            {
-                EntityCombat _entityCombat = GetComponent<EntityCombat>();
-                CollisionController _collisionController = GetComponent<CollisionController>();
+            case Behaviour.Passive:
+                GetComponent<EntityCombat>().canCombat = false;
+                break;
 
-                if (_entityCombat.inCombat || _collisionController.targets.Count <= 0)
-                    return;
+            case Behaviour.Aggresive:
+                    GetComponent<EventTriggerController>().stayEvent.AddListener(() =>
+                    {
+                        EntityCombat _entityCombat = GetComponent<EntityCombat>();
+                        CollisionController _collisionController = GetComponent<CollisionController>();
 
-                _entityCombat.ManageCombat(_collisionController.targets[0].transform);
-            });
+                        if (_entityCombat.inCombat || _collisionController.targets.Count <= 0)
+                            return;
+
+                        _entityCombat.ManageCombat(_collisionController.targets[0].transform);
+                    });
+                break;
         }
 
         StartCoroutine(AutoRegen());
