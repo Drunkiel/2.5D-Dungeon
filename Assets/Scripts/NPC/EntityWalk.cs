@@ -33,8 +33,11 @@ public class EntityWalk : MonoBehaviour
     {
         isMoving = movement.magnitude > 0.01f;
 
-        //if (isStopped || GameController.isPaused)
-        //    return;
+        if (isStopped || GameController.isPaused)
+            return;
+
+        if (isMoving && _controller.rgBody.velocity.magnitude < 0.01f)
+            Jump();
     }
 
     private void FixedUpdate()
@@ -156,5 +159,11 @@ public class EntityWalk : MonoBehaviour
         //New position
         Vector3 newPosition = new(startPosition.x + deltaX, startPosition.y, startPosition.z + deltaZ);
         return newPosition;
+    }
+
+    private void Jump()
+    {
+        _controller.rgBody.velocity = new Vector3(_controller.rgBody.velocity.x, 0f, _controller.rgBody.velocity.z);
+        _controller.rgBody.AddForce(transform.up * _controller._statistics.jumpForce, ForceMode.Impulse);
     }
 }

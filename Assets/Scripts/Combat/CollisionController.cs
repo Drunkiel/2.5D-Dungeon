@@ -46,9 +46,9 @@ public class CollisionController : MonoBehaviour
         {
             if (collider.CompareTag(entityTag))
             {
-                if (addTarget)
+                if (addTarget && !targets.Contains(collider.gameObject))
                     targets.Add(collider.gameObject);
-                else
+                else if (!addTarget && targets.Contains(collider.gameObject))
                     targets.Remove(collider.gameObject);
             }
         }

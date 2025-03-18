@@ -40,7 +40,7 @@ public class EntityController : MonoBehaviour
     public State currentState;
     public List<BehaviourState> _behaviourStates = new();
 
-    [SerializeField] private Rigidbody rgBody;
+    public Rigidbody rgBody;
     public Animator anim;
 
     public EntityWalk _entityWalk;
