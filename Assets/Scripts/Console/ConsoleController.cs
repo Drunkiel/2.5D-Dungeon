@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public enum OutputType
 {
@@ -128,7 +129,6 @@ public class ConsoleController : MonoBehaviour
             messages.RemoveAt(0);
         }
 
-        scrollRect.verticalNormalizedPosition = -1;
         chatInput.text = "";
         chatInput.ActivateInputField();
     }
@@ -187,6 +187,8 @@ public class ConsoleController : MonoBehaviour
         }
 
         messages.Add(newText);
+        Canvas.ForceUpdateCanvases();
+        scrollRect.verticalNormalizedPosition = -1;
     }
 
     public void EnterChatMode()

@@ -38,8 +38,9 @@ public class Requirement
             return;
 
         progressCurrent += 1;
-        if (progressCurrent >= progressNeeded)
-            ConsoleController.instance.ChatMessage(SenderType.Hidden, "Passed");
+        //Test if quests work
+        //if (progressCurrent >= progressNeeded)
+        //    ConsoleController.instance.ChatMessage(SenderType.Hidden, "Passed");
     }
 }
 

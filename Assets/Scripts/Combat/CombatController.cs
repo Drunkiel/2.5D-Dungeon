@@ -144,7 +144,13 @@ public class CombatController : MonoBehaviour
             if (_playerTarget != null)
                 PlayAnimation(_playerTarget.anim, "TakeDamage");
             else
+            {
                 PlayAnimation(_enemyTargets[i].anim, "TakeDamage");
+                
+                //If entity is killed check if is in the quest
+                if (_enemyTargets[i]._statistics.health <= 0)
+                    QuestController.instance.InvokeKillEvent(_enemyTargets[i]._entityInfo.ID);
+            }
         }
 
         return true;

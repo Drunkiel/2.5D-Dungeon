@@ -65,6 +65,8 @@ public class InventoryController : MonoBehaviour
                 slot.GetComponent<DragDropSlot>().image.sprite = _itemID._collectableItem.iconSprite;
                 break;
         }
+
+        QuestController.instance.InvokeCollectEvent(_itemID._itemData.ID);
     }
 
     public void AddToGearInventory(ItemID _itemID, int slotIndex)
