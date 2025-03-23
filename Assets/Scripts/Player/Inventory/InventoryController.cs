@@ -17,6 +17,7 @@ public class InventoryController : MonoBehaviour
     public Sprite sprite;
 
     public bool isMovingItem;
+    [SerializeField] private OpenCloseUI _openCloseUI;
 
     private void Start()
     {
@@ -39,7 +40,7 @@ public class InventoryController : MonoBehaviour
             return;
 
         if (!PlayerController.instance.isStopped && !GameController.isPaused && !isMovingItem)
-            GetComponent<OpenCloseUI>().OpenClose();
+            _openCloseUI.OpenClose();
     }
 
     public void AddToInventory(ItemID _itemID, int slotIndex)
@@ -94,6 +95,23 @@ public class InventoryController : MonoBehaviour
                 _itemController.SetArmor(_itemID);
                 break;
         }
+    }
+
+    public void RemoveItemByID(int itemID)
+    {
+        for (int i = 0; i < _inventorySlots.Count; i++)
+        {
+            if (_inventorySlots[i]._itemID == null)
+                continue;
+
+            if (_inventorySlots[i]._itemID._itemData.ID == itemID)
+            {
+                Destroy(_inventorySlots[i]._itemID.transform.parent.gameObject);
+                return;
+            }
+        }
+
+        ConsoleController.instance.ChatMessage(SenderType.System, $"Item: <color=red>{itemID}</color> is not found in the inventory", OutputType.Error);
     }
 
     public void DeleteGearInventory(int slotIndex)

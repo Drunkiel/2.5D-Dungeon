@@ -12,15 +12,25 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (itemRestriction != ItemType.None && eventData.pointerDrag.transform.GetChild(1).GetComponent<ItemID>()._itemData.itemType != itemRestriction)
-            return;
-
         RectTransform rectTransform = eventData.pointerDrag.GetComponent<RectTransform>();
         DragDropSlot _dragDropSlot = rectTransform.GetComponent<DragDropSlot>();
 
         //Check if slot is locked
         if (_dragDropSlot.lockedUp)
             return;
+
+        //Checks if item is correct type
+        if (itemRestriction != ItemType.None)
+        {
+            ItemID _droppedItemID = eventData.pointerDrag.transform.GetChild(1).GetComponent<ItemID>();
+            if (_droppedItemID._itemData == null)
+            {
+                if (itemRestriction != ItemType.Spell)
+                    return;
+            }
+            else if (_droppedItemID._itemData.itemType != itemRestriction)
+                return;
+        }
 
         ItemController _itemController = PlayerController.instance._holdingController._itemController;
         switch (itemRestriction)

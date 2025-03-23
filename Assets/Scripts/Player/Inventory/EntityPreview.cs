@@ -30,6 +30,8 @@ public class EntityPreview
     [SerializeField] private Image bootLeftImage;
     [SerializeField] private Image bootRightImage;
 
+    [SerializeField] private Sprite placeholderSprite;
+
     public void UpdateEntityPreviewLook(EntityPartType partType, Sprite sprite)
     {
         if (sprite == null)
@@ -130,13 +132,13 @@ public class EntityPreview
             UpdateEntityPreviewLook(EntityPartType.Legs, _entityLook.legLeftImage.sprite);
 
         //Armor
-        if (helmetImage != null && _gearHolder._armorHead != null)
-            UpdateArmorLook(ArmorType.Helmet, _gearHolder._armorHead.itemSprite);
+        if (helmetImage != null)
+            UpdateArmorLook(ArmorType.Helmet, _gearHolder._armorHead == null ? placeholderSprite : _gearHolder._armorHead.itemSprite);
 
-        if (chestplateImage != null && _gearHolder._armorChestplate != null)
-            UpdateArmorLook(ArmorType.Chestplate, _gearHolder._armorChestplate.itemSprite);
+        if (chestplateImage != null)
+            UpdateArmorLook(ArmorType.Chestplate, _gearHolder._armorChestplate == null ? placeholderSprite : _gearHolder._armorChestplate.itemSprite);
 
-        if (bootLeftImage != null && bootRightImage != null && _gearHolder._armorBoots != null)
-            UpdateArmorLook(ArmorType.Boots, _gearHolder._armorBoots.itemSprite);
+        if (bootLeftImage != null && bootRightImage != null)
+            UpdateArmorLook(ArmorType.Boots, _gearHolder._armorBoots == null ? placeholderSprite : _gearHolder._armorBoots.itemSprite);
     }
 }
