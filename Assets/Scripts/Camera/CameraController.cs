@@ -1,6 +1,6 @@
 using Cinemachine;
 using System.Collections;
-using System.Threading;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
     public int currentCamera;
     public CinemachineVirtualCamera[] virtualCameras;
     public Transform targetObject;
+    public List<Material> skyboxes = new();
 
     //Rotate speed
     public float rotationSpeed = 50f;
@@ -132,5 +133,13 @@ public class CameraController : MonoBehaviour
             virtualCameras[currentCamera].m_Lens.FieldOfView = Mathf.Lerp(startValue, number, time / timeToEnd);
             yield return null;
         }
+    }
+
+    public void ChangeSkyBox(int index)
+    {
+        if (skyboxes.Count <= index && index < 0)
+            return;
+
+        RenderSettings.skybox = skyboxes[index];
     }
 }
