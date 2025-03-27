@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,8 +16,15 @@ public class MapController : MonoBehaviour
 
     public void ChangeRoom(int index)
     {
+        StartCoroutine(RoomChanger(index));
+    }
+
+    private IEnumerator RoomChanger(int index)
+    {
+        yield return new WaitForSeconds(1);
         ActivateRoom(index);
-        Invoke(nameof(DisableRoom), 1f);
+        yield return new WaitForSeconds(1);
+        DisableRoom(currentRoomIndex);
         currentRoomIndex = index;
     }
 
@@ -26,9 +34,9 @@ public class MapController : MonoBehaviour
         _rooms[index].roomObject.SetActive(true);
     }
 
-    private void DisableRoom()
+    private void DisableRoom(int index)
     {
-        _rooms[currentRoomIndex].isVisible = false;
-        _rooms[currentRoomIndex].roomObject.SetActive(false);
+        _rooms[index].isVisible = false;
+        _rooms[index].roomObject.SetActive(false);
     }
 }
