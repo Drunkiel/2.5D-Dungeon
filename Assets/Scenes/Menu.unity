@@ -1060,6 +1060,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 78693431}
+  - component: {fileID: 78693432}
   m_Layer: 0
   m_Name: Entity_Holder
   m_TagString: Untagged
@@ -1082,6 +1083,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1885580516}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &78693432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78693430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b6e755f63579e4c9f4bdee7b40351e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entitiesFriendly: []
+  _entitiesEnemy:
+  - entityObject: {fileID: 5178939710355253913, guid: 84c98a5c73957784f871ffc8d9803f75,
+      type: 3}
 --- !u!1 &79372422
 GameObject:
   m_ObjectHideFlags: 0

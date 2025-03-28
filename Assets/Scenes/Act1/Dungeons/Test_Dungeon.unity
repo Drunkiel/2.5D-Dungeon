@@ -2015,6 +2015,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 877644807}
+  - component: {fileID: 877644808}
   m_Layer: 0
   m_Name: BattleRoom
   m_TagString: Untagged
@@ -2038,12 +2039,35 @@ Transform:
   - {fileID: 822332928}
   - {fileID: 2024745369}
   - {fileID: 181474078}
-  - {fileID: 920360392}
-  - {fileID: 1844885125}
   - {fileID: 726258983}
   - {fileID: 549691048}
+  - {fileID: 1844885125}
+  - {fileID: 920360392}
   m_Father: {fileID: 1462162196}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &877644808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877644806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd12d8cb65c99ab4a80b4313ef62ef1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints:
+  - {fileID: 181474078}
+  - {fileID: 726258983}
+  - {fileID: 549691048}
+  - {fileID: 1844885125}
+  _waves:
+  - isCompleted: 0
+    entityIDs: 00000000000000000000
+    delay: 5
+    spawnedEntities: []
+  positionIndexes: 00000000010000000200000003000000
 --- !u!1001 &920360391
 PrefabInstance:
   m_ObjectHideFlags: 0
