@@ -329,6 +329,21 @@ MonoBehaviour:
     additionalJumps: 
     _activeBuffs: []
     _statsController: {fileID: 5013447261982663118}
+    onDeath:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 144358680268746890}
+          m_TargetAssemblyTypeName: EntityController, Assembly-CSharp
+          m_MethodName: KillEntity
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   _holdingController: {fileID: 2005970543957765047}
   currentState: 1
   _behaviourStates:
@@ -399,6 +414,7 @@ MonoBehaviour:
   wanderingDistance: 1
   positionToGo: {x: 0, y: 0, z: 0}
   allowedDistance: 0
+  targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
   isMoving: 0
   move: {x: 0, y: 0, z: 0}
@@ -436,6 +452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b93adda004e404aae5e6b947cff403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canCombat: 1
   inCombat: 0
   timeToResetCombat: 0
 --- !u!114 &2005970543957765047
@@ -632,6 +649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9e4ea5df7517b498af3444840766b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectTag: 
   canBeShown: 0
   enterEvent:
     m_PersistentCalls:
@@ -1007,8 +1025,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a18709065a3d984685cc82e323c33dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityTag: 
   targets: []
+  entityTags: []
 --- !u!1 &4553714538821164680
 GameObject:
   m_ObjectHideFlags: 0

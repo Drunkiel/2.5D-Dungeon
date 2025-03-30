@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [Serializable]
 public class BasicStatistics
@@ -75,6 +76,9 @@ public class EntityStatistics
     public List<Buff> _activeBuffs = new();
     public EntityStatsController _statsController;
 
+    [Header("OnDeath")]
+    public UnityEvent onDeath;
+
     public void SaveStats()
     {
         _stats.maxHealth = maxHealth;
@@ -114,11 +118,8 @@ public class EntityStatistics
         health -= damageToDeal;
         _statsController.UpdateHealthSlider(health, maxHealth, ignore);
 
-        if (health < 0)
-        {
-            health = 0;
-            ConsoleController.instance.ChatMessage(SenderType.System, "Entity is dead :p");
-        }
+        if (health <= 0)
+            onDeath.Invoke();
 
         if (health > maxHealth)
             health = maxHealth;

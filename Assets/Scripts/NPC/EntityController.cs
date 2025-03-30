@@ -133,4 +133,10 @@ public class EntityController : MonoBehaviour
 
         StartCoroutine(AutoRegen());
     }
+
+    public void KillEntity()
+    {
+        QuestController.instance.InvokeKillEvent(_entityInfo.ID);
+        Destroy(gameObject);
+    }
 }

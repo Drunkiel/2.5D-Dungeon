@@ -5,6 +5,7 @@ using UnityEngine;
 
 public enum PopUpInfo
 {
+    None,
     QuestAccepted,
     QuestCompleted,
     VisitPlace,
@@ -57,6 +58,7 @@ public class PopUpController : MonoBehaviour
 
         string newText = _popUp.info switch
         {
+            PopUpInfo.None => $"{_popUp.text}",
             PopUpInfo.QuestAccepted => $"Quest accepted\n<color=yellow>{_popUp.text}</color>",
             PopUpInfo.QuestCompleted => $"Quest completed\n<color=yellow>{_popUp.text}</color>",
             PopUpInfo.VisitPlace => $"<color=yellow>{_popUp.text}</color>",

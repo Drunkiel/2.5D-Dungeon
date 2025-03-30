@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class Wave
@@ -15,10 +16,26 @@ public class BattleRoom : MonoBehaviour
 {
     public List<Transform> spawnPoints = new();
     public List<Wave> _waves = new();
+    public UnityEvent startEvents;
+    public UnityEvent finishEvents;
 
-    private void Start()
+    public void StartBattle()
     {
-        StartCoroutine(SpawnWave(0));
+        StartCoroutine(ManageBattle());
+    }
+
+    public IEnumerator ManageBattle()
+    {
+        startEvents.Invoke();
+
+        for (int i = 0; i < _waves.Count; i++)
+        {
+            StartCoroutine(SpawnWave(i));
+            yield return new WaitUntil(() => _waves[i].isCompleted);
+        }
+
+        PopUpController.instance.CreatePopUp(PopUpInfo.None, "Room cleared");
+        finishEvents.Invoke();
     }
 
     public IEnumerator SpawnWave(int index)
@@ -30,8 +47,15 @@ public class BattleRoom : MonoBehaviour
         {
             int a = i;
             int pIndex = Random.Range(0, positionIndexes.Count);
-            GameObject newEntity = Instantiate(EntityHolder.instance.GetEntity(_waves[index].entityIDs[a], EntityAttitude.Enemy), spawnPoints[positionIndexes[pIndex]].position + new Vector3(0, 1, 0), Quaternion.identity);
+            GameObject newEntity = Instantiate(EntityHolder.instance.GetEntity(_waves[index].entityIDs[a], EntityAttitude.Enemy),
+                                                spawnPoints[positionIndexes[pIndex]].position + new Vector3(0, 1, 0),
+                                                Quaternion.identity);
             _waves[index].spawnedEntities.Add(newEntity);
+            newEntity.GetComponent<EntityController>()._statistics.onDeath.AddListener(() =>
+            {
+                _waves[index].spawnedEntities.Remove(newEntity);
+            });
+
             positionIndexes.RemoveAt(pIndex);
 
             //If there is more entities to spawn than there are spawn points then readd positions
@@ -41,5 +65,9 @@ public class BattleRoom : MonoBehaviour
                 yield return new WaitForSeconds(_waves[index].delay);
             }
         }
+
+        //Wait until all enemies all killed
+        yield return new WaitUntil(() => _waves[index].spawnedEntities.Count == 0);
+        _waves[index].isCompleted = true;
     }
 }
