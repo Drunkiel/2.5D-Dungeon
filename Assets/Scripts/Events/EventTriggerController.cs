@@ -47,4 +47,9 @@ public class EventTriggerController : MonoBehaviour
     {
         objectTag = tag;
     }
+
+    public void Deactivate()
+    {
+        canBeShown = false;
+    }
 }

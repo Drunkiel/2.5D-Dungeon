@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TeleportEvent : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class TeleportEvent : MonoBehaviour
     public Vector3[] positions;
     [SerializeField] private Animator anim;
 
+    public UnityEvent onTeleportEvent;
+
     public void TeleportToPosition(int positionIndex)
     {
         if (isOnCooldown || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
@@ -16,6 +19,7 @@ public class TeleportEvent : MonoBehaviour
 
         StartCoroutine(PauseBeforeTeleport(() =>
         {
+            onTeleportEvent.Invoke();
             PortalController.instance.TeleportToPosition(positions[positionIndex]);
             SetCooldown();
         }));
@@ -28,12 +32,12 @@ public class TeleportEvent : MonoBehaviour
 
         StartCoroutine(PauseBeforeTeleport(() =>
         {
-            PortalController.instance.TeleportToObject(objectTransform);
-
             if (objectTransform.TryGetComponent(out TeleportEvent _teleportEvent))
                 _teleportEvent.SetCooldown();
-
             SetCooldown();
+
+            onTeleportEvent.Invoke();
+            PortalController.instance.TeleportToObject(objectTransform);
         }));
     }
 
@@ -55,6 +59,7 @@ public class TeleportEvent : MonoBehaviour
             if (positions.Length < 1)
                 positions = new Vector3[1] { Vector3.zero };
 
+            onTeleportEvent.Invoke();
             PortalController.instance.TeleportToScene(sceneName, positions[0]);
             SetCooldown();
         }));

@@ -14,6 +14,15 @@ public class MapController : MonoBehaviour
     public List<Room> _rooms = new();
     public int currentRoomIndex;
 
+    private void Start()
+    {
+        for (int i = 0; i < _rooms.Count; i++)
+        {
+            if (!_rooms[i].isVisible)
+                _rooms[i].roomObject.SetActive(false);
+        }
+    }
+
     public void ChangeRoom(int index)
     {
         StartCoroutine(RoomChanger(index));

@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class InteractableObject : MonoBehaviour
 {
+    private bool canInteract = true;
+
     public bool isTriggerNearby;
     public UnityEvent onClickFunctionalities;
     public UnityEvent onHoldFunctionalities;
@@ -30,12 +32,18 @@ public class InteractableObject : MonoBehaviour
 
     public void Click(InputAction.CallbackContext context)
     {
+        if (!canInteract)
+            return;
+
         if (onClickFunctionalities.GetPersistentEventCount() > 0 && isTriggerNearby && context.performed)
             StartOnClickInteraction();
     }
 
     public void Hold(InputAction.CallbackContext context)
     {
+        if (!canInteract)
+            return;
+
         if (isTriggerNearby && context.performed)
             StartOnHoldInteraction();
     }
@@ -59,5 +67,10 @@ public class InteractableObject : MonoBehaviour
     private void StartOnEndInteraction()
     {
         onEndClickFunctionalities.Invoke();
+    }
+
+    public void Deactivate()
+    {
+        canInteract = false;
     }
 }

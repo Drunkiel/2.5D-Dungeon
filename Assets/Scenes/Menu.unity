@@ -36757,6 +36757,9 @@ MonoBehaviour:
     additionalJumps: 
     _activeBuffs: []
     _statsController: {fileID: 1324385307}
+    onDeath:
+      m_PersistentCalls:
+        m_Calls: []
   isStopped: 0
   playerHeight: 0.16
   whatIsGround:
@@ -39130,7 +39133,7 @@ PrefabInstance:
     - target: {fileID: 3255761038772035325, guid: 23eaf8d72b22cf24fb8af8fc8f458150,
         type: 3}
       propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Test_Dungeon
+      value: TemplateDungeon
       objectReference: {fileID: 0}
     - target: {fileID: 3255761038772035325, guid: 23eaf8d72b22cf24fb8af8fc8f458150,
         type: 3}
