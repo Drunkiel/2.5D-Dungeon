@@ -13,10 +13,11 @@ public class CameraController : MonoBehaviour
     public Transform targetObject;
     public List<Material> skyboxes = new();
 
-    //Rotate speed
+    // Rotate speed
     public float rotationSpeed = 50f;
+    public float smoothingFactor = 5f;
 
-    //Distance from camera
+    // Distance from camera
     private float minDistance = 0.8f;
     private float maxDistance = 2f;
     private float distanceFromTarget = 2f;
@@ -24,9 +25,11 @@ public class CameraController : MonoBehaviour
 
     private float currentXRotation = 0f;
     private float currentYRotation = 30f;
-    private bool rightClick;
+    private float targetXRotation = 0f;
+    private float targetYRotation = 30f;
 
-    public Vector2 cameraRotation;
+    private bool rightClick;
+    private Vector2 cameraRotation;
 
     private void Awake()
     {
@@ -37,11 +40,7 @@ public class CameraController : MonoBehaviour
     {
         HandleZoom();
         SetCamera();
-
-        //Rotate camera
-        currentXRotation += cameraRotation.x * rotationSpeed * Time.deltaTime;
-        currentYRotation -= cameraRotation.y * rotationSpeed / 4 * Time.deltaTime;
-        currentYRotation = Mathf.Clamp(currentYRotation, 15, 45);
+        SmoothRotateCamera();
     }
 
     public void RightClick(InputAction.CallbackContext context)
@@ -69,33 +68,35 @@ public class CameraController : MonoBehaviour
         if (!rightClick)
             return;
 
-        //Get Input
-        float mouseX = context.ReadValue<Vector2>().x;
-        float mouseY = context.ReadValue<Vector2>().y;
-        mouseX = Mathf.Clamp(mouseX, -1, 1);
-        mouseY = Mathf.Clamp(mouseY, -1, 1);
-        cameraRotation = new(mouseX, mouseY);
+        // Get Input
+        Vector2 inputRotation = context.ReadValue<Vector2>();
+        inputRotation.x = Mathf.Clamp(inputRotation.x, -1, 1);
+        inputRotation.y = Mathf.Clamp(inputRotation.y, -1, 1);
+
+        targetXRotation += inputRotation.x * rotationSpeed * Time.deltaTime;
+        targetYRotation -= inputRotation.y * rotationSpeed / 4 * Time.deltaTime;
+        targetYRotation = Mathf.Clamp(targetYRotation, 15, 45);
+    }
+
+    private void SmoothRotateCamera()
+    {
+        // Smoothly interpolate rotation values for a more natural effect
+        currentXRotation = Mathf.Lerp(currentXRotation, targetXRotation, Time.deltaTime * smoothingFactor);
+        currentYRotation = Mathf.Lerp(currentYRotation, targetYRotation, Time.deltaTime * smoothingFactor);
     }
 
     private void HandleZoom()
     {
-        //Get scroll input
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
-
-        //Adjust the distance based on scroll input and zoom speed
         distanceFromTarget -= scrollInput * zoomSpeed;
-
-        //Clamp the distance to be within the min and max range
         distanceFromTarget = Mathf.Clamp(distanceFromTarget, minDistance, maxDistance);
     }
 
     private void SetCamera()
     {
-        //New position to camera
         Vector3 direction = new(0, 0, -distanceFromTarget);
         Vector3 cameraPosition = Quaternion.Euler(currentYRotation, currentXRotation, 0) * direction + targetObject.position;
 
-        //Set position
         virtualCameras[currentCamera].transform.position = cameraPosition;
         targetObject.transform.rotation = Quaternion.Euler(0, currentXRotation, 0);
     }
@@ -137,7 +138,7 @@ public class CameraController : MonoBehaviour
 
     public void ChangeSkyBox(int index)
     {
-        if (skyboxes.Count <= index && index < 0)
+        if (index < 0 || index >= skyboxes.Count)
             return;
 
         RenderSettings.skybox = skyboxes[index];

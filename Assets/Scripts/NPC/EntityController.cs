@@ -54,8 +54,8 @@ public class EntityController : MonoBehaviour
         _statistics._statsController.SetSliderColor(_entityInfo.entity);
 
         //Setting sliders value
-        _statistics._statsController.UpdateHealthSlider(_statistics.health, _statistics.maxHealth);
-        _statistics._statsController.UpdateManaSlider(_statistics.mana, _statistics.maxMana);
+        _statistics._statsController.UpdateHealthSlider(_statistics.health, _statistics.maxHealth, true);
+        _statistics._statsController.UpdateManaSlider(_statistics.mana, _statistics.maxMana, true);
 
         //Check behaviour type
         switch (_entityInfo.behaviour)
@@ -119,7 +119,7 @@ public class EntityController : MonoBehaviour
 
     private IEnumerator AutoRegen()
     {
-        //Wait 0.5s then regen some hp and mana
+        //Wait then regen some hp and mana
         yield return new WaitForSeconds(1f);
 
         if (!GetComponent<EntityCombat>().inCombat)
