@@ -51,6 +51,11 @@ public class BattleRoom : MonoBehaviour
                                                 spawnPoints[positionIndexes[pIndex]].position + new Vector3(0, 1, 0),
                                                 Quaternion.identity);
             _waves[index].spawnedEntities.Add(newEntity);
+
+            //If core add to dungeon controller
+            if (_waves[index].entityIDs[a] == 1000)
+                DungeonController.instance.SetCore(newEntity.GetComponent<EntityController>());
+
             newEntity.GetComponent<EntityController>()._statistics.onDeath.AddListener(() =>
             {
                 _waves[index].spawnedEntities.Remove(newEntity);

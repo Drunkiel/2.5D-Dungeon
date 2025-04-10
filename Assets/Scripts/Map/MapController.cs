@@ -19,7 +19,7 @@ public class MapController : MonoBehaviour
         for (int i = 0; i < _rooms.Count; i++)
         {
             if (!_rooms[i].isVisible)
-                _rooms[i].roomObject.SetActive(false);
+                DisableRoom(i);
         }
     }
 
@@ -40,12 +40,12 @@ public class MapController : MonoBehaviour
     private void ActivateRoom(int index)
     {
         _rooms[index].isVisible = true;
-        _rooms[index].roomObject.SetActive(true);
+        _rooms[index].roomObject.transform.GetChild(0).gameObject.SetActive(true);
     }
 
     private void DisableRoom(int index)
     {
         _rooms[index].isVisible = false;
-        _rooms[index].roomObject.SetActive(false);
+        _rooms[index].roomObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 }

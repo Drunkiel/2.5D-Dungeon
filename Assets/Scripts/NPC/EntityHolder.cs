@@ -39,9 +39,11 @@ public class EntityHolder : MonoBehaviour
 
     private GameObject GetEnemyEntity(short id)
     {
-        if (_entitiesEnemy.Count <= id)
+        short newID = (short)(id - 1000);
+        print(_entitiesEnemy[newID].entityObject);
+        if (_entitiesEnemy.Count <= newID)
             return null;
 
-        return _entitiesEnemy[id].entityObject;
+        return _entitiesEnemy[newID].entityObject;
     }
 }
