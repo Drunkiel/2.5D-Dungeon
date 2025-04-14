@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class TeleportEvent : MonoBehaviour
 {
-    [SerializeField] private bool isOnCooldown;
     [SerializeField] private float cooldownToTeleport = 2f;
     public Vector3[] positions;
     [SerializeField] private Animator anim;
@@ -14,27 +13,29 @@ public class TeleportEvent : MonoBehaviour
 
     public void TeleportToPosition(int positionIndex)
     {
-        if (isOnCooldown || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
+        PortalController _portalController = PortalController.instance;
+
+        if (_portalController.IsOnCooldown() || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
             return;
 
         StartCoroutine(PauseBeforeTeleport(() =>
         {
             onTeleportEvent.Invoke();
             PortalController.instance.TeleportToPosition(positions[positionIndex]);
-            SetCooldown();
+            _portalController.SetCooldown();
         }));
     }
 
     public void TeleportToObject(Transform objectTransform)
     {
-        if (isOnCooldown || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
+        PortalController _portalController = PortalController.instance;
+
+        if (_portalController.IsOnCooldown() || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
             return;
 
         StartCoroutine(PauseBeforeTeleport(() =>
         {
-            if (objectTransform.TryGetComponent(out TeleportEvent _teleportEvent))
-                _teleportEvent.SetCooldown();
-            SetCooldown();
+            _portalController.SetCooldown();
 
             onTeleportEvent.Invoke();
             PortalController.instance.TeleportToObject(objectTransform);
@@ -43,7 +44,9 @@ public class TeleportEvent : MonoBehaviour
 
     public void TeleportToScene(string sceneName)
     {
-        if (isOnCooldown || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
+        PortalController _portalController = PortalController.instance;
+
+        if (_portalController.IsOnCooldown() || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
             return;
 
         StartCoroutine(PauseBeforeTeleport(() =>
@@ -61,7 +64,22 @@ public class TeleportEvent : MonoBehaviour
 
             onTeleportEvent.Invoke();
             PortalController.instance.TeleportToScene(sceneName, positions[0]);
-            SetCooldown();
+            _portalController.SetCooldown();
+        }));
+    }
+
+    public void TeleportToPrevScene()
+    {
+        PortalController _portalController = PortalController.instance;
+
+        if (_portalController.IsOnCooldown() || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
+            return;
+
+        StartCoroutine(PauseBeforeTeleport(() =>
+        {
+            onTeleportEvent.Invoke();
+            PortalController.instance.TeleportToPrevScene();
+            _portalController.SetCooldown();
         }));
     }
 
@@ -73,16 +91,5 @@ public class TeleportEvent : MonoBehaviour
         PlayerController.instance.isStopped = true;
         yield return new WaitForSeconds(cooldownToTeleport * 0.9f);
         action();
-    }
-
-    public void SetCooldown()
-    {
-        isOnCooldown = true;
-        Invoke(nameof(ResetCooldown), 10);
-    }
-
-    public void ResetCooldown()
-    {
-        isOnCooldown = false;
     }
 }

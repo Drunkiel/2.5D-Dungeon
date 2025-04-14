@@ -30086,6 +30086,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a634430592d48640b1ea7620a75bcd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTeleportsOnCooldown: 0
+  _currScene:
+    sceneName: 
+    position: {x: 0, y: 0, z: 0}
+  _prevScene:
+    sceneName: 
+    position: {x: 0, y: 0, z: 0}
 --- !u!1 &1624835191
 GameObject:
   m_ObjectHideFlags: 0
@@ -36685,6 +36692,7 @@ MonoBehaviour:
     legLeftImage: {fileID: 1839905910}
     legRightImage: {fileID: 1218316044}
   skinPath: Player/Default
+  bodyType: 0
 --- !u!114 &1966873457
 MonoBehaviour:
   m_ObjectHideFlags: 0

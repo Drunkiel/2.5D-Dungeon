@@ -9,10 +9,17 @@ public enum EntityPartType
     Legs
 }
 
+public enum BodyType
+{
+    Normal,
+    Muscular,
+}
+
 public class EntityLookController : SaveLoadSystem
 {
     public EntityLook _entityLook;
     public string skinPath;
+    public BodyType bodyType;
 
     private void Start()
     {
@@ -30,6 +37,8 @@ public class EntityLookController : SaveLoadSystem
 
         if (_entityLook.legLeftImage != null && _entityLook.legRightImage != null)
             UpdateEntityLook(EntityPartType.Legs, GetSprite($"{skinsSavePath}{skinPath}/leg.png", 100f));
+
+        UpdateBodyType();
     }
 
     public void UpdateEntityLook(EntityPartType partType, Sprite sprite)
@@ -60,6 +69,22 @@ public class EntityLookController : SaveLoadSystem
             case EntityPartType.Legs:
                 _entityLook.legLeftImage.sprite = sprite;
                 _entityLook.legRightImage.sprite = sprite;
+                break;
+        }
+    }
+
+    private void UpdateBodyType()
+    {
+        switch(bodyType)
+        {
+            case BodyType.Normal:
+                break;
+
+            case BodyType.Muscular:
+                _entityLook.headImage.transform.localPosition = new(0, 0.175f, 0);
+                _entityLook.armRightImage.transform.parent.parent.localPosition = new(0, 0.1f, 0);
+                _entityLook.armRightImage.transform.parent.localPosition = new(-0.13f, 0, 0);
+                _entityLook.armLeftImage.transform.parent.localPosition = new(0.13f, 0, 0);
                 break;
         }
     }

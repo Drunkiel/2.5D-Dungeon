@@ -40,7 +40,6 @@ public class EntityHolder : MonoBehaviour
     private GameObject GetEnemyEntity(short id)
     {
         short newID = (short)(id - 1000);
-        print(_entitiesEnemy[newID].entityObject);
         if (_entitiesEnemy.Count <= newID)
             return null;
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -40,14 +41,20 @@ public class BattleRoom : MonoBehaviour
 
     public IEnumerator SpawnWave(int index)
     {
-        List<int> positionIndexes = new() { 0, 1, 2, 3 }; 
+        if (spawnPoints.Count <= 0)
+        {
+            ConsoleController.instance.ChatMessage(SenderType.System, $"There is no place to spawn enemies: {transform.name}", OutputType.Error);
+            yield break;
+        }
+
+        List<int> positionIndexes = Enumerable.Range(0, spawnPoints.Count).ToList();
 
         yield return new WaitForSeconds(_waves[index].delay);
         for (int i = 0; i < _waves[index].entityIDs.Count; i++)
         {
             int a = i;
             int pIndex = Random.Range(0, positionIndexes.Count);
-            GameObject newEntity = Instantiate(EntityHolder.instance.GetEntity(_waves[index].entityIDs[a], EntityAttitude.Enemy),
+            GameObject newEntity = Instantiate(EntityHolder.instance.GetEntity(_waves[index].entityIDs[a], EntityAttitude.Enemy),                                                                                                                           
                                                 spawnPoints[positionIndexes[pIndex]].position + new Vector3(0, 1, 0),
                                                 Quaternion.identity);
             _waves[index].spawnedEntities.Add(newEntity);

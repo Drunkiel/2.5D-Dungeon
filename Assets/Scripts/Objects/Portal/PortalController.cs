@@ -1,11 +1,28 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
+
+[Serializable]
+public class SceneData
+{
+    public string sceneName;
+    public Vector3 position;
+
+    public SceneData(string sceneName, Vector3 position)
+    {
+        this.sceneName = sceneName;
+        this.position = position;
+    }
+}
 
 public class PortalController : MonoBehaviour
 {
     public static PortalController instance;
+
+    [SerializeField] private bool isTeleportsOnCooldown;
+
+    [SerializeField] private SceneData _currScene;
+    [SerializeField] private SceneData _prevScene;
 
     private void Awake()
     {
@@ -41,10 +58,20 @@ public class PortalController : MonoBehaviour
 
         StartCoroutine(WaitAndTeleport(() =>
         {
+            _prevScene = new(_currScene.sceneName, PlayerController.instance.transform.position);
             StartCoroutine(GameController.instance.LoadAsyncScene(sceneName));
             PopUpController.instance.CreatePopUp(PopUpInfo.VisitPlace, sceneName);
             PlayerController.instance.transform.position = playerPosition;
+            _currScene = new(sceneName, playerPosition);
         }));
+    }
+
+    public void TeleportToPrevScene()
+    {
+        if (GameController.isPaused || string.IsNullOrEmpty(_prevScene.sceneName))
+            return;
+
+        TeleportToScene(_prevScene.sceneName, _prevScene.position);
     }
 
     IEnumerator WaitAndTeleport(Action action)
@@ -62,5 +89,18 @@ public class PortalController : MonoBehaviour
         PlayerController.instance.ResetMovement();
         PlayerController.instance.isStopped = false;
         CameraController.instance.ResetZoom();
+    }
+
+    public bool IsOnCooldown() => isTeleportsOnCooldown;
+
+    public void SetCooldown()
+    {
+        isTeleportsOnCooldown = true;
+        Invoke(nameof(ResetCooldown), 10);
+    }
+
+    private void ResetCooldown()
+    {
+        isTeleportsOnCooldown = false;
     }
 }
