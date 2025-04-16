@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class DungeonController : MonoBehaviour
     [SerializeField] private EntityController _coreController;
     public int timeLeft;
     [SerializeField] private Slider timeSlider;
+    [SerializeField] private TMP_Text timeText;
 
     private void Start()
     {
@@ -25,6 +27,7 @@ public class DungeonController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         timeLeft -= 1;
         timeSlider.value = timeLeft;
+        timeText.text = $"{timeLeft}s";
 
         if (_coreController != null)
             _coreController._statistics.TakeMana(-1, true);

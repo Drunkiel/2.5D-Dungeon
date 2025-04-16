@@ -13,6 +13,7 @@ public enum BodyType
 {
     Normal,
     Muscular,
+    Tall,
 }
 
 public class EntityLookController : SaveLoadSystem
@@ -85,6 +86,11 @@ public class EntityLookController : SaveLoadSystem
                 _entityLook.armRightImage.transform.parent.parent.localPosition = new(0, 0.1f, 0);
                 _entityLook.armRightImage.transform.parent.localPosition = new(-0.13f, 0, 0);
                 _entityLook.armLeftImage.transform.parent.localPosition = new(0.13f, 0, 0);
+                break;
+
+            case BodyType.Tall:
+                _entityLook.headImage.transform.localPosition = new(0, 0.2f, 0);
+                _entityLook.armRightImage.transform.parent.parent.localPosition = new(0, 0.125f, 0);
                 break;
         }
     }
