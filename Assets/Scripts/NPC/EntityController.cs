@@ -50,7 +50,7 @@ public class EntityController : MonoBehaviour
         _statistics.SaveStats();
 
         //Setting basic info of entity
-        _statistics._statsController.SetName(_entityInfo.name);
+        _statistics._statsController.SetName(_entityInfo);
         _statistics._statsController.SetSliderColor(_entityInfo.entity);
 
         //Setting sliders value

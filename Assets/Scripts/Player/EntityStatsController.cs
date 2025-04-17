@@ -13,9 +13,11 @@ public class EntityStatsController : MonoBehaviour
     [SerializeField] private Transform buffsParent;
     [SerializeField] private Image buffImage;
 
-    public void SetName(string newName)
+    public void SetName(EntityInfo _entityInfo)
     {
-        nameText.text = newName;
+        //if (string.IsNullOrEmpty(_entityInfo.title))
+        nameText.text = $"{_entityInfo.name}\n<color=yellow>{_entityInfo.title}</color>";
+
     }
 
     public void SetSliderColor(EntityAttitude entity)
