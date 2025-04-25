@@ -1525,49 +1525,97 @@ MonoBehaviour:
   _questUI: {fileID: 425872822}
   _allQuests:
   - id: 0
-    title: Yes
-    description: Talk to Bob
+    title: New Recruit
+    description: Talk to City Mayor
     _requirements:
     - type: 2
-      description: 
-      targetID: 0
-      progressCurrent: 0
-      progressNeeded: 1
-    onFinishEvent:
-      m_PersistentCalls:
-        m_Calls: []
-  - id: 1
-    title: Idk just go
-    description: Talk to Bob 2
-    _requirements:
-    - type: 1
-      description: Talk to Bob 2
+      description: Talk to City Mayor
       targetID: 0
       progressCurrent: 0
       progressNeeded: 1
     onFinishEvent:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2145703179}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ChangeDialog
+        - m_Target: {fileID: 96644583}
+          m_TargetAssemblyTypeName: QuestController, Assembly-CSharp
+          m_MethodName: GiveQuest
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - id: 1
+    title: New Recruit
+    description: Talk to Guild Receptionist
+    _requirements:
+    - type: 2
+      description: Talk to Guild Receptionist
+      targetID: 0
+      progressCurrent: 0
+      progressNeeded: 1
+    onFinishEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 96644583}
+          m_TargetAssemblyTypeName: QuestController, Assembly-CSharp
+          m_MethodName: GiveQuest
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 2
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - id: 2
+    title: New Recruit
+    description: Talk to Black Smith
+    _requirements:
+    - type: 2
+      description: Talk to Black Smith
+      targetID: 0
+      progressCurrent: 0
+      progressNeeded: 1
+    onFinishEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 96644583}
+          m_TargetAssemblyTypeName: QuestController, Assembly-CSharp
+          m_MethodName: GiveQuest
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 3
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - id: 2
+    title: New Recruit
+    description: Talk with Army General
+    _requirements:
+    - type: 0
+      description: Complete the dungeon
+      targetID: 0
+      progressCurrent: 0
+      progressNeeded: 1
+    onFinishEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 96644583}
+          m_TargetAssemblyTypeName: QuestController, Assembly-CSharp
+          m_MethodName: GiveQuest
           m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 4
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 802811165}
-          m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
-          m_MethodName: RemoveItemByID
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
