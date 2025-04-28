@@ -17,6 +17,7 @@ public class QuestController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        GiveQuest(0);
     }
 
     public void GiveQuest(int questIndex)
@@ -26,13 +27,15 @@ public class QuestController : MonoBehaviour
             return;
 
         //Check if quest is activated
-        if (_currentQuestsIndex.Contains(questIndex))
+        if (_currentQuestsIndex.Contains(questIndex) || _allQuests[questIndex].CheckIfFinished())
             return;
 
         //Add quest
         _currentQuestsIndex.Add(questIndex);
         _questUI.AddQuestToUI(_allQuests[questIndex]);
-        PopUpController.instance.CreatePopUp(PopUpInfo.QuestAccepted, _allQuests[questIndex].title);
+
+        if (PopUpController.instance != null)
+            PopUpController.instance.CreatePopUp(PopUpInfo.QuestAccepted, _allQuests[questIndex].title);
 
         //Set listeners
         for (int i = 0; i < _allQuests[questIndex]._requirements.Count; i++)

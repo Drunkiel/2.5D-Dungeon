@@ -1536,6 +1536,18 @@ MonoBehaviour:
     onFinishEvent:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 2145703179}
+          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
+          m_MethodName: StartDialog
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 2
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
         - m_Target: {fileID: 96644583}
           m_TargetAssemblyTypeName: QuestController, Assembly-CSharp
           m_MethodName: GiveQuest
@@ -1554,7 +1566,7 @@ MonoBehaviour:
     _requirements:
     - type: 2
       description: Talk to Guild Receptionist
-      targetID: 0
+      targetID: 1
       progressCurrent: 0
       progressNeeded: 1
     onFinishEvent:
@@ -1578,7 +1590,7 @@ MonoBehaviour:
     _requirements:
     - type: 2
       description: Talk to Black Smith
-      targetID: 0
+      targetID: 2
       progressCurrent: 0
       progressNeeded: 1
     onFinishEvent:
@@ -1607,19 +1619,7 @@ MonoBehaviour:
       progressNeeded: 1
     onFinishEvent:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 96644583}
-          m_TargetAssemblyTypeName: QuestController, Assembly-CSharp
-          m_MethodName: GiveQuest
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 4
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   _currentQuestsIndex: 
   idToCheck: 0
   killQuestIndexes: 
@@ -39573,10 +39573,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogs:
-  - text: 'Welcome to the PROJECT N, make yourself comfortable, you''re going to
-      be here for a while. '
+  - text: Oh, nice to see you
     endOptions:
-    - displayText: Why?
+    - displayText: Hello
       actionToDo:
         m_PersistentCalls:
           m_Calls:
@@ -39592,29 +39591,15 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+  - text: Bla bla bla, some story
+    endOptions:
     - displayText: Ok
       actionToDo:
         m_PersistentCalls:
           m_Calls:
           - m_Target: {fileID: 2145703179}
             m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-            m_MethodName: ChangeDialog
-            m_Mode: 3
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 2
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-    - displayText: I refuse
-      actionToDo:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 1885580515}
-            m_TargetAssemblyTypeName: SettingsController, Assembly-CSharp
-            m_MethodName: ExitGame
+            m_MethodName: EndDialog
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -39624,61 +39609,12 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-  - text: 'I''ll be 100% honest, I have no idea you chose this game so now you suffer
-      here. '
+  - text: The other one
     endOptions:
-    - displayText: ...
+    - displayText: Fuck my life
       actionToDo:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 2145703179}
-            m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-            m_MethodName: ChangeDialog
-            m_Mode: 3
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 3
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-  - text: Seriously? You just agree?
-    endOptions:
-    - displayText: Yes
-      actionToDo:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 2145703179}
-            m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-            m_MethodName: ChangeDialog
-            m_Mode: 3
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 3
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-  - text: So go to someone there now and they will tell you what to do next.
-    endOptions:
-    - displayText: Ok, see you later
-      actionToDo:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 96644583}
-            m_TargetAssemblyTypeName: QuestController, Assembly-CSharp
-            m_MethodName: GiveQuest
-            m_Mode: 3
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 1
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
           - m_Target: {fileID: 2145703179}
             m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
             m_MethodName: EndDialog
@@ -39686,37 +39622,7 @@ MonoBehaviour:
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 1
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-  - text: Fuck
-    endOptions:
-    - displayText: Ok, see you later
-      actionToDo:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 96644583}
-            m_TargetAssemblyTypeName: QuestController, Assembly-CSharp
-            m_MethodName: GiveQuest
-            m_Mode: 3
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 1
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 2145703179}
-            m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-            m_MethodName: EndDialog
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 1
+              m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
               m_BoolArgument: 0

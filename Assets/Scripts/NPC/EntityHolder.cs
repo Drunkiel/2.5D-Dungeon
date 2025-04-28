@@ -31,6 +31,12 @@ public class EntityHolder : MonoBehaviour
 
     private GameObject GetFriendlyEntity(short id)
     {
+        if (id >= 1000)
+        {
+            ConsoleController.instance.ChatMessage(SenderType.System, "Friendly entity's id is lower than 1000");
+            return null;
+        }
+
         if (_entitiesFriendly.Count <= id)
             return null;
 
@@ -39,6 +45,12 @@ public class EntityHolder : MonoBehaviour
 
     private GameObject GetEnemyEntity(short id)
     {
+        if (id < 1000)
+        {
+            ConsoleController.instance.ChatMessage(SenderType.System, "Enemy id's starts over 1000+");
+            return null;
+        }
+
         short newID = (short)(id - 1000);
         if (_entitiesEnemy.Count <= newID)
             return null;
