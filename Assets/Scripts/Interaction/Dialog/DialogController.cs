@@ -66,6 +66,15 @@ public class DialogController : MonoBehaviour
         _dialogUI.UpdateDialog(_dialogs[dialogIndex]);
     }
 
+    public void ForceChangeDialog(int index)
+    {
+        if (!_dialogUI.finishedSpelling)
+            _dialogUI.SpeedUpDialog(_dialogs[dialogIndex].text);
+
+        dialogIndex = index;
+        _dialogUI.UpdateDialog(_dialogs[dialogIndex]);
+    }
+
     public void EndDialog()
     {
         if (!_dialogUI.finishedSpelling)

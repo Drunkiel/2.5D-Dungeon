@@ -1,6 +1,14 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+
+[Serializable]
+public class PortalSpawn
+{
+    public GameObject portalObject;
+    public Vector3 position;
+}
 
 [Serializable]
 public class SceneData
@@ -19,6 +27,8 @@ public class PortalController : MonoBehaviour
 {
     public static PortalController instance;
 
+    public List<PortalSpawn> _spawnList = new();
+
     [SerializeField] private bool isTeleportsOnCooldown;
 
     [SerializeField] private SceneData _currScene;
@@ -27,6 +37,14 @@ public class PortalController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+
+    public void SpawnPortal(int index)
+    {
+        if (_spawnList.Count <= index) 
+            return;
+
+        Instantiate(_spawnList[index].portalObject, _spawnList[index].position, Quaternion.identity);
     }
 
     public void TeleportToPosition(Vector3 position)
