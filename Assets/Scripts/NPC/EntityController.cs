@@ -79,6 +79,7 @@ public class EntityController : MonoBehaviour
         }
 
         StartCoroutine(AutoRegen());
+        MiniMapController.instance.AddNPCIcon(this);
     }
 
     private void Update()
