@@ -28,7 +28,6 @@ public class GameController : MonoBehaviour
             yield return null;
 
         Scene nextScene = SceneManager.GetSceneByName(sceneName);
-        MiniMapController.instance.SetNewMiniMap(nextScene.buildIndex);
 
         //Move objects to other scene
         for (int i = 0; i < objectsToTeleportMust.Count; i++)

@@ -67,7 +67,7 @@ public class ItemController : SaveLoadSystem
         weaponCopy.transform.SetLocalPositionAndRotation(Vector3.zero, rotation);
         if (_itemID._weaponItem.resizable)
             weaponCopy.transform.localScale = Vector3.one;
-        
+
         if (_itemID._weaponItem.weaponType == WeaponType.Sword)
             weaponCopy.transform.localPosition = new(0.9f, 0, 0);
 

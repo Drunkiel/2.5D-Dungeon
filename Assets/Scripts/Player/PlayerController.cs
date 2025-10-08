@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsGround;
     [SerializeField] private bool grounded;
     private bool isFlipped;
+    private bool isFacingCamera;
 
     [SerializeField] private Vector3 lastGroundedPosition;
 
@@ -49,7 +50,7 @@ public class PlayerController : MonoBehaviour
     {
         //Checks if player is moving and touching ground
         isMoving = movement.magnitude > 0.1f;
-        grounded = Physics.Raycast(transform.position + new Vector3(0.05f, 0), Vector3.down, playerHeight, whatIsGround) || 
+        grounded = Physics.Raycast(transform.position + new Vector3(0.05f, 0), Vector3.down, playerHeight, whatIsGround) ||
             Physics.Raycast(transform.position + new Vector3(-0.05f, 0), Vector3.down, playerHeight, whatIsGround);
 
         anim.SetFloat("Movement", isStopped ? 0 : movement.magnitude);
@@ -111,6 +112,17 @@ public class PlayerController : MonoBehaviour
         {
             ResetMovement();
             return;
+        }
+
+        if (inputValue.y < 0 && !isFacingCamera)
+        {
+            isFacingCamera = true;
+            GetComponent<EntityLookController>().UpdateEntityLookAll(isFacingCamera);
+        }
+        else if (inputValue.y > 0 && isFacingCamera)
+        {
+            isFacingCamera = false;
+            GetComponent<EntityLookController>().UpdateEntityLookAll(isFacingCamera);
         }
 
         //Flipping player to direction they are going

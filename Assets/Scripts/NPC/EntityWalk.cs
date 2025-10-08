@@ -15,6 +15,7 @@ public class EntityWalk : MonoBehaviour
     public bool isMoving;
 
     private bool isFlipped;
+    public bool isFacingCamera;
     private bool isNewPositionFound;
 
     [HideInInspector] public Vector3 move;
@@ -24,7 +25,7 @@ public class EntityWalk : MonoBehaviour
     {
         _controller = GetComponent<EntityController>();
 
-        //Setting new first position to go
+        //Setting first position to go
         startPosition = transform.position;
         SetNewPosition(wanderingDistance);
     }
@@ -137,7 +138,29 @@ public class EntityWalk : MonoBehaviour
             direction.z * _controller._statistics.speedForce
         );
 
+        //Check if entity moves towards camera
+        Vector3 toCamera = Camera.main.transform.position - transform.position;
+        toCamera.y = 0;
+        toCamera.Normalize();
+
+        Vector3 moveDir = direction;
+        moveDir.y = 0;
+        moveDir.Normalize();
+
+        float dotToCamera = Vector3.Dot(moveDir, toCamera);
+
         //Flipping Enemy to direction they are going based on camera view
+        if (dotToCamera > 0 && !isFacingCamera)
+        {
+            isFacingCamera = true;
+            GetComponent<EntityLookController>().UpdateEntityLookAll(isFacingCamera);
+        }
+        else if (dotToCamera < 0 && isFacingCamera)
+        {
+            isFacingCamera = false;
+            GetComponent<EntityLookController>().UpdateEntityLookAll(isFacingCamera);
+        }
+
         if (newFaceDirection < 0 && !isFlipped)
         {
             transform.GetChild(0).localScale = new(-1, 1, 1);
