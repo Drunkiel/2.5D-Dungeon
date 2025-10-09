@@ -22,8 +22,6 @@ public class GearHolder
     public ArmorItem _armorChestplate;
     public ArmorItem _armorBoots;
 
-    public bool isWeaponSwapped;
-
     public WeaponItem GetHoldingWeapon(WeaponHoldingType holdingType)
     {
         return holdingType switch

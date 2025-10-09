@@ -118,11 +118,13 @@ public class PlayerController : MonoBehaviour
         {
             isFacingCamera = true;
             GetComponent<EntityLookController>().UpdateEntityLookAll(isFacingCamera);
+            // GetComponent<EntityLookController>().RotateToCamera(true);
         }
         else if (inputValue.y > 0 && isFacingCamera)
         {
             isFacingCamera = false;
             GetComponent<EntityLookController>().UpdateEntityLookAll(isFacingCamera);
+            // GetComponent<EntityLookController>().RotateToCamera(false);
         }
 
         //Flipping player to direction they are going
@@ -130,11 +132,13 @@ public class PlayerController : MonoBehaviour
         {
             transform.GetChild(0).localScale = new(-1, 1, 1);
             isFlipped = true;
+            GetComponent<EntityLookController>().RotateToCamera(false);
         }
         else if (inputValue.x > 0 && isFlipped)
         {
             transform.GetChild(0).localScale = new(1, 1, 1);
             isFlipped = false;
+            GetComponent<EntityLookController>().RotateToCamera(true);
         }
 
         movement = new Vector2(inputValue.x, inputValue.y);

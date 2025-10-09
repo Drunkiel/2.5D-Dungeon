@@ -1,4 +1,6 @@
 using System;
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum EntityPartType
@@ -41,6 +43,7 @@ public class EntityLookController : SaveLoadSystem
     public EntitySpriteHolder _spriteHolder;
     public string skinPath;
     public BodyType bodyType;
+    public bool isRotated;
 
     private void Start()
     {
@@ -98,6 +101,54 @@ public class EntityLookController : SaveLoadSystem
                 _entityLook.legLeftImage.sprite = sprite;
                 _entityLook.legRightImage.sprite = sprite;
                 break;
+        }
+    }
+
+    public void RotateToCamera(bool value)
+    {
+        isRotated = value;
+
+        if (value)
+        {
+            //Change parent to original state
+            _entityLook.armRightImage.transform.parent.parent.localScale = new(1, 1, 1);
+
+            _entityLook.armRightImage.sortingOrder = 4;
+            _entityLook.handRightImage.sortingOrder = 5;
+            _entityLook.handRightImage.transform.localScale = new(0.5f, 0.5f, 0.5f);
+
+            _entityLook.armLeftImage.sortingOrder = 0;
+            _entityLook.handLeftImage.sortingOrder = 1;
+            _entityLook.handLeftImage.transform.localScale = new(-0.5f, 0.5f, 0.5f);
+
+            if (TryGetComponent(out ItemController _itemController))
+            {
+                if (_itemController._gearHolder._weaponRight != null)
+                    _itemController._gearHolder._weaponRight.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 6;
+                if (_itemController._gearHolder._weaponLeft != null)
+                    _itemController._gearHolder._weaponLeft.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 2;
+            }
+        }
+        else
+        {
+            //Swap positions
+            _entityLook.armRightImage.transform.parent.parent.localScale = new(-1, 1, 1);
+
+            _entityLook.armRightImage.sortingOrder = 0;
+            _entityLook.handRightImage.sortingOrder = 1;
+            _entityLook.handRightImage.transform.localScale = new(-0.5f, 0.5f, 0.5f);
+
+            _entityLook.armLeftImage.sortingOrder = 4;
+            _entityLook.handLeftImage.sortingOrder = 5;
+            _entityLook.handLeftImage.transform.localScale = new(0.5f, 0.5f, 0.5f);
+
+            if (TryGetComponent(out ItemController _itemController))
+            {
+                if (_itemController._gearHolder._weaponRight != null)
+                    _itemController._gearHolder._weaponRight.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 2;
+                if (_itemController._gearHolder._weaponLeft != null)
+                    _itemController._gearHolder._weaponLeft.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 6;
+            }
         }
     }
 
