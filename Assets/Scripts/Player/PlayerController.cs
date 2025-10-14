@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsGround;
     [SerializeField] private bool grounded;
     private bool isFlipped;
-    private bool isFacingCamera;
+    private bool isFacingCamera = true;
 
     [SerializeField] private Vector3 lastGroundedPosition;
 
@@ -118,13 +118,13 @@ public class PlayerController : MonoBehaviour
         {
             isFacingCamera = true;
             GetComponent<EntityLookController>().UpdateEntityLookAll(isFacingCamera);
-            // GetComponent<EntityLookController>().RotateToCamera(true);
+            GetComponent<EntityLookController>().RotateCharacter(!isFlipped, isFacingCamera);
         }
         else if (inputValue.y > 0 && isFacingCamera)
         {
             isFacingCamera = false;
             GetComponent<EntityLookController>().UpdateEntityLookAll(isFacingCamera);
-            // GetComponent<EntityLookController>().RotateToCamera(false);
+            GetComponent<EntityLookController>().RotateCharacter(!isFlipped, isFacingCamera);
         }
 
         //Flipping player to direction they are going
@@ -132,13 +132,13 @@ public class PlayerController : MonoBehaviour
         {
             transform.GetChild(0).localScale = new(-1, 1, 1);
             isFlipped = true;
-            GetComponent<EntityLookController>().RotateToCamera(false);
+            GetComponent<EntityLookController>().RotateCharacter(!isFlipped, isFacingCamera);
         }
         else if (inputValue.x > 0 && isFlipped)
         {
             transform.GetChild(0).localScale = new(1, 1, 1);
             isFlipped = false;
-            GetComponent<EntityLookController>().RotateToCamera(true);
+            GetComponent<EntityLookController>().RotateCharacter(!isFlipped, isFacingCamera);
         }
 
         movement = new Vector2(inputValue.x, inputValue.y);
