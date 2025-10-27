@@ -13,8 +13,16 @@ public class PlayerController : MonoBehaviour
     public float playerHeight;
     public LayerMask whatIsGround;
     [SerializeField] private bool grounded;
-    private bool isFlipped;
-    private bool isFacingCamera = true;
+    public bool isFlipped
+    {
+        get;
+        private set;
+    }
+    public bool isFacingCamera
+    {
+        get;
+        private set;
+    }
 
     [SerializeField] private Vector3 lastGroundedPosition;
 

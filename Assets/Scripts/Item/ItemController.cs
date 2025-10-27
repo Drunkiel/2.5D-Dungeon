@@ -99,6 +99,9 @@ public class ItemController : SaveLoadSystem
                 _gearHolder._weaponBoth = PickWeapon(_itemID, Quaternion.Euler(0, 0, -90), _gearHolder.bothHandTransform);
                 break;
         }
+
+        PlayerController _playerController = PlayerController.instance;
+        _playerController.GetComponent<EntityLookController>().RotateCharacter(!_playerController.isFlipped, _playerController.isFacingCamera);
     }
 
     public bool CanPickArmor(ArmorType armorType)
@@ -160,6 +163,9 @@ public class ItemController : SaveLoadSystem
                 PickArmor(_itemID, _gearHolder.leftFeetTransform);
                 break;
         }
+
+        PlayerController _playerController = PlayerController.instance;
+        _playerController.GetComponent<EntityLookController>().RotateCharacter(!_playerController.isFlipped, _playerController.isFacingCamera);
     }
 
     public void ReplaceItem(ItemID _itemID)
@@ -246,6 +252,9 @@ public class ItemController : SaveLoadSystem
                 _inventoryController.AddToGearInventory(_itemID, (int)_armorItem.armorType);
                 break;
         }
+
+        PlayerController _playerController = PlayerController.instance;
+        _playerController.GetComponent<EntityLookController>().RotateCharacter(!_playerController.isFlipped, _playerController.isFacingCamera);
 
         Destroy(_itemID.gameObject);
     }

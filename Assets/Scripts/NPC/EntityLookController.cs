@@ -108,50 +108,63 @@ public class EntityLookController : SaveLoadSystem
     {
         isRotated = facingRight;
 
-        if (facingRight)
+        int rightArmOrder = facingRight ? 4 : 0;
+        int rightHandOrder = facingRight ? 5 : 1;
+        int leftArmOrder = facingRight ? 0 : 4;
+        int leftHandOrder = facingRight ? 1 : 5;
+
+        float scaleSign = facingCamera ? 1f : -1f;
+        float flipDirection = facingRight ? scaleSign : -scaleSign;
+
+        _entityLook.armRightImage.transform.parent.parent.localScale = new Vector3(flipDirection, 1, 1);
+
+        _entityLook.armRightImage.sortingOrder = rightArmOrder;
+        _entityLook.handRightImage.sortingOrder = rightHandOrder;
+        _entityLook.armLeftImage.sortingOrder = leftArmOrder;
+        _entityLook.handLeftImage.sortingOrder = leftHandOrder;
+
+        float handScaleRight = facingRight ? scaleSign * 0.5f : -scaleSign * 0.5f;
+        float handScaleLeft = facingRight ? -scaleSign * 0.5f : scaleSign * 0.5f;
+
+        _entityLook.handRightImage.transform.localScale = new Vector3(handScaleRight, 0.5f, 0.5f);
+        _entityLook.handLeftImage.transform.localScale = new Vector3(handScaleLeft, 0.5f, 0.5f);
+
+        if (TryGetComponent(out ItemController itemController))
         {
-            //Change parent to original state
-            _entityLook.armRightImage.transform.parent.parent.localScale = new(facingCamera ? 1 : -1, 1, 1);
+            GearHolder _gearHolder = itemController._gearHolder;
+            int rightWeaponOrder = facingRight ? 6 : 1;
+            int leftWeaponOrder = facingRight ? 1 : 6;
 
-            _entityLook.armRightImage.sortingOrder = 4;
-            _entityLook.handRightImage.sortingOrder = 5;
+            if (_gearHolder._weaponRight != null)
+                _gearHolder._weaponRight.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = rightWeaponOrder;
 
-            _entityLook.armLeftImage.sortingOrder = 0;
-            _entityLook.handLeftImage.sortingOrder = 1;
+            if (_gearHolder._weaponLeft != null)
+                _gearHolder._weaponLeft.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = leftWeaponOrder;
 
-            _entityLook.handRightImage.transform.localScale = new(facingCamera ? 0.5f : -0.5f, 0.5f, 0.5f);
-            _entityLook.handLeftImage.transform.localScale = new(facingCamera ? -0.5f : 0.5f, 0.5f, 0.5f);
+            if (_gearHolder._armorHead != null)
+                _gearHolder._armorHead.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite =
+                facingCamera ?
+                _gearHolder._armorHead.itemSpriteFront :
+                _gearHolder._armorHead.itemSpriteBack;
 
-            if (TryGetComponent(out ItemController _itemController))
+            if (_gearHolder._armorChestplate != null)
+                _gearHolder._armorChestplate.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite =
+                facingCamera ?
+                _gearHolder._armorChestplate.itemSpriteFront :
+                _gearHolder._armorChestplate.itemSpriteBack;
+
+            if (_gearHolder._armorBoots != null)
             {
-                if (_itemController._gearHolder._weaponRight != null)
-                    _itemController._gearHolder._weaponRight.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 6;
-                if (_itemController._gearHolder._weaponLeft != null)
-                    _itemController._gearHolder._weaponLeft.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 1;
+                _gearHolder._armorBoots.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite =
+                facingCamera ?
+                _gearHolder._armorBoots.itemSpriteFront :
+                _gearHolder._armorBoots.itemSpriteBack;
+
+                _gearHolder.leftFeetTransform.GetChild(1).GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite =
+                facingCamera ?
+                _gearHolder._armorBoots.itemSpriteFront :
+                _gearHolder._armorBoots.itemSpriteBack;
             }
-        }
-        else
-        {
-            //Swap positions
-            _entityLook.armRightImage.transform.parent.parent.localScale = new(facingCamera ? -1 : 1, 1, 1);
-
-            _entityLook.armRightImage.sortingOrder = 0;
-            _entityLook.handRightImage.sortingOrder = 1;
-
-            _entityLook.armLeftImage.sortingOrder = 4;
-            _entityLook.handLeftImage.sortingOrder = 5;
-
-            _entityLook.handRightImage.transform.localScale = new(facingCamera ? -0.5f : 0.5f, 0.5f, 0.5f);
-            _entityLook.handLeftImage.transform.localScale = new(facingCamera ? 0.5f : -0.5f, 0.5f, 0.5f);
-
-            if (TryGetComponent(out ItemController _itemController))
-            {
-                if (_itemController._gearHolder._weaponRight != null)
-                    _itemController._gearHolder._weaponRight.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 1;
-                if (_itemController._gearHolder._weaponLeft != null)
-                    _itemController._gearHolder._weaponLeft.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 6;
-            }
-
         }
     }
 

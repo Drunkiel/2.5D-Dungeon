@@ -20,6 +20,7 @@ public class WeaponItem : MonoBehaviour
     public WeaponType weaponType;
     public WeaponHoldingType holdingType;
     public bool resizable = true;
-    public Sprite itemSprite;
+    public Sprite itemSpriteFront;
+    public Sprite itemSpriteBack;
     public Sprite iconSprite;
 }

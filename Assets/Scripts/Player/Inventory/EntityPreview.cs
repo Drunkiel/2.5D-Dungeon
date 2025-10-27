@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [Serializable]
-public class EntityPreview 
+public class EntityPreview
 {
     //Player body textures
     [Header("Head")]
@@ -34,8 +34,8 @@ public class EntityPreview
 
     public void UpdateEntityPreviewLook(EntityPartType partType, Vector3 position, Sprite sprite)
     {
-        if (sprite == null) 
-            
+        if (sprite == null)
+
             return;
 
         switch (partType)
@@ -114,7 +114,7 @@ public class EntityPreview
 
                 helmetImage.sprite = sprite;
                 break;
-            
+
             case ArmorType.Chestplate:
                 if (sprite != null)
                     chestplateImage.GetComponent<RectTransform>().sizeDelta = sprite.rect.size / 100;
@@ -136,7 +136,7 @@ public class EntityPreview
     }
 
     public void UpdateAllByEntity(EntityLook _entityLook, GearHolder _gearHolder)
-    {   
+    {
         if (headImage != null)
             UpdateEntityPreviewLook(EntityPartType.Head, _entityLook.headImage.transform.localPosition, _entityLook.headImage.sprite);
 
@@ -144,24 +144,39 @@ public class EntityPreview
             UpdateEntityPreviewLook(EntityPartType.Body, _entityLook.bodyImage.transform.localPosition, _entityLook.bodyImage.sprite);
 
         if (armLeftImage != null && armRightImage != null)
-            UpdateEntityPreviewLook(EntityPartType.Arms, new(_entityLook.armLeftImage.transform.parent.localPosition.x, 
+            UpdateEntityPreviewLook(EntityPartType.Arms, new(_entityLook.armLeftImage.transform.parent.localPosition.x,
                                                              _entityLook.armLeftImage.transform.localPosition.y, _entityLook.armLeftImage.transform.parent.parent.localPosition.y), _entityLook.armLeftImage.sprite);
 
         if (handLeftImage != null && handRightImage != null)
             UpdateEntityPreviewLook(EntityPartType.Hands, _entityLook.handLeftImage.transform.localPosition, _entityLook.handLeftImage.sprite);
 
         if (legLeftImage != null && legRightImage != null)
-            UpdateEntityPreviewLook(EntityPartType.Legs, new(_entityLook.legLeftImage.transform.parent.localPosition.x, 
+            UpdateEntityPreviewLook(EntityPartType.Legs, new(_entityLook.legLeftImage.transform.parent.localPosition.x,
                                                              _entityLook.legLeftImage.transform.localPosition.y, -0.055f), _entityLook.legLeftImage.sprite);
 
         //Armor
         if (helmetImage != null)
-            UpdateArmorLook(ArmorType.Helmet, _gearHolder._armorHead == null ? placeholderSprite : _gearHolder._armorHead.itemSprite);
+            UpdateArmorLook(
+                ArmorType.Helmet,
+                _gearHolder._armorHead == null ?
+                placeholderSprite :
+                _gearHolder._armorHead.itemSpriteFront
+            );
 
         if (chestplateImage != null)
-            UpdateArmorLook(ArmorType.Chestplate, _gearHolder._armorChestplate == null ? placeholderSprite : _gearHolder._armorChestplate.itemSprite);
+            UpdateArmorLook(
+                ArmorType.Chestplate,
+                _gearHolder._armorChestplate == null ?
+                placeholderSprite :
+                _gearHolder._armorChestplate.itemSpriteFront
+            );
 
         if (bootLeftImage != null && bootRightImage != null)
-            UpdateArmorLook(ArmorType.Boots, _gearHolder._armorBoots == null ? placeholderSprite : _gearHolder._armorBoots.itemSprite);
+            UpdateArmorLook(
+                ArmorType.Boots,
+                _gearHolder._armorBoots == null ?
+                placeholderSprite :
+                _gearHolder._armorBoots.itemSpriteFront
+            );
     }
 }

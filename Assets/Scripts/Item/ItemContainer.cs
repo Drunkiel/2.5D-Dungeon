@@ -30,7 +30,7 @@ public class ItemContainer : SaveLoadSystem
         Load(itemsSavePath + "Armor/Mage");
 
         Load(itemsSavePath + "Collectable");
-        
+
         _allItems.AddRange(_weaponItems);
         _allItems.AddRange(_armorItems);
         _allItems.AddRange(_collectableItems);
@@ -38,7 +38,7 @@ public class ItemContainer : SaveLoadSystem
 
     public void UnLoadStuff()
     {
-        foreach(ItemID _itemID in _allItems)
+        foreach (ItemID _itemID in _allItems)
             Destroy(_itemID.gameObject);
 
         _allItems.Clear();
@@ -60,7 +60,7 @@ public class ItemContainer : SaveLoadSystem
             ItemDataParser _itemParser = ScriptableObject.CreateInstance<ItemDataParser>();
             JsonConvert.PopulateObject(saveFile, _itemParser);
 
-            switch(_itemParser._itemData.itemType)
+            switch (_itemParser._itemData.itemType)
             {
                 //Parse to weapon
                 case ItemType.Weapon:
@@ -69,7 +69,7 @@ public class ItemContainer : SaveLoadSystem
                     _newItem = _newWeapon;
                     _weaponItems.Add(CreateWeaponItem(_newWeapon, path));
                     break;
-                
+
                 //Parse to armor
                 case ItemType.Armor:
                     ArmorData _newArmor = ScriptableObject.CreateInstance<ArmorData>();
@@ -99,7 +99,7 @@ public class ItemContainer : SaveLoadSystem
     {
         for (int i = 0; i < _allItems.Count; i++)
         {
-            if(_allItems[i]._itemData.displayedName == itemName)
+            if (_allItems[i]._itemData.displayedName == itemName)
                 return _allItems[i];
         }
 
@@ -113,7 +113,7 @@ public class ItemContainer : SaveLoadSystem
             case ItemType.Armor:
                 for (int i = 0; i < _armorItems.Count; i++)
                 {
-                    if(_armorItems[i]._itemData.displayedName == itemName)
+                    if (_armorItems[i]._itemData.displayedName == itemName)
                         return _armorItems[i];
                 }
                 return null;
@@ -121,7 +121,7 @@ public class ItemContainer : SaveLoadSystem
             case ItemType.Weapon:
                 for (int i = 0; i < _weaponItems.Count; i++)
                 {
-                    if(_weaponItems[i]._itemData.displayedName == itemName)
+                    if (_weaponItems[i]._itemData.displayedName == itemName)
                         return _weaponItems[i];
                 }
                 return null;
@@ -129,7 +129,7 @@ public class ItemContainer : SaveLoadSystem
             case ItemType.Collectable:
                 for (int i = 0; i < _collectableItems.Count; i++)
                 {
-                    if(_collectableItems[i]._itemData.displayedName == itemName)
+                    if (_collectableItems[i]._itemData.displayedName == itemName)
                         return _collectableItems[i];
                 }
                 return null;
@@ -154,7 +154,7 @@ public class ItemContainer : SaveLoadSystem
 
         //Create a sprite
         int orderInLayer = 0;
-        switch(_weaponItem.holdingType)
+        switch (_weaponItem.holdingType)
         {
             case WeaponHoldingType.Right_Hand:
                 orderInLayer = 6;
@@ -169,7 +169,12 @@ public class ItemContainer : SaveLoadSystem
                 break;
         }
 
-        _weaponItem.itemSprite = LoadTexture(_weaponItem, $"{path}/{_weaponData._itemData.spritePath}", orderInLayer, 20f);
+        if (!string.IsNullOrEmpty(_weaponData._itemData.spritePathFront))
+            _weaponItem.itemSpriteFront = LoadTexture(_weaponItem, $"{path}/{_weaponData._itemData.spritePathFront}", orderInLayer, 20f);
+
+        if (!string.IsNullOrEmpty(_weaponData._itemData.spritePathBack))
+            _weaponItem.itemSpriteBack = LoadTexture(_weaponItem, $"{path}/{_weaponData._itemData.spritePathBack}", orderInLayer, 20f, false);
+
         _weaponItem.iconSprite = GetSprite($"{path}/{_weaponData._itemData.spriteIconPath}", 20f);
 
         return _itemID;
@@ -191,7 +196,12 @@ public class ItemContainer : SaveLoadSystem
         if (_armorItem.armorType == ArmorType.Chestplate)
             orderInLayer = 3;
 
-        _armorItem.itemSprite = LoadTexture(_armorItem, $"{path}/{_armorData._itemData.spritePath}", orderInLayer, 100f);
+        if (!string.IsNullOrEmpty(_armorData._itemData.spritePathFront))
+            _armorItem.itemSpriteFront = LoadTexture(_armorItem, $"{path}/{_armorData._itemData.spritePathFront}", orderInLayer, 100f);
+
+        if (!string.IsNullOrEmpty(_armorData._itemData.spritePathBack))
+            _armorItem.itemSpriteBack = LoadTexture(_armorItem, $"{path}/{_armorData._itemData.spritePathBack}", orderInLayer, 100f, false);
+
         _armorItem.iconSprite = GetSprite($"{path}/{_armorData._itemData.spriteIconPath}", 20f);
 
         return _itemID;
@@ -208,18 +218,22 @@ public class ItemContainer : SaveLoadSystem
         _itemID.name = _collectableData._itemData.displayedName;
 
         //Create a sprite
-        _collectableItem.itemSprite = LoadTexture(_collectableItem, $"{path}/{_collectableData._itemData.spritePath}", 5, 20f);
+        if (!string.IsNullOrEmpty(_collectableData._itemData.spritePathFront))
+            _collectableItem.itemSprite = LoadTexture(_collectableItem, $"{path}/{_collectableData._itemData.spritePathFront}", 5, 20f);
         _collectableItem.iconSprite = GetSprite($"{path}/{_collectableData._itemData.spriteIconPath}", 20f);
 
         return _itemID;
     }
 
-    private Sprite LoadTexture(Object itemObject, string path, int orderInLayer, float pixelsPerUnit)
+    private Sprite LoadTexture(Object itemObject, string path, int orderInLayer, float pixelsPerUnit, bool assign = true)
     {
-        SpriteRenderer spriteRenderer = itemObject.GetComponent<Transform>().GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();
         Sprite sprite = GetSprite(path, pixelsPerUnit);
-        spriteRenderer.sprite = sprite;
-        spriteRenderer.sortingOrder = orderInLayer;
+        if (assign)
+        {
+            SpriteRenderer spriteRenderer = itemObject.GetComponent<Transform>().GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = sprite;
+            spriteRenderer.sortingOrder = orderInLayer;
+        }
 
         return sprite;
     }

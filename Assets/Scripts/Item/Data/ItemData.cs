@@ -8,7 +8,8 @@ public class ItemData : ScriptableObject
     public short ID;
     public string displayedName;
     public ItemType itemType;
-    public string spritePath;
+    public string spritePathFront;
+    public string spritePathBack;
     public string spriteIconPath;
     public List<Attributes> _attributes = new();
     public List<ItemBuff> _itemBuffs = new();
