@@ -154,11 +154,13 @@ public class EntityWalk : MonoBehaviour
         {
             isFacingCamera = true;
             GetComponent<EntityLookController>().UpdateEntityLookAll(isFacingCamera);
+            GetComponent<EntityLookController>().RotateCharacter(!isFlipped, isFacingCamera);
         }
         else if (dotToCamera < 0 && isFacingCamera)
         {
             isFacingCamera = false;
             GetComponent<EntityLookController>().UpdateEntityLookAll(isFacingCamera);
+            GetComponent<EntityLookController>().RotateCharacter(!isFlipped, isFacingCamera);
         }
 
         if (newFaceDirection < 0 && !isFlipped)

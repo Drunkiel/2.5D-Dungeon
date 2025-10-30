@@ -14,14 +14,15 @@ public class CameraController : MonoBehaviour
     public List<Material> skyboxes = new();
 
     // Rotate speed
-    public float rotationSpeed = 50f;
+    public float rotationXSpeed = 50f;
+    public float rotationYSpeed = 50f;
     public float smoothingFactor = 5f;
 
     // Distance from camera
-    private float minDistance = 0.8f;
-    private float maxDistance = 2f;
-    private float distanceFromTarget = 2f;
-    private float zoomSpeed = 2f;
+    [SerializeField] private float minDistance = 0.8f;
+    [SerializeField] private float maxDistance = 2f;
+    [SerializeField] private float distanceFromTarget = 2f;
+    [SerializeField] private float zoomSpeed = 2f;
 
     private float currentXRotation = 0f;
     private float currentYRotation = 30f;
@@ -70,11 +71,9 @@ public class CameraController : MonoBehaviour
 
         // Get Input
         Vector2 inputRotation = context.ReadValue<Vector2>();
-        inputRotation.x = Mathf.Clamp(inputRotation.x, -1, 1);
-        inputRotation.y = Mathf.Clamp(inputRotation.y, -1, 1);
 
-        targetXRotation += inputRotation.x * rotationSpeed * Time.deltaTime;
-        targetYRotation -= inputRotation.y * rotationSpeed / 4 * Time.deltaTime;
+        targetXRotation += inputRotation.x * rotationXSpeed * Time.deltaTime;
+        targetYRotation -= inputRotation.y * rotationYSpeed * Time.deltaTime;
         targetYRotation = Mathf.Clamp(targetYRotation, 15, 45);
     }
 

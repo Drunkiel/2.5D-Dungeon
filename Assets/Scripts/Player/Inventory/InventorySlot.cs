@@ -63,7 +63,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
                     _itemController.SetArmor(_armorItemID);
                     InventoryController.instance._entityPreview.UpdateArmorLook(
                         _armorItemID._armorItem.armorType,
-                        PlayerController.instance.isFacingCamera ? _armorItemID._armorItem.itemSpriteFront : _armorItemID._armorItem.itemSpriteBack
+                        _armorItemID._armorItem.itemSpriteFront
                     );
                 }
                 break;

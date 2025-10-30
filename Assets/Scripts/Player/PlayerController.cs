@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        isFacingCamera = true;
         instance = this;
     }
 
