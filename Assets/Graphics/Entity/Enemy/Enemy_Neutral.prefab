@@ -949,7 +949,6 @@ GameObject:
   - component: {fileID: 1841506015529121038}
   - component: {fileID: 6766648056852324587}
   - component: {fileID: 2242784241959230794}
-  - component: {fileID: 4855756125477056135}
   - component: {fileID: 9097440375740507101}
   - component: {fileID: 1374707244783007872}
   - component: {fileID: 5483175710688211002}
@@ -1062,6 +1061,7 @@ MonoBehaviour:
   _entityInfo:
     ID: 0
     name: John
+    title: 
     entity: 1
     behaviour: 1
   _statistics:
@@ -1197,6 +1197,7 @@ MonoBehaviour:
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
   isMoving: 0
+  isFacingCamera: 0
   move: {x: 0, y: 0, z: 0}
 --- !u!114 &7344083697471045279
 MonoBehaviour:
@@ -1272,109 +1273,6 @@ MonoBehaviour:
     _skillDatas: []
   _combatUI: {fileID: 5194157636900211279}
   skillsParent: {fileID: 2829886986776283147}
---- !u!114 &4855756125477056135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5178939710355253913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: cb9a707a1d7738f4595fb3bffbb2f47f,
-    type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: MovementInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 16f58633-598a-4ca9-b4a2-3afe9528f1f2
-    m_ActionName: Player/New action
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: JumpInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 831694be-a454-4287-ad55-739d6410f3c3
-    m_ActionName: Player/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 056278de-51ac-4042-8aa7-8a86656317f9
-    m_ActionName: Actions/Click[/Keyboard/f]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0d66854d-d6eb-495f-8b8f-4c70f58190c0
-    m_ActionName: Actions/Hold[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: faedcc63-300f-45bd-b6e1-6df6bbbf888d
-    m_ActionName: Actions/End[/Keyboard/f]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1adfeedf-6cb6-4539-93ec-5d1796dd9b86
-    m_ActionName: Player/Inventory[/Keyboard/i]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7113e6d4-0e61-46da-ac53-70d8a02ecb14
-    m_ActionName: Player/PauseMenu[/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: fd078b41-9436-4411-8c29-2ce2d2075ca8
-    m_ActionName: Console/Console[/Keyboard/slash]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a9e6e103-d918-4824-9853-29ee6b5ee0b2
-    m_ActionName: Console/IndexUp[/Keyboard/upArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e5c51ffc-9acc-4ac8-a5b7-0412e382ea31
-    m_ActionName: Console/IndexDown[/Keyboard/downArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4a0fdf93-c8da-4d0b-a3ba-dcc0ac6e5472
-    m_ActionName: Player/CameraRotate[/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5d2b3af0-84ce-44e5-8661-3d89b35f2c18
-    m_ActionName: Player/RightClick[/Mouse/rightButton]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!95 &9097440375740507101
 Animator:
   serializedVersion: 5
@@ -1446,7 +1344,20 @@ MonoBehaviour:
     handRightImage: {fileID: 3298266561260819765}
     legLeftImage: {fileID: 5663989287228231078}
     legRightImage: {fileID: 3057650852874641567}
+  _spriteHolder:
+    head_Front: {fileID: 0}
+    body_Front: {fileID: 0}
+    arm_Front: {fileID: 0}
+    hand_Front: {fileID: 0}
+    leg_Front: {fileID: 0}
+    head_Back: {fileID: 0}
+    body_Back: {fileID: 0}
+    arm_Back: {fileID: 0}
+    hand_Back: {fileID: 0}
+    leg_Back: {fileID: 0}
   skinPath: NPC/NPC
+  bodyType: 0
+  isRotated: 0
 --- !u!1 &5274593317253492337
 GameObject:
   m_ObjectHideFlags: 0

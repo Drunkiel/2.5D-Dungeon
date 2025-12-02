@@ -69,19 +69,19 @@ public class CameraController : MonoBehaviour
         if (!rightClick)
             return;
 
-        // Get Input
         Vector2 inputRotation = context.ReadValue<Vector2>();
 
-        targetXRotation += inputRotation.x * rotationXSpeed * Time.deltaTime;
-        targetYRotation -= inputRotation.y * rotationYSpeed * Time.deltaTime;
+        // NIE mnożymy przez Time.deltaTime
+        targetXRotation += inputRotation.x * rotationXSpeed;
+        targetYRotation -= inputRotation.y * rotationYSpeed;
         targetYRotation = Mathf.Clamp(targetYRotation, 15, 45);
     }
 
     private void SmoothRotateCamera()
     {
-        // Smoothly interpolate rotation values for a more natural effect
-        currentXRotation = Mathf.Lerp(currentXRotation, targetXRotation, Time.deltaTime * smoothingFactor);
-        currentYRotation = Mathf.Lerp(currentYRotation, targetYRotation, Time.deltaTime * smoothingFactor);
+        // tu dopiero stosujemy Time.deltaTime – to jest UPDATE, nie input callback
+        currentXRotation = Mathf.Lerp(currentXRotation, targetXRotation, smoothingFactor * Time.deltaTime);
+        currentYRotation = Mathf.Lerp(currentYRotation, targetYRotation, smoothingFactor * Time.deltaTime);
     }
 
     private void HandleZoom()

@@ -55,6 +55,11 @@ public class ConsoleCommands : MonoBehaviour
     //Teleport
     public void Tp(string sceneName)
     {
-        PortalController.instance.TeleportToScene(sceneName, Vector3.up);
+        PortalController.instance.TeleportToScene(sceneName, Vector3.up * 10);
+    }
+
+    public void Debug()
+    {
+        transform.parent.GetComponent<OpenCloseUI>().OpenClose();
     }
 }

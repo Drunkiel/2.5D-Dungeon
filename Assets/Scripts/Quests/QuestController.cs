@@ -62,8 +62,8 @@ public class QuestController : MonoBehaviour
         //Removing quest
         _questUI.RemoveQuestUI(questIndex);
         _currentQuestsIndex.Remove(questIndex);
-        _allQuests[questIndex].onFinishEvent.Invoke();
         PopUpController.instance.CreatePopUp(PopUpInfo.QuestCompleted, _allQuests[questIndex].title);
+        _allQuests[questIndex].onFinishEvent.Invoke();
 
         for (int i = 0; i < _allQuests[questIndex]._requirements.Count; i++)
         {

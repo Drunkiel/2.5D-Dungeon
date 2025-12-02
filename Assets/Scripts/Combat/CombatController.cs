@@ -106,6 +106,9 @@ public class CombatController : MonoBehaviour
 
         foreach (GameObject target in _collisionController.targets)
         {
+            if (target == null)
+                return false;
+
             if (target.TryGetComponent(out EntityController _enemyComponent))
             {
                 _targetsStatistics.Add(_enemyComponent._statistics);
@@ -146,7 +149,7 @@ public class CombatController : MonoBehaviour
             else
             {
                 PlayAnimation(_enemyTargets[i].anim, "TakeDamage");
-                
+
                 //If entity is killed check if is in the quest
                 if (_enemyTargets[i]._statistics.health <= 0)
                     QuestController.instance.InvokeKillEvent(_enemyTargets[i]._entityInfo.ID);

@@ -65,16 +65,19 @@ public class EntityController : MonoBehaviour
                 break;
 
             case Behaviour.Aggresive:
-                    GetComponent<EventTriggerController>().stayEvent.AddListener(() =>
-                    {
-                        EntityCombat _entityCombat = GetComponent<EntityCombat>();
-                        CollisionController _collisionController = GetComponent<CollisionController>();
+                GetComponent<EventTriggerController>().enterEvent.AddListener(() =>
+                {
+                    print('a');
+                    currentState = State.Attacking;
 
-                        if (_entityCombat.inCombat || _collisionController.targets.Count <= 0)
-                            return;
+                    EntityCombat _entityCombat = GetComponent<EntityCombat>();
+                    CollisionController _collisionController = GetComponent<CollisionController>();
 
-                        _entityCombat.ManageCombat(_collisionController.targets[0].transform);
-                    });
+                    if (_entityCombat.inCombat || _collisionController.targets.Count <= 0)
+                        return;
+
+                    _entityCombat.ManageCombat(_collisionController.targets[0].transform);
+                });
                 break;
         }
 

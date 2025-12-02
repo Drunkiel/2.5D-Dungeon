@@ -45,7 +45,7 @@ public class EntityWalk : MonoBehaviour
     {
         if (transform.position.y < -10f)
         {
-            print($"Enemy fall off the map {transform.name} on position: {transform.position}");
+            print($"Entity fall off the map {transform.name} on position: {transform.position}");
             Destroy(gameObject);
         }
 
@@ -74,10 +74,13 @@ public class EntityWalk : MonoBehaviour
 
     public void ApproachTarget()
     {
-        Vector3 targetPosition = targetTransform != null ? targetTransform.position : PlayerController.instance.transform.position;
-        float distanceToPlayer = Vector3.Distance(transform.position, targetPosition);
+        if (targetTransform == null)
+            _controller.currentState = State.Patroling;
 
-        if (distanceToPlayer > allowedDistance)
+        Vector3 targetPosition = targetTransform != null ? targetTransform.position : PlayerController.instance.transform.position;
+        float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+
+        if (distanceToTarget > allowedDistance)
             positionToGo = targetPosition;
         else
             positionToGo = transform.position;

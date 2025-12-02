@@ -7,7 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public enum OutputType
 {
@@ -50,7 +49,10 @@ public class ConsoleController : MonoBehaviour
             return;
 
         if (!chatInput.isFocused && !GameController.isPaused)
+        {
             GetComponent<OpenCloseUI>().OpenClose();
+            chatInput.ActivateInputField();
+        }
     }
 
     public void IndexDownMessage(InputAction.CallbackContext context)
@@ -64,7 +66,7 @@ public class ConsoleController : MonoBehaviour
         previousMessagesIndex++;
         if (previousMessagesIndex >= previousMessages.Count)
             previousMessagesIndex = previousMessages.Count - 1;
-            
+
         chatInput.text = previousMessages[previousMessagesIndex];
     }
 
@@ -79,7 +81,7 @@ public class ConsoleController : MonoBehaviour
         previousMessagesIndex--;
         if (previousMessagesIndex < 0)
             previousMessagesIndex = 0;
-            
+
         chatInput.text = previousMessages[previousMessagesIndex];
     }
 
@@ -130,7 +132,7 @@ public class ConsoleController : MonoBehaviour
         }
 
         chatInput.text = "";
-        chatInput.ActivateInputField();
+        //chatInput.ActivateInputField();
     }
 
     private void SendCommand(string commandName, params string[] parameters)
@@ -205,7 +207,7 @@ public class ConsoleController : MonoBehaviour
 
     private string GetCommand()
     {
-        string input = chatInput.text[1..]; 
+        string input = chatInput.text[1..];
         List<string> args = new();
         bool insideQuotes = false;
         string currentArg = "";

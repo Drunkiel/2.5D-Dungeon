@@ -55,8 +55,20 @@ public class PerformanceStats : MonoBehaviour
     private int frameCount = 0;
     private float totalFPS = 0f;
 
+    // Reset timer
+    private float resetTimer = 0f;
+    private const float RESET_INTERVAL = 60f; // co 60 sekund
+
     void LateUpdate()
     {
+        // Licznik resetu
+        resetTimer += Time.unscaledDeltaTime;
+        if (resetTimer >= RESET_INTERVAL)
+        {
+            ResetStats();
+            resetTimer = 0f;
+        }
+
         // FPS & frame time
         deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
         frameTimeMS = deltaTime * 1000f;
@@ -92,10 +104,11 @@ public class PerformanceStats : MonoBehaviour
         vertices = -1;
 #endif
 
+        // Aktualizacja TMP
         sceneText.text = sceneName;
         positionText.text = $"X:{MathF.Round(playerPosition.x)} Y:{MathF.Round(playerPosition.y)} Z:{MathF.Round(playerPosition.z)}";
         currentFPSText.text = $"FPS: {MathF.Round(currentFPS)}";
-        avgFPSText.text = $"AVG: {averageFPS}";
+        avgFPSText.text = $"AVG: {MathF.Round(averageFPS)}";
         lowestFPSText.text = $"Low: {MathF.Round(lowestFPS)}";
         highestFPSText.text = $"High: {MathF.Round(highestFPS)}";
         frameTimeMSText.text = $"MS: {MathF.Round(frameTimeMS)}";
@@ -103,7 +116,16 @@ public class PerformanceStats : MonoBehaviour
         reservedMemoryText.text = $"M_Res: {MathF.Round(reservedMemoryMB)}";
         unUsedReservedMemoryText.text = $"M_Un: {MathF.Round(unusedReservedMemoryMB)}";
         drawCallsText.text = $"Draw: {drawCalls}";
-        trianglesText.text = $"Tria {triangles}";
+        trianglesText.text = $"Tria: {triangles}";
         verticesText.text = $"Ver: {vertices}";
+    }
+
+    private void ResetStats()
+    {
+        frameCount = 0;
+        totalFPS = 0f;
+        averageFPS = 0f;
+        lowestFPS = float.MaxValue;
+        highestFPS = 0f;
     }
 }

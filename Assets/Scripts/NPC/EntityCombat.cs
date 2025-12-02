@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EntityCombat : MonoBehaviour
 {
-    public bool canCombat = true; 
+    public bool canCombat = true;
     public bool inCombat;
     public float timeToResetCombat;
 
@@ -29,7 +29,7 @@ public class EntityCombat : MonoBehaviour
 
     private IEnumerator ResetCombat()
     {
-        // Czekanie przez okreœlony czas, a nastêpnie wyjœcie z trybu walki
+        //Wait to reset
         while (timeToResetCombat < 5)
         {
             timeToResetCombat += 1;
