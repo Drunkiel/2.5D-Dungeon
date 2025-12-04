@@ -13,6 +13,7 @@ public class EntityWalk : MonoBehaviour
 
     public Vector2 movement;
     public bool isMoving;
+    [SerializeField] private float movingTime;
 
     private bool isFlipped;
     public bool isFacingCamera;
@@ -37,7 +38,13 @@ public class EntityWalk : MonoBehaviour
         if (isStopped || GameController.isPaused)
             return;
 
-        if (isMoving && _controller.rgBody.velocity.magnitude < 0.01f)
+        //Check if entity is moving
+        if (isMoving)
+            movingTime += Time.deltaTime;
+        else if (movingTime != 0)
+            movingTime = 0f;
+
+        if (isMoving && movingTime > 0.2f && _controller.rgBody.velocity.magnitude < 0.01f)
             Jump();
     }
 
@@ -74,10 +81,7 @@ public class EntityWalk : MonoBehaviour
 
     public void ApproachTarget()
     {
-        if (targetTransform == null)
-            _controller.currentState = State.Patroling;
-
-        Vector3 targetPosition = targetTransform != null ? targetTransform.position : PlayerController.instance.transform.position;
+        Vector3 targetPosition = targetTransform != null ? targetTransform.position : transform.position;
         float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
 
         if (distanceToTarget > allowedDistance)
@@ -152,7 +156,7 @@ public class EntityWalk : MonoBehaviour
 
         float dotToCamera = Vector3.Dot(moveDir, toCamera);
 
-        //Flipping Enemy to direction they are going based on camera view
+        //Flipping Entity to direction they are going based on camera view
         if (dotToCamera > 0 && !isFacingCamera)
         {
             isFacingCamera = true;

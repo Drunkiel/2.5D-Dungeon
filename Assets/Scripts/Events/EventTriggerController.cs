@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class EventTriggerController : MonoBehaviour
 {
-    [SerializeField] private string objectTag;
+    [SerializeField] private List<string> objectTags;
     public bool canBeShown = true;
 
     public UnityEvent enterEvent;
@@ -13,7 +14,7 @@ public class EventTriggerController : MonoBehaviour
     private void Awake()
     {
         if (TryGetComponent(out TriggerController _controller))
-            SetTag(_controller.objectsTag[0]);
+            SetTag(_controller.objectsTag);
     }
 
     void OnTriggerEnter(Collider collider)
@@ -36,16 +37,16 @@ public class EventTriggerController : MonoBehaviour
 
     void CheckCollision(Collider collider, UnityEvent events)
     {
-        if (objectTag.Contains(collider.tag))
+        if (objectTags.Contains(collider.tag))
         {
             events.Invoke();
             return;
         }
     }
 
-    public void SetTag(string tag)
+    public void SetTag(List<string> tags)
     {
-        objectTag = tag;
+        objectTags = tags;
     }
 
     public void Deactivate()

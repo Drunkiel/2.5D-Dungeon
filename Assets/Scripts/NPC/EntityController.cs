@@ -67,7 +67,6 @@ public class EntityController : MonoBehaviour
             case Behaviour.Aggresive:
                 GetComponent<EventTriggerController>().enterEvent.AddListener(() =>
                 {
-                    print('a');
                     currentState = State.Attacking;
 
                     EntityCombat _entityCombat = GetComponent<EntityCombat>();
@@ -117,7 +116,7 @@ public class EntityController : MonoBehaviour
         if (_entityWalk.isStopped || GameController.isPaused)
             return;
 
-        rgBody.AddForce(_entityWalk.move * (_statistics.speedForce * rgBody.mass), ForceMode.Force);
+        rgBody.AddForce(_entityWalk.move * _statistics.speedForce, ForceMode.Acceleration);
     }
 
     private IEnumerator AutoRegen()

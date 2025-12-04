@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Projectile : MonoBehaviour
 {
     public float force;
     public bool useGravity;
-    public string[] entityTags;
+    public List<GameObject> targets = new();
     public float destroyDelay = 1;
     [SerializeField] private SkillDataParser _skillDataParser;
     [SerializeField] private CollisionController _parentCollisionController;
@@ -27,24 +28,31 @@ public class Projectile : MonoBehaviour
             Random.Range(-0.05f, 0.05f),
             Random.Range(-0.05f, 0.05f)
         );
-        skillCopyRgBody.AddForce(entityTags[0][0] != 'P' ? transform.forward * force : (-(transform.position - PlayerController.instance.transform.position).normalized + randomOffset).normalized * force);
+        if (targets.Count <= 0 || targets[0] == null)
+        {
+            Destroy(skillCopyObject, 0);
+            return;
+        }
+        skillCopyRgBody.AddForce(targets[0].tag[0] != 'P' ?
+            (-(transform.position - targets[0].transform.position).normalized + randomOffset).normalized * force :
+            (-(transform.position - PlayerController.instance.transform.position).normalized + randomOffset).normalized * force);
         skillCopyObject.GetComponent<Projectile>().disable = false;
         Destroy(skillCopyObject, destroyDelay);
     }
 
-    public void SetData(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics, Transform casterTransform, CombatUI _combatUI, string[] entityTags)
+    public void SetData(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics, Transform casterTransform, CombatUI _combatUI, List<GameObject> targets, string[] entityTags)
     {
         this._skillDataParser = _skillDataParser;
         this._casterStatistics = _casterStatistics;
         this._combatUI = _combatUI;
         this.casterTransform = casterTransform;
-        this.entityTags = entityTags;
-        _collisionController.entityTags = this.entityTags;
+        this.targets = targets;
+        _collisionController.entityTags = entityTags;
     }
 
     void OnTriggerEnter(Collider collider)
     {
-        foreach (string entityTag in entityTags)
+        foreach (string entityTag in _collisionController.entityTags)
         {
             if (string.IsNullOrEmpty(entityTag))
                 return;

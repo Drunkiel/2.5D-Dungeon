@@ -18,6 +18,12 @@ public class CombatController : MonoBehaviour
         if (_collisionController.targets.Count <= 0)
             yield break;
 
+        if (_collisionController.targets.Count > 0 && _collisionController.targets[0] == null)
+        {
+            _collisionController.targets.RemoveAt(0);
+            yield break;
+        }
+
         //Determine who is caster
         Transform casterTransform = _collisionController.transform.parent.parent.parent;
         PlayerController _player = casterTransform.GetComponent<PlayerController>();
@@ -73,7 +79,7 @@ public class CombatController : MonoBehaviour
 
             case SkillType.AttackRange:
                 Projectile _projectile = _collisionController.transform.GetChild(0).GetComponentInParent<Projectile>();
-                _projectile.SetData(_skillDataParser, _casterStatistics, casterTransform, _combatUI, _collisionController.entityTags);
+                _projectile.SetData(_skillDataParser, _casterStatistics, casterTransform, _combatUI, _collisionController.targets, _collisionController.entityTags);
                 break;
 
             case SkillType.Defence:

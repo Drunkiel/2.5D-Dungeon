@@ -952,9 +952,9 @@ GameObject:
   - component: {fileID: 9097440375740507101}
   - component: {fileID: 1338825079129598483}
   - component: {fileID: 1374707244783007872}
-  - component: {fileID: 5483175710688211002}
   - component: {fileID: 1257160100214200346}
   - component: {fileID: 4186418426643005242}
+  - component: {fileID: 5483175710688211002}
   m_Layer: 7
   m_Name: Enemy_Agressive
   m_TagString: Enemy
@@ -1308,7 +1308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9e4ea5df7517b498af3444840766b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectTag: 
+  objectTags: []
   canBeShown: 1
   enterEvent:
     m_PersistentCalls:
@@ -1336,18 +1336,6 @@ MonoBehaviour:
   objectsTag:
   - Player
   - Friend
---- !u!114 &5483175710688211002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5178939710355253913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aec37f0cc87a8e439277c977774f23d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1257160100214200346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1399,6 +1387,18 @@ MonoBehaviour:
   skinPath: NPC/NPC
   bodyType: 0
   isRotated: 0
+--- !u!114 &5483175710688211002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5178939710355253913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aec37f0cc87a8e439277c977774f23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5274593317253492337
 GameObject:
   m_ObjectHideFlags: 0
