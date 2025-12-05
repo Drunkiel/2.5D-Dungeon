@@ -132,7 +132,7 @@ public class ConsoleController : MonoBehaviour
         }
 
         chatInput.text = "";
-        //chatInput.ActivateInputField();
+        chatInput.ActivateInputField();
     }
 
     private void SendCommand(string commandName, params string[] parameters)
