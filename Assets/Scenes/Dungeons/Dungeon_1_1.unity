@@ -516,7 +516,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coreController: {fileID: 0}
-  timeLeft: 360
+  _clock:
+    hours: 1
+    minutes: 1
+    seconds: 50
+    timeLeft: 0
   timeSlider: {fileID: 1505383217}
   timeText: {fileID: 386696794}
 --- !u!1 &1475834774
@@ -2844,6 +2848,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 836716438609378703, guid: 37d313ca338e5724e957e79dbaf2b367,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 1396052425136396495, guid: 37d313ca338e5724e957e79dbaf2b367,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2953,6 +2962,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7996131940949895452, guid: 37d313ca338e5724e957e79dbaf2b367,
+        type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7996131940949895452, guid: 37d313ca338e5724e957e79dbaf2b367,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8426045345338079788, guid: 37d313ca338e5724e957e79dbaf2b367,
         type: 3}
@@ -3441,7 +3460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9e4ea5df7517b498af3444840766b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectTag: Player
+  objectTags: []
   canBeShown: 1
   enterEvent:
     m_PersistentCalls:
