@@ -1,6 +1,5 @@
 using System;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public enum EntityPartType
@@ -49,6 +48,26 @@ public class EntityLookController : SaveLoadSystem
     {
         LoadSpirtes();
         UpdateEntityLookAll(true);
+        UpdateBodyType();
+    }
+
+    public void SpriteLoader(string newPath = null, string bodyType = null)
+    {
+        if (!string.IsNullOrEmpty(newPath))
+            skinPath = newPath;
+
+        if (!string.IsNullOrEmpty(bodyType))
+            this.bodyType = Enum.Parse<BodyType>(bodyType);
+
+        LoadSpirtes();
+
+        bool facingCamera = false;
+        if (TryGetComponent(out PlayerController _playerController))
+            facingCamera = _playerController.isFacingCamera;
+        if (TryGetComponent(out EntityController _entityController))
+            facingCamera = _entityController._entityWalk.isFacingCamera;
+
+        UpdateEntityLookAll(facingCamera);
         UpdateBodyType();
     }
 
@@ -123,11 +142,11 @@ public class EntityLookController : SaveLoadSystem
         _entityLook.armLeftImage.sortingOrder = leftArmOrder;
         _entityLook.handLeftImage.sortingOrder = leftHandOrder;
 
-        float handScaleRight = facingRight ? scaleSign * 0.5f : -scaleSign * 0.5f;
-        float handScaleLeft = facingRight ? -scaleSign * 0.5f : scaleSign * 0.5f;
+        float handScaleRight = facingRight ? scaleSign * 1f : -scaleSign * 1f;
+        float handScaleLeft = facingRight ? -scaleSign * 1f : scaleSign * 1f;
 
-        _entityLook.handRightImage.transform.localScale = new Vector3(handScaleRight, 0.5f, 0.5f);
-        _entityLook.handLeftImage.transform.localScale = new Vector3(handScaleLeft, 0.5f, 0.5f);
+        _entityLook.handRightImage.transform.localScale = new Vector3(handScaleRight, 1f, 1f);
+        _entityLook.handLeftImage.transform.localScale = new Vector3(handScaleLeft, 1f, 1f);
 
         if (TryGetComponent(out ItemController itemController))
         {
@@ -173,6 +192,10 @@ public class EntityLookController : SaveLoadSystem
         switch (bodyType)
         {
             case BodyType.Normal:
+                _entityLook.headImage.transform.localPosition = new(0, 0.15f, 0);
+                _entityLook.armRightImage.transform.parent.parent.localPosition = new(0, 0.075f, 0);
+                _entityLook.armRightImage.transform.parent.localPosition = new(-0.1f, 0, 0);
+                _entityLook.armLeftImage.transform.parent.localPosition = new(0.1f, 0, 0);
                 break;
 
             case BodyType.Muscular:

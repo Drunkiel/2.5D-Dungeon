@@ -56,7 +56,7 @@ public class SaveLoadSystem : MonoBehaviour
         //EXAMPLE
         //Here load data from file
         string saveFile = ReadFromFile($"{path}/");
-            
+
         // Deserialize
         JsonConvert.PopulateObject(saveFile, new());
 
@@ -80,7 +80,7 @@ public class SaveLoadSystem : MonoBehaviour
 
         //Fetch files through main directory
         foreach (FileInfo singleFile in mainInfo)
-            foundedFiles.Add(singleFile.Name);   
+            foundedFiles.Add(singleFile.Name);
 
         //Fetch files through sub directory's
         DirectoryInfo[] directoryInfos = dir.GetDirectories();
@@ -94,7 +94,7 @@ public class SaveLoadSystem : MonoBehaviour
         return foundedFiles;
     }
 
-    public Sprite GetSprite(string path, float pixelsPerUnit)
+    public static Sprite GetSprite(string path, float pixelsPerUnit)
     {
         //Create new texture
         byte[] spriteData = File.ReadAllBytes(path);

@@ -533,6 +533,8 @@ MonoBehaviour:
   _entityInfo:
     ID: 0
     name: Bob
+    title: 
+    entity: 0
     behaviour: 0
   _statistics:
     _stats:
@@ -550,6 +552,8 @@ MonoBehaviour:
       meleeProtection: 0
       rangeProtection: 0
       magicProtection: 0
+      divineResistance: 0
+      demonicResistance: 0
       speedForce: 0
       maxSpeed: 0
     health: 100
@@ -569,16 +573,17 @@ MonoBehaviour:
     meleeProtection: 0
     rangeProtection: 0
     magicProtection: 0
-    fireResistance: 0
-    waterResistance: 0
-    earthResistance: 0
-    airResistance: 0
+    divineResistance: 0
+    demonicResistance: 0
     speedForce: 0
     maxSpeed: 0
     jumpForce: 5
     additionalJumps: 
     _activeBuffs: []
     _statsController: {fileID: 8962519001477313747}
+    onDeath:
+      m_PersistentCalls:
+        m_Calls: []
   _holdingController: {fileID: 67188910040427025}
   currentState: 0
   _behaviourStates:
@@ -625,8 +630,11 @@ MonoBehaviour:
   wanderingDistance: 5
   positionToGo: {x: 0, y: 0, z: 0}
   allowedDistance: 0
+  targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
   isMoving: 0
+  movingTime: 0
+  isFacingCamera: 0
   move: {x: 0, y: 0, z: 0}
 --- !u!114 &1446096858292529184
 MonoBehaviour:
@@ -640,6 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b93adda004e404aae5e6b947cff403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canCombat: 1
   inCombat: 0
   timeToResetCombat: 0
 --- !u!114 &67188910040427025
@@ -847,6 +856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9e4ea5df7517b498af3444840766b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectTags: []
   canBeShown: 1
   enterEvent:
     m_PersistentCalls:
@@ -1019,7 +1029,20 @@ MonoBehaviour:
     handRightImage: {fileID: 4600980028382529212}
     legLeftImage: {fileID: 464327183201597048}
     legRightImage: {fileID: 8234576502250109648}
+  _spriteHolder:
+    head_Front: {fileID: 0}
+    body_Front: {fileID: 0}
+    arm_Front: {fileID: 0}
+    hand_Front: {fileID: 0}
+    leg_Front: {fileID: 0}
+    head_Back: {fileID: 0}
+    body_Back: {fileID: 0}
+    arm_Back: {fileID: 0}
+    hand_Back: {fileID: 0}
+    leg_Back: {fileID: 0}
   skinPath: NPC_Text
+  bodyType: 0
+  isRotated: 0
 --- !u!114 &7258805553564486904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1273,7 +1296,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.3, z: 0}
-  m_LocalScale: {x: -0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3780518621614892092}
@@ -1624,7 +1647,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.3, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8057813156865147276}

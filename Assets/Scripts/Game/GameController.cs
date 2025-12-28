@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,12 +12,20 @@ public class GameController : MonoBehaviour
     public static bool isPC = true;
     public static bool isPaused;
 
-    public List<GameObject> objectsToTeleportMust = new(); 
+    public List<GameObject> objectsToTeleportMust = new();
     public List<GameObject> objectsToTeleportAdditional = new();
+
+    [SerializeField] private TMP_Text versionText;
 
     private void Awake()
     {
         instance = this;
+
+        string version =
+            $"Developed by <color=yellow>Drunkiel</color>\n" +
+            $"Version: <color=yellow>{Application.version}</color>";
+
+        versionText.text = version;
     }
 
     public IEnumerator LoadAsyncScene(string sceneName)

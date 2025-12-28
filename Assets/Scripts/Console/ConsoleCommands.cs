@@ -62,4 +62,16 @@ public class ConsoleCommands : MonoBehaviour
     {
         transform.parent.GetComponent<OpenCloseUI>().OpenClose();
     }
+
+    public void Skin(string newPath, string bodyType)
+    {
+        PlayerController.instance.GetComponent<EntityLookController>().SpriteLoader(newPath, bodyType);
+    }
+
+    public void SkinCut(string skinPath, string outputFolder)
+    {
+        ImageCutter _imageCutter = GetComponent<ImageCutter>();
+        _imageCutter.sourceImage = SaveLoadSystem.GetSprite(SaveLoadSystem.skinsSavePath + skinPath, 20f).texture;
+        _imageCutter.ExtractImages(outputFolder);
+    }
 }

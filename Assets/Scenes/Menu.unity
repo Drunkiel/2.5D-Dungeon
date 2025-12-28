@@ -3255,7 +3255,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &162432806
@@ -5111,7 +5111,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &261539741
@@ -9008,7 +9008,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &389076932
@@ -10975,7 +10975,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.3, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 315624821}
@@ -15328,7 +15328,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &747526963
@@ -20613,7 +20613,7 @@ Transform:
   m_GameObject: {fileID: 1028236839}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.07499999, z: 0}
+  m_LocalPosition: {x: 0, y: 0.075, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23929,6 +23929,7 @@ GameObject:
   - component: {fileID: 1191755105}
   - component: {fileID: 1191755104}
   - component: {fileID: 1191755106}
+  - component: {fileID: 1191755107}
   m_Layer: 5
   m_Name: Console
   m_TagString: Untagged
@@ -24133,6 +24134,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5040e49f1e734d4baf4edeaa8dd6ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1191755107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191755100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d636524c0dc1cb4b81fb1454fe4ad02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  images:
+  - imageName: head_front
+    start: {x: 17, y: 1}
+    end: {x: 62, y: 31}
+  - imageName: head_back
+    start: {x: 93, y: 1}
+    end: {x: 138, y: 31}
+  - imageName: body_front
+    start: {x: 20, y: 33}
+    end: {x: 60, y: 63}
+  - imageName: body_back
+    start: {x: 95, y: 33}
+    end: {x: 135, y: 63}
+  - imageName: arm_front
+    start: {x: 2, y: 33}
+    end: {x: 17, y: 63}
+  - imageName: arm_back
+    start: {x: 78, y: 33}
+    end: {x: 93, y: 63}
+  - imageName: hand_front
+    start: {x: 1, y: 64}
+    end: {x: 18, y: 71}
+  - imageName: hand_back
+    start: {x: 77, y: 64}
+    end: {x: 94, y: 71}
+  - imageName: leg_front
+    start: {x: 22, y: 64}
+    end: {x: 37, y: 84}
+  - imageName: leg_back
+    start: {x: 97, y: 64}
+    end: {x: 112, y: 84}
+  sourceImage: {fileID: 0}
 --- !u!1 &1202541236
 GameObject:
   m_ObjectHideFlags: 0
@@ -25398,7 +25443,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1258547580
@@ -25509,7 +25554,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.3, z: 0}
-  m_LocalScale: {x: -0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2118791063}
@@ -33245,8 +33290,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Developed by <color=yellow>Drunkiel</color>
 
-    Version: <color=yellow>Really
-    early alpha</color>'
+    Version: <color=yellow>Should
+    display a number</color>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3dc03c47ef605f94f94354d11ccfd723, type: 2}
   m_sharedMaterial: {fileID: -2370568698158808678, guid: 3dc03c47ef605f94f94354d11ccfd723,
@@ -36598,7 +36643,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: d90e461ad28a7a6da84b32a014e52da9, type: 3}
-  m_Color: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -38032,6 +38077,7 @@ MonoBehaviour:
   - {fileID: 1885580513}
   - {fileID: 1966873448}
   objectsToTeleportAdditional: []
+  versionText: {fileID: 1672490059}
 --- !u!1 &1896157637
 GameObject:
   m_ObjectHideFlags: 0
