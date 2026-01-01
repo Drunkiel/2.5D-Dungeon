@@ -27,7 +27,7 @@ public class SettingsController : SaveLoadSystem
     }
 
     public override void Save(string path)
-    {   
+    {
         _settingsData.isFullscreen = _graphicsSettings.isFullscreen;
         _settingsData.resolutionIndex = _graphicsSettings.resolutionIndex;
         _settingsData.qualityIndex = _graphicsSettings.qualityIndex;
@@ -49,11 +49,11 @@ public class SettingsController : SaveLoadSystem
     {
         //Here load data from file
         string saveFile = ReadFromFile(path);
-            
-        // Deserialize
+
+        //Deserialize
         JsonConvert.PopulateObject(saveFile, _settingsData);
 
-        //Here override game data
+        //Override game data
         _graphicsSettings.isFullscreen = _settingsData.isFullscreen;
         _graphicsSettings.resolutionIndex = _settingsData.resolutionIndex;
         _graphicsSettings.qualityIndex = _settingsData.qualityIndex;
@@ -69,9 +69,10 @@ public class SettingsController : SaveLoadSystem
     public void ManagePauseUI()
     {
         _openCloseUI.OpenClose();
+        _openCloseUI.GetComponent<PauseMenu>().ResetPauseMenu();
         GameController.isPaused = _openCloseUI.isOpen;
     }
-    
+
     public void ExitGame()
     {
         Application.Quit();

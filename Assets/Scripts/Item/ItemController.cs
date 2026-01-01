@@ -66,10 +66,10 @@ public class ItemController : SaveLoadSystem
         weaponCopy.name = _itemID.name;
         weaponCopy.transform.SetLocalPositionAndRotation(Vector3.zero, rotation);
         if (_itemID._weaponItem.resizable)
-            weaponCopy.transform.localScale = Vector3.one;
+            weaponCopy.transform.localScale = new(0.5f, 0.5f, 1);
 
         if (_itemID._weaponItem.weaponType == WeaponType.Sword)
-            weaponCopy.transform.localPosition = new(0.9f, 0, 0);
+            weaponCopy.transform.localPosition = new(0.45f, 0, 0);
 
         return weaponCopy.GetComponent<ItemID>()._weaponItem;
     }
@@ -91,7 +91,7 @@ public class ItemController : SaveLoadSystem
                     rotation = Quaternion.identity;
 
                 _gearHolder._weaponLeft = PickWeapon(_itemID, rotation, _gearHolder.leftHandTransform);
-                _gearHolder._weaponLeft.transform.localScale = new(-1, 1, 1);
+                _gearHolder._weaponLeft.transform.localScale = new(-0.5f, 0.5f, 1);
                 break;
 
             //Picking weapon to both hands
