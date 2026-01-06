@@ -88,7 +88,7 @@ public class TeleportEvent : MonoBehaviour
         yield return new WaitForSeconds(cooldownToTeleport * 0.1f);
         if (anim != null)
             anim.Play("Teleport");
-        PlayerController.instance.isStopped = true;
+        PlayerController.instance.StopPlayer(true);
         yield return new WaitForSeconds(cooldownToTeleport * 0.9f);
         action();
     }

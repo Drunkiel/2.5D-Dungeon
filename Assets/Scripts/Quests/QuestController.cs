@@ -17,7 +17,6 @@ public class QuestController : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        GiveQuest(0);
     }
 
     public void GiveQuest(int questIndex)

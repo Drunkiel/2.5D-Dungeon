@@ -30,7 +30,6 @@ public class CameraController : MonoBehaviour
     private float targetYRotation = 30f;
 
     private bool rightClick;
-    private Vector2 cameraRotation;
 
     private void Awake()
     {
@@ -39,6 +38,9 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (GameController.isPaused)
+            return;
+
         HandleZoom();
         SetCamera();
         SmoothRotateCamera();
@@ -46,16 +48,19 @@ public class CameraController : MonoBehaviour
 
     public void RightClick(InputAction.CallbackContext context)
     {
+        if (GameController.isPaused)
+        {
+            rightClick = false;
+            return;
+        }
+
         if (GameController.isPC)
         {
             if (context.started)
                 rightClick = true;
 
             if (context.canceled)
-            {
                 rightClick = false;
-                cameraRotation = Vector2.zero;
-            }
         }
         else
         {

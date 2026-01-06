@@ -36,7 +36,7 @@ public class DialogController : MonoBehaviour
         //Assigning values
         this._entityController = _entityController;
         dialogIndex = index;
-        _playerController.isStopped = true;
+        _playerController.StopPlayer(true);
 
         if (_entityController != null)
         {
@@ -83,7 +83,7 @@ public class DialogController : MonoBehaviour
             return;
         }
 
-        PlayerController.instance.isStopped = false;
+        PlayerController.instance.StopPlayer(false);
         if (_entityController != null)
             _entityController._entityWalk.isStopped = false;
 

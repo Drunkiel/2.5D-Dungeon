@@ -195,14 +195,14 @@ public class ConsoleController : MonoBehaviour
 
     public void EnterChatMode()
     {
-        PlayerController.instance.isStopped = true;
+        PlayerController.instance.StopPlayer(true);
         previousMessagesIndex = previousMessages.Count - 1;
     }
 
     public void ExitChatMode()
     {
         if (!PlayerController.instance.GetComponent<EntityCombat>().inCombat)
-            PlayerController.instance.isStopped = false;
+            PlayerController.instance.StopPlayer(false);
     }
 
     private string GetCommand()

@@ -8,7 +8,11 @@ public class PlayerController : MonoBehaviour
 
     public EntityStatistics _statistics;
 
-    public bool isStopped;
+    public bool isStopped
+    {
+        get;
+        private set;
+    }
 
     public float playerHeight;
     public LayerMask whatIsGround;
@@ -207,6 +211,8 @@ public class PlayerController : MonoBehaviour
         movement = Vector2.zero;
         rgBody.velocity = Vector3.zero;
     }
+
+    public void StopPlayer(bool value) => isStopped = value;
 
     private IEnumerator AutoRegen()
     {

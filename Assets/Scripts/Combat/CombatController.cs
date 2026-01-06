@@ -95,7 +95,7 @@ public class CombatController : MonoBehaviour
     private void SetMovementState(PlayerController _player, EntityController _enemyController, bool state)
     {
         if (_enemyController == null)
-            _player.isStopped = state;
+            _player.StopPlayer(state);
         else
             _enemyController._entityWalk.isStopped = state;
     }

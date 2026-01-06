@@ -41,7 +41,7 @@ public class PortalController : MonoBehaviour
 
     public void SpawnPortal(int index)
     {
-        if (_spawnList.Count <= index) 
+        if (_spawnList.Count <= index)
             return;
 
         Instantiate(_spawnList[index].portalObject, _spawnList[index].position, Quaternion.identity);
@@ -105,7 +105,7 @@ public class PortalController : MonoBehaviour
         //Teleporting player
         action();
         PlayerController.instance.ResetMovement();
-        PlayerController.instance.isStopped = false;
+        PlayerController.instance.StopPlayer(false);
         CameraController.instance.ResetZoom();
     }
 
