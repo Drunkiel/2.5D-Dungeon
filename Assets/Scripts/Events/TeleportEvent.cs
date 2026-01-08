@@ -62,9 +62,9 @@ public class TeleportEvent : MonoBehaviour
             if (positions.Length < 1)
                 positions = new Vector3[1] { Vector3.zero };
 
-            onTeleportEvent.Invoke();
             PortalController.instance.TeleportToScene(sceneName, positions[0]);
             _portalController.SetCooldown();
+            StartCoroutine(WaitAndRunAction());
         }));
     }
 
@@ -91,5 +91,11 @@ public class TeleportEvent : MonoBehaviour
         PlayerController.instance.StopPlayer(true);
         yield return new WaitForSeconds(cooldownToTeleport * 0.9f);
         action();
+    }
+
+    private IEnumerator WaitAndRunAction()
+    {
+        yield return new WaitForSeconds(2f);
+        onTeleportEvent.Invoke();
     }
 }

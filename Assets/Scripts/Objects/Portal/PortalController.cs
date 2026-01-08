@@ -31,7 +31,7 @@ public class PortalController : MonoBehaviour
 
     [SerializeField] private bool isTeleportsOnCooldown;
 
-    [SerializeField] private SceneData _currScene;
+    public SceneData _currScene;
     [SerializeField] private SceneData _prevScene;
 
     private void Awake()

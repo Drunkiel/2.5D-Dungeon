@@ -34,7 +34,7 @@ public class SettingsController : SaveLoadSystem
         _settingsData.fpsLimit = _graphicsSettings.fpsLimit;
         _settingsData.isVSync = _graphicsSettings.isVSync;
 
-        //Here save data to file
+        //Save data to file
         string jsonData = JsonConvert.SerializeObject(_settingsData, Formatting.Indented, new JsonSerializerSettings
         {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -47,7 +47,7 @@ public class SettingsController : SaveLoadSystem
 
     public override void Load(string path)
     {
-        //Here load data from file
+        //Load data from file
         string saveFile = ReadFromFile(path);
 
         //Deserialize

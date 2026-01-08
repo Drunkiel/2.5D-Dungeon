@@ -103,7 +103,6 @@ public class EntityPreview
         rightHand.rectTransform.sizeDelta /= 100f;
     }
 
-
     public void UpdateArmorLook(ArmorType partType, Sprite sprite)
     {
         switch (partType)

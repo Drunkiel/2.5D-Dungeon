@@ -13,6 +13,8 @@ public class CameraController : MonoBehaviour
     public Transform targetObject;
     public List<Material> skyboxes = new();
 
+    [SerializeField] private bool isLocked;
+
     // Rotate speed
     public float rotationXSpeed = 50f;
     public float rotationYSpeed = 50f;
@@ -38,7 +40,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (GameController.isPaused)
+        if (GameController.isPaused || isLocked)
             return;
 
         HandleZoom();
@@ -146,5 +148,10 @@ public class CameraController : MonoBehaviour
             return;
 
         RenderSettings.skybox = skyboxes[index];
+    }
+
+    public void LockCamera(bool value)
+    {
+        isLocked = value;
     }
 }
