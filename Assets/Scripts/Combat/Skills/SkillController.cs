@@ -21,7 +21,7 @@ public enum AttributeTypes
     MeleeProtection,
     RangeProtection,
     MagicProtection,
-    
+
     //Cooldown
     Cooldown,
 
@@ -47,7 +47,7 @@ public class Attributes
 
 public class SkillController : MonoBehaviour
 {
-	public SkillHolder _skillHolder;
+    public SkillHolder _skillHolder;
     public CombatUI _combatUI;
     public Transform skillsParent;
 
@@ -56,7 +56,7 @@ public class SkillController : MonoBehaviour
         for (int i = 0; i < _skillHolder.skillNames.Count; i++)
         {
             _skillHolder._skillDatas.Add(SkillContainer.instance.GetSkillByName(_skillHolder.skillNames[i]));
-            
+
             if (_skillHolder._skillDatas[i] == null)
             {
                 ConsoleController.instance.ChatMessage(SenderType.System, $"There is no skill named: {_skillHolder.skillNames[i]}");
@@ -79,10 +79,7 @@ public class SkillController : MonoBehaviour
     public void CastSkill(int index)
     {
         if (_combatUI._skillInfos[index] == null)
-        {
-            print('a');
             return;
-        }
 
         if (_combatUI._skillInfos[index].canBeCasted)
             StartCoroutine(_combatUI.Cast(index, _skillHolder._skillDatas[index]));

@@ -680,6 +680,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6138279114808022306}
   - component: {fileID: 4585052898740507360}
+  - component: {fileID: 742547205086858725}
   m_Layer: 5
   m_Name: Buffs
   m_TagString: Untagged
@@ -730,6 +731,21 @@ MonoBehaviour:
   m_Spacing: {x: 0.01, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &742547205086858725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6443405845856904827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2210e94f1fd81440bc6d09ad3f7e3e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buffCells: []
+  buffCellPrefab: {fileID: 1490113222247137324, guid: e228bcea738d4a7498722fda611aa352,
+    type: 3}
 --- !u!1 &7536231224364248567
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,6 +958,4 @@ MonoBehaviour:
   manaSlider: {fileID: 7596622609857591116}
   statusDisplayObject: {fileID: 2711824359339567459, guid: 91748ff7f3c2a904688da471e29aa62c,
     type: 3}
-  buffsParent: {fileID: 6138279114808022306}
-  buffImage: {fileID: 1644938808871451315, guid: 83a8c5935b171e342abd11fadd7c11c5,
-    type: 3}
+  _buffController: {fileID: 742547205086858725}

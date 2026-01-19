@@ -43,7 +43,7 @@ public class EntityStatistics
     public int mana;
     public int maxMana;
     public float manaRegeneration;
-    
+
     [Header("Multiplier's")]
     public float damageMultiplier = 1;
     public float allProtectionMultiplier = 1;
@@ -175,7 +175,7 @@ public class EntityStatistics
     {
         if (!ignore)
             mana -= CalculateManaUsage(amount * manaUsageMultiplier);
-        else    
+        else
             mana -= (int)amount;
 
         _statsController.UpdateManaSlider(mana, maxMana, ignore);
@@ -239,7 +239,7 @@ public class EntityStatistics
     public void RecalculateStatistics(GearHolder _gearHolder)
     {
         ResetStatistics();
-        _statsController.RemoveBuffImages();
+        _statsController._buffController.RemoveAllBuffs();
 
         //Getting weapons
         WeaponItem _weaponItemLeft = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Left_Hand);
@@ -247,8 +247,8 @@ public class EntityStatistics
         WeaponItem _weaponItemBoth = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Both_Hands);
 
         ItemID _weaponLeft = null;
-        ItemID _weaponRight = null;;
-        ItemID _weaponBoth = null;;
+        ItemID _weaponRight = null; ;
+        ItemID _weaponBoth = null; ;
 
         if (_weaponItemLeft != null)
             _weaponLeft = _weaponItemLeft.GetComponent<ItemID>();
@@ -354,7 +354,7 @@ public class EntityStatistics
 
         for (int i = 0; i < _allItemBuffs.Count; i++)
         {
-            switch(_allItemBuffs[i].itemBuffs)
+            switch (_allItemBuffs[i].itemBuffs)
             {
                 case ItemBuffs.Damage:
                     damageMultiplier += _allItemBuffs[i].amount;
@@ -420,7 +420,7 @@ public class EntityStatistics
                     break;
             }
 
-            _statsController.AddNewBuffImage(_activeBuffs[i].sprite);
+            _statsController._buffController.AddBuff(_activeBuffs[i]);
         }
     }
 }

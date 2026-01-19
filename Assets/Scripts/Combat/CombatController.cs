@@ -83,7 +83,7 @@ public class CombatController : MonoBehaviour
                 break;
 
             case SkillType.Defence:
-                BuffSkill(_skillDataParser, _casterStatistics, _combatUI);
+                BuffSkill(_skillDataParser, _collisionController, _casterStatistics, _combatUI);
                 break;
         }
 
@@ -165,8 +165,9 @@ public class CombatController : MonoBehaviour
         return true;
     }
 
-    private void BuffSkill(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics, CombatUI _combatUI)
+    private void BuffSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics, CombatUI _combatUI)
     {
+        //Set buff for caster
         _casterStatistics._activeBuffs.Add(new Buff(
             _skillDataParser._skillData.displayedName,
             _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Cooldown }),
@@ -176,6 +177,24 @@ public class CombatController : MonoBehaviour
         ));
 
         _casterStatistics.RecalculateStatistics(PlayerController.instance._holdingController._itemController._gearHolder);
+
+        if (_skillDataParser._skillData.worksOnOthers)
+        {
+            for (int i = _skillDataParser._skillData.worksOnSelf ? 1 : 0; i < _collisionController.targets.Count; i++)
+            {
+                EntityStatistics _targetStatistics = _collisionController.targets[i].GetComponent<EntityController>()._statistics;
+
+                _targetStatistics._activeBuffs.Add(new Buff(
+                    _skillDataParser._skillData.displayedName,
+                    _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Cooldown }),
+                    _skillDataParser.iconSprite,
+                    _combatUI.GetBuff(_skillDataParser),
+                    (int)_combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Buff })
+                ));
+
+                _targetStatistics.RecalculateStatistics(PlayerController.instance._holdingController._itemController._gearHolder);
+            }
+        }
     }
 
     public float PlayAnimation(Animator animator, string animationName)

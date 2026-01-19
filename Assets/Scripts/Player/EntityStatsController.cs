@@ -10,14 +10,12 @@ public class EntityStatsController : MonoBehaviour
     public Slider manaSlider;
     private float previousManaStatus;
     [SerializeField] private GameObject statusDisplayObject;
-    [SerializeField] private Transform buffsParent;
-    [SerializeField] private Image buffImage;
+    public BuffController _buffController;
 
     public void SetName(EntityInfo _entityInfo)
     {
         //if (string.IsNullOrEmpty(_entityInfo.title))
         nameText.text = $"{_entityInfo.name}\n<color=yellow>{_entityInfo.title}</color>";
-
     }
 
     public void SetSliderColor(EntityAttitude entity)
@@ -38,7 +36,7 @@ public class EntityStatsController : MonoBehaviour
 
     public void UpdateHealthSlider(float newValue, float maxValue, bool ignore = false)
     {
-        if (previousHealthStatus == newValue) 
+        if (previousHealthStatus == newValue)
             return;
 
         if (previousHealthStatus != 0 && !ignore)
@@ -88,15 +86,15 @@ public class EntityStatsController : MonoBehaviour
         manaSlider.value = newValue / maxValue;
     }
 
-    public void AddNewBuffImage(Sprite buffSprite)
-    {
-        Image newImage = Instantiate(buffImage, buffsParent);
-        newImage.sprite = buffSprite;
-    }
+    // public void AddNewBuffImage(Sprite buffSprite)
+    // {
+    //     Image newImage = Instantiate(buffImage, buffsParent);
+    //     newImage.sprite = buffSprite;
+    // }
 
-    public void RemoveBuffImages()
-    {
-        for (int i = 0; i < buffsParent.childCount; i++)
-            Destroy(buffsParent.GetChild(i).gameObject);
-    }
+    // public void RemoveBuffImages()
+    // {
+    //     for (int i = 0; i < buffsParent.childCount; i++)
+    //         Destroy(buffsParent.GetChild(i).gameObject);
+    // }
 }
