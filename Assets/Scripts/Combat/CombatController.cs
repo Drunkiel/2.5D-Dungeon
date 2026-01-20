@@ -24,13 +24,10 @@ public class CombatController : MonoBehaviour
             yield break;
         }
 
-        //Determine who is caster
+        //Get caster
         Transform casterTransform = _collisionController.transform.parent.parent.parent;
-        PlayerController _player = casterTransform.GetComponent<PlayerController>();
-        EntityController _entityController = _player == null ? casterTransform.GetComponent<EntityController>() : null;
-
-        EntityStatistics _casterStatistics = _player != null ? _player._statistics :
-                                            _entityController != null ? _entityController._statistics : null;
+        EntityController _entityController = casterTransform.GetComponent<EntityController>();
+        EntityStatistics _casterStatistics = _entityController._statistics;
 
         if (_casterStatistics == null)
         {
@@ -38,6 +35,7 @@ public class CombatController : MonoBehaviour
             yield break;
         }
 
+        //Check if entity has enough mana to cast
         float manaUsage = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.ManaUsage });
         if (_casterStatistics.mana * _casterStatistics.manaUsageMultiplier < manaUsage)
         {
@@ -45,17 +43,13 @@ public class CombatController : MonoBehaviour
             yield break;
         }
 
+        //Play animation
         string animName = string.IsNullOrEmpty(_skillDataParser._skillData.animationName) ? "TakeDamage" : _skillDataParser._skillData.animationName;
-        if (_player != null)
-        {
-            PlayAnimation(_player.anim, animName);
-            _player.GetComponent<EntityCombat>().ManageCombat(casterTransform);
-        }
-        else if (_entityController != null)
+        if (_entityController != null)
         {
             PlayAnimation(_entityController.anim, animName);
-            if (_skillDataParser._skillData.allowedDistance != 0)
-                _entityController._entityWalk.allowedDistance = _skillDataParser._skillData.allowedDistance;
+            if (_skillDataParser._skillData.allowedDistance != 0 && TryGetComponent(out EntityWalk _entityWalk))
+                _entityWalk.allowedDistance = _skillDataParser._skillData.allowedDistance;
             _entityController.GetComponent<EntityCombat>().ManageCombat(casterTransform);
         }
 
@@ -66,7 +60,7 @@ public class CombatController : MonoBehaviour
 
         //Check if entity needs to be stopped
         if (_skillDataParser._skillData.stopMovement)
-            SetMovementState(_player, _entityController, true);
+            SetMovementState(_entityController, true);
 
         //Delay cast
         yield return new WaitForSeconds(_skillDataParser._skillData.delay);
@@ -89,15 +83,12 @@ public class CombatController : MonoBehaviour
 
         _casterStatistics.TakeMana(manaUsage);
         if (_skillDataParser._skillData.stopMovement)
-            SetMovementState(_player, _entityController, false);
+            SetMovementState(_entityController, false);
     }
 
-    private void SetMovementState(PlayerController _player, EntityController _enemyController, bool state)
+    private void SetMovementState(EntityController _entityController, bool state)
     {
-        if (_enemyController == null)
-            _player.StopPlayer(state);
-        else
-            _enemyController._entityWalk.isStopped = state;
+        _entityController.StopEntity(state);
     }
 
     public bool AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, Transform casterTransform, EntityStatistics _casterStatistics, CombatUI _combatUI)
@@ -105,7 +96,6 @@ public class CombatController : MonoBehaviour
         //Get current target
         List<EntityStatistics> _targetsStatistics = new();
         List<EntityController> _enemyTargets = new();
-        PlayerController _playerTarget = null;
 
         if (_collisionController.targets.Count <= 0)
             return false;
@@ -120,12 +110,6 @@ public class CombatController : MonoBehaviour
                 _targetsStatistics.Add(_enemyComponent._statistics);
                 _enemyTargets.Add(_enemyComponent);
                 _enemyComponent.GetComponent<EntityCombat>().ManageCombat(casterTransform);
-            }
-            else if (target.TryGetComponent(out PlayerController _playerComponent))
-            {
-                _targetsStatistics.Add(_playerComponent._statistics);
-                _playerTarget = _playerComponent;
-                _playerTarget.GetComponent<EntityCombat>().ManageCombat(casterTransform);
             }
             else
             {
@@ -150,16 +134,11 @@ public class CombatController : MonoBehaviour
         for (int i = 0; i < _targetsStatistics.Count; i++)
         {
             _targetsStatistics[i].TakeDamage((skillDamage + damageToDeal) * _casterStatistics.damageMultiplier, _attributes.attributeType, _attributes.elementalTypes);
-            if (_playerTarget != null)
-                PlayAnimation(_playerTarget.anim, "TakeDamage");
-            else
-            {
-                PlayAnimation(_enemyTargets[i].anim, "TakeDamage");
+            PlayAnimation(_enemyTargets[i].anim, "TakeDamage");
 
-                //If entity is killed check if is in the quest
-                if (_enemyTargets[i]._statistics.health <= 0)
-                    QuestController.instance.InvokeKillEvent(_enemyTargets[i]._entityInfo.ID);
-            }
+            //If entity is killed check if is in the quest
+            if (_enemyTargets[i]._statistics.health <= 0)
+                QuestController.instance.InvokeKillEvent(_enemyTargets[i]._entityInfo.ID);
         }
 
         return true;
@@ -176,7 +155,7 @@ public class CombatController : MonoBehaviour
             (int)_combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Buff })
         ));
 
-        _casterStatistics.RecalculateStatistics(PlayerController.instance._holdingController._itemController._gearHolder);
+        _casterStatistics.RecalculateStatistics(GameController.instance._player._holdingController._itemController._gearHolder);
 
         if (_skillDataParser._skillData.worksOnOthers)
         {
@@ -192,7 +171,7 @@ public class CombatController : MonoBehaviour
                     (int)_combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Buff })
                 ));
 
-                _targetStatistics.RecalculateStatistics(PlayerController.instance._holdingController._itemController._gearHolder);
+                _targetStatistics.RecalculateStatistics(GameController.instance._player._holdingController._itemController._gearHolder);
             }
         }
     }

@@ -15,7 +15,7 @@ public class TeleportEvent : MonoBehaviour
     {
         PortalController _portalController = PortalController.instance;
 
-        if (_portalController.IsOnCooldown() || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
+        if (_portalController.IsOnCooldown() || GameController.instance._player.GetComponent<EntityCombat>().inCombat)
             return;
 
         StartCoroutine(PauseBeforeTeleport(() =>
@@ -30,7 +30,7 @@ public class TeleportEvent : MonoBehaviour
     {
         PortalController _portalController = PortalController.instance;
 
-        if (_portalController.IsOnCooldown() || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
+        if (_portalController.IsOnCooldown() || GameController.instance._player.GetComponent<EntityCombat>().inCombat)
             return;
 
         StartCoroutine(PauseBeforeTeleport(() =>
@@ -46,7 +46,7 @@ public class TeleportEvent : MonoBehaviour
     {
         PortalController _portalController = PortalController.instance;
 
-        if (_portalController.IsOnCooldown() || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
+        if (_portalController.IsOnCooldown() || GameController.instance._player.GetComponent<EntityCombat>().inCombat)
             return;
 
         StartCoroutine(PauseBeforeTeleport(() =>
@@ -72,7 +72,7 @@ public class TeleportEvent : MonoBehaviour
     {
         PortalController _portalController = PortalController.instance;
 
-        if (_portalController.IsOnCooldown() || PlayerController.instance.GetComponent<EntityCombat>().inCombat)
+        if (_portalController.IsOnCooldown() || GameController.instance._player.GetComponent<EntityCombat>().inCombat)
             return;
 
         StartCoroutine(PauseBeforeTeleport(() =>
@@ -88,7 +88,7 @@ public class TeleportEvent : MonoBehaviour
         yield return new WaitForSeconds(cooldownToTeleport * 0.1f);
         if (anim != null)
             anim.Play("Teleport");
-        PlayerController.instance.StopPlayer(true);
+        GameController.instance._player.StopEntity(true);
         yield return new WaitForSeconds(cooldownToTeleport * 0.9f);
         action();
     }

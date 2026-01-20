@@ -35,7 +35,7 @@ public class Projectile : MonoBehaviour
         }
         skillCopyRgBody.AddForce(targets[0].tag[0] != 'P' ?
             (-(transform.position - targets[0].transform.position).normalized + randomOffset).normalized * force :
-            (-(transform.position - PlayerController.instance.transform.position).normalized + randomOffset).normalized * force);
+            (-(transform.position - GameController.instance._player.transform.position).normalized + randomOffset).normalized * force);
         skillCopyObject.GetComponent<Projectile>().disable = false;
         Destroy(skillCopyObject, destroyDelay);
     }

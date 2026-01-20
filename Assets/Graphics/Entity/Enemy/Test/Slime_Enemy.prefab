@@ -247,6 +247,7 @@ MonoBehaviour:
   _entityInfo:
     ID: 1001
     name: Slime
+    title: 
     entity: 1
     behaviour: 2
   _statistics:
@@ -310,7 +311,21 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   _holdingController: {fileID: 3321926919677336769}
-  currentState: 1
+  rgBody: {fileID: 868303963634673058}
+  anim: {fileID: 1297883972931436610}
+--- !u!114 &3402172737806029077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3455514002619786919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
   _behaviourStates:
   - state: 0
     acton:
@@ -321,7 +336,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3402172737806029077}
-          m_TargetAssemblyTypeName: EnemyWalk, Assembly-CSharp
+          m_TargetAssemblyTypeName: EntityWalk, Assembly-CSharp
           m_MethodName: Patrolling
           m_Mode: 1
           m_Arguments:
@@ -338,7 +353,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 3402172737806029077}
           m_TargetAssemblyTypeName: EntityWalk, Assembly-CSharp
-          m_MethodName: ApproachPlayer
+          m_MethodName: ApproachTarget
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -360,28 +375,14 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  rgBody: {fileID: 868303963634673058}
-  anim: {fileID: 1297883972931436610}
-  _entityWalk: {fileID: 3402172737806029077}
---- !u!114 &3402172737806029077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3455514002619786919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isStopped: 0
   wanderingDistance: 1
   positionToGo: {x: 0, y: 0, z: 0}
   allowedDistance: 0
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
   isMoving: 0
+  movingTime: 0
+  isFacingCamera: 0
   move: {x: 0, y: 0, z: 0}
 --- !u!114 &5626858171036809324
 MonoBehaviour:
@@ -592,7 +593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9e4ea5df7517b498af3444840766b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectTag: 
+  objectTags: []
   canBeShown: 1
   enterEvent:
     m_PersistentCalls:
@@ -676,7 +677,20 @@ MonoBehaviour:
     handRightImage: {fileID: 0}
     legLeftImage: {fileID: 0}
     legRightImage: {fileID: 0}
+  _spriteHolder:
+    head_Front: {fileID: 0}
+    body_Front: {fileID: 0}
+    arm_Front: {fileID: 0}
+    hand_Front: {fileID: 0}
+    leg_Front: {fileID: 0}
+    head_Back: {fileID: 0}
+    body_Back: {fileID: 0}
+    arm_Back: {fileID: 0}
+    hand_Back: {fileID: 0}
+    leg_Back: {fileID: 0}
   skinPath: Enemy/Slime
+  bodyType: 0
+  isRotated: 0
 --- !u!1 &4994963850319528632
 GameObject:
   m_ObjectHideFlags: 0

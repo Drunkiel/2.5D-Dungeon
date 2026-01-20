@@ -25,7 +25,7 @@ public class ConsoleCommands : MonoBehaviour
 
     public void ReloadStatistics()
     {
-        PlayerController _playerController = PlayerController.instance;
+        EntityController _playerController = GameController.instance._player;
 
         _playerController._statistics.ResetStatistics();
         _playerController._statistics.RecalculateStatistics(_playerController._holdingController._itemController._gearHolder);
@@ -65,7 +65,7 @@ public class ConsoleCommands : MonoBehaviour
 
     public void Skin(string newPath, string bodyType)
     {
-        PlayerController.instance.GetComponent<EntityLookController>().SpriteLoader(newPath, bodyType);
+        GameController.instance._player.GetComponent<EntityLookController>().SpriteLoader(newPath, bodyType);
     }
 
     public void SkinCut(string skinPath, string outputFolder)

@@ -18,9 +18,12 @@ public class CombatUI : MonoBehaviour
 
     private void Start()
     {
+        SkillHolder _skillHolder = GameController.instance._player.GetComponent<SkillController>()._skillHolder;
         for (int i = 0; i < _skillInfos.Count; i++)
+        {
             if (_skillInfos[i].skillButton != null)
-                SetSkillToBTN(i, PlayerController.instance.GetComponent<SkillController>()._skillHolder._skillDatas[i]);
+                SetSkillToBTN(i, _skillHolder._skillDatas[i]);
+        }
     }
 
     public void SetSkillToBTN(int buttonIndex, SkillDataParser _skillDataParser)
@@ -80,6 +83,6 @@ public class CombatUI : MonoBehaviour
                 return _skillDataParser._skillData._skillAttributes[i].buffTypes;
         }
 
-        return Buffs.None;  
+        return Buffs.None;
     }
 }

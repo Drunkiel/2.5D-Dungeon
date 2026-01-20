@@ -1,9 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityWalk : MonoBehaviour
 {
-    public bool isStopped;
+    public State currentState;
+    public List<BehaviourState> _behaviourStates = new();
 
     private Vector3 startPosition;
     [SerializeField] private float wanderingDistance;
@@ -12,6 +14,8 @@ public class EntityWalk : MonoBehaviour
     public Transform targetTransform;
 
     public Vector2 movement;
+    [SerializeField] private Vector2 newVelocityXZ;
+    [SerializeField] private float newVelocityY;
     public bool isMoving;
     [SerializeField] private float movingTime;
 
@@ -29,20 +33,71 @@ public class EntityWalk : MonoBehaviour
         //Setting first position to go
         startPosition = transform.position;
         SetNewPosition(wanderingDistance);
+
+        //Check behaviour type
+        switch (_controller._entityInfo.behaviour)
+        {
+            case Behaviour.Passive:
+                GetComponent<EntityCombat>().canCombat = false;
+                break;
+
+            case Behaviour.Aggresive:
+                GetComponent<EventTriggerController>().enterEvent.AddListener(() =>
+                {
+                    currentState = State.Attacking;
+
+                    EntityCombat _entityCombat = GetComponent<EntityCombat>();
+                    CollisionController _collisionController = GetComponent<CollisionController>();
+
+                    if (_entityCombat.inCombat || _collisionController.targets.Count <= 0)
+                        return;
+
+                    _entityCombat.ManageCombat(_collisionController.targets[0].transform);
+                });
+                break;
+        }
     }
 
     private void Update()
     {
         isMoving = movement.magnitude > 0.01f;
 
-        if (isStopped || GameController.isPaused)
+        if (_controller.isStopped || GameController.isPaused)
             return;
+
+        //Check for entity behaviour
+        switch (currentState)
+        {
+            case State.Standing:
+                _behaviourStates[0].acton.Invoke();
+                break;
+
+            case State.Patroling:
+                _behaviourStates[1].acton.Invoke();
+                break;
+
+            case State.Attacking:
+                _behaviourStates[2].acton.Invoke();
+                break;
+        }
 
         //Check if entity is moving
         if (isMoving)
             movingTime += Time.deltaTime;
         else if (movingTime != 0)
             movingTime = 0f;
+
+        //Clamping movement speed
+        newVelocityXZ = new(_controller.rgBody.velocity.x, _controller.rgBody.velocity.z);
+        newVelocityY = _controller.rgBody.velocity.y;
+
+        if (newVelocityXZ.magnitude > _controller._statistics.maxSpeed)
+            newVelocityXZ = Vector3.ClampMagnitude(newVelocityXZ, _controller._statistics.maxSpeed);
+
+        if (newVelocityY < -10)
+            newVelocityY = -10;
+
+        _controller.rgBody.velocity = new(newVelocityXZ.x, _controller.rgBody.velocity.y, newVelocityXZ.y);
 
         if (isMoving && movingTime > 0.2f && _controller.rgBody.velocity.magnitude < 0.01f)
             Jump();
@@ -56,10 +111,11 @@ public class EntityWalk : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (isStopped || GameController.isPaused)
+        if (_controller.isStopped || GameController.isPaused)
             return;
 
         move = new Vector3(movement.x, 0, movement.y).normalized;
+        _controller.rgBody.AddForce(move * _controller._statistics.speedForce, ForceMode.Acceleration);
     }
 
     public void Patrolling()
@@ -94,7 +150,7 @@ public class EntityWalk : MonoBehaviour
 
     public void FleeFromTarget()
     {
-        Vector3 targetPosition = targetTransform != null ? targetTransform.position : PlayerController.instance.transform.position;
+        Vector3 targetPosition = targetTransform != null ? targetTransform.position : GameController.instance._player.transform.position;
         float distanceToPlayer = Vector3.Distance(transform.position, targetPosition);
 
         if (distanceToPlayer < allowedDistance)

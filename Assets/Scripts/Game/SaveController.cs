@@ -55,9 +55,9 @@ public class SaveController : SaveLoadSystem
     public override void Save(string path)
     {
         //Override data to save
-        _saveData.skinPath = PlayerController.instance.GetComponent<EntityLookController>().skinPath;
+        _saveData.skinPath = GameController.instance._player.GetComponent<EntityLookController>().skinPath;
         _saveData.sceneName = PortalController.instance._currScene.sceneName;
-        _saveData.position = new(PlayerController.instance.transform.position);
+        _saveData.position = new(GameController.instance._player.transform.position);
 
         //Save data to file
         string jsonData = JsonConvert.SerializeObject(_saveData, Formatting.Indented, new JsonSerializerSettings
@@ -80,8 +80,8 @@ public class SaveController : SaveLoadSystem
         JsonConvert.PopulateObject(saveFile, _saveData);
 
         //Override game data
-        PlayerController.instance.GetComponent<EntityLookController>().skinPath = _saveData.skinPath;
-        PlayerController.instance.GetComponent<EntityLookController>().SpriteLoader();
+        GameController.instance._player.GetComponent<EntityLookController>().skinPath = _saveData.skinPath;
+        GameController.instance._player.GetComponent<EntityLookController>().SpriteLoader();
         _teleportEvent.positions[0] = _saveData.position.ConvertToVector3();
         _teleportEvent.TeleportToScene(_saveData.sceneName);
 

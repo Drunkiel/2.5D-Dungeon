@@ -282,6 +282,7 @@ MonoBehaviour:
   _entityInfo:
     ID: 1002
     name: Chimken
+    title: 
     entity: 1
     behaviour: 1
   _statistics:
@@ -345,6 +346,20 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   _holdingController: {fileID: 2005970543957765047}
+  rgBody: {fileID: 564550842651508242}
+  anim: {fileID: 6734043793878700165}
+--- !u!114 &6287878749997528120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2700706213809638934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   currentState: 1
   _behaviourStates:
   - state: 0
@@ -356,7 +371,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 6287878749997528120}
-          m_TargetAssemblyTypeName: EnemyWalk, Assembly-CSharp
+          m_TargetAssemblyTypeName: EntityWalk, Assembly-CSharp
           m_MethodName: Patrolling
           m_Mode: 1
           m_Arguments:
@@ -372,8 +387,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 6287878749997528120}
-          m_TargetAssemblyTypeName: EnemyWalk, Assembly-CSharp
-          m_MethodName: RandomRun
+          m_TargetAssemblyTypeName: EntityWalk, Assembly-CSharp
+          m_MethodName: ApproachTarget
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -395,28 +410,14 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  rgBody: {fileID: 564550842651508242}
-  anim: {fileID: 6734043793878700165}
-  _entityWalk: {fileID: 6287878749997528120}
---- !u!114 &6287878749997528120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2700706213809638934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isStopped: 0
   wanderingDistance: 1
   positionToGo: {x: 0, y: 0, z: 0}
   allowedDistance: 0
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
   isMoving: 0
+  movingTime: 0
+  isFacingCamera: 0
   move: {x: 0, y: 0, z: 0}
 --- !u!114 &1169793214923292630
 MonoBehaviour:
@@ -439,7 +440,20 @@ MonoBehaviour:
     handRightImage: {fileID: 0}
     legLeftImage: {fileID: 1632192787301497139}
     legRightImage: {fileID: 3820476379777277899}
+  _spriteHolder:
+    head_Front: {fileID: 0}
+    body_Front: {fileID: 0}
+    arm_Front: {fileID: 0}
+    hand_Front: {fileID: 0}
+    leg_Front: {fileID: 0}
+    head_Back: {fileID: 0}
+    body_Back: {fileID: 0}
+    arm_Back: {fileID: 0}
+    hand_Back: {fileID: 0}
+    leg_Back: {fileID: 0}
   skinPath: Enemy/Chicken
+  bodyType: 0
+  isRotated: 0
 --- !u!114 &7162256622069694355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,7 +663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9e4ea5df7517b498af3444840766b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectTag: 
+  objectTags: []
   canBeShown: 0
   enterEvent:
     m_PersistentCalls:

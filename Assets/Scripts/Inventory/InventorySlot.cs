@@ -32,7 +32,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
                 return;
         }
 
-        ItemController _itemController = PlayerController.instance._holdingController._itemController;
+        ItemController _itemController = GameController.instance._player._holdingController._itemController;
         switch (itemRestriction)
         {
             case ItemType.Weapon:

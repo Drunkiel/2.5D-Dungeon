@@ -70,7 +70,7 @@ public class SkillController : MonoBehaviour
                 _combatUI._skillInfos.Add(new() { canBeCasted = true, _collisionController = _collisionController });
 
             _collisionController.Configure(
-                TryGetComponent(out PlayerController _) || GetComponent<EntityController>()._entityInfo.entity == EntityAttitude.Friendly,
+                GetComponent<EntityController>()._entityInfo.entity == EntityAttitude.Friendly,
                 _skillHolder._skillDatas[i]._skillData
             );
         }

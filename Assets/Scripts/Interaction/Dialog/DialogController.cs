@@ -25,7 +25,7 @@ public class DialogController : MonoBehaviour
 
     public void StartDialog(int index, EntityController _entityController = null)
     {
-        PlayerController _playerController = PlayerController.instance;
+        EntityController _playerController = GameController.instance._player;
 
         if (isTalking)
         {
@@ -36,12 +36,12 @@ public class DialogController : MonoBehaviour
         //Assigning values
         this._entityController = _entityController;
         dialogIndex = index;
-        _playerController.StopPlayer(true);
+        _playerController.StopEntity(true);
 
         if (_entityController != null)
         {
-            _entityController._entityWalk.isStopped = true;
-            _entityController._entityWalk.GoTo(_playerController.transform.position, _playerController.transform.position);
+            _entityController.StopEntity(true);
+            //_entityController._entityWalk.GoTo(_playerController.transform.position, _playerController.transform.position);
             _dialogUI._npcPreview.UpdateAllByEntity(_entityController.GetComponent<EntityLookController>()._entityLook, _entityController._holdingController._itemController._gearHolder);
             _dialogUI.nameText.text = _entityController._entityInfo.name;
 
@@ -83,9 +83,9 @@ public class DialogController : MonoBehaviour
             return;
         }
 
-        PlayerController.instance.StopPlayer(false);
+        GameController.instance._player.StopEntity(false);
         if (_entityController != null)
-            _entityController._entityWalk.isStopped = false;
+            _entityController.StopEntity(false);
 
         _openCloseUI.Close();
         isTalking = false;

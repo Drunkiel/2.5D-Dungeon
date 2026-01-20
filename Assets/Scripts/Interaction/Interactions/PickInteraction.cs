@@ -6,7 +6,7 @@ public class PickInteraction : MonoBehaviour
 
     public void Pick()
     {
-        if (!PlayerController.instance._holdingController._itemController.PickItem(_itemID))
+        if (!GameController.instance._player._holdingController._itemController.PickItem(_itemID))
             return;
 
         GetComponent<EventTriggerController>().canBeShown = false;

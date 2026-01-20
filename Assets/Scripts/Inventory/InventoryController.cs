@@ -29,7 +29,7 @@ public class InventoryController : MonoBehaviour
             _inventorySlots.Add(slot);
         }
 
-        _entityPreview.UpdateAllByEntity(PlayerController.instance.GetComponent<EntityLookController>()._entityLook, PlayerController.instance._holdingController._itemController._gearHolder);
+        _entityPreview.UpdateAllByEntity(GameController.instance._player.GetComponent<EntityLookController>()._entityLook, GameController.instance._player._holdingController._itemController._gearHolder);
 
         instance = this;
     }
@@ -39,7 +39,7 @@ public class InventoryController : MonoBehaviour
         if (!context.performed)
             return;
 
-        if (!PlayerController.instance.isStopped && !GameController.isPaused && !isMovingItem)
+        if (!GameController.instance._player.isStopped && !GameController.isPaused && !isMovingItem)
             _openCloseUI.OpenClose();
     }
 
@@ -73,7 +73,7 @@ public class InventoryController : MonoBehaviour
     public void AddToGearInventory(ItemID _itemID, int slotIndex)
     {
         GameObject slot = Instantiate(_gearSlots[slotIndex].itemPlacePrefab, _gearSlots[slotIndex].transform);
-        ItemController _itemController = PlayerController.instance._holdingController._itemController;
+        ItemController _itemController = GameController.instance._player._holdingController._itemController;
 
         switch (_itemID._itemData.itemType)
         {
@@ -85,7 +85,7 @@ public class InventoryController : MonoBehaviour
 
                 _itemController.SetWeapon(_itemID);
                 break;
-            
+
             case ItemType.Armor:
                 slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemID._armorItem.iconSprite;
 

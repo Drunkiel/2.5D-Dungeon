@@ -24,7 +24,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
         if (currentSlot._itemID != null && currentSlot.itemRestriction != ItemType.None)
         {
-            GearHolder _gearHolder = PlayerController.instance._holdingController._itemController._gearHolder;
+            GearHolder _gearHolder = GameController.instance._player._holdingController._itemController._gearHolder;
 
             if (currentSlot._itemID._armorItem != null)
             {
@@ -90,7 +90,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         //Check if pointer is over any UI element
         if (!EventSystem.current.gameObject.TryGetComponent(out InventorySlot _inventorySlot) || _itemID._itemData.itemType != _inventorySlot.itemRestriction)
         {
-            GearHolder _gearHolder = PlayerController.instance._holdingController._itemController._gearHolder;
+            GearHolder _gearHolder = GameController.instance._player._holdingController._itemController._gearHolder;
 
             //Checks if there is any armor equipped
             if (_itemID._armorItem != null && _gearHolder.GetHoldingArmor(transform.GetChild(1).GetComponent<ItemID>()._armorItem.armorType) == null)

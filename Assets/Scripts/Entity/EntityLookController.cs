@@ -61,10 +61,8 @@ public class EntityLookController : SaveLoadSystem
         LoadSpirtes();
 
         bool facingCamera = false;
-        if (TryGetComponent(out PlayerController _playerController))
-            facingCamera = _playerController.isFacingCamera;
         if (TryGetComponent(out EntityController _entityController))
-            facingCamera = _entityController._entityWalk.isFacingCamera;
+            facingCamera = _entityController.isFacingCamera;
 
         UpdateEntityLookAll(facingCamera);
         UpdateBodyType();

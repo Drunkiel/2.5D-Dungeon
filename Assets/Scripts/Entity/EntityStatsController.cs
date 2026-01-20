@@ -14,8 +14,8 @@ public class EntityStatsController : MonoBehaviour
 
     public void SetName(EntityInfo _entityInfo)
     {
-        //if (string.IsNullOrEmpty(_entityInfo.title))
-        nameText.text = $"{_entityInfo.name}\n<color=yellow>{_entityInfo.title}</color>";
+        if (nameText != null)
+            nameText.text = $"{_entityInfo.name}\n<color=yellow>{_entityInfo.title}</color>";
     }
 
     public void SetSliderColor(EntityAttitude entity)

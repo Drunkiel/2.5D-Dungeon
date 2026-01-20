@@ -100,7 +100,7 @@ public class ItemController : SaveLoadSystem
                 break;
         }
 
-        PlayerController _playerController = PlayerController.instance;
+        EntityController _playerController = GameController.instance._player;
         _playerController.GetComponent<EntityLookController>().RotateCharacter(!_playerController.isFlipped, _playerController.isFacingCamera);
     }
 
@@ -164,7 +164,7 @@ public class ItemController : SaveLoadSystem
                 break;
         }
 
-        PlayerController _playerController = PlayerController.instance;
+        EntityController _playerController = GameController.instance._player;
         _playerController.GetComponent<EntityLookController>().RotateCharacter(!_playerController.isFlipped, _playerController.isFacingCamera);
     }
 
@@ -253,7 +253,7 @@ public class ItemController : SaveLoadSystem
                 break;
         }
 
-        PlayerController _playerController = PlayerController.instance;
+        EntityController _playerController = GameController.instance._player;
         _playerController.GetComponent<EntityLookController>().RotateCharacter(!_playerController.isFlipped, _playerController.isFacingCamera);
 
         Destroy(_itemID.gameObject);

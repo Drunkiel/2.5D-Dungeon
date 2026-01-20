@@ -43,10 +43,11 @@ public class BuffController : MonoBehaviour
             progress += Time.deltaTime / duration;
 
             float currentY = Mathf.Lerp(startY, endY, progress);
-            background.anchoredPosition = new Vector2(
-                background.anchoredPosition.x,
-                currentY
-            );
+            if (background != null)
+                background.anchoredPosition = new Vector2(
+                    background.anchoredPosition.x,
+                    currentY
+                );
 
             yield return null;
         }

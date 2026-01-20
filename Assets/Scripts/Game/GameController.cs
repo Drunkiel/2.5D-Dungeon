@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public static GameController instance;
+    public EntityController _player;
 
     public static bool isPC = true;
     public static bool isPaused;

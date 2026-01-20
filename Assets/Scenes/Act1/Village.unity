@@ -3052,12 +3052,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStopped: 0
+  currentState: 1
+  _behaviourStates:
+  - state: 0
+    acton:
+      m_PersistentCalls:
+        m_Calls: []
+  - state: 1
+    acton:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 196249350}
+          m_TargetAssemblyTypeName: EntityWalk, Assembly-CSharp
+          m_MethodName: Patrolling
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - state: 2
+    acton:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 196249350}
+          m_TargetAssemblyTypeName: EntityWalk, Assembly-CSharp
+          m_MethodName: ApproachTarget
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 196249344}
+          m_TargetAssemblyTypeName: SkillController, Assembly-CSharp
+          m_MethodName: CastSkill
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   wanderingDistance: 1
   positionToGo: {x: 0, y: 0, z: 0}
   allowedDistance: 0
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
+  newVelocityXZ: {x: 0, y: 0}
+  newVelocityY: 0
   isMoving: 0
   movingTime: 0
   isFacingCamera: 0
@@ -3129,59 +3180,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   _holdingController: {fileID: 196249347}
-  currentState: 1
-  _behaviourStates:
-  - state: 0
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
-  - state: 1
-    acton:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 196249350}
-          m_TargetAssemblyTypeName: EnemyWalk, Assembly-CSharp
-          m_MethodName: Patrolling
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - state: 2
-    acton:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 196249350}
-          m_TargetAssemblyTypeName: EntityWalk, Assembly-CSharp
-          m_MethodName: ApproachTarget
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 196249344}
-          m_TargetAssemblyTypeName: SkillController, Assembly-CSharp
-          m_MethodName: CastSkill
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   rgBody: {fileID: 196249354}
   anim: {fileID: 196249342}
-  _entityWalk: {fileID: 196249350}
 --- !u!65 &196249352
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14955,109 +14955,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7374da85337e8fc409613afbef0b67d2, type: 3}
---- !u!1001 &1102130983
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1257160100214200346, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: targets.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4612955350352780205, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5178939710355253913, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_Name
-      value: Enemy_Agressive
-      objectReference: {fileID: 0}
-    - target: {fileID: 5178939710355253913, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5392948488647936076, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5392948488647936076, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419647626675531499, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.49
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419647626675531499, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419647626675531499, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -16.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419647626675531499, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419647626675531499, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419647626675531499, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419647626675531499, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419647626675531499, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419647626675531499, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8419647626675531499, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9034392449785760574, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9034392449785760574, guid: 8f3292d4de5f5fc4181949ec489e6242,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8f3292d4de5f5fc4181949ec489e6242, type: 3}
 --- !u!1001 &1104342978
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18950,12 +18847,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStopped: 0
+  currentState: 0
+  _behaviourStates:
+  - state: 0
+    acton:
+      m_PersistentCalls:
+        m_Calls: []
+  - state: 1
+    acton:
+      m_PersistentCalls:
+        m_Calls: []
+  - state: 2
+    acton:
+      m_PersistentCalls:
+        m_Calls: []
   wanderingDistance: 5
   positionToGo: {x: 0, y: 0, z: 0}
   allowedDistance: 0
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
+  newVelocityXZ: {x: 0, y: 0}
+  newVelocityY: 0
   isMoving: 0
   movingTime: 0
   isFacingCamera: 0
@@ -19027,35 +18939,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   _holdingController: {fileID: 1303834247}
-  currentState: 0
-  _behaviourStates:
-  - state: 0
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
-  - state: 1
-    acton:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1303834249}
-          m_TargetAssemblyTypeName: EnemyWalk, Assembly-CSharp
-          m_MethodName: Patrolling
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - state: 2
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
   rgBody: {fileID: 1303834253}
   anim: {fileID: 0}
-  _entityWalk: {fileID: 1303834249}
 --- !u!65 &1303834251
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25376,12 +25261,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStopped: 0
+  currentState: 0
+  _behaviourStates:
+  - state: 0
+    acton:
+      m_PersistentCalls:
+        m_Calls: []
+  - state: 1
+    acton:
+      m_PersistentCalls:
+        m_Calls: []
+  - state: 2
+    acton:
+      m_PersistentCalls:
+        m_Calls: []
   wanderingDistance: 5
   positionToGo: {x: 0, y: 0, z: 0}
   allowedDistance: 0
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
+  newVelocityXZ: {x: 0, y: 0}
+  newVelocityY: 0
   isMoving: 0
   movingTime: 0
   isFacingCamera: 0
@@ -25453,35 +25353,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   _holdingController: {fileID: 1691451280}
-  currentState: 0
-  _behaviourStates:
-  - state: 0
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
-  - state: 1
-    acton:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1691451282}
-          m_TargetAssemblyTypeName: EnemyWalk, Assembly-CSharp
-          m_MethodName: Patrolling
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - state: 2
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
   rgBody: {fileID: 1691451286}
   anim: {fileID: 0}
-  _entityWalk: {fileID: 1691451282}
 --- !u!65 &1691451284
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32793,6 +32666,91 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[1].state
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[2].state
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[1].acton.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[2].acton.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[1].acton.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[2].acton.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[1].acton.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5086506590392587239}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[2].acton.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5086506590392587239}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[1].acton.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[2].acton.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[1].acton.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Patrolling
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[2].acton.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ApproachTarget
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[1].acton.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EntityWalk, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[2].acton.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EntityWalk, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[1].acton.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+        type: 3}
+      propertyPath: _behaviourStates.Array.data[2].acton.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8463778987204827342, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -32863,6 +32821,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c31b2fca5d4e314b8d3030064d83cb2, type: 3}
+--- !u!114 &5086506590392587239 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6634431841469778539, guid: 8c31b2fca5d4e314b8d3030064d83cb2,
+    type: 3}
+  m_PrefabInstance: {fileID: 5086506590392587238}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5944284883357922028
 GameObject:
   m_ObjectHideFlags: 0
@@ -32959,12 +32929,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStopped: 0
+  currentState: 0
+  _behaviourStates:
+  - state: 0
+    acton:
+      m_PersistentCalls:
+        m_Calls: []
+  - state: 1
+    acton:
+      m_PersistentCalls:
+        m_Calls: []
+  - state: 2
+    acton:
+      m_PersistentCalls:
+        m_Calls: []
   wanderingDistance: 5
   positionToGo: {x: 0, y: 0, z: 0}
   allowedDistance: 0
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
+  newVelocityXZ: {x: 0, y: 0}
+  newVelocityY: 0
   isMoving: 0
   movingTime: 0
   isFacingCamera: 0
@@ -33179,35 +33164,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   _holdingController: {fileID: 67188909547215620}
-  currentState: 0
-  _behaviourStates:
-  - state: 0
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
-  - state: 1
-    acton:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6634431840859896702}
-          m_TargetAssemblyTypeName: EnemyWalk, Assembly-CSharp
-          m_MethodName: Patrolling
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - state: 2
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
   rgBody: {fileID: 7289960858542168046}
   anim: {fileID: 0}
-  _entityWalk: {fileID: 6634431840859896702}
 --- !u!114 &7871436604571292761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33553,4 +33511,3 @@ SceneRoots:
   - {fileID: 1754758767}
   - {fileID: 1671486465}
   - {fileID: 864997028}
-  - {fileID: 1102130983}

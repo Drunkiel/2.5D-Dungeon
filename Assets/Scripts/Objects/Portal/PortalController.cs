@@ -54,7 +54,7 @@ public class PortalController : MonoBehaviour
 
         StartCoroutine(WaitAndTeleport(() =>
         {
-            PlayerController.instance.transform.position = position;
+            GameController.instance._player.transform.position = position;
         }));
     }
 
@@ -65,7 +65,7 @@ public class PortalController : MonoBehaviour
 
         StartCoroutine(WaitAndTeleport(() =>
         {
-            PlayerController.instance.transform.position = objectTransform.position;
+            GameController.instance._player.transform.position = objectTransform.position;
         }));
     }
 
@@ -76,10 +76,10 @@ public class PortalController : MonoBehaviour
 
         StartCoroutine(WaitAndTeleport(() =>
         {
-            _prevScene = new(_currScene.sceneName, PlayerController.instance.transform.position);
+            _prevScene = new(_currScene.sceneName, GameController.instance._player.transform.position);
             StartCoroutine(GameController.instance.LoadAsyncScene(sceneName));
             PopUpController.instance.CreatePopUp(PopUpInfo.VisitPlace, sceneName);
-            PlayerController.instance.transform.position = playerPosition;
+            GameController.instance._player.transform.position = playerPosition;
             _currScene = new(sceneName, playerPosition);
         }));
     }
@@ -104,8 +104,8 @@ public class PortalController : MonoBehaviour
 
         //Teleporting player
         action();
-        PlayerController.instance.ResetMovement();
-        PlayerController.instance.StopPlayer(false);
+        GameController.instance._player.GetComponent<PlayerMovement>().ResetMovement();
+        GameController.instance._player.StopEntity(false);
         CameraController.instance.ResetZoom();
     }
 

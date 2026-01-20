@@ -35,18 +35,31 @@ public class EntityController : MonoBehaviour
 {
     public EntityInfo _entityInfo;
     public EntityStatistics _statistics;
-    public HoldingController _holdingController;
 
-    public State currentState;
-    public List<BehaviourState> _behaviourStates = new();
+    public bool isStopped
+    {
+        get;
+        private set;
+    }
+    public bool isFlipped
+    {
+        get;
+        private set;
+    }
+    public bool isFacingCamera
+    {
+        get;
+        private set;
+    }
+
+    public HoldingController _holdingController;
 
     public Rigidbody rgBody;
     public Animator anim;
 
-    public EntityWalk _entityWalk;
-
     private void Start()
     {
+        isFacingCamera = true;
         _statistics.SaveStats();
 
         //Setting basic info of entity
@@ -57,67 +70,21 @@ public class EntityController : MonoBehaviour
         _statistics._statsController.UpdateHealthSlider(_statistics.health, _statistics.maxHealth, true);
         _statistics._statsController.UpdateManaSlider(_statistics.mana, _statistics.maxMana, true);
 
-        //Check behaviour type
-        switch (_entityInfo.behaviour)
-        {
-            case Behaviour.Passive:
-                GetComponent<EntityCombat>().canCombat = false;
-                break;
-
-            case Behaviour.Aggresive:
-                GetComponent<EventTriggerController>().enterEvent.AddListener(() =>
-                {
-                    currentState = State.Attacking;
-
-                    EntityCombat _entityCombat = GetComponent<EntityCombat>();
-                    CollisionController _collisionController = GetComponent<CollisionController>();
-
-                    if (_entityCombat.inCombat || _collisionController.targets.Count <= 0)
-                        return;
-
-                    _entityCombat.ManageCombat(_collisionController.targets[0].transform);
-                });
-                break;
-        }
-
         StartCoroutine(AutoRegen());
     }
 
     private void Update()
     {
-        if (_entityWalk.isStopped || GameController.isPaused)
+        if (isStopped || GameController.isPaused)
             return;
-
-        switch (currentState)
-        {
-            case State.Standing:
-                _behaviourStates[0].acton.Invoke();
-                break;
-
-            case State.Patroling:
-                _behaviourStates[1].acton.Invoke();
-                break;
-
-            case State.Attacking:
-                _behaviourStates[2].acton.Invoke();
-                break;
-        }
 
         //Updating buffs
         _statistics.UpdateBuffs(_holdingController._itemController._gearHolder);
-
-        //Controls max speed
-        if (rgBody.velocity.magnitude > _statistics.maxSpeed)
-            rgBody.velocity = Vector3.ClampMagnitude(rgBody.velocity, _statistics.maxSpeed);
     }
 
-    private void FixedUpdate()
-    {
-        if (_entityWalk.isStopped || GameController.isPaused)
-            return;
-
-        rgBody.AddForce(_entityWalk.move * _statistics.speedForce, ForceMode.Acceleration);
-    }
+    public void StopEntity(bool value) => isStopped = value;
+    public void Flip(bool value) => isFlipped = value;
+    public void FaceCamera(bool value) => isFacingCamera = value;
 
     private IEnumerator AutoRegen()
     {
