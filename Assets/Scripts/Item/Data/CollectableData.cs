@@ -5,4 +5,6 @@ using UnityEngine;
 public class CollectableData : ScriptableObject
 {
     public ItemData _itemData;
+    public Sprite itemSprite;
+    public Sprite iconSprite;
 }

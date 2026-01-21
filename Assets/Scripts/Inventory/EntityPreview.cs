@@ -35,7 +35,6 @@ public class EntityPreview
     public void UpdateEntityPreviewLook(EntityPartType partType, Vector3 position, Sprite sprite)
     {
         if (sprite == null)
-
             return;
 
         switch (partType)
@@ -134,24 +133,24 @@ public class EntityPreview
         }
     }
 
-    public void UpdateAllByEntity(EntityLook _entityLook, GearHolder _gearHolder)
+    public void UpdateAllByEntity(EntityLook _entityLook, EntitySpriteHolder _spriteHolder, GearHolder _gearHolder)
     {
         if (headImage != null)
-            UpdateEntityPreviewLook(EntityPartType.Head, _entityLook.headImage.transform.localPosition, _entityLook.headImage.sprite);
+            UpdateEntityPreviewLook(EntityPartType.Head, _entityLook.headImage.transform.localPosition, _spriteHolder.head_Front);
 
         if (bodyImage != null)
-            UpdateEntityPreviewLook(EntityPartType.Body, _entityLook.bodyImage.transform.localPosition, _entityLook.bodyImage.sprite);
+            UpdateEntityPreviewLook(EntityPartType.Body, _entityLook.bodyImage.transform.localPosition, _spriteHolder.body_Front);
 
         if (armLeftImage != null && armRightImage != null)
             UpdateEntityPreviewLook(EntityPartType.Arms, new(_entityLook.armLeftImage.transform.parent.localPosition.x,
-                                                             _entityLook.armLeftImage.transform.localPosition.y, _entityLook.armLeftImage.transform.parent.parent.localPosition.y), _entityLook.armLeftImage.sprite);
+                                                             _entityLook.armLeftImage.transform.localPosition.y, _entityLook.armLeftImage.transform.parent.parent.localPosition.y), _spriteHolder.arm_Front);
 
         if (handLeftImage != null && handRightImage != null)
-            UpdateEntityPreviewLook(EntityPartType.Hands, _entityLook.handLeftImage.transform.localPosition, _entityLook.handLeftImage.sprite);
+            UpdateEntityPreviewLook(EntityPartType.Hands, _entityLook.handLeftImage.transform.localPosition, _spriteHolder.hand_Front);
 
         if (legLeftImage != null && legRightImage != null)
             UpdateEntityPreviewLook(EntityPartType.Legs, new(_entityLook.legLeftImage.transform.parent.localPosition.x,
-                                                             _entityLook.legLeftImage.transform.localPosition.y, -0.055f), _entityLook.legLeftImage.sprite);
+                                                             _entityLook.legLeftImage.transform.localPosition.y, -0.055f), _spriteHolder.leg_Front);
 
         //Armor
         if (helmetImage != null)

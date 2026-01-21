@@ -4,7 +4,6 @@ public class EntityItemLoader : MonoBehaviour
 {
     public string weaponRightName;
     public string weaponLeftName;
-    public string weaponBothName;
 
     public string armorHeadName;
     public string armorChestplateName;
@@ -25,7 +24,7 @@ public class EntityItemLoader : MonoBehaviour
         //Give weapon to right hand
         if (weaponRightName.Length != 0)
         {
-            ItemID _itemID = _itemContainer.GetItemByName(weaponRightName);
+            ItemID _itemID = _itemContainer.GetItemByNameAndType(weaponRightName, ItemType.Weapon);
             if (_itemID != null)
                 _itemController.SetWeapon(_itemID);
             else
@@ -35,27 +34,17 @@ public class EntityItemLoader : MonoBehaviour
         //Give weapon to left hand
         if (weaponLeftName.Length != 0)
         {
-            ItemID _itemID = _itemContainer.GetItemByName(weaponLeftName);
+            ItemID _itemID = _itemContainer.GetItemByNameAndType(weaponLeftName, ItemType.Weapon);
             if (_itemID != null)
                 _itemController.SetWeapon(_itemID);
             else
                 ConsoleController.instance.ChatMessage(SenderType.System, $"There is no weapon called: {weaponLeftName}");
         }
 
-        //Give weapon to both hands
-        if (weaponBothName.Length != 0)
-        {
-            ItemID _itemID = _itemContainer.GetItemByName(weaponBothName);
-            if (_itemID != null)
-                _itemController.SetWeapon(_itemID);
-            else
-                ConsoleController.instance.ChatMessage(SenderType.System, $"There is no weapon called: {weaponBothName}");
-        }
-
         //Give armor to head
         if (armorHeadName.Length != 0)
         {
-            ItemID _itemID = _itemContainer.GetItemByName(armorHeadName);
+            ItemID _itemID = _itemContainer.GetItemByNameAndType(armorHeadName, ItemType.Armor);
             if (_itemID != null)
                 _itemController.SetArmor(_itemID);
             else
@@ -65,7 +54,7 @@ public class EntityItemLoader : MonoBehaviour
         //Give armor to chestplate
         if (armorChestplateName.Length != 0)
         {
-            ItemID _itemID = _itemContainer.GetItemByName(armorChestplateName);
+            ItemID _itemID = _itemContainer.GetItemByNameAndType(armorChestplateName, ItemType.Armor);
             if (_itemID != null)
                 _itemController.SetArmor(_itemID);
             else
@@ -75,7 +64,7 @@ public class EntityItemLoader : MonoBehaviour
         //Give armor to boots
         if (armorBootsName.Length != 0)
         {
-            ItemID _itemID = _itemContainer.GetItemByName(armorBootsName);
+            ItemID _itemID = _itemContainer.GetItemByNameAndType(armorBootsName, ItemType.Armor);
             if (_itemID != null)
                 _itemController.SetArmor(_itemID);
             else

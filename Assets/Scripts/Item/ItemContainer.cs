@@ -8,9 +8,9 @@ public class ItemContainer : SaveLoadSystem
     public static ItemContainer instance;
 
     public List<ItemID> _allItems = new();
-    public List<ItemID> _weaponItems = new();
-    public List<ItemID> _armorItems = new();
-    public List<ItemID> _collectableItems = new();
+    public List<WeaponData> _weaponItems = new();
+    public List<ArmorData> _armorItems = new();
+    public List<CollectableData> _collectableItems = new();
     public List<GameObject> itemPrefabs = new();
 
     void Awake()
@@ -31,9 +31,9 @@ public class ItemContainer : SaveLoadSystem
 
         Load(itemsSavePath + "Collectable");
 
-        _allItems.AddRange(_weaponItems);
-        _allItems.AddRange(_armorItems);
-        _allItems.AddRange(_collectableItems);
+        // _allItems.AddRange(_weaponItems);
+        // _allItems.AddRange(_armorItems);
+        // _allItems.AddRange(_collectableItems);
     }
 
     public void UnLoadStuff()
@@ -54,7 +54,6 @@ public class ItemContainer : SaveLoadSystem
         foreach (var itemLocation in itemsLocation)
         {
             string saveFile = ReadFromFile($"{path}/{itemLocation}");
-            Object _newItem = new();
 
             //Test if founded json is parsable to other types
             ItemDataParser _itemParser = ScriptableObject.CreateInstance<ItemDataParser>();
@@ -66,33 +65,56 @@ public class ItemContainer : SaveLoadSystem
                 case ItemType.Weapon:
                     WeaponData _newWeapon = ScriptableObject.CreateInstance<WeaponData>();
                     JsonConvert.PopulateObject(saveFile, _newWeapon);
-                    _newItem = _newWeapon;
-                    _weaponItems.Add(CreateWeaponItem(_newWeapon, path));
+                    InitializeWeapon(_newWeapon, path);
+                    _weaponItems.Add(_newWeapon);
                     break;
 
                 //Parse to armor
                 case ItemType.Armor:
                     ArmorData _newArmor = ScriptableObject.CreateInstance<ArmorData>();
                     JsonConvert.PopulateObject(saveFile, _newArmor);
-                    _newItem = _newArmor;
-                    _armorItems.Add(CreateArmorItem(_newArmor, path));
+                    InitializeArmor(_newArmor, path);
+                    _armorItems.Add(_newArmor);
                     break;
 
                 case ItemType.Collectable:
                     CollectableData _newCollectable = ScriptableObject.CreateInstance<CollectableData>();
                     JsonConvert.PopulateObject(saveFile, _newCollectable);
-                    _newItem = _newCollectable;
-                    _collectableItems.Add(CreateCollectableItem(_newCollectable, path));
+                    InitializeCollectable(_newCollectable, path);
+                    _collectableItems.Add(_newCollectable);
                     break;
             }
-
-            //If empty drop warning
-            if (_newItem == null)
-            {
-                ConsoleController.instance.ChatMessage(SenderType.System, $"File {itemLocation} does not match any known data type.", OutputType.Error);
-                return;
-            }
         }
+    }
+
+    private void InitializeWeapon(WeaponData _weaponData, string path)
+    {
+        if (!string.IsNullOrEmpty(_weaponData._itemData.spritePathFront))
+            _weaponData.itemSpriteFront = GetSprite($"{path}/{_weaponData._itemData.spritePathFront}", 20f);
+
+        if (!string.IsNullOrEmpty(_weaponData._itemData.spritePathBack))
+            _weaponData.itemSpriteBack = GetSprite($"{path}/{_weaponData._itemData.spritePathBack}", 20f);
+
+        _weaponData.iconSprite = GetSprite($"{path}/{_weaponData._itemData.spriteIconPath}", 20f);
+    }
+
+    private void InitializeArmor(ArmorData _armorData, string path)
+    {
+        if (!string.IsNullOrEmpty(_armorData._itemData.spritePathFront))
+            _armorData.itemSpriteFront = GetSprite($"{path}/{_armorData._itemData.spritePathFront}", 100f);
+
+        if (!string.IsNullOrEmpty(_armorData._itemData.spritePathBack))
+            _armorData.itemSpriteBack = GetSprite($"{path}/{_armorData._itemData.spritePathBack}", 100f);
+
+        _armorData.iconSprite = GetSprite($"{path}/{_armorData._itemData.spriteIconPath}", 20f);
+    }
+
+    private void InitializeCollectable(CollectableData _collectableData, string path)
+    {
+        if (!string.IsNullOrEmpty(_collectableData._itemData.spritePathFront))
+            _collectableData.itemSprite = GetSprite($"{path}/{_collectableData._itemData.spritePathFront}", 20f);
+
+        _collectableData.iconSprite = GetSprite($"{path}/{_collectableData._itemData.spriteIconPath}", 20f);
     }
 
     public ItemID GetItemByName(string itemName)
@@ -110,19 +132,19 @@ public class ItemContainer : SaveLoadSystem
     {
         switch (itemType)
         {
-            case ItemType.Armor:
-                for (int i = 0; i < _armorItems.Count; i++)
-                {
-                    if (_armorItems[i]._itemData.displayedName == itemName)
-                        return _armorItems[i];
-                }
-                return null;
-
             case ItemType.Weapon:
                 for (int i = 0; i < _weaponItems.Count; i++)
                 {
                     if (_weaponItems[i]._itemData.displayedName == itemName)
-                        return _weaponItems[i];
+                        return CreateWeaponItem(_weaponItems[i]);
+                }
+                return null;
+
+            case ItemType.Armor:
+                for (int i = 0; i < _armorItems.Count; i++)
+                {
+                    if (_armorItems[i]._itemData.displayedName == itemName)
+                        return CreateArmorItem(_armorItems[i]);
                 }
                 return null;
 
@@ -130,7 +152,7 @@ public class ItemContainer : SaveLoadSystem
                 for (int i = 0; i < _collectableItems.Count; i++)
                 {
                     if (_collectableItems[i]._itemData.displayedName == itemName)
-                        return _collectableItems[i];
+                        return CreateCollectableItem(_collectableItems[i]);
                 }
                 return null;
         }
@@ -138,7 +160,7 @@ public class ItemContainer : SaveLoadSystem
         return null;
     }
 
-    private ItemID CreateWeaponItem(WeaponData _weaponData, string path)
+    private ItemID CreateWeaponItem(WeaponData _weaponData)
     {
         //Creating new item
         ItemID _itemID = Instantiate(itemPrefabs[0], new Vector2(0, -10), Quaternion.identity, transform).GetComponent<ItemID>();
@@ -170,17 +192,17 @@ public class ItemContainer : SaveLoadSystem
         }
 
         if (!string.IsNullOrEmpty(_weaponData._itemData.spritePathFront))
-            _weaponItem.itemSpriteFront = LoadTexture(_weaponItem, $"{path}/{_weaponData._itemData.spritePathFront}", orderInLayer, 20f);
+            LoadTexture(_weaponItem, _weaponData.itemSpriteFront, orderInLayer);
 
         if (!string.IsNullOrEmpty(_weaponData._itemData.spritePathBack))
-            _weaponItem.itemSpriteBack = LoadTexture(_weaponItem, $"{path}/{_weaponData._itemData.spritePathBack}", orderInLayer, 20f, false);
+            LoadTexture(_weaponItem, _weaponData.itemSpriteBack, orderInLayer, false);
 
-        _weaponItem.iconSprite = GetSprite($"{path}/{_weaponData._itemData.spriteIconPath}", 20f);
+        _weaponItem.iconSprite = _weaponData.iconSprite;
 
         return _itemID;
     }
 
-    private ItemID CreateArmorItem(ArmorData _armorData, string path)
+    private ItemID CreateArmorItem(ArmorData _armorData)
     {
         //Creating new item
         ItemID _itemID = Instantiate(itemPrefabs[1], new Vector2(1, -10), Quaternion.identity, transform).GetComponent<ItemID>();
@@ -197,17 +219,17 @@ public class ItemContainer : SaveLoadSystem
             orderInLayer = 3;
 
         if (!string.IsNullOrEmpty(_armorData._itemData.spritePathFront))
-            _armorItem.itemSpriteFront = LoadTexture(_armorItem, $"{path}/{_armorData._itemData.spritePathFront}", orderInLayer, 100f);
+            _armorItem.itemSpriteFront = LoadTexture(_armorItem, _armorData.itemSpriteFront, orderInLayer);
 
         if (!string.IsNullOrEmpty(_armorData._itemData.spritePathBack))
-            _armorItem.itemSpriteBack = LoadTexture(_armorItem, $"{path}/{_armorData._itemData.spritePathBack}", orderInLayer, 100f, false);
+            _armorItem.itemSpriteBack = LoadTexture(_armorItem, _armorData.itemSpriteBack, orderInLayer, false);
 
-        _armorItem.iconSprite = GetSprite($"{path}/{_armorData._itemData.spriteIconPath}", 20f);
+        _armorItem.iconSprite = _armorData.iconSprite;
 
         return _itemID;
     }
 
-    private ItemID CreateCollectableItem(CollectableData _collectableData, string path)
+    private ItemID CreateCollectableItem(CollectableData _collectableData)
     {
         //Creating new item
         ItemID _itemID = Instantiate(itemPrefabs[2], new Vector2(-1, -10), Quaternion.identity, transform).GetComponent<ItemID>();
@@ -219,15 +241,14 @@ public class ItemContainer : SaveLoadSystem
 
         //Create a sprite
         if (!string.IsNullOrEmpty(_collectableData._itemData.spritePathFront))
-            _collectableItem.itemSprite = LoadTexture(_collectableItem, $"{path}/{_collectableData._itemData.spritePathFront}", 5, 20f);
-        _collectableItem.iconSprite = GetSprite($"{path}/{_collectableData._itemData.spriteIconPath}", 20f);
+            LoadTexture(_collectableItem, _collectableData.itemSprite, 5);
+        _collectableItem.iconSprite = _collectableData.iconSprite;
 
         return _itemID;
     }
 
-    private Sprite LoadTexture(Object itemObject, string path, int orderInLayer, float pixelsPerUnit, bool assign = true)
+    private Sprite LoadTexture(Object itemObject, Sprite sprite, int orderInLayer, bool assign = true)
     {
-        Sprite sprite = GetSprite(path, pixelsPerUnit);
         if (assign)
         {
             SpriteRenderer spriteRenderer = itemObject.GetComponent<Transform>().GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();

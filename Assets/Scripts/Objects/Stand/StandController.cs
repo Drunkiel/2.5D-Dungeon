@@ -12,6 +12,7 @@ public class StandController : MonoBehaviour
     {
         parentTransform.localPosition = new(0, parentPositionY, 0);
         ItemID _itemCopy = ItemContainer.instance.GetItemByNameAndType(itemName, itemType);
+        _itemCopy.transform.parent = parentTransform.GetChild(0);
 
         if (_itemCopy == null)
         {
@@ -19,9 +20,8 @@ public class StandController : MonoBehaviour
             return;
         }
 
-        ItemID _newItem = Instantiate(_itemCopy, parentTransform.GetChild(0));
-        _newItem.transform.localPosition = Vector3.zero;
-
-        _pickInteraction._itemID = _newItem;
+        _itemCopy.transform.localPosition = Vector3.zero;
+        _itemCopy.transform.localRotation = Quaternion.identity;
+        _pickInteraction._itemID = _itemCopy;
     }
 }

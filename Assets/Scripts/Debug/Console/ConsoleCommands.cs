@@ -31,11 +31,6 @@ public class ConsoleCommands : MonoBehaviour
         _playerController._statistics.RecalculateStatistics(_playerController._holdingController._itemController._gearHolder);
     }
 
-    public void GetItem(string itemName)
-    {
-        ItemContainer.instance.GetItemByName(itemName);
-    }
-
     public void KillEvent(string id)
     {
         if (!short.TryParse(id, out short targetID))

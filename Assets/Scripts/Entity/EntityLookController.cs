@@ -50,6 +50,23 @@ public class EntityLookController : SaveLoadSystem
         UpdateBodyType();
     }
 
+    private void LoadSpirtes()
+    {
+        string path = $"{skinsSavePath}{skinPath}";
+
+        _spriteHolder.head_Front = GetSprite($"{path}/head_front.png", 100f);
+        _spriteHolder.body_Front = GetSprite($"{path}/body_front.png", 100f);
+        _spriteHolder.arm_Front = GetSprite($"{path}/arm_front.png", 100f);
+        _spriteHolder.hand_Front = GetSprite($"{path}/hand_front.png", 100f);
+        _spriteHolder.leg_Front = GetSprite($"{path}/leg_front.png", 100f);
+
+        _spriteHolder.head_Back = GetSprite($"{path}/head_back.png", 100f);
+        _spriteHolder.body_Back = GetSprite($"{path}/body_back.png", 100f);
+        _spriteHolder.arm_Back = GetSprite($"{path}/arm_back.png", 100f);
+        _spriteHolder.hand_Back = GetSprite($"{path}/hand_back.png", 100f);
+        _spriteHolder.leg_Back = GetSprite($"{path}/leg_back.png", 100f);
+    }
+
     public void SpriteLoader(string newPath = null, string bodyType = null)
     {
         if (!string.IsNullOrEmpty(newPath))
@@ -66,6 +83,7 @@ public class EntityLookController : SaveLoadSystem
 
         UpdateEntityLookAll(facingCamera);
         UpdateBodyType();
+        InventoryController.instance._entityPreview.UpdateAllByEntity(_entityLook, _spriteHolder, GameController.instance._player._holdingController._itemController._gearHolder);
     }
 
     public void UpdateEntityLookAll(bool isFacingCamera)
@@ -207,22 +225,5 @@ public class EntityLookController : SaveLoadSystem
                 _entityLook.armRightImage.transform.parent.parent.localPosition = new(0, 0.125f, 0);
                 break;
         }
-    }
-
-    private void LoadSpirtes()
-    {
-        string path = $"{skinsSavePath}{skinPath}";
-
-        _spriteHolder.head_Front = GetSprite($"{path}/head_front.png", 100f);
-        _spriteHolder.body_Front = GetSprite($"{path}/body_front.png", 100f);
-        _spriteHolder.arm_Front = GetSprite($"{path}/arm_front.png", 100f);
-        _spriteHolder.hand_Front = GetSprite($"{path}/hand_front.png", 100f);
-        _spriteHolder.leg_Front = GetSprite($"{path}/leg_front.png", 100f);
-
-        _spriteHolder.head_Back = GetSprite($"{path}/head_back.png", 100f);
-        _spriteHolder.body_Back = GetSprite($"{path}/body_back.png", 100f);
-        _spriteHolder.arm_Back = GetSprite($"{path}/arm_back.png", 100f);
-        _spriteHolder.hand_Back = GetSprite($"{path}/hand_back.png", 100f);
-        _spriteHolder.leg_Back = GetSprite($"{path}/leg_back.png", 100f);
     }
 }
