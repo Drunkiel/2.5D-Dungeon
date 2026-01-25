@@ -42,12 +42,18 @@ public class CombatUI : MonoBehaviour
             yield break;
 
         CombatController _combatController = CombatController.instance;
+        if (!_combatController.CheckClass(_skillDataParser, _skillInfos[buttonIndex]._collisionController))
+        {
+            ConsoleController.instance.ChatMessage(SenderType.System, $"This skill needs weapon for: {_skillDataParser._skillData.entityClass}", OutputType.Warning);
+            yield break;
+        }
+
         StartCoroutine(_combatController.CastSkill(_skillDataParser, _skillInfos[buttonIndex]._collisionController, this));
         _skillInfos[buttonIndex].canBeCasted = false;
         if (_skillInfos[buttonIndex].skillButton != null)
             _skillInfos[buttonIndex].skillButton.interactable = false;
 
-        // Wait until the animation is done
+        //Wait until the cooldown is done
         yield return new WaitForSeconds(GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Cooldown }));
 
         _skillInfos[buttonIndex].canBeCasted = true;

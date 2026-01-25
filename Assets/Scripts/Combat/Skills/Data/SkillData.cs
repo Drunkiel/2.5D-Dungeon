@@ -16,6 +16,7 @@ public class SkillData : ScriptableObject
     public float delay;
     public bool stopMovement;
     public float allowedDistance;
+    public EntityClass entityClass;
     public SkillType type;
     public bool worksOnSelf;
     public bool worksOnOthers;

@@ -7,7 +7,6 @@ public class ItemContainer : SaveLoadSystem
 {
     public static ItemContainer instance;
 
-    public List<ItemID> _allItems = new();
     public List<WeaponData> _weaponItems = new();
     public List<ArmorData> _armorItems = new();
     public List<CollectableData> _collectableItems = new();
@@ -30,18 +29,10 @@ public class ItemContainer : SaveLoadSystem
         Load(itemsSavePath + "Armor/Mage");
 
         Load(itemsSavePath + "Collectable");
-
-        // _allItems.AddRange(_weaponItems);
-        // _allItems.AddRange(_armorItems);
-        // _allItems.AddRange(_collectableItems);
     }
 
     public void UnLoadStuff()
     {
-        foreach (ItemID _itemID in _allItems)
-            Destroy(_itemID.gameObject);
-
-        _allItems.Clear();
         _weaponItems.Clear();
         _armorItems.Clear();
         _collectableItems.Clear();
@@ -119,11 +110,11 @@ public class ItemContainer : SaveLoadSystem
 
     public ItemID GetItemByName(string itemName)
     {
-        for (int i = 0; i < _allItems.Count; i++)
-        {
-            if (_allItems[i]._itemData.displayedName == itemName)
-                return _allItems[i];
-        }
+        // for (int i = 0; i < _allItems.Count; i++)
+        // {
+        //     if (_allItems[i]._itemData.displayedName == itemName)
+        //         return _allItems[i];
+        // }
 
         return null;
     }

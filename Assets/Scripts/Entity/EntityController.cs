@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,6 +14,14 @@ public enum Behaviour
     Passive,
     Neutral,
     Aggresive,
+}
+
+public enum EntityClass
+{
+    None,
+    Warrior,
+    Archer,
+    Mage
 }
 
 public enum State

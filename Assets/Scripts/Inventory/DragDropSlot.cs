@@ -59,6 +59,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
             {
                 //Find weapon
                 WeaponItem _weaponItem = _gearHolder.GetHoldingWeapon(currentSlot._itemID._weaponItem.holdingType);
+                GameController.instance._player.GetComponent<EntityController>()._entityInfo.entityClass = EntityClass.None;
 
                 //Destroy current holding weapon
                 if (_weaponItem != null)

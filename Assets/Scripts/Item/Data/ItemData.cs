@@ -7,6 +7,7 @@ public class ItemData : ScriptableObject
 {
     public short ID;
     public string displayedName;
+    public EntityClass entityClass;
     public ItemType itemType;
     public string spritePathFront;
     public string spritePathBack;

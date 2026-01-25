@@ -35,6 +35,9 @@ public class CombatController : MonoBehaviour
             yield break;
         }
 
+        if (!_entityController._entityInfo.entityClass.Equals(_skillDataParser._skillData.entityClass) && _skillDataParser._skillData.entityClass != EntityClass.None)
+            yield break;
+
         //Check if entity has enough mana to cast
         float manaUsage = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.ManaUsage });
         if (_casterStatistics.mana * _casterStatistics.manaUsageMultiplier < manaUsage)
@@ -174,6 +177,16 @@ public class CombatController : MonoBehaviour
                 _targetStatistics.RecalculateStatistics(GameController.instance._player._holdingController._itemController._gearHolder);
             }
         }
+    }
+
+    public bool CheckClass(SkillDataParser _skillDataParser, CollisionController _collisionController)
+    {
+        EntityController _entityController = _collisionController.transform.parent.parent.parent.GetComponent<EntityController>();
+
+        if (!_entityController._entityInfo.entityClass.Equals(_skillDataParser._skillData.entityClass) && _skillDataParser._skillData.entityClass != EntityClass.None)
+            return false;
+
+        return true;
     }
 
     public float PlayAnimation(Animator animator, string animationName)

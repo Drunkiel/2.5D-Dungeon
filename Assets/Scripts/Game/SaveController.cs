@@ -80,8 +80,9 @@ public class SaveController : SaveLoadSystem
         JsonConvert.PopulateObject(saveFile, _saveData);
 
         //Override game data
-        GameController.instance._player.GetComponent<EntityLookController>().skinPath = _saveData.skinPath;
-        GameController.instance._player.GetComponent<EntityLookController>().SpriteLoader();
+        EntityLookController _lookController = GameController.instance._player.GetComponent<EntityLookController>();
+        _lookController.skinPath = _saveData.skinPath;
+        _lookController.SpriteLoader();
         _teleportEvent.positions[0] = _saveData.position.ConvertToVector3();
         _teleportEvent.TeleportToScene(_saveData.sceneName);
 

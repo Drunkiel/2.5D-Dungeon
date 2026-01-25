@@ -2944,9 +2944,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9878cbfcca39c4db913e6a5d57c2bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRightName: 
+  weaponRightName: Sword of shit
   weaponLeftName: 
-  weaponBothName: 
   armorHeadName: Guard hat
   armorChestplateName: 
   armorBootsName: 
@@ -3129,6 +3128,7 @@ MonoBehaviour:
     ID: 0
     name: 
     title: Guard
+    entityClass: 0
     entity: 0
     behaviour: 2
   _statistics:
@@ -15751,85 +15751,6 @@ Transform:
   - {fileID: 1158756776}
   m_Father: {fileID: 1209877292}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1155094378
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1657302341}
-    m_Modifications:
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4.43
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.99
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.08932232
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.99600285
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 190.249
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2575987468025185657, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_Name
-      value: House (11)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2575987468025185657, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4c222cb5b7c18db40bf831fa5e71638e, type: 3}
---- !u!4 &1155094379 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1155094378}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1156554603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18888,6 +18809,7 @@ MonoBehaviour:
     ID: 5
     name: John
     title: 
+    entityClass: 0
     entity: 0
     behaviour: 0
   _statistics:
@@ -19042,7 +18964,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponRightName: 
   weaponLeftName: 
-  weaponBothName: 
   armorHeadName: Mage hat
   armorChestplateName: Mage ch
   armorBootsName: Mage boots
@@ -23772,8 +23693,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1841777524}
-  - {fileID: 1155094379}
   - {fileID: 1180085966}
   - {fileID: 2022709821}
   - {fileID: 1483619122}
@@ -25302,6 +25221,7 @@ MonoBehaviour:
     ID: 4
     name: Thomas
     title: Army General
+    entityClass: 0
     entity: 0
     behaviour: 0
   _statistics:
@@ -26625,85 +26545,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1926395232}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1841777523
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1657302341}
-    m_Modifications:
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.09837702
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.99514925
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 168.709
-      objectReference: {fileID: 0}
-    - target: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2575987468025185657, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_Name
-      value: House (10)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2575987468025185657, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4c222cb5b7c18db40bf831fa5e71638e, type: 3}
---- !u!4 &1841777524 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 159664687816366236, guid: 4c222cb5b7c18db40bf831fa5e71638e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1841777523}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1845426027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33113,6 +32954,7 @@ MonoBehaviour:
     ID: 2
     name: Bobby
     title: Blacksmith
+    entityClass: 0
     entity: 0
     behaviour: 0
   _statistics:

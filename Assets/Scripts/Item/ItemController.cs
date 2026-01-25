@@ -71,6 +71,7 @@ public class ItemController : SaveLoadSystem
         if (_itemID._weaponItem.weaponType == WeaponType.Sword)
             weaponCopy.transform.localPosition = new(0.45f, 0, 0);
 
+        GetComponent<EntityController>()._entityInfo.entityClass = _itemID._itemData.entityClass;
         return weaponCopy.GetComponent<ItemID>()._weaponItem;
     }
 

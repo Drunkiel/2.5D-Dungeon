@@ -211,6 +211,8 @@ public class EntityLookController : SaveLoadSystem
                 _entityLook.armRightImage.transform.parent.parent.localPosition = new(0, 0.075f, 0);
                 _entityLook.armRightImage.transform.parent.localPosition = new(-0.1f, 0, 0);
                 _entityLook.armLeftImage.transform.parent.localPosition = new(0.1f, 0, 0);
+                _entityLook.legRightImage.transform.parent.localPosition = new(-0.05f, 0, 0);
+                _entityLook.legLeftImage.transform.parent.localPosition = new(0.05f, 0, 0);
                 break;
 
             case BodyType.Muscular:
@@ -218,11 +220,15 @@ public class EntityLookController : SaveLoadSystem
                 _entityLook.armRightImage.transform.parent.parent.localPosition = new(0, 0.1f, 0);
                 _entityLook.armRightImage.transform.parent.localPosition = new(-0.13f, 0, 0);
                 _entityLook.armLeftImage.transform.parent.localPosition = new(0.13f, 0, 0);
+                _entityLook.legRightImage.transform.parent.localPosition = new(-0.05f, 0, 0);
+                _entityLook.legLeftImage.transform.parent.localPosition = new(0.05f, 0, 0);
                 break;
 
             case BodyType.Tall:
                 _entityLook.headImage.transform.localPosition = new(0, 0.2f, 0);
                 _entityLook.armRightImage.transform.parent.parent.localPosition = new(0, 0.125f, 0);
+                _entityLook.legRightImage.transform.parent.localPosition = new(-0.05f, 0, 0);
+                _entityLook.legLeftImage.transform.parent.localPosition = new(0.05f, 0, 0);
                 break;
         }
     }

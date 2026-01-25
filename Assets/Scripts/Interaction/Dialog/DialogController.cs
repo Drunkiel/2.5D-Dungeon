@@ -41,8 +41,7 @@ public class DialogController : MonoBehaviour
         if (_entityController != null)
         {
             _entityController.StopEntity(true);
-            //_entityController._entityWalk.GoTo(_playerController.transform.position, _playerController.transform.position);
-            EntityLookController _lookController = GameController.instance._player.GetComponent<EntityLookController>();
+            EntityLookController _lookController = _entityController.GetComponent<EntityLookController>();
             _dialogUI._npcPreview.UpdateAllByEntity(_lookController._entityLook, _lookController._spriteHolder, _entityController._holdingController._itemController._gearHolder);
             _dialogUI.nameText.text = _entityController._entityInfo.name;
 

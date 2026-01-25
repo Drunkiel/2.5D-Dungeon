@@ -51,6 +51,11 @@ public class ConsoleController : MonoBehaviour
         if (!chatInput.isFocused && !GameController.isPaused)
         {
             GetComponent<OpenCloseUI>().OpenClose();
+
+            //Reset messages to appear again
+            for (int i = 0; i < messages.Count; i++)
+                messages[i].GetComponent<Animator>().SetTrigger("Reset");
+
             chatInput.ActivateInputField();
         }
     }
