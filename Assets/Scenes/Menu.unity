@@ -3982,7 +3982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotID: 0
   _itemID: {fileID: 0}
-  itemPlacePrefab: {fileID: 717573261603681906, guid: 9157d9bc90092504591646f0403dc98d,
+  itemPlacePrefab: {fileID: 717573261603681906, guid: d3fb3e4d46c749f4ea53c538d0657645,
     type: 3}
   itemRestriction: 2
   holdingTypes: 
@@ -12627,6 +12627,7 @@ MonoBehaviour:
     ID: 0
     name: Player
     title: Hero from farlands
+    entityClass: 0
     entity: 0
     behaviour: 1
   _statistics:
@@ -22197,7 +22198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotID: 0
   _itemID: {fileID: 0}
-  itemPlacePrefab: {fileID: 717573261603681906, guid: 9157d9bc90092504591646f0403dc98d,
+  itemPlacePrefab: {fileID: 717573261603681906, guid: d3fb3e4d46c749f4ea53c538d0657645,
     type: 3}
   itemRestriction: 1
   holdingTypes: 0000000002000000
@@ -28231,7 +28232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotID: 0
   _itemID: {fileID: 0}
-  itemPlacePrefab: {fileID: 717573261603681906, guid: 9157d9bc90092504591646f0403dc98d,
+  itemPlacePrefab: {fileID: 717573261603681906, guid: d3fb3e4d46c749f4ea53c538d0657645,
     type: 3}
   itemRestriction: 1
   holdingTypes: 0100000002000000
@@ -28669,7 +28670,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0296077a866ec4ca8b1aed372888e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allItems: []
   _weaponItems: []
   _armorItems: []
   _collectableItems: []
@@ -31050,7 +31050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotID: 0
   _itemID: {fileID: 0}
-  itemPlacePrefab: {fileID: 717573261603681906, guid: 9157d9bc90092504591646f0403dc98d,
+  itemPlacePrefab: {fileID: 717573261603681906, guid: d3fb3e4d46c749f4ea53c538d0657645,
     type: 3}
   itemRestriction: 2
   holdingTypes: 
@@ -33598,6 +33598,12 @@ MonoBehaviour:
   _saveData:
     skinPath: 
     sceneName: 
+    _inventoryData:
+      weaponRightID: 0
+      weaponLeftID: 0
+      armorHeadID: 0
+      armorChestplateID: 0
+      armorBootsID: 0
 --- !u!114 &1885580520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34007,7 +34013,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotID: 0
   _itemID: {fileID: 0}
-  itemPlacePrefab: {fileID: 717573261603681906, guid: 9157d9bc90092504591646f0403dc98d,
+  itemPlacePrefab: {fileID: 717573261603681906, guid: d3fb3e4d46c749f4ea53c538d0657645,
     type: 3}
   itemRestriction: 2
   holdingTypes: 

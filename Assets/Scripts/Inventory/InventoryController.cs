@@ -96,6 +96,9 @@ public class InventoryController : MonoBehaviour
                 _itemController.SetArmor(_itemID);
                 break;
         }
+        ItemID _itemCopy = Instantiate(_itemID.gameObject, slot.transform).GetComponent<ItemID>();
+        slot.transform.parent.GetComponent<InventorySlot>()._itemID = _itemCopy;
+        slot.GetComponent<DragDropSlot>().currentSlot = _gearSlots[slotIndex];
     }
 
     public void RemoveItemByID(int itemID)

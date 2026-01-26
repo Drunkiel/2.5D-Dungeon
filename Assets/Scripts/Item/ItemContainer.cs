@@ -119,6 +119,38 @@ public class ItemContainer : SaveLoadSystem
         return null;
     }
 
+    public ItemID GetItemByIDAndType(int itemID, ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Weapon:
+                for (int i = 0; i < _weaponItems.Count; i++)
+                {
+                    if (_weaponItems[i]._itemData.ID == itemID)
+                        return CreateWeaponItem(_weaponItems[i]);
+                }
+                return null;
+
+            case ItemType.Armor:
+                for (int i = 0; i < _armorItems.Count; i++)
+                {
+                    if (_armorItems[i]._itemData.ID == itemID)
+                        return CreateArmorItem(_armorItems[i]);
+                }
+                return null;
+
+            case ItemType.Collectable:
+                for (int i = 0; i < _collectableItems.Count; i++)
+                {
+                    if (_collectableItems[i]._itemData.ID == itemID)
+                        return CreateCollectableItem(_collectableItems[i]);
+                }
+                return null;
+        }
+
+        return null;
+    }
+
     public ItemID GetItemByNameAndType(string itemName, ItemType itemType)
     {
         switch (itemType)
