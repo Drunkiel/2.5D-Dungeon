@@ -108,13 +108,54 @@ public class ItemContainer : SaveLoadSystem
         _collectableData.iconSprite = GetSprite($"{path}/{_collectableData._itemData.spriteIconPath}", 20f);
     }
 
+    public ItemID GetItemByID(int itemID)
+    {
+        //Look through weapons
+        for (int i = 0; i < _weaponItems.Count; i++)
+        {
+            if (_weaponItems[i]._itemData.ID == itemID)
+                return CreateWeaponItem(_weaponItems[i]);
+        }
+
+        //Look through armor
+        for (int i = 0; i < _armorItems.Count; i++)
+        {
+            if (_armorItems[i]._itemData.ID == itemID)
+                return CreateArmorItem(_armorItems[i]);
+        }
+
+        //Look through collectables
+        for (int i = 0; i < _collectableItems.Count; i++)
+        {
+            if (_collectableItems[i]._itemData.ID == itemID)
+                return CreateCollectableItem(_collectableItems[i]);
+        }
+
+        return null;
+    }
+
     public ItemID GetItemByName(string itemName)
     {
-        // for (int i = 0; i < _allItems.Count; i++)
-        // {
-        //     if (_allItems[i]._itemData.displayedName == itemName)
-        //         return _allItems[i];
-        // }
+        //Look through weapons
+        for (int i = 0; i < _weaponItems.Count; i++)
+        {
+            if (_weaponItems[i]._itemData.displayedName == itemName)
+                return CreateWeaponItem(_weaponItems[i]);
+        }
+
+        //Look through armor
+        for (int i = 0; i < _armorItems.Count; i++)
+        {
+            if (_armorItems[i]._itemData.displayedName == itemName)
+                return CreateArmorItem(_armorItems[i]);
+        }
+
+        //Look through collectables
+        for (int i = 0; i < _collectableItems.Count; i++)
+        {
+            if (_collectableItems[i]._itemData.displayedName == itemName)
+                return CreateCollectableItem(_collectableItems[i]);
+        }
 
         return null;
     }
