@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum ItemType
@@ -29,6 +30,9 @@ public class ItemController : SaveLoadSystem
         //Cloning item to founded slot and adding it to inventory
         GameObject itemClone = Instantiate(_itemID.gameObject, _inventoryController._inventorySlots[availableSlot].transform);
         _inventoryController.AddToInventory(itemClone.GetComponent<ItemID>(), availableSlot);
+
+        if (isPlayer)
+            ConsoleController.instance.ChatMessage(SenderType.Hidden, "Picked");
 
         Destroy(_itemID.gameObject);
         return true;

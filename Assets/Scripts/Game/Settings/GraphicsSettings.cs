@@ -11,7 +11,7 @@ public class GraphicsSettings : MonoBehaviour
     public int qualityIndex;
     public int fpsLimit;
     public bool isVSync;
-    
+
     [SerializeField] private TMP_Text fullscreenText;
     [SerializeField] private TMP_Text resolutionText;
     [SerializeField] private TMP_Text qualityText;
@@ -44,7 +44,7 @@ public class GraphicsSettings : MonoBehaviour
         else
         {
             QualitySettings.vSyncCount = 0;
-            UpdateFPS();
+            UpdateFPS(skip);
         }
 
         vSyncText.text = isVSync ? "On" : "Off";
@@ -79,17 +79,20 @@ public class GraphicsSettings : MonoBehaviour
         );
     }
 
-    public void UpdateFPS()
+    public void UpdateFPS(bool skip = false)
     {
-        int newMaxFPS;
+        int newMaxFPS = fpsLimit;
 
-        try
+        if (!skip)
         {
-            newMaxFPS = int.Parse(fpsInput.text);
-        }
-        catch (Exception)
-        {
-            newMaxFPS = 0;
+            try
+            {
+                newMaxFPS = int.Parse(fpsInput.text);
+            }
+            catch (Exception)
+            {
+                newMaxFPS = 0;
+            }
         }
 
         if (newMaxFPS < 30)
@@ -98,6 +101,8 @@ public class GraphicsSettings : MonoBehaviour
             newMaxFPS = 30;
         }
 
+        fpsLimit = newMaxFPS;
+        fpsInput.text = fpsLimit.ToString();
         if (QualitySettings.vSyncCount != 0)
             return;
 

@@ -64,6 +64,12 @@ public class SettingsController : SaveLoadSystem
         _graphicsSettings.UpdateResolution(true);
         _graphicsSettings.UpdateQuality(true);
         _graphicsSettings.UpdateVSync(true);
+        _graphicsSettings.UpdateFPS(true);
+    }
+
+    public void ForceSave()
+    {
+        Save(savePath + "settings.json");
     }
 
     public void ManagePauseUI()

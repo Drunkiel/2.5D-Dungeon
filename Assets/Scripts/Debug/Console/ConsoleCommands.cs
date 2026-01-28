@@ -23,6 +23,16 @@ public class ConsoleCommands : MonoBehaviour
         ItemContainer.instance.LoadStuff();
     }
 
+    public void GiveItem(int itemID)
+    {
+        InventoryController _inventoryController = InventoryController.instance;
+        int availableSlotIndex = _inventoryController.GetAvailableSlotIndex();
+        if (availableSlotIndex != -1)
+            _inventoryController.AddToInventory(ItemContainer.instance.GetItemByID(itemID), availableSlotIndex);
+        else
+            _consoleController.ChatMessage(SenderType.System, "There is no space in the inventory", OutputType.Warning);
+    }
+
     public void ReloadStatistics()
     {
         EntityController _playerController = GameController.instance._player;
