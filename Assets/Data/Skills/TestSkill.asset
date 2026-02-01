@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3abc020636c80a746bd244bafa864eec, type: 3}
   m_Name: TestSkill
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 3
   displayedName: 
   spritePath: Heart.png
   spriteIconPath: 
@@ -21,6 +21,8 @@ MonoBehaviour:
   center: {x: 0, y: 0, z: 0}
   delay: 0
   stopMovement: 0
+  allowedDistance: 0
+  entityClass: 0
   type: 0
   worksOnSelf: 0
   worksOnOthers: 0

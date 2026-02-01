@@ -5,4 +5,5 @@ public class SaveData
     public string sceneName;
     public EasyVector3 position;
     public InventoryData _inventoryData;
+    public SkillSaveData _skillData;
 }

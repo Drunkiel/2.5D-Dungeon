@@ -16,7 +16,7 @@ public class CombatUI : MonoBehaviour
 {
     public List<SkillInfo> _skillInfos = new();
 
-    private void Start()
+    public void a()
     {
         SkillHolder _skillHolder = GameController.instance._player.GetComponent<SkillController>()._skillHolder;
         for (int i = 0; i < _skillInfos.Count; i++)

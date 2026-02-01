@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum ElementalTypes
 {
@@ -51,29 +52,32 @@ public class SkillController : MonoBehaviour
     public CombatUI _combatUI;
     public Transform skillsParent;
 
-    void Awake()
+    public void SetUpSkill(SkillDataParser _skillDataParser, int slotIndex)
     {
-        for (int i = 0; i < _skillHolder.skillNames.Count; i++)
+        _skillHolder._skillDatas.Add(_skillDataParser);
+
+        if (_skillHolder._skillDatas[^1] == null)
         {
-            _skillHolder._skillDatas.Add(SkillContainer.instance.GetSkillByName(_skillHolder.skillNames[i]));
-
-            if (_skillHolder._skillDatas[i] == null)
-            {
-                ConsoleController.instance.ChatMessage(SenderType.System, $"There is no skill named: {_skillHolder.skillNames[i]}");
-                continue;
-            }
-
-            CollisionController _collisionController = Instantiate(_skillHolder._skillDatas[i].skillPrefab, skillsParent).GetComponent<CollisionController>();
-            if (_combatUI._skillInfos.Count == _skillHolder.skillNames.Count)
-                _combatUI._skillInfos[i]._collisionController = _collisionController;
-            else
-                _combatUI._skillInfos.Add(new() { canBeCasted = true, _collisionController = _collisionController });
-
-            _collisionController.Configure(
-                GetComponent<EntityController>()._entityInfo.entity == EntityAttitude.Friendly,
-                _skillHolder._skillDatas[i]._skillData
-            );
+            ConsoleController.instance.ChatMessage(SenderType.System, $"There is no skill named: {_skillDataParser._skillData.displayedName}");
+            return;
         }
+
+        CollisionController _collisionController = Instantiate(_skillHolder._skillDatas[^1].skillPrefab, skillsParent).GetComponent<CollisionController>();
+        if (_combatUI._skillInfos.Count == _skillHolder.skillsID.Count)
+            _combatUI._skillInfos[^1]._collisionController = _collisionController;
+        else
+        {
+            Button skillButton = InventoryController.instance._skillSlots[slotIndex]._itemID.GetComponent<Button>();
+            _combatUI._skillInfos.Add(new() { skillButton = skillButton, canBeCasted = true, _collisionController = _collisionController });
+        }
+
+        _collisionController.Configure(
+            GetComponent<EntityController>()._entityInfo.entity == EntityAttitude.Friendly,
+            _skillHolder._skillDatas[^1]._skillData
+        );
+
+        if (_combatUI._skillInfos[^1].skillButton != null)
+            _combatUI.SetSkillToBTN(_combatUI._skillInfos.Count - 1, _skillHolder._skillDatas[^1]);
     }
 
     public void CastSkill(int index)

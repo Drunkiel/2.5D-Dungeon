@@ -6,14 +6,9 @@ public class QuickInventoryController : MonoBehaviour
 {
     [SerializeField] private bool lockedUp;
     [SerializeField] private Sprite[] lockStateSprites;
-    [SerializeField] private Image lockImage; 
+    [SerializeField] private Image lockImage;
     [SerializeField] private GameObject backgroundImage;
     public List<InventorySlot> _inventorySlots = new();
-
-    private void Start()
-    {
-        ChangeLockState();
-    }
 
     public bool GetLockedState()
     {

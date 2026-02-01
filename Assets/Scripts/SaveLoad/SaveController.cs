@@ -24,6 +24,7 @@ public class SaveController : SaveLoadSystem
         _saveData.sceneName = PortalController.instance._currScene.sceneName;
         _saveData.position = new(_playerController.transform.position);
         _saveData._inventoryData = new(_playerController._holdingController._itemController._gearHolder, InventoryController.instance._inventorySlots);
+        _saveData._skillData = new(InventoryController.instance._skillSlots);
 
         //Save data to file
         string jsonData = JsonConvert.SerializeObject(_saveData, Formatting.Indented, new JsonSerializerSettings
@@ -60,10 +61,12 @@ public class SaveController : SaveLoadSystem
         LoadPosition();
         //Load inventory
         LoadInventory();
+        //Load skills
+        LoadSkills();
         //Load Skin
         LoadSkin(_playerController);
 
-        print("Loaded");
+        PopUpController.instance.CreatePopUp(PopUpInfo.VisitPlace, "Save is loaded");
     }
 
     private void LoadPosition()
@@ -95,6 +98,17 @@ public class SaveController : SaveLoadSystem
         for (int i = 0; i < _saveData._inventoryData.inventoryItemIDs.Count; i++)
             if (_saveData._inventoryData.inventoryItemIDs[i] != 0)
                 _inventoryController.LoadToInventory(_itemContainer.GetItemByID(_saveData._inventoryData.inventoryItemIDs[i]), i);
+    }
+
+    private void LoadSkills()
+    {
+        InventoryController _inventoryController = InventoryController.instance;
+
+        for (int i = 0; i < _inventoryController._skillSlots.Count; i++)
+        {
+            if (_saveData._skillData.skillIDs[i] != 0)
+                _inventoryController.LoadToSkillInventory(SkillContainer.instance.GetSkillByID(_saveData._skillData.skillIDs[i]), i);
+        }
     }
 
     private void LoadSkin(EntityController _playerController)

@@ -20,9 +20,9 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             return;
 
         //Checks if item is correct type
+        ItemID _droppedItemID = eventData.pointerDrag.transform.GetChild(1).GetComponent<ItemID>();
         if (itemRestriction != ItemType.None)
         {
-            ItemID _droppedItemID = eventData.pointerDrag.transform.GetChild(1).GetComponent<ItemID>();
             if (_droppedItemID._itemData == null)
             {
                 if (itemRestriction != ItemType.Spell)
@@ -31,6 +31,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             else if (_droppedItemID._itemData.itemType != itemRestriction)
                 return;
         }
+        else if (_droppedItemID._itemData == null)
+            return;
 
         ItemController _itemController = GameController.instance._player._holdingController._itemController;
         switch (itemRestriction)

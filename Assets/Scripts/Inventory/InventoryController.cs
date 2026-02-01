@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class InventoryController : MonoBehaviour
 {
     public static InventoryController instance;
+    public QuickInventoryController _quickInventory;
 
-    private readonly int countOfSlots = 24;
     public List<InventorySlot> _gearSlots = new();
     public List<InventorySlot> _inventorySlots = new();
+    public List<InventorySlot> _skillSlots = new();
     [SerializeField] private GameObject slotPrefab;
     public Transform slotParent;
 
@@ -21,14 +22,6 @@ public class InventoryController : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < countOfSlots; i++)
-        {
-            GameObject newSlot = Instantiate(slotPrefab, slotParent);
-            InventorySlot slot = newSlot.GetComponent<InventorySlot>();
-            slot.slotID = i;
-            _inventorySlots.Add(slot);
-        }
-
         EntityLookController _lookController = GameController.instance._player.GetComponent<EntityLookController>();
         _entityPreview.UpdateAllByEntity(_lookController._entityLook, _lookController._spriteHolder, GameController.instance._player._holdingController._itemController._gearHolder);
 
@@ -118,6 +111,21 @@ public class InventoryController : MonoBehaviour
         slot.GetComponent<DragDropSlot>().currentSlot = _inventorySlots[slotIndex];
     }
 
+    public void LoadToSkillInventory(SkillDataParser _skillDataParser, int slotIndex)
+    {
+        GameObject slot = Instantiate(_skillSlots[slotIndex].itemPlacePrefab, _skillSlots[slotIndex].transform);
+        ItemID _itemID = slot.transform.GetChild(1).GetComponent<ItemID>();
+        _itemID._skillDataParser = _skillDataParser;
+        SkillController _skillController = GameController.instance._player._holdingController._skillsController;
+        _skillController._skillHolder.skillsID.Add(_itemID._skillDataParser._skillData.ID);
+
+        slot.transform.GetChild(1).GetComponent<Image>().sprite = _itemID._skillDataParser.iconSprite;
+        slot.transform.parent.GetComponent<InventorySlot>()._itemID = _itemID;
+        slot.GetComponent<DragDropSlot>().currentSlot = _skillSlots[slotIndex];
+
+        _skillController.SetUpSkill(_skillDataParser, slotIndex);
+    }
+
     public void RemoveItemByID(int itemID)
     {
         for (int i = 0; i < _inventorySlots.Count; i++)
@@ -146,7 +154,7 @@ public class InventoryController : MonoBehaviour
 
     public int GetAvailableSlotIndex()
     {
-        for (int i = 0; i < countOfSlots; i++)
+        for (int i = 0; i < _inventorySlots.Count; i++)
         {
             if (_inventorySlots[i]._itemID == null)
                 return i;

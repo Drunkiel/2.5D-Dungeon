@@ -22,6 +22,17 @@ public class SkillContainer : SaveLoadSystem
         }
     }
 
+    public SkillDataParser GetSkillByID(int skillID)
+    {
+        for (int i = 0; i < _allSkills.Count; i++)
+        {
+            if (_allSkills[i]._skillData.ID == skillID)
+                return _allSkills[i];
+        }
+
+        return null;
+    }
+
     public SkillDataParser GetSkillByName(string skillName)
     {
         for (int i = 0; i < _allSkills.Count; i++)

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -126,7 +127,9 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         if (eventData.button == PointerEventData.InputButton.Right)
             ComparisonController.instance.MakeComparison(currentSlot._itemID);
 
-        rectTransform.SetParent(InventoryController.instance.slotParent.parent);
+        //!TEMPORARY SOLUTION
+        if (currentSlot.itemRestriction != ItemType.Spell)
+            rectTransform.SetParent(InventoryController.instance.slotParent.parent);
     }
 
     public void OnDrop(PointerEventData eventData)

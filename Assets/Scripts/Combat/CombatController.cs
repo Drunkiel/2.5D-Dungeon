@@ -6,8 +6,6 @@ public class CombatController : MonoBehaviour
 {
     public static CombatController instance;
 
-    [SerializeField] private OpenCloseUI _openCloseUI;
-
     private void Awake()
     {
         instance = this;
