@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController instance;
     public EntityController _player;
+    [SerializeField] private Canvas mainCanvas;
 
     public static bool isPC = true;
     public static bool isPaused;
@@ -45,4 +46,6 @@ public class GameController : MonoBehaviour
 
         SceneManager.UnloadSceneAsync(currentScene);
     }
+
+    public Canvas GetCanvas() => mainCanvas;
 }

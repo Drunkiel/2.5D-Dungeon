@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -79,7 +78,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         if (lockedUp)
             return;
 
-        rectTransform.anchoredPosition += eventData.delta / 1.5f;
+        rectTransform.anchoredPosition += eventData.delta / GameController.instance.GetCanvas().scaleFactor;
     }
 
     public void OnEndDrag(PointerEventData eventData)
