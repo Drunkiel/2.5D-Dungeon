@@ -33,9 +33,9 @@ public static class GridTerrainPainterSceneGUI
             return;
 
         Vector3 world = ray.GetPoint(dist);
-        float size = generator.data.cellSize;
+        float size = generator.data.asset.cellSize / 2;
 
-        Vector2Int cell = new Vector2Int(
+        Vector2Int cell = new(
             Mathf.FloorToInt(world.x / size),
             Mathf.FloorToInt(world.z / size)
         );
@@ -53,14 +53,14 @@ public static class GridTerrainPainterSceneGUI
 
         //Erase
         Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-        Plane zeroPlane = new Plane(Vector3.up, Vector3.zero);
+        Plane zeroPlane = new(Vector3.up, Vector3.zero);
 
         if (zeroPlane.Raycast(ray, out float dist))
         {
             Vector3 world = ray.GetPoint(dist);
-            Vector2Int cell = new Vector2Int(
-                Mathf.FloorToInt(world.x / gen.data.cellSize),
-                Mathf.FloorToInt(world.z / gen.data.cellSize)
+            Vector2Int cell = new(
+                Mathf.FloorToInt(world.x / gen.data.asset.cellSize),
+                Mathf.FloorToInt(world.z / gen.data.asset.cellSize)
             );
 
             if (gen.data.TryGetTile(cell, out var tile))
@@ -75,7 +75,7 @@ public static class GridTerrainPainterSceneGUI
         if (GridTerrainPainterWindow.paintMode == PaintMode.Paint)
             return GridTerrainPainterWindow.currentHeight;
 
-        //Erase - show where is erasing
+        //Eraser display
         if (gen.data.TryGetTile(cell, out var tile))
             return tile.height;
 

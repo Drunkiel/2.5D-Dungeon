@@ -65,6 +65,12 @@ public class GridTerrainPainterWindow : EditorWindow
 
         if (GUILayout.Button("Reload Tiles"))
             LoadTiles();
+
+        if (GUILayout.Button("Save Terrain"))
+            SaveTerrain();
+
+        if (GUILayout.Button("Load Terrain"))
+            LoadAsset();
     }
 
     void DrawTileSelection()
@@ -91,5 +97,29 @@ public class GridTerrainPainterWindow : EditorWindow
             selectedIndex = newIndex;
             currentRuleTile = availableTiles[selectedIndex];
         }
+    }
+
+    void SaveTerrain()
+    {
+        GridTerrainComponent terrain =
+            FindObjectOfType<GridTerrainComponent>();
+
+        if (terrain == null)
+        {
+            Debug.LogError("No GridTerrainComponent in scene");
+            return;
+        }
+
+        terrain.SaveAsAsset();
+        terrain.data.SaveToAsset();
+    }
+
+    void LoadAsset()
+    {
+        GridTerrainData data = FindObjectOfType<GridTerrainData>();
+        GridTerrainGenerator generator = FindObjectOfType<GridTerrainGenerator>();
+
+        data.tiles = data.asset.GetDictionary();
+        generator.Rebuild();
     }
 }

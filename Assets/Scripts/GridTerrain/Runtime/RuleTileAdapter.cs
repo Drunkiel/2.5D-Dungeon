@@ -1,43 +1,8 @@
 using UnityEngine;
-using System.Reflection;
-using System.Collections;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public static class RuleTileAdapter
 {
-    static FieldInfo rulesField;
-
-    static RuleTileAdapter()
-    {
-        rulesField = FindRulesField();
-    }
-
-    static FieldInfo FindRulesField()
-    {
-        System.Type type = typeof(RuleTile);
-
-        while (type != null)
-        {
-            var fields = type.GetFields(
-                BindingFlags.Instance |
-                BindingFlags.NonPublic |
-                BindingFlags.Public
-            );
-
-            foreach (var f in fields)
-            {
-                if (typeof(IEnumerable).IsAssignableFrom(f.FieldType))
-                {
-                    if (f.Name.ToLower().Contains("rule"))
-                        return f;
-                }
-            }
-
-            type = type.BaseType;
-        }
-
-        return null;
-    }
-
     public static Sprite ResolveSprite(
         RuleTile ruleTile,
         Vector2Int position,
@@ -46,26 +11,13 @@ public static class RuleTileAdapter
         if (ruleTile == null || data == null)
             return null;
 
-        if (rulesField == null)
+        for (int i = 0; i < ruleTile.m_TilingRules.Count; i++)
         {
-            Debug.LogError(
-                $"RuleTileAdapter: Unable to locate rules field via reflection ({ruleTile.name})"
-            );
-            return ruleTile.m_DefaultSprite;
-        }
-
-        var rulesObj = rulesField.GetValue(ruleTile);
-        if (rulesObj is not IEnumerable rules)
-            return ruleTile.m_DefaultSprite;
-
-        foreach (var rule in rules)
-        {
-            if (rule == null)
-                continue;
+            var rule = ruleTile.m_TilingRules[i];
 
             if (RuleMatches(rule, position, data, ruleTile))
             {
-                Sprite sprite = GetRuleSprite(rule);
+                Sprite sprite = GetRuleSprite(rule, position, i);
                 if (sprite != null)
                     return sprite;
             }
@@ -75,27 +27,33 @@ public static class RuleTileAdapter
     }
 
     static bool RuleMatches(
-        object rule,
-        Vector2Int pos,
+        RuleTile.TilingRule rule,
+        Vector2Int centerPos,
         GridTerrainData data,
         RuleTile ruleTile)
     {
-        var neighborsField = rule.GetType().GetField(
-            "m_Neighbors",
-            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
-        );
+        var neighbors = rule.m_Neighbors;
+        var positions = rule.m_NeighborPositions;
 
-        if (neighborsField == null)
+        if (neighbors == null || positions == null)
             return false;
 
-        int[] neighbors = neighborsField.GetValue(rule) as int[];
-        if (neighbors == null || neighbors.Length < 4)
+        if (neighbors.Count != positions.Count)
             return false;
 
-        return Check(pos + Vector2Int.up, neighbors[0], data, ruleTile) &&
-               Check(pos + Vector2Int.right, neighbors[1], data, ruleTile) &&
-               Check(pos + Vector2Int.down, neighbors[2], data, ruleTile) &&
-               Check(pos + Vector2Int.left, neighbors[3], data, ruleTile);
+        for (int i = 0; i < neighbors.Count; i++)
+        {
+            Vector3Int offset3D = positions[i];
+            Vector2Int checkPos = centerPos + new Vector2Int(
+                offset3D.x,
+                offset3D.y
+            );
+
+            if (!Check(checkPos, neighbors[i], data, ruleTile))
+                return false;
+        }
+
+        return true;
     }
 
     static bool Check(
@@ -110,24 +68,46 @@ public static class RuleTileAdapter
 
         return rule switch
         {
-            1 => same,
-            2 => !same,
-            _ => true
+            1 => same,      // MUST HAVE
+            2 => !same,     // MUST NOT HAVE
+            _ => true       // DON'T CARE
         };
     }
 
-    static Sprite GetRuleSprite(object rule)
+    static Sprite GetRuleSprite(
+        RuleTile.TilingRule rule,
+        Vector2Int position,
+        int ruleIndex)
     {
-        var spritesField = rule.GetType().GetField(
-            "m_Sprites",
-            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
-        );
+        var sprites = rule.m_Sprites;
 
-        if (spritesField == null)
+        if (sprites == null || sprites.Length == 0)
             return null;
 
-        return spritesField.GetValue(rule) is Sprite[] sprites && sprites.Length > 0
-            ? sprites[0]
-            : null;
+        //Single sprite
+        if (sprites.Length == 1)
+            return sprites[0];
+
+        //Select random sprite
+        if (rule.m_Output != OutputSprite.Random)
+            return sprites[0];
+
+        int seed = Hash(position, ruleIndex);
+        int index = Mathf.Abs(seed) % sprites.Length;
+
+        return sprites[index];
     }
+
+    static int Hash(Vector2Int pos, int ruleIndex)
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 31 + pos.x;
+            hash = hash * 31 + pos.y;
+            hash = hash * 31 + ruleIndex;
+            return hash;
+        }
+    }
+
 }

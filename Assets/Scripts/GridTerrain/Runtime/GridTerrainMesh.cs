@@ -5,46 +5,62 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class GridTerrainMesh : MonoBehaviour
 {
-    Mesh mesh;
-    GridTerrainData data;
+    public Mesh mesh;
+
+    MeshFilter mf;
 
     void OnEnable()
     {
-        EnsureInitialized();
+        mf = GetComponent<MeshFilter>();
     }
 
-    void Awake()
+    void EnsureMeshReference()
     {
-        EnsureInitialized();
-    }
+        if (mf == null)
+            mf = GetComponent<MeshFilter>();
 
-    void EnsureInitialized()
-    {
-        if (data == null)
-            data = GetComponent<GridTerrainData>();
-
-        if (mesh == null)
+        if (mf.sharedMesh != null)
         {
-            mesh = new Mesh();
-            mesh.name = "GridTerrainMesh";
-
-            MeshFilter mf = GetComponent<MeshFilter>();
-            mf.sharedMesh = mesh;
+            mesh = mf.sharedMesh;
+            return;
         }
+
+        //Create mesh if null
+        if (mesh == null)
+            mesh = new Mesh
+            {
+                name = "GridTerrain_Runtime"
+            };
+
+        mf.sharedMesh = mesh;
+    }
+
+    public Mesh GetMesh()
+    {
+        EnsureMeshReference();
+        return mesh;
     }
 
     public void Build(GridTerrainData sourceData)
     {
-        EnsureInitialized();
-
-        if (sourceData == null || sourceData.tiles == null)
+        if (sourceData == null)
             return;
+
+        EnsureMeshReference();
+
+        if ((sourceData.tiles == null || sourceData.tiles.Count == 0)
+            && mesh != null
+            && mesh.vertexCount > 0)
+        {
+            print($"{sourceData.tiles == null}, {sourceData.tiles.Count == 0}, {mesh != null}, {mesh.vertexCount > 0}");
+            return;
+        }
 
         List<Vector3> vertices = new();
         List<int> triangles = new();
         List<Vector2> uvs = new();
 
-        foreach (var kvp in sourceData.tiles)
+        foreach (var kvp in sourceData.AllTiles())
         {
             AddTile(
                 kvp.Key,
@@ -85,7 +101,7 @@ public class GridTerrainMesh : MonoBehaviour
 
         SpriteUV.Get(sprite, out Vector2 uvMin, out Vector2 uvMax);
 
-        float size = data.cellSize;
+        float size = data.asset.cellSize / 2;
         float height = tile.height;
 
         int vIndex = vertices.Count;
