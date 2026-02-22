@@ -12,7 +12,13 @@ public class GridTerrainPainterWindow : EditorWindow
     public static PaintMode paintMode = PaintMode.Paint;
 
     public static RuleTile currentRuleTile;
-    public static int currentHeight = 0;
+
+    public static bool autoSnapHeight = true;
+    public static float currentHeight = 0;
+
+    public static Vector3 currentRotation = Vector3.zero;
+    public static bool snapRotation = true;
+    public static float snapStep = 90f;
 
     RuleTile[] availableTiles;
     string[] tileNames;
@@ -58,7 +64,53 @@ public class GridTerrainPainterWindow : EditorWindow
         {
             DrawTileSelection();
             GUILayout.Space(5);
-            currentHeight = EditorGUILayout.IntField("Height (Y)", currentHeight);
+
+
+            GridTerrainData data = FindObjectOfType<GridTerrainData>();
+
+            if (data != null)
+            {
+                GUILayout.Space(10);
+                GUILayout.Label("Height Controls", EditorStyles.boldLabel);
+
+                EditorGUILayout.BeginHorizontal();
+
+                if (GUILayout.Button("-"))
+                {
+                    currentHeight -= data.heightStep;
+                    currentHeight = Mathf.Round(currentHeight / data.heightStep) * data.heightStep;
+                }
+
+                currentHeight = EditorGUILayout.FloatField("Height (Y)", currentHeight);
+
+                if (GUILayout.Button("+"))
+                {
+                    currentHeight += data.heightStep;
+                    currentHeight = Mathf.Round(currentHeight / data.heightStep) * data.heightStep;
+                }
+
+                EditorGUILayout.EndHorizontal();
+
+                data.heightStep = EditorGUILayout.FloatField("Height Step", data.heightStep);
+            }
+
+            GUILayout.Space(10);
+            GUILayout.Label("Rotation", EditorStyles.boldLabel);
+
+            snapRotation = EditorGUILayout.Toggle("Snap Rotation", snapRotation);
+
+            currentRotation = EditorGUILayout.Vector3Field(
+                "Rotation (XYZ)",
+                currentRotation
+            );
+
+            if (data != null)
+            {
+                data.autoSnapHeight = EditorGUILayout.Toggle(
+                    "Auto Snap Height",
+                    data.autoSnapHeight
+                );
+            }
         }
 
         GUILayout.Space(10);

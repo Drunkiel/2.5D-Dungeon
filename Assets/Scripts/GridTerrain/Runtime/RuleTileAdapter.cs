@@ -44,6 +44,7 @@ public static class RuleTileAdapter
         for (int i = 0; i < neighbors.Count; i++)
         {
             Vector3Int offset3D = positions[i];
+
             Vector2Int checkPos = centerPos + new Vector2Int(
                 offset3D.x,
                 offset3D.y
@@ -62,9 +63,19 @@ public static class RuleTileAdapter
         GridTerrainData data,
         RuleTile ruleTile)
     {
-        bool same =
-            data.TryGetTile(pos, out TileData t) &&
-            t.tileId == ruleTile.name;
+        bool same = false;
+
+        if (data.TryGetTiles(pos, out var list))
+        {
+            foreach (var tile in list)
+            {
+                if (tile.tileId == ruleTile.name)
+                {
+                    same = true;
+                    break;
+                }
+            }
+        }
 
         return rule switch
         {
@@ -84,11 +95,9 @@ public static class RuleTileAdapter
         if (sprites == null || sprites.Length == 0)
             return null;
 
-        //Single sprite
         if (sprites.Length == 1)
             return sprites[0];
 
-        //Select random sprite
         if (rule.m_Output != OutputSprite.Random)
             return sprites[0];
 
@@ -109,5 +118,4 @@ public static class RuleTileAdapter
             return hash;
         }
     }
-
 }

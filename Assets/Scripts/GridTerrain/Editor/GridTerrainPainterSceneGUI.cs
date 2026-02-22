@@ -26,89 +26,96 @@ public static class GridTerrainPainterSceneGUI
         Event e = Event.current;
 
         Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
-        float planeHeight = GetRaycastPlaneHeight(generator);
-        Plane plane = new(Vector3.up, new Vector3(0, planeHeight, 0));
 
-        if (!plane.Raycast(ray, out float dist))
-            return;
-
-        Vector3 world = ray.GetPoint(dist);
-        float size = generator.data.asset.cellSize / 2;
-
-        Vector2Int cell = new(
-            Mathf.FloorToInt(world.x / size),
-            Mathf.FloorToInt(world.z / size)
-        );
-
-        float previewHeight = GetPreviewHeight(cell, generator);
-
-        DrawPreview(cell, size, previewHeight);
-        HandlePainting(e, cell, generator);
-    }
-
-    static float GetRaycastPlaneHeight(GridTerrainGenerator gen)
-    {
-        if (GridTerrainPainterWindow.paintMode == PaintMode.Paint)
-            return GridTerrainPainterWindow.currentHeight;
-
-        //Erase
-        Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-        Plane zeroPlane = new(Vector3.up, Vector3.zero);
-
-        if (zeroPlane.Raycast(ray, out float dist))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
         {
-            Vector3 world = ray.GetPoint(dist);
+            Vector3 world = hit.point;
+
+            float size = generator.data.asset.cellSize / 2f;
+
             Vector2Int cell = new(
-                Mathf.FloorToInt(world.x / gen.data.asset.cellSize),
-                Mathf.FloorToInt(world.z / gen.data.asset.cellSize)
+                Mathf.FloorToInt(world.x / size),
+                Mathf.FloorToInt(world.z / size)
             );
 
-            if (gen.data.TryGetTile(cell, out var tile))
-                return tile.height;
+            DrawPreview(cell, generator);
+            HandlePainting(e, cell, generator);
+        }
+    }
+
+    static void DrawPreview(
+        Vector2Int cell,
+        GridTerrainGenerator generator)
+    {
+        var data = generator.data;
+        if (data == null)
+            return;
+
+        float size = data.asset.cellSize / 2f;
+
+        float worldHeight =
+            GridTerrainPainterWindow.currentHeight *
+            data.tileHeight;
+
+        Vector3 center = new(
+            cell.x * size + size / 2f,
+            worldHeight,
+            cell.y * size + size / 2f
+        );
+
+        Quaternion rot =
+            Quaternion.Euler(GridTerrainPainterWindow.currentRotation);
+
+        Vector3[] quad =
+        {
+            new(-size/2, 0, -size/2),
+            new(size/2, 0, -size/2),
+            new(size/2, 0, size/2),
+            new(-size/2, 0, size/2),
+        };
+
+        float minY = float.MaxValue;
+        Vector3[] rotated = new Vector3[4];
+
+        for (int i = 0; i < 4; i++)
+        {
+            rotated[i] = rot * quad[i];
+
+            if (rotated[i].y < minY)
+                minY = rotated[i].y;
         }
 
-        return 0f;
-    }
+        Vector3 snapOffset = Vector3.zero;
 
-    static float GetPreviewHeight(Vector2Int cell, GridTerrainGenerator gen)
-    {
-        if (GridTerrainPainterWindow.paintMode == PaintMode.Paint)
-            return GridTerrainPainterWindow.currentHeight;
+        if (data.autoSnapHeight)
+        {
+            snapOffset = new Vector3(0, -minY, 0);
+        }
 
-        //Eraser display
-        if (gen.data.TryGetTile(cell, out var tile))
-            return tile.height;
-
-        return 0f;
-    }
-
-    static void DrawPreview(Vector2Int cell, float size, float height)
-    {
         Handles.color =
             GridTerrainPainterWindow.paintMode == PaintMode.Paint
             ? Color.green
             : Color.red;
 
-        Handles.DrawWireCube(
-            new Vector3(
-                cell.x * size + size / 2f,
-                height,
-                cell.y * size + size / 2f
-            ),
-            new Vector3(size, 0.01f, size)
-        );
+        for (int i = 0; i < 4; i++)
+        {
+            rotated[i] += center + snapOffset;
+        }
+
+        Handles.DrawLine(rotated[0], rotated[1]);
+        Handles.DrawLine(rotated[1], rotated[2]);
+        Handles.DrawLine(rotated[2], rotated[3]);
+        Handles.DrawLine(rotated[3], rotated[0]);
     }
 
     static void HandlePainting(Event e, Vector2Int cell, GridTerrainGenerator gen)
     {
-        //Reset when release on mouse
         if (e.type == EventType.MouseUp)
         {
             lastPaintedCell = null;
             return;
         }
 
-        //Paint
         if ((e.type == EventType.MouseDown || e.type == EventType.MouseDrag) && e.button == 0)
         {
             if (lastPaintedCell.HasValue && lastPaintedCell.Value == cell)
@@ -121,15 +128,16 @@ public static class GridTerrainPainterSceneGUI
                 if (GridTerrainPainterWindow.currentRuleTile == null)
                     return;
 
-                gen.data.SetTile(cell, new TileData
+                gen.data.AddTile(cell, new TileData
                 {
                     tileId = GridTerrainPainterWindow.currentRuleTile.name,
-                    height = GridTerrainPainterWindow.currentHeight
+                    height = GridTerrainPainterWindow.currentHeight,
+                    rotation = GridTerrainPainterWindow.currentRotation
                 });
             }
             else
             {
-                gen.data.RemoveTile(cell);
+                gen.data.RemoveTopTile(cell);
             }
 
             gen.Rebuild();
