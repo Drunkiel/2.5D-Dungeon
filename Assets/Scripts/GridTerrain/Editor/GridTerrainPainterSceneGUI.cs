@@ -1,3 +1,4 @@
+using Codice.Client.BaseCommands;
 using UnityEditor;
 using UnityEngine;
 
@@ -123,21 +124,24 @@ public static class GridTerrainPainterSceneGUI
 
             Undo.RecordObject(gen.data, "Grid Terrain Paint");
 
-            if (GridTerrainPainterWindow.paintMode == PaintMode.Paint)
+            switch (GridTerrainPainterWindow.paintMode)
             {
-                if (GridTerrainPainterWindow.currentRuleTile == null)
-                    return;
+                case PaintMode.Paint:
+                    if (GridTerrainPainterWindow.currentRuleTile == null)
+                        return;
 
-                gen.data.AddTile(cell, new TileData
-                {
-                    tileId = GridTerrainPainterWindow.currentRuleTile.name,
-                    height = GridTerrainPainterWindow.currentHeight,
-                    rotation = GridTerrainPainterWindow.currentRotation
-                });
-            }
-            else
-            {
-                gen.data.RemoveTopTile(cell);
+                    gen.data.AddTile(cell, new TileData
+                    {
+                        tileId = GridTerrainPainterWindow.currentRuleTile.name,
+                        height = GridTerrainPainterWindow.currentHeight,
+                        rotation = GridTerrainPainterWindow.currentRotation
+                    });
+
+                    break;
+
+                case PaintMode.Erase:
+                    gen.data.RemoveTopTile(cell);
+                    break;
             }
 
             gen.Rebuild();

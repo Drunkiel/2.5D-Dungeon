@@ -48,13 +48,10 @@ public class GridTerrainMesh : MonoBehaviour
 
         foreach (var kvp in sourceData.AllTiles())
         {
-            Vector2Int cell = kvp.Key;
-            List<TileData> tileStack = kvp.Value;
-
-            foreach (var tile in tileStack)
+            foreach (var tile in kvp.Value)   // 🔥 ważne
             {
                 AddTile(
-                    cell,
+                    kvp.Key,
                     tile,
                     sourceData,
                     vertices,
@@ -95,27 +92,42 @@ public class GridTerrainMesh : MonoBehaviour
 
         float size = data.asset.cellSize / 2;
         float baseHeight = tile.height * data.tileHeight;
+        float maxStep = data.tileHeight;
 
         int vIndex = vertices.Count;
 
-        Vector3 center = new(
+        Vector3 center = new Vector3(
             cell.x * size + size / 2f,
             baseHeight,
             cell.y * size + size / 2f
         );
 
-        //Snapping corners
-        float hBL = GetCornerHeight(cell, new Vector2Int(-1, -1), baseHeight, data);
-        float hBR = GetCornerHeight(cell, new Vector2Int(1, -1), baseHeight, data);
-        float hTL = GetCornerHeight(cell, new Vector2Int(-1, 1), baseHeight, data);
-        float hTR = GetCornerHeight(cell, new Vector2Int(1, 1), baseHeight, data);
+        float hBL = ClampHeightDifference(
+            GetCornerHeight(cell, new Vector2Int(-1, -1), baseHeight, data),
+            baseHeight,
+            maxStep);
+
+        float hBR = ClampHeightDifference(
+            GetCornerHeight(cell, new Vector2Int(1, -1), baseHeight, data),
+            baseHeight,
+            maxStep);
+
+        float hTL = ClampHeightDifference(
+            GetCornerHeight(cell, new Vector2Int(-1, 1), baseHeight, data),
+            baseHeight,
+            maxStep);
+
+        float hTR = ClampHeightDifference(
+            GetCornerHeight(cell, new Vector2Int(1, 1), baseHeight, data),
+            baseHeight,
+            maxStep);
 
         float half = size / 2f;
 
-        vertices.Add(center + new Vector3(-half, hBL - baseHeight, -half)); // 0 BL
-        vertices.Add(center + new Vector3(half, hBR - baseHeight, -half)); // 1 BR
-        vertices.Add(center + new Vector3(half, hTR - baseHeight, half)); // 2 TR
-        vertices.Add(center + new Vector3(-half, hTL - baseHeight, half)); // 3 TL
+        vertices.Add(center + new Vector3(-half, hBL - baseHeight, -half));
+        vertices.Add(center + new Vector3(half, hBR - baseHeight, -half));
+        vertices.Add(center + new Vector3(half, hTR - baseHeight, half));
+        vertices.Add(center + new Vector3(-half, hTL - baseHeight, half));
 
         triangles.Add(vIndex + 0);
         triangles.Add(vIndex + 2);
@@ -164,4 +176,15 @@ public class GridTerrainMesh : MonoBehaviour
 
         return maxHeight;
     }
+
+    float ClampHeightDifference(float neighborHeight, float baseHeight, float maxStep)
+    {
+        float diff = neighborHeight - baseHeight;
+
+        if (Mathf.Abs(diff) <= maxStep)
+            return neighborHeight;
+
+        return baseHeight + Mathf.Sign(diff) * maxStep;
+    }
+
 }

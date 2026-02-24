@@ -4,7 +4,9 @@ using UnityEngine;
 public enum PaintMode
 {
     Paint,
-    Erase
+    Erase,
+    Raise,
+    Lower
 }
 
 public class GridTerrainPainterWindow : EditorWindow
@@ -55,7 +57,7 @@ public class GridTerrainPainterWindow : EditorWindow
         GUILayout.Label("Mode", EditorStyles.boldLabel);
         paintMode = (PaintMode)GUILayout.Toolbar(
             (int)paintMode,
-            new[] { "Paint", "Erase" }
+           new[] { "Paint", "Erase", "Raise", "Lower" }
         );
 
         GUILayout.Space(10);
