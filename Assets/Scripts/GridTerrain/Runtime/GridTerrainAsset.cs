@@ -10,22 +10,22 @@ public class GridTerrainAsset : ScriptableObject
     public struct TileEntry
     {
         public Vector2Int position;
-        public List<TileData> dataList;
+        public TileData data;
     }
 
     public List<TileEntry> tiles = new();
 
-    Dictionary<Vector2Int, List<TileData>> runtimeLookup;
+    Dictionary<Vector2Int, TileData> runtimeLookup;
 
     public void BuildLookup()
     {
-        runtimeLookup = new Dictionary<Vector2Int, List<TileData>>();
+        runtimeLookup = new Dictionary<Vector2Int, TileData>();
 
         foreach (var t in tiles)
-            runtimeLookup[t.position] = new List<TileData>(t.dataList);
+            runtimeLookup[t.position] = t.data;
     }
 
-    public Dictionary<Vector2Int, List<TileData>> GetDictionary()
+    public Dictionary<Vector2Int, TileData> GetDictionary()
     {
         if (runtimeLookup == null)
             BuildLookup();
@@ -33,7 +33,7 @@ public class GridTerrainAsset : ScriptableObject
         return runtimeLookup;
     }
 
-    public void SyncFromDictionary(Dictionary<Vector2Int, List<TileData>> dict)
+    public void SyncFromDictionary(Dictionary<Vector2Int, TileData> dict)
     {
         tiles.Clear();
 
@@ -42,7 +42,7 @@ public class GridTerrainAsset : ScriptableObject
             tiles.Add(new TileEntry
             {
                 position = kvp.Key,
-                dataList = new List<TileData>(kvp.Value)
+                data = kvp.Value
             });
         }
 

@@ -48,18 +48,16 @@ public class GridTerrainMesh : MonoBehaviour
 
         foreach (var kvp in sourceData.AllTiles())
         {
-            foreach (var tile in kvp.Value)   // 🔥 ważne
-            {
-                AddTile(
-                    kvp.Key,
-                    tile,
-                    sourceData,
-                    vertices,
-                    triangles,
-                    uvs
-                );
-            }
+            AddTile(
+                kvp.Key,
+                kvp.Value,
+                sourceData,
+                vertices,
+                triangles,
+                uvs
+            );
         }
+
 
         mesh.Clear();
         mesh.SetVertices(vertices);
@@ -96,7 +94,7 @@ public class GridTerrainMesh : MonoBehaviour
 
         int vIndex = vertices.Count;
 
-        Vector3 center = new Vector3(
+        Vector3 center = new(
             cell.x * size + size / 2f,
             baseHeight,
             cell.y * size + size / 2f
@@ -153,24 +151,21 @@ public class GridTerrainMesh : MonoBehaviour
 
         Vector2Int[] influence =
         {
-            new(0,0),
-            new(cornerOffset.x,0),
-            new(0,cornerOffset.y),
-            new(cornerOffset.x,cornerOffset.y)
-        };
+        new(0,0),
+        new(cornerOffset.x,0),
+        new(0,cornerOffset.y),
+        new(cornerOffset.x,cornerOffset.y)
+    };
 
         foreach (var offset in influence)
         {
             Vector2Int checkPos = cell + offset;
 
-            if (data.TryGetTiles(checkPos, out var list))
+            if (data.TryGetTile(checkPos, out var tile))
             {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    float h = list[i].height * data.tileHeight;
-                    if (h > maxHeight)
-                        maxHeight = h;
-                }
+                float h = tile.height * data.tileHeight;
+                if (h > maxHeight)
+                    maxHeight = h;
             }
         }
 
@@ -186,5 +181,4 @@ public class GridTerrainMesh : MonoBehaviour
 
         return baseHeight + Mathf.Sign(diff) * maxStep;
     }
-
 }

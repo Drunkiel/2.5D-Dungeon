@@ -65,23 +65,17 @@ public static class RuleTileAdapter
     {
         bool same = false;
 
-        if (data.TryGetTiles(pos, out var list))
+        if (data.TryGetTile(pos, out var tile))
         {
-            foreach (var tile in list)
-            {
-                if (tile.tileId == ruleTile.name)
-                {
-                    same = true;
-                    break;
-                }
-            }
+            if (tile.tileId == ruleTile.name)
+                same = true;
         }
 
         return rule switch
         {
-            1 => same,      // MUST HAVE
-            2 => !same,     // MUST NOT HAVE
-            _ => true       // DON'T CARE
+            1 => same,
+            2 => !same,
+            _ => true
         };
     }
 

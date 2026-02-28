@@ -12,7 +12,9 @@ public struct TileData
 public class GridTerrainData : MonoBehaviour
 {
     public GridTerrainAsset asset;
-    public Dictionary<Vector2Int, List<TileData>> tiles = new();
+
+    // 🔥 jedna komórka = jeden tile
+    public Dictionary<Vector2Int, TileData> tiles = new();
 
     public float heightStep = 0.2f;
     public float tileHeight = 1f;
@@ -43,87 +45,23 @@ public class GridTerrainData : MonoBehaviour
 
         data.height = snapped;
 
-        if (!tiles.TryGetValue(pos, out var list))
-        {
-            list = new List<TileData>();
-            tiles[pos] = list;
-        }
-
-        list.Add(data);
-
-        AutoFillNeighbors(pos, data);
+        // 🔥 nadpisujemy zamiast dodawać
+        tiles[pos] = data;
     }
 
-    public void RemoveTopTile(Vector2Int pos)
+    public void RemoveTile(Vector2Int pos)
     {
-        if (!tiles.TryGetValue(pos, out var list))
-            return;
-
-        if (list.Count == 0)
-            return;
-
-        list.RemoveAt(list.Count - 1);
-
-        if (list.Count == 0)
+        if (tiles.ContainsKey(pos))
             tiles.Remove(pos);
     }
 
-    public bool TryGetTiles(Vector2Int pos, out List<TileData> list)
+    public bool TryGetTile(Vector2Int pos, out TileData tile)
     {
-        return tiles.TryGetValue(pos, out list);
+        return tiles.TryGetValue(pos, out tile);
     }
 
-    public IEnumerable<KeyValuePair<Vector2Int, List<TileData>>> AllTiles()
+    public IEnumerable<KeyValuePair<Vector2Int, TileData>> AllTiles()
     {
         return tiles;
     }
-
-    void AutoFillNeighbors(Vector2Int pos, TileData placedTile)
-    {
-        Vector2Int[] dirs =
-        {
-        Vector2Int.up,
-        Vector2Int.down,
-        Vector2Int.left,
-        Vector2Int.right
-    };
-
-        foreach (var dir in dirs)
-        {
-            Vector2Int neighborPos = pos + dir;
-
-            if (!tiles.TryGetValue(neighborPos, out var neighborList))
-                continue;
-
-            if (neighborList.Count == 0)
-                continue;
-
-            TileData neighborTop = neighborList[neighborList.Count - 1];
-
-            float diff = placedTile.height - neighborTop.height;
-
-            if (Mathf.Abs(diff) <= heightStep)
-                continue;
-
-            float min = Mathf.Min(placedTile.height, neighborTop.height);
-            float max = Mathf.Max(placedTile.height, neighborTop.height);
-
-            float current = min + heightStep;
-
-            while (current < max)
-            {
-                TileData filler = new()
-                {
-                    tileId = placedTile.tileId,
-                    height = current,
-                    rotation = Vector3.zero
-                };
-
-                neighborList.Add(filler);
-
-                current += heightStep;
-            }
-        }
-    }
-
 }
