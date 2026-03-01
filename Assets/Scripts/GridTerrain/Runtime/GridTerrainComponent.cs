@@ -6,52 +6,58 @@ using UnityEngine;
 public class GridTerrainComponent : MonoBehaviour
 {
     public GridTerrainData data;
+    Mesh runtimeMesh;
 
 #if UNITY_EDITOR
-    public void SaveAsAsset(string folder = "Assets/GridTerrains")
+    public void SaveAsAsset()
     {
-        var meshComp = GetComponent<GridTerrainMesh>();
-        if (meshComp == null)
+        if (data == null || data.asset == null)
+            return;
+
+        MeshFilter mf = GetComponent<MeshFilter>();
+
+        if (mf.sharedMesh == null)
+            return;
+
+        string folderPath =
+            System.IO.Path.GetDirectoryName(
+                AssetDatabase.GetAssetPath(data.asset)
+            );
+
+        string meshAssetPath =
+            $"{folderPath}/{data.asset.name.Replace("Data", "Mesh")}.asset";
+
+        Mesh meshAsset =
+            AssetDatabase.LoadAssetAtPath<Mesh>(meshAssetPath);
+
+        if (meshAsset == null)
         {
-            Debug.LogError("No GridTerrainMesh found");
+            Debug.LogError("Mesh asset not found!");
             return;
         }
 
-        Mesh runtimeMesh = meshComp.GetMesh();
-        if (runtimeMesh == null)
-        {
-            Debug.LogError("No mesh to save");
-            return;
-        }
+        meshAsset.Clear();
+        meshAsset.vertices = mf.sharedMesh.vertices;
+        meshAsset.triangles = mf.sharedMesh.triangles;
+        meshAsset.uv = mf.sharedMesh.uv;
+        meshAsset.normals = mf.sharedMesh.normals;
 
-        if (!AssetDatabase.IsValidFolder(folder))
-        {
-            AssetDatabase.CreateFolder("Assets", "GridTerrains");
-        }
-
-        string meshPath = $"{folder}/{name}_Mesh.asset";
-
-        Mesh meshCopy = Instantiate(runtimeMesh);
-        meshCopy.name = name + "_Mesh";
-
-        AssetDatabase.CreateAsset(meshCopy, meshPath);
-
-        // Material
-        var renderer = GetComponent<MeshRenderer>();
-        if (renderer && renderer.sharedMaterial)
-        {
-            string matPath = $"{folder}/{name}_Material.mat";
-
-            Material matCopy = Instantiate(renderer.sharedMaterial);
-            AssetDatabase.CreateAsset(matCopy, matPath);
-
-            renderer.sharedMaterial = matCopy;
-        }
-
+        EditorUtility.SetDirty(meshAsset);
         AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
 
-        Debug.Log("Terrain saved as mesh asset");
+        Debug.Log("Mesh saved to asset.");
+    }
+
+    public void SetMesh(Mesh assetMesh)
+    {
+        MeshFilter mf = GetComponent<MeshFilter>();
+
+        runtimeMesh = new Mesh
+        {
+            name = assetMesh.name + "_Runtime"
+        };
+
+        mf.sharedMesh = runtimeMesh;
     }
 #endif
 }
