@@ -96,7 +96,8 @@ public static class RuleTileAdapter
             return sprites[0];
 
         int seed = Hash(position, ruleIndex);
-        int index = Mathf.Abs(seed) % sprites.Length;
+        var rng = new System.Random(seed);
+        int index = rng.Next(sprites.Length);
 
         return sprites[index];
     }
@@ -105,11 +106,18 @@ public static class RuleTileAdapter
     {
         unchecked
         {
-            int hash = 17;
-            hash = hash * 31 + pos.x;
-            hash = hash * 31 + pos.y;
-            hash = hash * 31 + ruleIndex;
-            return hash;
+            uint x = (uint)pos.x;
+            uint y = (uint)pos.y;
+            uint r = (uint)ruleIndex;
+
+            uint hash = x * 374761393u;
+            hash += y * 668265263u;
+            hash += r * 1446648777u;
+
+            hash = (hash ^ (hash >> 13)) * 1274126177u;
+            hash ^= hash >> 16;
+
+            return (int)hash;
         }
     }
 }
