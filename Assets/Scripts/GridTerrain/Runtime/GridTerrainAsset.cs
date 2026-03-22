@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Grid Terrain/Terrain Data")]
 public class GridTerrainAsset : ScriptableObject
 {
-    public float cellSize = 0.5f;
+    public float cellSize = 1;
 
     [System.Serializable]
     public struct TileEntry

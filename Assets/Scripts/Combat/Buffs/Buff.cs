@@ -13,8 +13,8 @@ public enum Buffs
 [System.Serializable]
 public class Buff
 {
-    public string name; 
-    public float duration; 
+    public string name;
+    public float duration;
     public float timer;
     public Buffs buffType;
     public Sprite sprite;
@@ -37,7 +37,7 @@ public class Buff
     {
         if (!isPermanent)
         {
-            timer += Time.deltaTime;
+            timer += 1f;
             return timer < duration;
         }
         return true;

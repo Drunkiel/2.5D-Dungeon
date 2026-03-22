@@ -45,12 +45,12 @@ public class EntityLookController : SaveLoadSystem
 
     private void Start()
     {
-        LoadSpirtes();
+        LoadSprites();
         UpdateEntityLookAll(true);
         UpdateBodyType();
     }
 
-    private void LoadSpirtes()
+    private void LoadSprites()
     {
         string path = $"{skinsSavePath}{skinPath}";
 
@@ -75,7 +75,7 @@ public class EntityLookController : SaveLoadSystem
         if (!string.IsNullOrEmpty(bodyType))
             this.bodyType = Enum.Parse<BodyType>(bodyType);
 
-        LoadSpirtes();
+        LoadSprites();
 
         bool facingCamera = false;
         if (TryGetComponent(out EntityController _entityController))

@@ -26,7 +26,6 @@ public class SceneData
 public class PortalController : MonoBehaviour
 {
     public static PortalController instance;
-
     public List<PortalSpawn> _spawnList = new();
 
     [SerializeField] private bool isTeleportsOnCooldown;

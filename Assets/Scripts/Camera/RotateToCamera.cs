@@ -2,24 +2,29 @@ using UnityEngine;
 
 public class RotateToCamera : MonoBehaviour
 {
-    private float rotationDistanceThreshold = 5f;
+    private float rotationDistanceThresholdSqr = 25f; //5*5
+    private Transform _cameraTransform;
 
-    private void Update()
+    private void Awake()
     {
-        //Check distance between object and camera
-        float distanceToCamera = Vector3.Distance(Camera.main.transform.position, transform.position);
-
-        if (distanceToCamera <= rotationDistanceThreshold)
-            RotateObject();
+        if (Camera.main != null)
+            _cameraTransform = Camera.main.transform;
     }
 
-    private void RotateObject()
+    private void LateUpdate()
     {
-        //Calculate direction to the camera but only consider the horizontal plane (Y axis rotation)
-        Vector3 directionToCamera = Camera.main.transform.position - transform.position;
+        if (_cameraTransform == null)
+            return;
+
+        Vector3 offset = _cameraTransform.position - transform.position;
+        if (offset.sqrMagnitude <= rotationDistanceThresholdSqr)
+            RotateObject(offset);
+    }
+
+    private void RotateObject(Vector3 directionToCamera)
+    {
         directionToCamera.y = 0f;
 
-        //Rotate towards camera
         if (directionToCamera.sqrMagnitude > 0.001f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(directionToCamera);

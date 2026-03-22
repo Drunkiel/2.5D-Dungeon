@@ -64,6 +64,8 @@ public class EntityController : MonoBehaviour
     public Rigidbody rgBody;
     public Animator anim;
 
+    private float nextCheck = 0;
+
     private void Start()
     {
         isFacingCamera = true;
@@ -85,8 +87,13 @@ public class EntityController : MonoBehaviour
         if (isStopped || GameController.isPaused)
             return;
 
-        //Updating buffs
-        _statistics.UpdateBuffs(_holdingController._itemController._gearHolder);
+        //Updating buffs / Check every second
+        if (Time.time >= nextCheck)
+        {
+            if (_holdingController != null && _statistics._activeBuffs.Count > 0)
+                _statistics.UpdateBuffs(_holdingController._itemController._gearHolder);
+            nextCheck = Time.time + 1f;
+        }
     }
 
     public void StopEntity(bool value) => isStopped = value;
@@ -95,7 +102,7 @@ public class EntityController : MonoBehaviour
 
     private IEnumerator AutoRegen()
     {
-        //Wait then regen some hp and mana
+        //Wait then regenerate some hp and mana
         yield return new WaitForSeconds(1f);
 
         if (!GetComponent<EntityCombat>().inCombat)

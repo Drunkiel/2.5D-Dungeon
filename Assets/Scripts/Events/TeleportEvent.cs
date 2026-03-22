@@ -51,7 +51,7 @@ public class TeleportEvent : MonoBehaviour
 
         StartCoroutine(PauseBeforeTeleport(() =>
         {
-            //Basic string verificacion
+            //Basic string verification
             if (string.IsNullOrEmpty(sceneName))
             {
                 ConsoleController.instance.ChatMessage(SenderType.System, $"Scene named: {sceneName} is not found");

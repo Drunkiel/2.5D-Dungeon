@@ -38,7 +38,7 @@ public class CameraController : MonoBehaviour
         instance = this;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (GameController.isPaused || isLocked)
             return;
@@ -78,7 +78,6 @@ public class CameraController : MonoBehaviour
 
         Vector2 inputRotation = context.ReadValue<Vector2>();
 
-        // NIE mnożymy przez Time.deltaTime
         targetXRotation += inputRotation.x * rotationXSpeed;
         targetYRotation -= inputRotation.y * rotationYSpeed;
         targetYRotation = Mathf.Clamp(targetYRotation, 15, 45);
@@ -86,7 +85,6 @@ public class CameraController : MonoBehaviour
 
     private void SmoothRotateCamera()
     {
-        // tu dopiero stosujemy Time.deltaTime – to jest UPDATE, nie input callback
         currentXRotation = Mathf.Lerp(currentXRotation, targetXRotation, smoothingFactor * Time.deltaTime);
         currentYRotation = Mathf.Lerp(currentYRotation, targetYRotation, smoothingFactor * Time.deltaTime);
     }
