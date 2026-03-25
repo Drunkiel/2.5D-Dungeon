@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class Entity
 {
-    public GameObject entityObject;
+    public EntityController _entityController;
 }
 
 public class EntityHolder : MonoBehaviour
@@ -12,14 +12,14 @@ public class EntityHolder : MonoBehaviour
     public static EntityHolder instance;
 
     public List<Entity> _entitiesFriendly = new();
-    public List<Entity> _entitiesEnemy= new();
+    public List<Entity> _entitiesEnemy = new();
 
     private void Awake()
     {
         instance = this;
     }
 
-    public GameObject GetEntity(short id, EntityAttitude entityAttitude)
+    public EntityController GetEntity(short id, EntityAttitude entityAttitude)
     {
         return entityAttitude switch
         {
@@ -29,7 +29,19 @@ public class EntityHolder : MonoBehaviour
         };
     }
 
-    private GameObject GetFriendlyEntity(short id)
+    public EntityController GetEntityInScene(short id)
+    {
+        EntityController[] _entityControllers = (EntityController[])FindObjectsOfType(typeof(EntityController));
+        foreach (EntityController _entityController in _entityControllers)
+        {
+            if (_entityController._entityInfo.ID == id)
+                return _entityController;
+        }
+
+        return null;
+    }
+
+    private EntityController GetFriendlyEntity(short id)
     {
         if (id >= 1000)
         {
@@ -40,10 +52,10 @@ public class EntityHolder : MonoBehaviour
         if (_entitiesFriendly.Count <= id)
             return null;
 
-        return _entitiesFriendly[id].entityObject;
+        return _entitiesFriendly[id]._entityController;
     }
 
-    private GameObject GetEnemyEntity(short id)
+    private EntityController GetEnemyEntity(short id)
     {
         if (id < 1000)
         {
@@ -55,6 +67,6 @@ public class EntityHolder : MonoBehaviour
         if (_entitiesEnemy.Count <= newID)
             return null;
 
-        return _entitiesEnemy[newID].entityObject;
+        return _entitiesEnemy[newID]._entityController;
     }
 }

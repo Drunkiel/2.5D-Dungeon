@@ -5,40 +5,79 @@ using UnityEngine.UI;
 
 public class DialogUI : MonoBehaviour
 {
-    public TMP_Text nameText;
     public TMP_Text dialogText;
     public EntityPreview _npcPreview;
+    public EntityPreview _playerPreview;
     public Transform parent;
     public Button optionBTN;
 
     public bool finishedSpelling;
+    private bool optionsShown = false;
+    public float typingSpeed = 0.02f;
+    private Dialog _currentDialog;
 
     public void UpdateDialog(Dialog _dialog)
     {
-        //Reset current text and remove buttons
+        _currentDialog = _dialog;
+        optionsShown = false;
+
+        //!TEST OF CONCEPT
+        _npcPreview.headImage.transform.parent.parent.localPosition = new(_npcPreview.headImage.transform.parent.parent.localPosition.x, 150, 0);
+        _playerPreview.headImage.transform.parent.parent.localPosition = new(_playerPreview.headImage.transform.parent.parent.localPosition.x, 100, 0);
+
+        //Reset text
         dialogText.text = "";
+        dialogText.maxVisibleCharacters = 0;
+
+        //Delete all response Buttons
         for (int i = 0; i < parent.childCount; i++)
             Destroy(parent.GetChild(i).gameObject);
 
-        //Set new text and buttons
-        for (int i = 0; i < _dialog.endOptions.Count; i++)
-        {
-            //Create new button and add listener
-            Button newOptionButton = Instantiate(optionBTN, parent);
-            int a = i;
-            newOptionButton.onClick.AddListener(() => _dialog.endOptions[a].actionToDo.Invoke());
-            
-            //Set text to button
-            newOptionButton.transform.GetChild(0).GetComponent<TMP_Text>().text = _dialog.endOptions[i].displayText;
-        }
+        dialogText.gameObject.SetActive(true);
 
-        if (gameObject.activeSelf)
-            StartCoroutine(nameof(TextWriting), _dialog.text);
+        StartCoroutine(TextWriting(_dialog.text));
     }
 
-    public void SpeedUpDialog(string dialog)
+    public void OnDialogClick()
     {
-        dialogText.text = dialog;
+        if (!finishedSpelling)
+        {
+            SpeedUpDialog();
+            return;
+        }
+
+        if (!optionsShown)
+        {
+            ShowResponseOptions();
+            return;
+        }
+    }
+
+    private void ShowResponseOptions()
+    {
+        optionsShown = true;
+        dialogText.gameObject.SetActive(false);
+
+        //!TEST OF CONCEPT
+        _npcPreview.headImage.transform.parent.parent.localPosition = new(_npcPreview.headImage.transform.parent.parent.localPosition.x, 100, 0);
+        _playerPreview.headImage.transform.parent.parent.localPosition = new(_playerPreview.headImage.transform.parent.parent.localPosition.x, 150, 0);
+
+        //Create response Buttons
+        for (int i = 0; i < _currentDialog._responseOptions.Count; i++)
+        {
+            Button newOptionButton = Instantiate(optionBTN, parent);
+            int a = i;
+
+            newOptionButton.onClick.AddListener(() => _currentDialog._responseOptions[a].actionToDo.Invoke());
+
+            newOptionButton.transform.GetChild(0).GetComponent<TMP_Text>().text =
+                _currentDialog._responseOptions[i].text;
+        }
+    }
+
+    public void SpeedUpDialog()
+    {
+        dialogText.maxVisibleCharacters = dialogText.textInfo.characterCount;
         finishedSpelling = true;
     }
 
@@ -46,13 +85,20 @@ public class DialogUI : MonoBehaviour
     {
         finishedSpelling = false;
 
-        foreach (char singleCharacter in dialog)
+        dialogText.text = dialog;
+        dialogText.ForceMeshUpdate();
+
+        int totalCharacters = dialogText.textInfo.characterCount;
+
+        dialogText.maxVisibleCharacters = 0;
+
+        for (int i = 0; i <= totalCharacters; i++)
         {
             if (finishedSpelling)
                 yield break;
 
-            dialogText.text += singleCharacter;
-            yield return new WaitForSeconds(0.02f);
+            dialogText.maxVisibleCharacters = i;
+            yield return new WaitForSeconds(typingSpeed);
         }
 
         finishedSpelling = true;

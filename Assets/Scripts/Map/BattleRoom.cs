@@ -54,7 +54,7 @@ public class BattleRoom : MonoBehaviour
         {
             int a = i;
             int pIndex = Random.Range(0, positionIndexes.Count);
-            GameObject newEntity = Instantiate(EntityHolder.instance.GetEntity(_waves[index].entityIDs[a], EntityAttitude.Enemy),                                                                                                                           
+            GameObject newEntity = Instantiate(EntityHolder.instance.GetEntity(_waves[index].entityIDs[a], EntityAttitude.Enemy).gameObject,
                                                 spawnPoints[positionIndexes[pIndex]].position + new Vector3(0, 1, 0),
                                                 Quaternion.identity);
             _waves[index].spawnedEntities.Add(newEntity);

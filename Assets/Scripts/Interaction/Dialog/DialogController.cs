@@ -20,33 +20,30 @@ public class DialogController : MonoBehaviour
 
     public void StartDialog(int index)
     {
-        StartDialog(index, _entityController);
-    }
-
-    public void StartDialog(int index, EntityController _entityController = null)
-    {
         EntityController _playerController = GameController.instance._player;
 
         if (isTalking)
         {
-            _dialogUI.SpeedUpDialog(_dialogs[dialogIndex].text);
+            _dialogUI.SpeedUpDialog();
             return;
         }
 
         //Assigning values
-        this._entityController = _entityController;
         dialogIndex = index;
-        _playerController.StopEntity(true);
+        _entityController = EntityHolder.instance.GetEntityInScene(_dialogs[dialogIndex].entityID);
 
         if (_entityController != null)
         {
-            _entityController.StopEntity(true);
-            EntityLookController _lookController = _entityController.GetComponent<EntityLookController>();
-            _dialogUI._npcPreview.UpdateAllByEntity(_lookController._entityLook, _lookController._spriteHolder, _entityController._holdingController._itemController._gearHolder);
-            _dialogUI.nameText.text = _entityController._entityInfo.name;
+            UpdatePreviewLook(_entityController, _dialogUI._npcPreview);
+            UpdatePreviewLook(_playerController, _dialogUI._playerPreview);
 
             //Checking if player is talking to right npc
             QuestController.instance.InvokeTalkEvent(_entityController._entityInfo.ID);
+        }
+        else
+        {
+            ConsoleController.instance.ChatMessage(SenderType.System, $"Entity {_dialogs[dialogIndex].entityID} does not exists", OutputType.Error);
+            return;
         }
 
         _openCloseUI.Open();
@@ -54,11 +51,18 @@ public class DialogController : MonoBehaviour
         isTalking = true;
     }
 
+    private void UpdatePreviewLook(EntityController _entityController, EntityPreview _entityPreview)
+    {
+        _entityController.StopEntity(true);
+        EntityLookController _entityLookController = _entityController.GetComponent<EntityLookController>();
+        _entityPreview.UpdateAllByEntity(_entityLookController._entityLook, _entityLookController._spriteHolder, _entityController._holdingController._itemController._gearHolder);
+    }
+
     public void ChangeDialog(int index)
     {
         if (!_dialogUI.finishedSpelling)
         {
-            _dialogUI.SpeedUpDialog(_dialogs[dialogIndex].text);
+            _dialogUI.SpeedUpDialog();
             return;
         }
 
@@ -69,7 +73,7 @@ public class DialogController : MonoBehaviour
     public void ForceChangeDialog(int index)
     {
         if (!_dialogUI.finishedSpelling)
-            _dialogUI.SpeedUpDialog(_dialogs[dialogIndex].text);
+            _dialogUI.SpeedUpDialog();
 
         dialogIndex = index;
         _dialogUI.UpdateDialog(_dialogs[dialogIndex]);
@@ -79,7 +83,7 @@ public class DialogController : MonoBehaviour
     {
         if (!_dialogUI.finishedSpelling)
         {
-            _dialogUI.SpeedUpDialog(_dialogs[dialogIndex].text);
+            _dialogUI.SpeedUpDialog();
             return;
         }
 

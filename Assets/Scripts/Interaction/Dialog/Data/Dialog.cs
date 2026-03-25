@@ -1,17 +1,22 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
 public class Dialog
 {
+    public int ID;
+    public short entityID;
+    [TextArea(3, 10)]
     public string text;
-    public List<DialogEndOptions> endOptions = new();
+    public List<DialogResponseOptions> _responseOptions = new();
 }
 
 [Serializable]
-public class DialogEndOptions
+public class DialogResponseOptions
 {
-    public string displayText;
+    [TextArea(3, 10)]
+    public string text;
     public UnityEvent actionToDo;
 }
