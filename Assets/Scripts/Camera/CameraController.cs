@@ -50,7 +50,7 @@ public class CameraController : MonoBehaviour
 
     public void RightClick(InputAction.CallbackContext context)
     {
-        if (GameController.isPaused)
+        if (GameController.isPaused || isLocked)
         {
             rightClick = false;
             return;
@@ -79,8 +79,10 @@ public class CameraController : MonoBehaviour
         Vector2 inputRotation = context.ReadValue<Vector2>();
 
         targetXRotation += inputRotation.x * rotationXSpeed;
-        targetYRotation -= inputRotation.y * rotationYSpeed;
-        targetYRotation = Mathf.Clamp(targetYRotation, 15, 45);
+        //!TESTING CONCEPT
+        targetYRotation = 45;
+        // targetYRotation -= inputRotation.y * rotationYSpeed;
+        // targetYRotation = Mathf.Clamp(targetYRotation, 15, 45);
     }
 
     private void SmoothRotateCamera()

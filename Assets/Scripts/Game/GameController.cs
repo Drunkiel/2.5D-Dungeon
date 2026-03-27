@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -29,7 +30,7 @@ public class GameController : MonoBehaviour
         versionText.text = version;
     }
 
-    public IEnumerator LoadAsyncScene(string sceneName)
+    public IEnumerator LoadAsyncScene(string sceneName, Action action = null)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -44,7 +45,13 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < objectsToTeleportMust.Count; i++)
             SceneManager.MoveGameObjectToScene(objectsToTeleportMust[i], nextScene);
 
-        SceneManager.UnloadSceneAsync(currentScene);
+        AsyncOperation asyncUnLoad = SceneManager.UnloadSceneAsync(currentScene);
+
+        //Wait until scene is unloaded
+        while (!asyncUnLoad.isDone)
+            yield return null;
+
+        action?.Invoke();
     }
 
     public Canvas GetCanvas() => mainCanvas;

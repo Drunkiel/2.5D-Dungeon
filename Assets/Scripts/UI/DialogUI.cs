@@ -77,7 +77,8 @@ public class DialogUI : MonoBehaviour
 
     public void SpeedUpDialog()
     {
-        dialogText.maxVisibleCharacters = dialogText.textInfo.characterCount;
+        if (dialogText.textInfo != null)
+            dialogText.maxVisibleCharacters = dialogText.textInfo.characterCount;
         finishedSpelling = true;
     }
 

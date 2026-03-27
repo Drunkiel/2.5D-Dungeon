@@ -19,7 +19,17 @@ public class QuestController : MonoBehaviour
         instance = this;
     }
 
+    void Start()
+    {
+        GiveQuest(0, false);
+    }
+
     public void GiveQuest(int questIndex)
+    {
+        GiveQuest(questIndex, true);
+    }
+
+    public void GiveQuest(int questIndex, bool showPopUp)
     {
         //Check if index is bigger than are quests
         if (questIndex >= _allQuests.Count)
@@ -33,7 +43,7 @@ public class QuestController : MonoBehaviour
         _currentQuestsIndex.Add(questIndex);
         _questUI.AddQuestToUI(_allQuests[questIndex]);
 
-        if (PopUpController.instance != null)
+        if (PopUpController.instance != null && showPopUp)
             PopUpController.instance.CreatePopUp(PopUpInfo.QuestAccepted, _allQuests[questIndex].title);
 
         //Set listeners

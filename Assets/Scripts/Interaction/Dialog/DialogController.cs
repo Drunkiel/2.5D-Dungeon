@@ -46,6 +46,7 @@ public class DialogController : MonoBehaviour
             return;
         }
 
+        CameraController.instance.LockCamera(true);
         _openCloseUI.Open();
         _dialogUI.UpdateDialog(_dialogs[dialogIndex]);
         isTalking = true;
@@ -76,7 +77,6 @@ public class DialogController : MonoBehaviour
             _dialogUI.SpeedUpDialog();
 
         dialogIndex = index;
-        _dialogUI.UpdateDialog(_dialogs[dialogIndex]);
     }
 
     public void EndDialog()
@@ -87,6 +87,7 @@ public class DialogController : MonoBehaviour
             return;
         }
 
+        CameraController.instance.LockCamera(false);
         GameController.instance._player.StopEntity(false);
         if (_entityController != null)
             _entityController.StopEntity(false);

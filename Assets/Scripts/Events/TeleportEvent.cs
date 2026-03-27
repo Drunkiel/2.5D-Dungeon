@@ -7,6 +7,7 @@ public class TeleportEvent : MonoBehaviour
 {
     [SerializeField] private float cooldownToTeleport = 2f;
     public Vector3[] positions;
+    public short teleportID;
     [SerializeField] private Animator anim;
 
     public UnityEvent onTeleportEvent;
@@ -39,6 +40,28 @@ public class TeleportEvent : MonoBehaviour
 
             onTeleportEvent.Invoke();
             PortalController.instance.TeleportToObject(objectTransform);
+        }));
+    }
+
+    public void TeleportToSceneTeleport(string sceneName)
+    {
+        PortalController _portalController = PortalController.instance;
+
+        if (_portalController.IsOnCooldown() || GameController.instance._player.GetComponent<EntityCombat>().inCombat)
+            return;
+
+        StartCoroutine(PauseBeforeTeleport(() =>
+        {
+            //Basic string verification
+            if (string.IsNullOrEmpty(sceneName))
+            {
+                ConsoleController.instance.ChatMessage(SenderType.System, $"Scene named: {sceneName} is not found");
+                return;
+            }
+
+            PortalController.instance.TeleportToSceneTeleport(sceneName, teleportID);
+            _portalController.SetCooldown();
+            StartCoroutine(WaitAndRunAction());
         }));
     }
 

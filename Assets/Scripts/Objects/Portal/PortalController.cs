@@ -83,6 +83,26 @@ public class PortalController : MonoBehaviour
         }));
     }
 
+    public void TeleportToSceneTeleport(string sceneName, short teleportID)
+    {
+        if (GameController.isPaused)
+            return;
+
+        StartCoroutine(WaitAndTeleport(() =>
+        {
+            _prevScene = new(_currScene.sceneName, GameController.instance._player.transform.position);
+            StartCoroutine(GameController.instance.LoadAsyncScene(sceneName, () =>
+            {
+                PopUpController.instance.CreatePopUp(PopUpInfo.VisitPlace, sceneName);
+                //Get position to spawn Player
+                TeleportDataHolder _dataHolder = (TeleportDataHolder)FindObjectOfType(typeof(TeleportDataHolder));
+                Vector3 teleportPosition = _dataHolder._teleportDatas[teleportID].teleportObject.transform.GetChild(0).position;
+                GameController.instance._player.transform.position = teleportPosition;
+                _currScene = new(sceneName, teleportPosition);
+            }));
+        }));
+    }
+
     public void TeleportToPrevScene()
     {
         if (GameController.isPaused || string.IsNullOrEmpty(_prevScene.sceneName))

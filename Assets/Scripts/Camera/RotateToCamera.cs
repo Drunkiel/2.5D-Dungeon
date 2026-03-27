@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RotateToCamera : MonoBehaviour
 {
-    private float rotationDistanceThresholdSqr = 25f; //5*5
+    private readonly float rotationDistanceThresholdSqr = 25f; //5*5
     private Transform _cameraTransform;
 
     private void Awake()
