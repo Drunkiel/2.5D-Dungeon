@@ -56,7 +56,7 @@ public class DialogController : MonoBehaviour
     {
         _entityController.StopEntity(true);
         EntityLookController _entityLookController = _entityController.GetComponent<EntityLookController>();
-        _entityPreview.UpdateAllByEntity(_entityLookController._entityLook, _entityLookController._spriteHolder, _entityController._holdingController._itemController._gearHolder);
+        _entityPreview.UpdateAllByEntity(_entityLookController._entityLook, _entityLookController._spriteHolder, _entityController._itemController._gearHolder);
     }
 
     public void ChangeDialog(int index)

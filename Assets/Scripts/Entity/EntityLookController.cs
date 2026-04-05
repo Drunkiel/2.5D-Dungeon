@@ -83,7 +83,7 @@ public class EntityLookController : SaveLoadSystem
 
         UpdateEntityLookAll(facingCamera);
         UpdateBodyType();
-        InventoryController.instance._entityPreview.UpdateAllByEntity(_entityLook, _spriteHolder, GameController.instance._player._holdingController._itemController._gearHolder);
+        InventoryController.instance._entityPreview.UpdateAllByEntity(_entityLook, _spriteHolder, GameController.instance._player._itemController._gearHolder);
     }
 
     public void UpdateEntityLookAll(bool isFacingCamera)

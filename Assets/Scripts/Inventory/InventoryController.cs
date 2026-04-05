@@ -23,7 +23,7 @@ public class InventoryController : MonoBehaviour
     private void Start()
     {
         EntityLookController _lookController = GameController.instance._player.GetComponent<EntityLookController>();
-        _entityPreview.UpdateAllByEntity(_lookController._entityLook, _lookController._spriteHolder, GameController.instance._player._holdingController._itemController._gearHolder);
+        _entityPreview.UpdateAllByEntity(_lookController._entityLook, _lookController._spriteHolder, GameController.instance._player._itemController._gearHolder);
 
         instance = this;
     }
@@ -67,7 +67,7 @@ public class InventoryController : MonoBehaviour
     public void LoadToGearInventory(ItemID _itemID, int slotIndex)
     {
         GameObject slot = Instantiate(_gearSlots[slotIndex].itemPlacePrefab, _gearSlots[slotIndex].transform);
-        ItemController _itemController = GameController.instance._player._holdingController._itemController;
+        ItemController _itemController = GameController.instance._player._itemController;
 
         switch (_itemID._itemData.itemType)
         {
@@ -116,7 +116,7 @@ public class InventoryController : MonoBehaviour
         GameObject slot = Instantiate(_skillSlots[slotIndex].itemPlacePrefab, _skillSlots[slotIndex].transform);
         ItemID _itemID = slot.transform.GetChild(1).GetComponent<ItemID>();
         _itemID._skillDataParser = _skillDataParser;
-        SkillController _skillController = GameController.instance._player._holdingController._skillsController;
+        SkillController _skillController = GameController.instance._player._skillsController;
         _skillController._skillHolder.skillsID.Add(_itemID._skillDataParser._skillData.ID);
 
         slot.transform.GetChild(1).GetComponent<Image>().sprite = _itemID._skillDataParser.iconSprite;

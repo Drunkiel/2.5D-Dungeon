@@ -165,7 +165,6 @@ GameObject:
   - component: {fileID: 6287878749997528120}
   - component: {fileID: 1169793214923292630}
   - component: {fileID: 7162256622069694355}
-  - component: {fileID: 2005970543957765047}
   - component: {fileID: 3369233351137755661}
   - component: {fileID: 7859858754993962914}
   - component: {fileID: 6131611469941005280}
@@ -283,6 +282,7 @@ MonoBehaviour:
     ID: 1002
     name: Chimken
     title: 
+    entityClass: 0
     entity: 1
     behaviour: 1
   _statistics:
@@ -345,7 +345,8 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  _holdingController: {fileID: 2005970543957765047}
+  _itemController: {fileID: 3369233351137755661}
+  _skillsController: {fileID: 7859858754993962914}
   rgBody: {fileID: 564550842651508242}
   anim: {fileID: 6734043793878700165}
 --- !u!114 &6287878749997528120
@@ -415,6 +416,8 @@ MonoBehaviour:
   allowedDistance: 0
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
+  newVelocityXZ: {x: 0, y: 0}
+  newVelocityY: 0
   isMoving: 0
   movingTime: 0
   isFacingCamera: 0
@@ -469,20 +472,6 @@ MonoBehaviour:
   canCombat: 1
   inCombat: 0
   timeToResetCombat: 0
---- !u!114 &2005970543957765047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2700706213809638934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29be3de51ee963f44a3ed24f52628aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemController: {fileID: 3369233351137755661}
-  _skillsController: {fileID: 7859858754993962914}
 --- !u!114 &3369233351137755661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,8 +511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillHolder:
-    skillNames:
-    - Speed
+    skillsID: 
     _skillDatas: []
   _combatUI: {fileID: 2188388283335968423}
   skillsParent: {fileID: 9064172160109199589}

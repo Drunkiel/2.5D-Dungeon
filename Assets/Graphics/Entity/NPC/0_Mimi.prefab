@@ -123,12 +123,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9187809349393938441}
-  - component: {fileID: 3646987753295491904}
-  - component: {fileID: 985397194288961291}
   - component: {fileID: 6280647872323589344}
   - component: {fileID: 5098897416123109683}
   - component: {fileID: 5739743612330850663}
-  - component: {fileID: 8880565776750209176}
   - component: {fileID: 4407220391444317787}
   - component: {fileID: 9010675024894858528}
   - component: {fileID: 4337896926071406790}
@@ -166,54 +163,6 @@ Transform:
   - {fileID: 2196136558863371446}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &3646987753295491904
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4500025192079454394}
-  serializedVersion: 4
-  m_Mass: 11
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 112
-  m_CollisionDetection: 0
---- !u!65 &985397194288961291
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4500025192079454394}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.3, y: 0.385, z: 0.01}
-  m_Center: {x: 0, y: 0.037, z: 0}
 --- !u!65 &6280647872323589344
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -302,8 +251,9 @@ MonoBehaviour:
     onDeath:
       m_PersistentCalls:
         m_Calls: []
-  _holdingController: {fileID: 8880565776750209176}
-  rgBody: {fileID: 3646987753295491904}
+  _itemController: {fileID: 4407220391444317787}
+  _skillsController: {fileID: 9010675024894858528}
+  rgBody: {fileID: 0}
   anim: {fileID: 0}
 --- !u!114 &5739743612330850663
 MonoBehaviour:
@@ -320,20 +270,6 @@ MonoBehaviour:
   canCombat: 1
   inCombat: 0
   timeToResetCombat: 0
---- !u!114 &8880565776750209176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4500025192079454394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29be3de51ee963f44a3ed24f52628aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemController: {fileID: 4407220391444317787}
-  _skillsController: {fileID: 9010675024894858528}
 --- !u!114 &4407220391444317787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1351,7 +1287,7 @@ Transform:
   m_GameObject: {fileID: 7973400568648801174}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.55, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

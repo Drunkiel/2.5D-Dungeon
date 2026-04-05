@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
     private float currentXRotation = 0f;
     private float currentYRotation = 30f;
     private float targetXRotation = 0f;
-    private float targetYRotation = 30f;
+    [SerializeField] private float targetYRotation = 30f;
 
     private bool rightClick;
 
@@ -80,7 +80,6 @@ public class CameraController : MonoBehaviour
 
         targetXRotation += inputRotation.x * rotationXSpeed;
         //!TESTING CONCEPT
-        targetYRotation = 45;
         // targetYRotation -= inputRotation.y * rotationYSpeed;
         // targetYRotation = Mathf.Clamp(targetYRotation, 15, 45);
     }
@@ -140,6 +139,11 @@ public class CameraController : MonoBehaviour
             virtualCameras[currentCamera].m_Lens.FieldOfView = Mathf.Lerp(startValue, number, time / timeToEnd);
             yield return null;
         }
+    }
+
+    public void ChangeCameraYAngle(int value)
+    {
+        targetYRotation = value;
     }
 
     public void ChangeSkyBox(int index)

@@ -411,7 +411,6 @@ GameObject:
   - component: {fileID: 7494612481661892330}
   - component: {fileID: 6634431841469778539}
   - component: {fileID: 1446096858292529184}
-  - component: {fileID: 67188910040427025}
   - component: {fileID: 3732451543693721110}
   - component: {fileID: 2755251479877560043}
   - component: {fileID: 3261361491367836943}
@@ -585,7 +584,8 @@ MonoBehaviour:
     onDeath:
       m_PersistentCalls:
         m_Calls: []
-  _holdingController: {fileID: 67188910040427025}
+  _itemController: {fileID: 3732451543693721110}
+  _skillsController: {fileID: 2755251479877560043}
   rgBody: {fileID: 7289960857911305979}
   anim: {fileID: 0}
 --- !u!114 &6634431841469778539
@@ -664,20 +664,6 @@ MonoBehaviour:
   canCombat: 1
   inCombat: 0
   timeToResetCombat: 0
---- !u!114 &67188910040427025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2226422668782238916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29be3de51ee963f44a3ed24f52628aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemController: {fileID: 3732451543693721110}
-  _skillsController: {fileID: 2755251479877560043}
 --- !u!114 &3732451543693721110
 MonoBehaviour:
   m_ObjectHideFlags: 0

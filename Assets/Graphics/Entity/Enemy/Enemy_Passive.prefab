@@ -946,7 +946,6 @@ GameObject:
   - component: {fileID: 1047587455327668846}
   - component: {fileID: 7315278706092271255}
   - component: {fileID: 7344083697471045279}
-  - component: {fileID: 1841506015529121038}
   - component: {fileID: 6766648056852324587}
   - component: {fileID: 2242784241959230794}
   - component: {fileID: 9097440375740507101}
@@ -1062,6 +1061,7 @@ MonoBehaviour:
     ID: 0
     name: John
     title: 
+    entityClass: 0
     entity: 1
     behaviour: 0
   _statistics:
@@ -1124,7 +1124,8 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  _holdingController: {fileID: 1841506015529121038}
+  _itemController: {fileID: 6766648056852324587}
+  _skillsController: {fileID: 2242784241959230794}
   rgBody: {fileID: 8991351400228812822}
   anim: {fileID: 9097440375740507101}
 --- !u!114 &7315278706092271255
@@ -1182,6 +1183,8 @@ MonoBehaviour:
   allowedDistance: 0
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
+  newVelocityXZ: {x: 0, y: 0}
+  newVelocityY: 0
   isMoving: 0
   movingTime: 0
   isFacingCamera: 0
@@ -1201,20 +1204,6 @@ MonoBehaviour:
   canCombat: 1
   inCombat: 0
   timeToResetCombat: 0
---- !u!114 &1841506015529121038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5178939710355253913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29be3de51ee963f44a3ed24f52628aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemController: {fileID: 6766648056852324587}
-  _skillsController: {fileID: 2242784241959230794}
 --- !u!114 &6766648056852324587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1254,9 +1243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillHolder:
-    skillNames:
-    - Range Attack
-    - Speed
+    skillsID: 
     _skillDatas: []
   _combatUI: {fileID: 5194157636900211279}
   skillsParent: {fileID: 2829886986776283147}

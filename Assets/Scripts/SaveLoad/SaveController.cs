@@ -23,7 +23,7 @@ public class SaveController : SaveLoadSystem
         _saveData.skinPath = _playerController.GetComponent<EntityLookController>().skinPath;
         _saveData.sceneName = PortalController.instance._currScene.sceneName;
         _saveData.position = new(_playerController.transform.position);
-        _saveData._inventoryData = new(_playerController._holdingController._itemController._gearHolder, InventoryController.instance._inventorySlots);
+        _saveData._inventoryData = new(_playerController._itemController._gearHolder, InventoryController.instance._inventorySlots);
         _saveData._skillData = new(InventoryController.instance._skillSlots);
 
         //Save data to file
@@ -65,6 +65,8 @@ public class SaveController : SaveLoadSystem
         LoadSkills();
         //Load Skin
         LoadSkin(_playerController);
+        //Change camera angle
+        CameraController.instance.ChangeCameraYAngle(45);
 
         PopUpController.instance.CreatePopUp(PopUpInfo.VisitPlace, "Save is loaded");
     }

@@ -34,7 +34,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         else if (_droppedItemID._itemData == null)
             return;
 
-        ItemController _itemController = GameController.instance._player._holdingController._itemController;
+        ItemController _itemController = GameController.instance._player._itemController;
         switch (itemRestriction)
         {
             case ItemType.Weapon:

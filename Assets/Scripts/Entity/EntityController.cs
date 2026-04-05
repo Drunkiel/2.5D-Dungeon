@@ -59,7 +59,8 @@ public class EntityController : MonoBehaviour
         private set;
     }
 
-    public HoldingController _holdingController;
+    public ItemController _itemController;
+    public SkillController _skillsController;
 
     public Rigidbody rgBody;
     public Animator anim;
@@ -90,8 +91,8 @@ public class EntityController : MonoBehaviour
         //Updating buffs / Check every second
         if (Time.time >= nextCheck)
         {
-            if (_holdingController != null && _statistics._activeBuffs.Count > 0)
-                _statistics.UpdateBuffs(_holdingController._itemController._gearHolder);
+            if (_statistics._activeBuffs.Count > 0)
+                _statistics.UpdateBuffs(_itemController._gearHolder);
             nextCheck = Time.time + 1f;
         }
     }

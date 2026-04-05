@@ -156,7 +156,7 @@ public class CombatController : MonoBehaviour
             (int)_combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Buff })
         ));
 
-        _casterStatistics.RecalculateStatistics(GameController.instance._player._holdingController._itemController._gearHolder);
+        _casterStatistics.RecalculateStatistics(GameController.instance._player._itemController._gearHolder);
 
         if (_skillDataParser._skillData.worksOnOthers)
         {
@@ -172,7 +172,7 @@ public class CombatController : MonoBehaviour
                     (int)_combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Buff })
                 ));
 
-                _targetStatistics.RecalculateStatistics(GameController.instance._player._holdingController._itemController._gearHolder);
+                _targetStatistics.RecalculateStatistics(GameController.instance._player._itemController._gearHolder);
             }
         }
     }

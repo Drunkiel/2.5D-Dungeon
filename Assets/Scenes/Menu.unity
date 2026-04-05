@@ -6527,6 +6527,7 @@ MonoBehaviour:
   positions:
   - {x: 0, y: 2, z: -5}
   - {x: -10, y: 0.265, z: 0}
+  teleportID: 0
   anim: {fileID: 0}
   onTeleportEvent:
     m_PersistentCalls:
@@ -13729,7 +13730,6 @@ GameObject:
   - component: {fileID: 714463636}
   - component: {fileID: 714463631}
   - component: {fileID: 714463630}
-  - component: {fileID: 714463629}
   - component: {fileID: 714463628}
   - component: {fileID: 714463627}
   - component: {fileID: 714463626}
@@ -13928,20 +13928,6 @@ MonoBehaviour:
     _armorHead: {fileID: 0}
     _armorChestplate: {fileID: 0}
     _armorBoots: {fileID: 0}
---- !u!114 &714463629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714463623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29be3de51ee963f44a3ed24f52628aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemController: {fileID: 714463628}
-  _skillsController: {fileID: 714463627}
 --- !u!114 &714463630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14059,7 +14045,8 @@ MonoBehaviour:
     onDeath:
       m_PersistentCalls:
         m_Calls: []
-  _holdingController: {fileID: 714463629}
+  _itemController: {fileID: 714463628}
+  _skillsController: {fileID: 714463627}
   rgBody: {fileID: 714463634}
   anim: {fileID: 714463624}
 --- !u!65 &714463633
@@ -16954,6 +16941,7 @@ MonoBehaviour:
   maxDistance: 2
   distanceFromTarget: 2
   zoomSpeed: 2
+  targetYRotation: 30
 --- !u!1 &813732166
 GameObject:
   m_ObjectHideFlags: 0
@@ -31022,11 +31010,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Big thanks to me\n\n\r\nMichaelsGameLab\r - water shader\nOgxd - grid
-    shader"
+  m_text: 'Big thanks to me
+
+
+    MichaelsGameLab - water shader
+
+    Ogxd - grid
+    shader'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3dc03c47ef605f94f94354d11ccfd723, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -2370568698158808678, guid: 3dc03c47ef605f94f94354d11ccfd723,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -31057,7 +31051,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -31089,7 +31083,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1546682638
@@ -38352,6 +38346,7 @@ MonoBehaviour:
   cooldownToTeleport: 0
   positions:
   - {x: 0, y: 0, z: 0}
+  teleportID: 0
   anim: {fileID: 0}
   onTeleportEvent:
     m_PersistentCalls:
@@ -43175,6 +43170,7 @@ MonoBehaviour:
   cooldownToTeleport: 0
   positions:
   - {x: 0, y: 2, z: -5}
+  teleportID: 0
   anim: {fileID: 0}
   onTeleportEvent:
     m_PersistentCalls:
