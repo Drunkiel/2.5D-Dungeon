@@ -42,21 +42,44 @@ public class CombatUI : MonoBehaviour
             yield break;
 
         CombatController _combatController = CombatController.instance;
+
         if (!_combatController.CheckClass(_skillDataParser, _skillInfos[buttonIndex]._collisionController))
         {
-            ConsoleController.instance.ChatMessage(SenderType.System, $"This skill needs weapon for: {_skillDataParser._skillData.entityClass}", OutputType.Warning);
+            ConsoleController.instance.ChatMessage(
+                SenderType.System,
+                $"This skill needs weapon for: {_skillDataParser._skillData.entityClass}",
+                OutputType.Warning);
+
             yield break;
         }
 
-        StartCoroutine(_combatController.CastSkill(_skillDataParser, _skillInfos[buttonIndex]._collisionController, this));
+        StartCoroutine(_combatController.CastSkill(
+            _skillDataParser,
+            _skillInfos[buttonIndex]._collisionController,
+            this));
+
         _skillInfos[buttonIndex].canBeCasted = false;
+
         if (_skillInfos[buttonIndex].skillButton != null)
             _skillInfos[buttonIndex].skillButton.interactable = false;
 
-        //Wait until the cooldown is done
-        yield return new WaitForSeconds(GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.Cooldown }));
+        float cooldown = GetSkillModifier(
+            _skillDataParser._skillData,
+            new() { AttributeTypes.Cooldown });
+
+        float timer = 0f;
+
+        //Custom cooldown waiter
+        while (timer < cooldown)
+        {
+            if (!GameController.isPaused)
+                timer += Time.deltaTime;
+
+            yield return null;
+        }
 
         _skillInfos[buttonIndex].canBeCasted = true;
+
         if (_skillInfos[buttonIndex].skillButton != null)
             _skillInfos[buttonIndex].skillButton.interactable = true;
     }

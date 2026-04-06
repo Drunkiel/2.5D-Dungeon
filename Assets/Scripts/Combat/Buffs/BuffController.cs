@@ -13,13 +13,11 @@ public class BuffController : MonoBehaviour
         _newBuffCell.iconImage.sprite = _buffData.sprite;
         _buffCells.Add(_newBuffCell);
 
-        // Uruchom animację tylko jeśli buff nie jest permanentny
         if (!_buffData.isPermanent)
         {
             StartCoroutine(MoveBackgroundOverTime(
                 _newBuffCell.backgroundImage.GetComponent<RectTransform>(),
-                _buffData.duration,
-                _buffData.timer
+                _buffData
             ));
         }
     }
@@ -32,15 +30,15 @@ public class BuffController : MonoBehaviour
         _buffCells.Clear();
     }
 
-    private IEnumerator MoveBackgroundOverTime(RectTransform background, float duration, float timer)
+    private IEnumerator MoveBackgroundOverTime(RectTransform background, Buff _buffData)
     {
         float startY = 0f;
         float endY = -25f;
-        float progress = Mathf.Clamp01(timer / duration);
+        float progress = 0f;
 
-        while (progress < 1f)
+        while (progress <= 1f)
         {
-            progress += Time.deltaTime / duration;
+            progress = Mathf.Clamp01(_buffData.timer / _buffData.duration);
 
             float currentY = Mathf.Lerp(startY, endY, progress);
             if (background != null)
