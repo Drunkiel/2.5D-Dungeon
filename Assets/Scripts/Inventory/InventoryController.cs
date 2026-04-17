@@ -18,7 +18,9 @@ public class InventoryController : MonoBehaviour
     public Sprite sprite;
 
     public bool isMovingItem;
-    [SerializeField] private OpenCloseUI _openCloseUI;
+    [SerializeField] private OpenCloseUI _inventoryUI;
+    [SerializeField] private OpenCloseUI _playerEqUI;
+    [SerializeField] private OpenCloseUI _skillsUI;
 
     private void Start()
     {
@@ -34,7 +36,25 @@ public class InventoryController : MonoBehaviour
             return;
 
         if (!GameController.instance._player.isStopped && !GameController.isPaused && !isMovingItem)
-            _openCloseUI.OpenClose();
+            _inventoryUI.OpenClose();
+    }
+
+    public void ManageSkills(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+            return;
+
+        if (!GameController.instance._player.isStopped && !GameController.isPaused && !isMovingItem)
+            _skillsUI.OpenClose();
+    }
+
+    public void ManagePlayerEQ(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+            return;
+
+        if (!GameController.instance._player.isStopped && !GameController.isPaused && !isMovingItem)
+            _playerEqUI.OpenClose();
     }
 
     public void AddToInventory(ItemID _itemID, int slotIndex)

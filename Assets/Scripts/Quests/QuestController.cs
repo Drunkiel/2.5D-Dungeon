@@ -29,38 +29,38 @@ public class QuestController : MonoBehaviour
         GiveQuest(questIndex, true);
     }
 
-    public void GiveQuest(int questIndex, bool showPopUp)
+    public void GiveQuest(int questID, bool showPopUp)
     {
         //Check if index is bigger than are quests
-        if (questIndex >= _allQuests.Count)
+        if (questID >= _allQuests.Count)
             return;
 
         //Check if quest is activated
-        if (_currentQuestsIndex.Contains(questIndex) || _allQuests[questIndex].CheckIfFinished())
+        if (_currentQuestsIndex.Contains(questID) || _allQuests[questID].CheckIfFinished())
             return;
 
         //Add quest
-        _currentQuestsIndex.Add(questIndex);
-        _questUI.AddQuestToUI(_allQuests[questIndex]);
+        _currentQuestsIndex.Add(questID);
+        _questUI.AddQuestToUI(_allQuests[questID]);
 
         if (PopUpController.instance != null && showPopUp)
-            PopUpController.instance.CreatePopUp(PopUpInfo.QuestAccepted, _allQuests[questIndex].title);
+            PopUpController.instance.CreatePopUp(PopUpInfo.QuestAccepted, _allQuests[questID].title);
 
         //Set listeners
-        for (int i = 0; i < _allQuests[questIndex]._requirements.Count; i++)
+        for (int i = 0; i < _allQuests[questID]._requirements.Count; i++)
         {
-            switch (_allQuests[questIndex]._requirements[i].type)
+            switch (_allQuests[questID]._requirements[i].type)
             {
                 case RequirementType.Kill:
-                    killQuestIndexes.Add((short)questIndex);
+                    killQuestIndexes.Add((short)questID);
                     break;
 
                 case RequirementType.Collect:
-                    collectQuestIndexes.Add((short)questIndex);
+                    collectQuestIndexes.Add((short)questID);
                     break;
 
                 case RequirementType.Talk:
-                    talkQuestIndexes.Add((short)questIndex);
+                    talkQuestIndexes.Add((short)questID);
                     break;
             }
         }

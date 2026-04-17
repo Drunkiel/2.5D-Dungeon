@@ -7,6 +7,7 @@ public class DialogController : MonoBehaviour
 
     [SerializeField] private List<Dialog> _dialogs = new();
     private int dialogIndex;
+    private short npcIdPreviewLoaded = -1; //ID that should be never assigned to NPC
     public bool isTalking;
 
     public DialogUI _dialogUI;
@@ -35,6 +36,7 @@ public class DialogController : MonoBehaviour
         if (_entityController != null)
         {
             UpdatePreviewLook(_entityController, _dialogUI._npcPreview);
+            npcIdPreviewLoaded = _dialogs[dialogIndex].entityID;
             UpdatePreviewLook(_playerController, _dialogUI._playerPreview);
 
             //Checking if player is talking to right npc
@@ -48,7 +50,7 @@ public class DialogController : MonoBehaviour
 
         CameraController.instance.LockCamera(true);
         _openCloseUI.Open();
-        _dialogUI.UpdateDialog(_dialogs[dialogIndex]);
+        _dialogUI.UpdateDialog(_dialogs[dialogIndex], _entityController._entityInfo.name);
         isTalking = true;
     }
 
@@ -68,7 +70,13 @@ public class DialogController : MonoBehaviour
         }
 
         dialogIndex = index;
-        _dialogUI.UpdateDialog(_dialogs[dialogIndex]);
+        EntityController _entity = EntityHolder.instance.GetEntityInScene(_dialogs[dialogIndex].entityID);
+        if (_entity != null && npcIdPreviewLoaded != _dialogs[dialogIndex].entityID)
+        {
+            UpdatePreviewLook(_entity, _dialogUI._npcPreview);
+            npcIdPreviewLoaded = _dialogs[dialogIndex].entityID;
+        }
+        _dialogUI.UpdateDialog(_dialogs[dialogIndex], _entity != null ? _entity._entityInfo.name : "");
     }
 
     public void ForceChangeDialog(int index)

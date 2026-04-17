@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +17,7 @@ public class DialogUI : MonoBehaviour
     public float typingSpeed = 0.02f;
     private Dialog _currentDialog;
 
-    public void UpdateDialog(Dialog _dialog)
+    public void UpdateDialog(Dialog _dialog, string npcName = "")
     {
         _currentDialog = _dialog;
         optionsShown = false;
@@ -35,7 +36,7 @@ public class DialogUI : MonoBehaviour
 
         dialogText.gameObject.SetActive(true);
 
-        StartCoroutine(TextWriting(_dialog.text));
+        StartCoroutine(TextWriting($"{npcName} - ", _dialog.text));
     }
 
     public void OnDialogClick()
@@ -82,18 +83,17 @@ public class DialogUI : MonoBehaviour
         finishedSpelling = true;
     }
 
-    IEnumerator TextWriting(string dialog)
+    IEnumerator TextWriting(string npcName, string dialog)
     {
         finishedSpelling = false;
 
-        dialogText.text = dialog;
+        dialogText.text = $"<color=yellow>{npcName}</color>{dialog}";
         dialogText.ForceMeshUpdate();
 
         int totalCharacters = dialogText.textInfo.characterCount;
+        dialogText.maxVisibleCharacters = npcName.Length;
 
-        dialogText.maxVisibleCharacters = 0;
-
-        for (int i = 0; i <= totalCharacters; i++)
+        for (int i = npcName.Length; i <= totalCharacters; i++)
         {
             if (finishedSpelling)
                 yield break;

@@ -27,7 +27,7 @@
                     "name": "Inventory",
                     "type": "Button",
                     "id": "1adfeedf-6cb6-4539-93ec-5d1796dd9b86",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press",
                     "initialStateCheck": false
@@ -57,6 +57,24 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PlayerEQ",
+                    "type": "Button",
+                    "id": "ae143a14-ac8f-4597-96ad-637979557c87",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skills",
+                    "type": "Button",
+                    "id": "df08c334-c072-4e0d-8118-484a37c3c5b3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
@@ -280,6 +298,28 @@
                     "action": "RightClick",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d23e73b-56a0-4b41-b07b-257a9945b38f",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlayerEQ",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1fb2efa6-d312-40a9-9823-d1557ef13d70",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skills",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -291,7 +331,7 @@
                     "name": "Click",
                     "type": "Button",
                     "id": "056278de-51ac-4042-8aa7-8a86656317f9",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press",
                     "initialStateCheck": false
