@@ -79,4 +79,9 @@ public class ConsoleCommands : MonoBehaviour
         _imageCutter.sourceImage = SaveLoadSystem.GetSprite(SaveLoadSystem.skinsSavePath + skinPath, 20f).texture;
         _imageCutter.ExtractImages(outputFolder);
     }
+
+    public void ForcePlayerMovement()
+    {
+        GameController.instance._player.GetComponent<PlayerMovement>().ForceMovement(Vector2.up, 0.2f);
+    }
 }

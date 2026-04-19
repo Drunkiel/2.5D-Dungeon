@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 newVelocityXZ;
     private float newVelocityY;
     public bool isMoving;
+
+    private bool isForceMoving = false;
+    private Vector2 forcedMovement;
 
     private EntityController _controller;
 
@@ -63,7 +67,8 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         //Make movement depend on direction player is facing
-        Vector3 move = new Vector3(movement.x, 0, movement.y).normalized;
+        Vector2 currentMovement = isForceMoving ? forcedMovement : movement;
+        Vector3 move = new Vector3(currentMovement.x, 0, currentMovement.y).normalized;
         Vector3 rotatedMovement = transform.TransformDirection(move);
 
         //Move player
@@ -78,6 +83,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void MovementInput(InputAction.CallbackContext context)
     {
+        if (isForceMoving)
+            return;
+
         Vector2 inputValue = context.ReadValue<Vector2>();
 
         if (_controller.isStopped || GameController.isPaused)
@@ -86,34 +94,72 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (inputValue.y < 0 && !_controller.isFacingCamera)
-        {
-            _controller.FaceCamera(true);
-            GetComponent<EntityLookController>().UpdateEntityLookAll(_controller.isFacingCamera);
-            GetComponent<EntityLookController>().RotateCharacter(!_controller.isFlipped, _controller.isFacingCamera);
-        }
-        else if (inputValue.y > 0 && _controller.isFacingCamera)
-        {
-            _controller.FaceCamera(false);
-            GetComponent<EntityLookController>().UpdateEntityLookAll(_controller.isFacingCamera);
-            GetComponent<EntityLookController>().RotateCharacter(!_controller.isFlipped, _controller.isFacingCamera);
-        }
-
-        //Flipping player to direction they are going
-        if (inputValue.x < 0 && !_controller.isFlipped)
-        {
-            transform.GetChild(0).localScale = new(-1, 1, 1);
-            _controller.Flip(true);
-            GetComponent<EntityLookController>().RotateCharacter(!_controller.isFlipped, _controller.isFacingCamera);
-        }
-        else if (inputValue.x > 0 && _controller.isFlipped)
-        {
-            transform.GetChild(0).localScale = new(1, 1, 1);
-            _controller.Flip(false);
-            GetComponent<EntityLookController>().RotateCharacter(!_controller.isFlipped, _controller.isFacingCamera);
-        }
+        HandleRotation(inputValue);
 
         movement = new Vector2(inputValue.x, inputValue.y);
+    }
+
+    public void ForceMovement(Vector2 direction, float time)
+    {
+        StartCoroutine(ForceMovementCoroutine(direction, time));
+    }
+
+    private IEnumerator ForceMovementCoroutine(Vector2 direction, float time)
+    {
+        isForceMoving = true;
+        forcedMovement = direction.normalized;
+        HandleRotation(direction);
+
+        yield return new WaitForSeconds(time);
+
+        isForceMoving = false;
+        forcedMovement = Vector2.zero;
+    }
+
+    public void ResetMovement()
+    {
+        movement = Vector2.zero;
+        _controller.rgBody.velocity = Vector3.zero;
+    }
+
+    private void HandleRotation(Vector2 currentMovement)
+    {
+        if (currentMovement.magnitude < 0.01f)
+            return;
+
+        //Flip on y axis (Forward/Backwards)
+        if (currentMovement.y < 0 && !_controller.isFacingCamera)
+        {
+            _controller.FaceCamera(true);
+            GetComponent<EntityLookController>()
+                .UpdateEntityLookAll(_controller.isFacingCamera);
+            GetComponent<EntityLookController>()
+                .RotateCharacter(!_controller.isFlipped, _controller.isFacingCamera);
+        }
+        else if (currentMovement.y > 0 && _controller.isFacingCamera)
+        {
+            _controller.FaceCamera(false);
+            GetComponent<EntityLookController>()
+                .UpdateEntityLookAll(_controller.isFacingCamera);
+            GetComponent<EntityLookController>()
+                .RotateCharacter(!_controller.isFlipped, _controller.isFacingCamera);
+        }
+
+        //Flip on x axis (Left/Right)
+        if (currentMovement.x < 0 && !_controller.isFlipped)
+        {
+            transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
+            _controller.Flip(true);
+            GetComponent<EntityLookController>()
+                .RotateCharacter(!_controller.isFlipped, _controller.isFacingCamera);
+        }
+        else if (currentMovement.x > 0 && _controller.isFlipped)
+        {
+            transform.GetChild(0).localScale = new Vector3(1, 1, 1);
+            _controller.Flip(false);
+            GetComponent<EntityLookController>()
+                .RotateCharacter(!_controller.isFlipped, _controller.isFacingCamera);
+        }
     }
 
     public void JumpInput(InputAction.CallbackContext context)
@@ -163,11 +209,5 @@ public class PlayerMovement : MonoBehaviour
 
         for (int i = 0; i < _controller._statistics.additionalJumps.Count; i++)
             _controller._statistics.additionalJumps[i] = false;
-    }
-
-    public void ResetMovement()
-    {
-        movement = Vector2.zero;
-        _controller.rgBody.velocity = Vector3.zero;
     }
 }

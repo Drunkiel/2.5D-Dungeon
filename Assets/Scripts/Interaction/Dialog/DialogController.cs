@@ -25,7 +25,7 @@ public class DialogController : MonoBehaviour
 
         if (isTalking)
         {
-            _dialogUI.SpeedUpDialog();
+            _dialogUI.OnDialogClick();
             return;
         }
 
