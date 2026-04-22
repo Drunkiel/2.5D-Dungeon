@@ -126,9 +126,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         if (eventData.button == PointerEventData.InputButton.Right)
             ComparisonController.instance.MakeComparison(currentSlot._itemID);
 
-        //!TEMPORARY SOLUTION
-        if (currentSlot.itemRestriction != ItemType.Spell)
-            rectTransform.SetParent(InventoryController.instance.slotParent.parent);
+        rectTransform.SetParent(InventoryController.instance.slotParent);
     }
 
     public void OnDrop(PointerEventData eventData)
