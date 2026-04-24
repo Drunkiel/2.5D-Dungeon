@@ -7,54 +7,108 @@ public class ComparisonItem : MonoBehaviour
 {
     public ItemID _itemID;
 
-    public Image itemShowcase;
-    public TMP_Text itemNameText;
-    public TMP_Text holdingTypeText;
+    [SerializeField] private Image itemShowcase;
+    [SerializeField] private TMP_Text itemNameText;
+    [SerializeField] private TMP_Text holdingTypeText;
 
-    public Transform statContent;
-    public TMP_Text statTextPrefab;
-    public List<TMP_Text> allContextTexts = new();
+    [SerializeField] private Transform statContent;
+    [SerializeField] private TMP_Text statTextPrefab;
+    private Sprite iconSprite;
+    private string titleText;
 
     public void OverrideData()
     {
-        ItemData _itemData = null;
+        if (_itemID._itemData != null)
+            SetItemData();
+        else
+            SetSkillData();
+
+        itemShowcase.sprite = iconSprite;
+        itemNameText.text = titleText;
+    }
+
+    private void SetItemData()
+    {
+        ItemData _itemData = _itemID._itemData;
         List<ItemBuff> _itemBuffs = new();
-        Sprite iconSprite = null;
+        titleText = _itemData.displayedName;
 
         switch (_itemID._itemData.itemType)
         {
             case ItemType.Weapon:
-                _itemData = _itemID._itemData;
                 iconSprite = _itemID._weaponItem.iconSprite;
 
                 holdingTypeText.text = "Holding type:" + _itemID._weaponItem.holdingType;
                 break;
 
             case ItemType.Armor:
-                _itemData = _itemID._itemData;
                 iconSprite = _itemID._armorItem.iconSprite;
 
                 holdingTypeText.text = "Holding type:" + _itemID._armorItem.armorType;
                 break;
         }
 
-        if (_itemData._itemBuffs.Count > 0) 
+        if (_itemData._itemBuffs.Count > 0)
             _itemBuffs = _itemData._itemBuffs;
 
-        //Removing content
-        for (int i = 0; i < allContextTexts.Count; i++)
-            Destroy(allContextTexts[i].gameObject);
-        allContextTexts.Clear();
-
-        //Adding new content
+        //Displaying stats
         for (int i = 0; i < _itemBuffs.Count; i++)
         {
             TMP_Text newStatText = Instantiate(statTextPrefab, statContent);
             newStatText.text = $"{_itemBuffs[i].itemBuffs}: {_itemBuffs[i].amount}";
-            allContextTexts.Add(newStatText);
         }
+    }
 
-        itemShowcase.sprite = iconSprite;
-        itemNameText.text = _itemData.displayedName;
+    private void SetSkillData()
+    {
+        SkillDataParser _skillData = _itemID._skillDataParser;
+        List<Attributes> _attributes = new();
+        titleText = _skillData._skillData.displayedName;
+        iconSprite = _skillData.iconSprite;
+
+
+        if (_skillData._skillData._skillAttributes.Count > 0)
+            _attributes = _skillData._skillData._skillAttributes;
+
+        //Displaying stats
+        for (int i = 0; i < _attributes.Count; i++)
+        {
+            string attributeName = BetterSkillNames(_attributes[i].attributeType, _attributes[i].buffTypes);
+
+            TMP_Text newStatText = Instantiate(statTextPrefab, statContent);
+            newStatText.text = $"{attributeName}: {_attributes[i].amount}";
+        }
+    }
+
+    private string BetterSkillNames(AttributeTypes attribute, Buffs buff = Buffs.None)
+    {
+        return attribute switch
+        {
+            AttributeTypes.Buff => BetterBuffNames(buff),
+            AttributeTypes.MeleeDamage => "Melee Damage",
+            AttributeTypes.RangeDamage => "Range Damage",
+            AttributeTypes.MagicDamage => "Magic Damage",
+            AttributeTypes.AllProtection => "Protection",
+            AttributeTypes.MeleeProtection => "Melee Protection",
+            AttributeTypes.RangeProtection => "Range Protection",
+            AttributeTypes.MagicProtection => "Magic Protection",
+            AttributeTypes.Cooldown => "Cooldown",
+            AttributeTypes.ManaUsage => "Mana Needed",
+            _ => "",
+        };
+    }
+
+    private string BetterBuffNames(Buffs buff)
+    {
+        return buff switch
+        {
+            Buffs.None => "",
+            Buffs.MaxHealth => "+MaxHP",
+            Buffs.MaxMana => "+MaxMP",
+            Buffs.Damage => "+Damage",
+            Buffs.Protection => "+Protection",
+            Buffs.MaxSpeed => "+Speed",
+            _ => "",
+        };
     }
 }

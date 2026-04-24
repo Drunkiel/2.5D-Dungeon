@@ -19022,6 +19022,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5d2b3af0-84ce-44e5-8661-3d89b35f2c18
     m_ActionName: Player/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ae143a14-ac8f-4597-96ad-637979557c87
+    m_ActionName: Player/PlayerEQ[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: df08c334-c072-4e0d-8118-484a37c3c5b3
+    m_ActionName: Player/Skills[/Keyboard/v]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -35916,6 +35924,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1663804418}
   - component: {fileID: 1663804419}
+  - component: {fileID: 1663804420}
   m_Layer: 0
   m_Name: Item_Holder
   m_TagString: Untagged
@@ -35957,6 +35966,21 @@ MonoBehaviour:
   - {fileID: 2585958969199680765, guid: 7d30b57c0ff02e2b0aca84dc7e5901a0, type: 3}
   - {fileID: 674930728305127747, guid: 53571433a80458b5ebbff357e6437959, type: 3}
   - {fileID: 1655226432234036565, guid: f9b7bc35e940cb3f585ee60bbd340d2a, type: 3}
+--- !u!114 &1663804420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663804417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba539b82919701e4baa9c803062743a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 400526019}
+  _comparisonItemPrefab: {fileID: 6349214716567761114, guid: 88d5505e2ddca664cb987392451211ff,
+    type: 3}
 --- !u!1 &1664410646
 GameObject:
   m_ObjectHideFlags: 0
@@ -40465,6 +40489,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 5d2b3af0-84ce-44e5-8661-3d89b35f2c18
     m_ActionName: Player/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ae143a14-ac8f-4597-96ad-637979557c87
+    m_ActionName: Player/PlayerEQ[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: df08c334-c072-4e0d-8118-484a37c3c5b3
+    m_ActionName: Player/Skills[/Keyboard/v]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -43396,7 +43428,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 638458763}
-  - {fileID: 2146956642}
   m_Father: {fileID: 974272291}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -44490,56 +44521,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143f7d0b0be30b34a8add24dbacfcf6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2146956641
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2146956642}
-  - component: {fileID: 2146956643}
-  m_Layer: 5
-  m_Name: DisplayItemUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2146956642
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146956641}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2107069855}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2146956643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146956641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba539b82919701e4baa9c803062743a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _comparisonItemPrefab: {fileID: 9093107963098015312, guid: 21c26cce1c586834d8fdcf90df822efe,
-    type: 3}
 --- !u!65 &774078877546130404
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using UnityEngine;
 public class ComparisonController : MonoBehaviour
 {
     public static ComparisonController instance;
+    [SerializeField] private Transform parent;
 
     [SerializeField] private ComparisonItem _comparisonItemPrefab;
 
@@ -13,10 +14,10 @@ public class ComparisonController : MonoBehaviour
 
     public void MakeComparison(ItemID _otherItemID)
     {
-        ComparisonItem _comparisonItem = Instantiate(_comparisonItemPrefab, transform);
+        ComparisonItem _comparisonItem = Instantiate(_comparisonItemPrefab, parent);
 
         _comparisonItem._itemID = _otherItemID;
-        
+
         //Checks if item exists
         if (_comparisonItem._itemID == null)
             return;

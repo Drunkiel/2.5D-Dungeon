@@ -121,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1430856054183543053}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AutoDestroy, Assembly-CSharp
         m_MethodName: InstantDestroy
         m_Mode: 1
@@ -472,9 +472,8 @@ GameObject:
   - component: {fileID: 8983049221377925686}
   - component: {fileID: 9093107963098015312}
   - component: {fileID: 8188064433758654504}
-  - component: {fileID: 1430856054183543053}
   m_Layer: 5
-  m_Name: DisplayItem
+  m_Name: ComparisonPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -539,19 +538,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5040e49f1e734d4baf4edeaa8dd6ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1430856054183543053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2773393619083177009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32fbffe6c66942f5b8abd46e2172a060, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interval: 0
 --- !u!1 &5140108466598373636
 GameObject:
   m_ObjectHideFlags: 0

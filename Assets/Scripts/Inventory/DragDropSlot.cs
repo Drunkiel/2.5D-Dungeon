@@ -68,6 +68,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         }
 
         currentSlot._itemID = null;
+        rectTransform.SetParent(InventoryController.instance.slotParent);
 
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
@@ -126,7 +127,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         if (eventData.button == PointerEventData.InputButton.Right)
             ComparisonController.instance.MakeComparison(currentSlot._itemID);
 
-        rectTransform.SetParent(InventoryController.instance.slotParent);
+        //rectTransform.SetParent(InventoryController.instance.slotParent);
     }
 
     public void OnDrop(PointerEventData eventData)
