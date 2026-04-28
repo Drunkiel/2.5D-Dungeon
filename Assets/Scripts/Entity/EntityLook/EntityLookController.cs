@@ -10,7 +10,14 @@ public class EntityLookController : SaveLoadSystem
     public EntitySpriteHolder _spriteHolder;
     public string skinPath;
     public BodyType bodyType;
-    public bool isRotated;
+    public Vector2 direction = new Vector2(1, 1);
+
+    private Animator anim;
+
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     private void LoadSprites()
     {
@@ -102,66 +109,111 @@ public class EntityLookController : SaveLoadSystem
 
     public void RotateCharacter(bool facingRight, bool facingCamera)
     {
-        isRotated = facingRight;
+        Vector2 newDirection = new(
+            facingRight ? 1 : -1,
+            facingCamera ? 1 : -1
+        );
 
-        int rightArmOrder = facingRight ? 4 : 0;
-        int rightHandOrder = facingRight ? 5 : 1;
-        int leftArmOrder = facingRight ? 0 : 4;
-        int leftHandOrder = facingRight ? 1 : 5;
+        direction = newDirection;
 
-        float scaleSign = facingCamera ? 1f : -1f;
-        float flipDirection = facingRight ? scaleSign : -scaleSign;
+        float x = direction.x;   // 1 or -1
+        float y = direction.y;   // 1 or -1
 
-        _entityLook.armRightImage.transform.parent.parent.localScale = new Vector3(flipDirection, 1, 1);
+        //Flip entity parts
+        _entityLook.armRightImage.transform.parent.parent.localScale =
+            new Vector3(x * y, 1, 1);
 
-        _entityLook.armRightImage.sortingOrder = rightArmOrder;
-        _entityLook.handRightImage.sortingOrder = rightHandOrder;
-        _entityLook.armLeftImage.sortingOrder = leftArmOrder;
-        _entityLook.handLeftImage.sortingOrder = leftHandOrder;
+        _entityLook.handRightImage.transform.localScale =
+            new Vector3(x * y, 1, 1);
 
-        float handScaleRight = facingRight ? scaleSign * 1f : -scaleSign * 1f;
-        float handScaleLeft = facingRight ? -scaleSign * 1f : scaleSign * 1f;
+        _entityLook.handLeftImage.transform.localScale =
+            new Vector3(-x * y, 1, 1);
 
-        _entityLook.handRightImage.transform.localScale = new Vector3(handScaleRight, 1f, 1f);
-        _entityLook.handLeftImage.transform.localScale = new Vector3(handScaleLeft, 1f, 1f);
+        //Sorting entity parts
+        _entityLook.armRightImage.sortingOrder = x == 1 ? 4 : 0;
+        _entityLook.handRightImage.sortingOrder = x == 1 ? 5 : 1;
+        _entityLook.armLeftImage.sortingOrder = x == 1 ? 0 : 4;
+        _entityLook.handLeftImage.sortingOrder = x == 1 ? 1 : 5;
 
+        //Update items
         if (TryGetComponent(out ItemController itemController))
         {
-            GearHolder _gearHolder = itemController._gearHolder;
-            int rightWeaponOrder = facingRight ? 6 : 1;
-            int leftWeaponOrder = facingRight ? 1 : 6;
+            GearHolder gear = itemController._gearHolder;
 
-            if (_gearHolder._weaponRight != null)
-                _gearHolder._weaponRight.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = rightWeaponOrder;
+            int rightWeaponOrder = x == 1 ? 6 : 1;
+            int leftWeaponOrder = x == 1 ? 1 : 6;
 
-            if (_gearHolder._weaponLeft != null)
-                _gearHolder._weaponLeft.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = leftWeaponOrder;
+            if (gear._weaponRight != null)
+                gear._weaponRight.transform.GetChild(0).GetChild(0)
+                    .GetComponent<SpriteRenderer>().sortingOrder = rightWeaponOrder;
 
-            if (_gearHolder._armorHead != null)
-                _gearHolder._armorHead.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite =
-                facingCamera ?
-                _gearHolder._armorHead.itemSpriteFront :
-                _gearHolder._armorHead.itemSpriteBack;
+            if (gear._weaponLeft != null)
+                gear._weaponLeft.transform.GetChild(0).GetChild(0)
+                    .GetComponent<SpriteRenderer>().sortingOrder = leftWeaponOrder;
 
-            if (_gearHolder._armorChestplate != null)
-                _gearHolder._armorChestplate.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite =
-                facingCamera ?
-                _gearHolder._armorChestplate.itemSpriteFront :
-                _gearHolder._armorChestplate.itemSpriteBack;
+            Sprite headSprite = y == 1 ? gear._armorHead?.itemSpriteFront : gear._armorHead?.itemSpriteBack;
+            Sprite chestSprite = y == 1 ? gear._armorChestplate?.itemSpriteFront : gear._armorChestplate?.itemSpriteBack;
+            Sprite bootsSprite = y == 1 ? gear._armorBoots?.itemSpriteFront : gear._armorBoots?.itemSpriteBack;
 
-            if (_gearHolder._armorBoots != null)
+            if (gear._armorHead != null)
+                gear._armorHead.transform.GetChild(0).GetChild(0)
+                    .GetComponent<SpriteRenderer>().sprite = headSprite;
+
+            if (gear._armorChestplate != null)
+                gear._armorChestplate.transform.GetChild(0).GetChild(0)
+                    .GetComponent<SpriteRenderer>().sprite = chestSprite;
+
+            if (gear._armorBoots != null)
             {
-                _gearHolder._armorBoots.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite =
-                facingCamera ?
-                _gearHolder._armorBoots.itemSpriteFront :
-                _gearHolder._armorBoots.itemSpriteBack;
+                gear._armorBoots.transform.GetChild(0).GetChild(0)
+                    .GetComponent<SpriteRenderer>().sprite = bootsSprite;
 
-                _gearHolder.leftFeetTransform.GetChild(1).GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite =
-                facingCamera ?
-                _gearHolder._armorBoots.itemSpriteFront :
-                _gearHolder._armorBoots.itemSpriteBack;
+                gear.leftFeetTransform.GetChild(1).GetChild(0).GetChild(0)
+                    .GetComponent<SpriteRenderer>().sprite = bootsSprite;
             }
         }
+
+        //Rotate skills to match Entity orientation to camera
+        GetComponent<SkillController>()._combatUI.RotateSkills(direction);
+        //Update animations
+        UpdateAnimationByDirection();
+    }
+
+    private void UpdateAnimationByDirection()
+    {
+        if (anim == null)
+            return;
+
+        AnimatorStateInfo state = anim.GetCurrentAnimatorStateInfo(0);
+
+        if (anim.GetCurrentAnimatorClipInfoCount(0) == 0)
+            return;
+
+        string currentName = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+
+        string baseName = currentName.EndsWith("_R")
+            ? currentName.Replace("_R", "")
+            : currentName;
+
+        string reversedName = baseName + "_R";
+
+        string targetName = GetCorrectAnimation(direction, baseName, reversedName);
+
+        if (targetName == currentName)
+            return;
+
+        //Check if animation exists
+        if (GetReversedClip(targetName) == null)
+            return;
+
+        float normalizedTime = state.normalizedTime % 1f;
+
+        anim.Play(targetName, 0, normalizedTime);
+    }
+
+    public string GetCorrectAnimation(Vector2 direction, string animName, string reversedAnimName)
+    {
+        return direction.x * direction.y == 1 ? animName : reversedAnimName;
     }
 
     private void UpdateBodyType()
@@ -193,6 +245,19 @@ public class EntityLookController : SaveLoadSystem
                 _entityLook.legLeftImage.transform.parent.localPosition = new(0.05f, -0.13f, 0);
                 break;
         }
+    }
+
+    public AnimationClip GetReversedClip(string reversedName)
+    {
+        AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+
+        foreach (var clip in clips)
+        {
+            if (clip.name == reversedName)
+                return clip;
+        }
+
+        return null;
     }
 
     public void ApplySkinInEditor()

@@ -310,7 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 500
   useGravity: 1
-  entityTags: []
+  targets: []
   destroyDelay: 5
   _skillDataParser:
     _skillData: {fileID: 0}
@@ -365,6 +365,9 @@ MonoBehaviour:
     additionalJumps: 
     _activeBuffs: []
     _statsController: {fileID: 0}
+    onDeath:
+      m_PersistentCalls:
+        m_Calls: []
   _combatUI: {fileID: 0}
 --- !u!114 &903253747616110240
 MonoBehaviour:

@@ -45,7 +45,9 @@ public class CombatController : MonoBehaviour
         }
 
         //Play animation
-        string animName = string.IsNullOrEmpty(_skillDataParser._skillData.animationName) ? "TakeDamage" : _skillDataParser._skillData.animationName;
+        EntityLookController _entityLook = casterTransform.GetComponent<EntityLookController>();
+        AnimationClip reversedAnimation = _entityLook.GetReversedClip(_skillDataParser._skillData.animationName + "_R");
+        string animName = string.IsNullOrEmpty(_skillDataParser._skillData.animationName) ? "TakeDamage" : reversedAnimation == null ? _skillDataParser._skillData.animationName : _entityLook.GetCorrectAnimation(_entityLook.direction, _skillDataParser._skillData.animationName, reversedAnimation.name);
         if (_entityController != null)
         {
             PlayAnimation(_entityController.anim, animName);

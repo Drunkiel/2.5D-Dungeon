@@ -16,16 +16,6 @@ public class CombatUI : MonoBehaviour
 {
     public List<SkillInfo> _skillInfos = new();
 
-    public void a()
-    {
-        SkillHolder _skillHolder = GameController.instance._player.GetComponent<SkillController>()._skillHolder;
-        for (int i = 0; i < _skillInfos.Count; i++)
-        {
-            if (_skillInfos[i].skillButton != null)
-                SetSkillToBTN(i, _skillHolder._skillDatas[i]);
-        }
-    }
-
     public void SetSkillToBTN(int buttonIndex, SkillDataParser _skillDataParser)
     {
         _skillInfos[buttonIndex].skillButton.onClick.RemoveAllListeners();
@@ -82,6 +72,14 @@ public class CombatUI : MonoBehaviour
 
         if (_skillInfos[buttonIndex].skillButton != null)
             _skillInfos[buttonIndex].skillButton.interactable = true;
+    }
+
+    public void RotateSkills(Vector2 direction)
+    {
+        foreach (SkillInfo _skillInfo in _skillInfos)
+        {
+            _skillInfo._collisionController.transform.localScale = new Vector3(1, 1, -direction.y);
+        }
     }
 
     public float GetSkillModifier(SkillData _skillData, List<AttributeTypes> attributeTypes)
