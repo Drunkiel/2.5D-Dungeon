@@ -15931,7 +15931,7 @@ MonoBehaviour:
     leg_Back: {fileID: 96581204}
   skinPath: Player/Ghost
   bodyType: 0
-  isRotated: 0
+  direction: {x: 1, y: 1}
 --- !u!114 &714463631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15967,48 +15967,53 @@ MonoBehaviour:
     entity: 0
     behaviour: 1
   _statistics:
-    _stats:
-      maxHealth: 0
-      healthRegeneration: 0
-      manaRegeneration: 0
-      damageMultiplier: 0
-      allProtectionMultiplier: 0
-      elementalProtectionMultiplier: 0
-      manaUsageMultiplier: 0
-      meleeDamage: 0
-      rangeDamage: 0
-      magicDamage: 0
-      allProtection: 0
-      meleeProtection: 0
-      rangeProtection: 0
-      magicProtection: 0
-      divineResistance: 0
-      demonicResistance: 0
-      speedForce: 0
-      maxSpeed: 0
-    health: 50
-    maxHealth: 100
-    healthRegeneration: 1
-    mana: 10
-    maxMana: 10
-    manaRegeneration: 1
-    damageMultiplier: 1
-    allProtectionMultiplier: 1
-    elementalProtectionMultiplier: 1
-    manaUsageMultiplier: 1
-    meleeDamage: 0
-    rangeDamage: 0
-    magicDamage: 0
-    allProtection: 0
-    meleeProtection: 0
-    rangeProtection: 0
-    magicProtection: 0
-    divineResistance: 0
-    demonicResistance: 0
-    speedForce: 30
-    maxSpeed: 1.2
-    jumpForce: 3
-    additionalJumps: 
+    vitals:
+      maxHealth:
+        BaseValue: 100
+      maxMana:
+        BaseValue: 100
+      health: 0
+      mana: 0
+      healthRegeneration: 1
+      manaRegeneration: 1
+      manaUsageMultiplier:
+        BaseValue: 1
+    damage:
+      damageMultiplier:
+        BaseValue: 1
+      meleeDamage:
+        BaseValue: 0
+      rangeDamage:
+        BaseValue: 0
+      magicDamage:
+        BaseValue: 0
+    protection:
+      allProtectionMultiplier:
+        BaseValue: 1
+      allProtection:
+        BaseValue: 0
+      meleeProtection:
+        BaseValue: 0
+      rangeProtection:
+        BaseValue: 0
+      magicProtection:
+        BaseValue: 0
+    elemental:
+      elementalProtectionMultiplier:
+        BaseValue: 1
+      fireResistance:
+        BaseValue: 0
+      waterResistance:
+        BaseValue: 0
+      earthResistance:
+        BaseValue: 0
+      airResistance:
+        BaseValue: 0
+    movement:
+      speedForce: 30
+      maxSpeed: 1.2
+      jumpForce: 3
+      additionalJumps: 
     _activeBuffs: []
     _statsController: {fileID: 722818068}
     onDeath:

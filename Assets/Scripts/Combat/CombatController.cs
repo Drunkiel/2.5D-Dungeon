@@ -25,7 +25,7 @@ public class CombatController : MonoBehaviour
         //Get caster
         Transform casterTransform = _collisionController.transform.parent.parent.parent;
         EntityController _entityController = casterTransform.GetComponent<EntityController>();
-        EntityStatistics _casterStatistics = _entityController._statistics;
+        EntityStats _casterStatistics = _entityController._statistics;
 
         if (_casterStatistics == null)
         {
@@ -38,7 +38,7 @@ public class CombatController : MonoBehaviour
 
         //Check if entity has enough mana to cast
         float manaUsage = _combatUI.GetSkillModifier(_skillDataParser._skillData, new() { AttributeTypes.ManaUsage });
-        if (_casterStatistics.mana * _casterStatistics.manaUsageMultiplier < manaUsage)
+        if (_casterStatistics.vitals.mana * _casterStatistics.vitals.manaUsageMultiplier.Value < manaUsage)
         {
             ConsoleController.instance.ChatMessage(SenderType.Hidden, "Not enough mana to cast spell", OutputType.Warning);
             yield break;
@@ -94,10 +94,10 @@ public class CombatController : MonoBehaviour
         _entityController.StopEntity(state);
     }
 
-    public bool AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, Transform casterTransform, EntityStatistics _casterStatistics, CombatUI _combatUI)
+    public bool AttackSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, Transform casterTransform, EntityStats _casterStatistics, CombatUI _combatUI)
     {
         //Get current target
-        List<EntityStatistics> _targetsStatistics = new();
+        List<EntityStats> _targetsStatistics = new();
         List<EntityController> _enemyTargets = new();
 
         if (_collisionController.targets.Count <= 0)
@@ -126,28 +126,28 @@ public class CombatController : MonoBehaviour
 
         //Checks what type of damage to deal
         Attributes _attributes = _skillDataParser._skillData._skillAttributes[0];
-        int damageToDeal = _attributes.attributeType switch
+        float damageToDeal = _attributes.attributeType switch
         {
-            AttributeTypes.MeleeDamage => _casterStatistics.meleeDamage,
-            AttributeTypes.RangeDamage => _casterStatistics.rangeDamage,
-            AttributeTypes.MagicDamage => _casterStatistics.magicDamage,
+            AttributeTypes.MeleeDamage => _casterStatistics.damage.meleeDamage.Value,
+            AttributeTypes.RangeDamage => _casterStatistics.damage.rangeDamage.Value,
+            AttributeTypes.MagicDamage => _casterStatistics.damage.magicDamage.Value,
             _ => 0
         };
 
         for (int i = 0; i < _targetsStatistics.Count; i++)
         {
-            _targetsStatistics[i].TakeDamage((skillDamage + damageToDeal) * _casterStatistics.damageMultiplier, _attributes.attributeType, _attributes.elementalTypes);
+            _targetsStatistics[i].TakeDamage(skillDamage + damageToDeal, _attributes.attributeType, _attributes.elementalTypes, _casterStatistics);
             PlayAnimation(_enemyTargets[i].anim, "TakeDamage");
 
             //If entity is killed check if is in the quest
-            if (_enemyTargets[i]._statistics.health <= 0)
+            if (_enemyTargets[i]._statistics.vitals.health <= 0)
                 QuestController.instance.InvokeKillEvent(_enemyTargets[i]._entityInfo.ID);
         }
 
         return true;
     }
 
-    private void BuffSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStatistics _casterStatistics, CombatUI _combatUI)
+    private void BuffSkill(SkillDataParser _skillDataParser, CollisionController _collisionController, EntityStats _casterStatistics, CombatUI _combatUI)
     {
         //Set buff for caster
         _casterStatistics._activeBuffs.Add(new Buff(
@@ -164,7 +164,7 @@ public class CombatController : MonoBehaviour
         {
             for (int i = _skillDataParser._skillData.worksOnSelf ? 1 : 0; i < _collisionController.targets.Count; i++)
             {
-                EntityStatistics _targetStatistics = _collisionController.targets[i].GetComponent<EntityController>()._statistics;
+                EntityStats _targetStatistics = _collisionController.targets[i].GetComponent<EntityController>()._statistics;
 
                 _targetStatistics._activeBuffs.Add(new Buff(
                     _skillDataParser._skillData.displayedName,

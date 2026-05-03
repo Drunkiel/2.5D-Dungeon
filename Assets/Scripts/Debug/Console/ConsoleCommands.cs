@@ -37,7 +37,7 @@ public class ConsoleCommands : MonoBehaviour
     {
         EntityController _playerController = GameController.instance._player;
 
-        _playerController._statistics.ResetStatistics();
+        //_playerController._statistics.ResetStatistics();
         _playerController._statistics.RecalculateStatistics(_playerController._itemController._gearHolder);
     }
 

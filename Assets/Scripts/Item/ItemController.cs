@@ -13,6 +13,7 @@ public enum ItemType
 public class ItemController : SaveLoadSystem
 {
     public GearHolder _gearHolder;
+    public event Action OnGearChanged;
 
     public bool PickItem(ItemID _itemID, bool isPlayer = true)
     {
@@ -105,6 +106,7 @@ public class ItemController : SaveLoadSystem
                 break;
         }
 
+        OnGearChanged?.Invoke();
         EntityController _playerController = GameController.instance._player;
         _playerController.GetComponent<EntityLookController>().RotateCharacter(!_playerController.isFlipped, _playerController.isFacingCamera);
     }
@@ -169,7 +171,51 @@ public class ItemController : SaveLoadSystem
                 break;
         }
 
+        OnGearChanged?.Invoke();
         EntityController _playerController = GameController.instance._player;
         _playerController.GetComponent<EntityLookController>().RotateCharacter(!_playerController.isFlipped, _playerController.isFacingCamera);
+    }
+
+    public void ForceRemoveReference(ItemID _itemID)
+    {
+        if (_itemID._weaponItem != null)
+            switch (_itemID._weaponItem.holdingType)
+            {
+                //Picking weapon to right hand
+                case WeaponHoldingType.Right_Hand:
+                    _gearHolder._weaponRight = null;
+                    break;
+
+                //Picking weapon to left hand
+                case WeaponHoldingType.Left_Hand:
+                    _gearHolder._weaponLeft = null;
+                    break;
+
+                //Picking weapon to both hands
+                case WeaponHoldingType.Both_Hands:
+                    _gearHolder._weaponBoth = null;
+                    break;
+            }
+
+        if (_itemID._armorItem != null)
+            switch (_itemID._armorItem.armorType)
+            {
+                //Picking armor to head
+                case ArmorType.Helmet:
+                    _gearHolder._armorHead = null;
+                    break;
+
+                //Picking armor to body
+                case ArmorType.Chestplate:
+                    _gearHolder._armorChestplate = null;
+                    break;
+
+                //Picking armor to legs
+                case ArmorType.Boots:
+                    _gearHolder._armorBoots = null;
+                    break;
+            }
+
+        OnGearChanged?.Invoke();
     }
 }

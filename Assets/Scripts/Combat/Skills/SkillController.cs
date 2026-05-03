@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum ElementalTypes
+public enum ElementType
 {
-    NoElement,
-    Divine,
-    Demonic,
+    None,
+    Fire,
+    Water,
+    Earth,
+    Air
 }
 
 public enum AttributeTypes
@@ -23,11 +25,24 @@ public enum AttributeTypes
     RangeProtection,
     MagicProtection,
 
+    //Elements
+    ElementalResistance,
+    FireResistance,
+    WaterResistance,
+    EarthResistance,
+    AirResistance,
+
     //Cooldown
     Cooldown,
 
     //Mana
     ManaUsage,
+}
+
+public enum ValueType
+{
+    Flat,
+    Percentage,
 }
 
 public enum SkillType
@@ -41,8 +56,9 @@ public enum SkillType
 public class Attributes
 {
     public AttributeTypes attributeType;
-    public ElementalTypes elementalTypes;
+    public ElementType elementalTypes;
     public Buffs buffTypes;
+    public ValueType valueType;
     public int amount;
 }
 

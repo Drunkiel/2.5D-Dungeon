@@ -6,13 +6,14 @@ public class Projectile : MonoBehaviour
 {
     public float force;
     public bool useGravity;
+    public bool rotateToTarget;
     public List<GameObject> targets = new();
     public float destroyDelay = 1;
     [SerializeField] private SkillDataParser _skillDataParser;
     [SerializeField] private CollisionController _parentCollisionController;
     [SerializeField] private CollisionController _collisionController;
     [SerializeField] private Transform casterTransform;
-    [SerializeField] private EntityStatistics _casterStatistics;
+    [SerializeField] private EntityStats _casterStatistics;
     [SerializeField] private CombatUI _combatUI;
     private bool disable = true;
 
@@ -20,9 +21,18 @@ public class Projectile : MonoBehaviour
     {
         GameObject skillCopyObject = Instantiate(gameObject, transform.position, transform.rotation, null);
         Rigidbody skillCopyRgBody = skillCopyObject.GetComponent<Rigidbody>();
-        skillCopyObject.transform.GetChild(0).gameObject.SetActive(true);
+        //Collision with ground
+        skillCopyObject.transform.GetChild(transform.childCount - 1).gameObject.SetActive(true);
+        //Other settings
         skillCopyRgBody.useGravity = useGravity;
         skillCopyRgBody.constraints = RigidbodyConstraints.FreezeRotation;
+
+        // if (rotateToTarget)
+        // {
+        //     skillCopyObject.transform.rotation =
+        //         Quaternion.LookRotation(targets[0].transform.position);
+        // }
+
         Vector3 randomOffset = new(
             Random.Range(-0.05f, 0.05f),
             Random.Range(-0.05f, 0.05f),
@@ -40,7 +50,7 @@ public class Projectile : MonoBehaviour
         Destroy(skillCopyObject, destroyDelay);
     }
 
-    public void SetData(SkillDataParser _skillDataParser, EntityStatistics _casterStatistics, Transform casterTransform, CombatUI _combatUI, List<GameObject> targets, string[] entityTags)
+    public void SetData(SkillDataParser _skillDataParser, EntityStats _casterStatistics, Transform casterTransform, CombatUI _combatUI, List<GameObject> targets, string[] entityTags)
     {
         this._skillDataParser = _skillDataParser;
         this._casterStatistics = _casterStatistics;

@@ -82,7 +82,7 @@ public class DungeonController : MonoBehaviour
     public void SetCore(EntityController _core)
     {
         _coreController = _core;
-        _coreController._statistics.maxMana = (int)timeSlider.maxValue;
-        _coreController._statistics._statsController.UpdateManaSlider(0, _coreController._statistics.maxMana, true);
+        _coreController._statistics.vitals.maxMana.BaseValue = (int)timeSlider.maxValue;
+        _coreController._statistics._statsController.UpdateManaSlider(0, _coreController._statistics.vitals.maxMana.Value, true);
     }
 }

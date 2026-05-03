@@ -41,7 +41,7 @@ public class BehaviourState
 public class EntityController : MonoBehaviour
 {
     public EntityInfo _entityInfo;
-    public EntityStatistics _statistics;
+    public EntityStats _statistics;
 
     public bool isStopped
     {
@@ -71,14 +71,16 @@ public class EntityController : MonoBehaviour
     {
         isFacingCamera = true;
         _statistics.SaveStats();
+        _statistics.vitals.Initialize();
+        _itemController.OnGearChanged += () => _statistics.RecalculateStatistics(_itemController._gearHolder);
 
         //Setting basic info of entity
         _statistics._statsController.SetName(_entityInfo);
         _statistics._statsController.SetSliderColor(_entityInfo.entity);
 
         //Setting sliders value
-        _statistics._statsController.UpdateHealthSlider(_statistics.health, _statistics.maxHealth, true);
-        _statistics._statsController.UpdateManaSlider(_statistics.mana, _statistics.maxMana, true);
+        _statistics._statsController.UpdateHealthSlider(_statistics.vitals.health, _statistics.vitals.maxHealth.Value, true);
+        _statistics._statsController.UpdateManaSlider(_statistics.vitals.mana, _statistics.vitals.maxMana.Value, true);
 
         StartCoroutine(AutoRegen());
     }
@@ -108,11 +110,11 @@ public class EntityController : MonoBehaviour
 
         if (!GetComponent<EntityCombat>().inCombat)
         {
-            if (_statistics.health < _statistics.maxHealth)
-                _statistics.TakeDamage(-_statistics.healthRegeneration, AttributeTypes.Buff, ElementalTypes.NoElement, true);
+            if (_statistics.vitals.health < _statistics.vitals.maxHealth.Value)
+                _statistics.TakeDamage(-_statistics.vitals.healthRegeneration, AttributeTypes.Buff, ElementType.None, _statistics, true);
 
-            if (_statistics.mana < _statistics.maxMana)
-                _statistics.TakeMana(-_statistics.manaRegeneration, true);
+            if (_statistics.vitals.mana < _statistics.vitals.maxMana.Value)
+                _statistics.TakeMana(-_statistics.vitals.manaRegeneration, true);
         }
 
         StartCoroutine(AutoRegen());

@@ -46,8 +46,8 @@ public class PlayerMovement : MonoBehaviour
         newVelocityXZ = new(_controller.rgBody.velocity.x, _controller.rgBody.velocity.z);
         newVelocityY = _controller.rgBody.velocity.y;
 
-        if (newVelocityXZ.magnitude > _controller._statistics.maxSpeed)
-            newVelocityXZ = Vector3.ClampMagnitude(newVelocityXZ, _controller._statistics.maxSpeed);
+        if (newVelocityXZ.magnitude > _controller._statistics.movement.maxSpeed)
+            newVelocityXZ = Vector3.ClampMagnitude(newVelocityXZ, _controller._statistics.movement.maxSpeed);
 
         if (newVelocityY < -10)
             newVelocityY = -10;
@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 rotatedMovement = transform.TransformDirection(move);
 
         //Move player
-        _controller.rgBody.AddForce(rotatedMovement * _controller._statistics.speedForce, ForceMode.Acceleration);
+        _controller.rgBody.AddForce(rotatedMovement * _controller._statistics.movement.speedForce, ForceMode.Acceleration);
     }
 
     private void LateUpdate()
@@ -182,19 +182,19 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         _controller.rgBody.velocity = new Vector3(_controller.rgBody.velocity.x, 0f, _controller.rgBody.velocity.z);
-        _controller.rgBody.AddForce(transform.up * _controller._statistics.jumpForce, ForceMode.Impulse);
+        _controller.rgBody.AddForce(transform.up * _controller._statistics.movement.jumpForce, ForceMode.Impulse);
     }
 
     private bool CheckIfCanJump()
     {
-        if (_controller._statistics.additionalJumps.Count == 0)
+        if (_controller._statistics.movement.additionalJumps.Count == 0)
             return false;
 
-        for (int i = 0; i < _controller._statistics.additionalJumps.Count; i++)
+        for (int i = 0; i < _controller._statistics.movement.additionalJumps.Count; i++)
         {
-            if (!_controller._statistics.additionalJumps[i])
+            if (!_controller._statistics.movement.additionalJumps[i])
             {
-                _controller._statistics.additionalJumps[i] = true;
+                _controller._statistics.movement.additionalJumps[i] = true;
                 return true;
             }
         }
@@ -204,10 +204,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void ResetJumps()
     {
-        if (_controller._statistics.additionalJumps.Count == 0)
+        if (_controller._statistics.movement.additionalJumps.Count == 0)
             return;
 
-        for (int i = 0; i < _controller._statistics.additionalJumps.Count; i++)
-            _controller._statistics.additionalJumps[i] = false;
+        for (int i = 0; i < _controller._statistics.movement.additionalJumps.Count; i++)
+            _controller._statistics.movement.additionalJumps[i] = false;
     }
 }

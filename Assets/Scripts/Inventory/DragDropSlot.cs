@@ -65,6 +65,8 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
                 if (_weaponItem != null)
                     Destroy(_weaponItem.gameObject);
             }
+
+            GameController.instance._player._itemController.ForceRemoveReference(currentSlot._itemID);
         }
 
         currentSlot._itemID = null;
@@ -126,8 +128,6 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
         if (eventData.button == PointerEventData.InputButton.Right)
             ComparisonController.instance.MakeComparison(currentSlot._itemID);
-
-        //rectTransform.SetParent(InventoryController.instance.slotParent);
     }
 
     public void OnDrop(PointerEventData eventData)

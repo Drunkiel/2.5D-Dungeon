@@ -23,7 +23,7 @@ public enum ItemBuffs
 public class ItemBuff
 {
     public ItemBuffs itemBuffs;
-    [Range(-2, 2)]
+    public ValueType valueType;
     public float amount = 1;
 }
 

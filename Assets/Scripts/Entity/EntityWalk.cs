@@ -91,8 +91,8 @@ public class EntityWalk : MonoBehaviour
         newVelocityXZ = new(_controller.rgBody.velocity.x, _controller.rgBody.velocity.z);
         newVelocityY = _controller.rgBody.velocity.y;
 
-        if (newVelocityXZ.magnitude > _controller._statistics.maxSpeed)
-            newVelocityXZ = Vector3.ClampMagnitude(newVelocityXZ, _controller._statistics.maxSpeed);
+        if (newVelocityXZ.magnitude > _controller._statistics.movement.maxSpeed)
+            newVelocityXZ = Vector3.ClampMagnitude(newVelocityXZ, _controller._statistics.movement.maxSpeed);
 
         if (newVelocityY < -10)
             newVelocityY = -10;
@@ -115,7 +115,7 @@ public class EntityWalk : MonoBehaviour
             return;
 
         move = new Vector3(movement.x, 0, movement.y).normalized;
-        _controller.rgBody.AddForce(move * _controller._statistics.speedForce, ForceMode.Acceleration);
+        _controller.rgBody.AddForce(move * _controller._statistics.movement.speedForce, ForceMode.Acceleration);
     }
 
     public void Patrolling()
@@ -197,8 +197,8 @@ public class EntityWalk : MonoBehaviour
         float newFaceDirection = Vector3.Dot(cameraRight, faceDirection - transform.position);
 
         movement = new Vector2(
-            direction.x * _controller._statistics.speedForce,
-            direction.z * _controller._statistics.speedForce
+            direction.x * _controller._statistics.movement.speedForce,
+            direction.z * _controller._statistics.movement.speedForce
         );
 
         //Check if entity moves towards camera
@@ -252,6 +252,6 @@ public class EntityWalk : MonoBehaviour
     private void Jump()
     {
         _controller.rgBody.velocity = new Vector3(_controller.rgBody.velocity.x, 0f, _controller.rgBody.velocity.z);
-        _controller.rgBody.AddForce(transform.up * _controller._statistics.jumpForce, ForceMode.Impulse);
+        _controller.rgBody.AddForce(transform.up * _controller._statistics.movement.jumpForce, ForceMode.Impulse);
     }
 }

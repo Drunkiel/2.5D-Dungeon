@@ -106,7 +106,7 @@ public class EntityStatistics
         _stats.maxSpeed = maxSpeed;
     }
 
-    public void TakeDamage(float amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes, bool ignore = false)
+    public void TakeDamage(float amount, AttributeTypes attributeTypes, ElementType elementalTypes, bool ignore = false)
     {
         int damageToDeal;
 
@@ -125,7 +125,7 @@ public class EntityStatistics
             health = maxHealth;
     }
 
-    public int CalculateDamage(float amount, AttributeTypes attributeTypes, ElementalTypes elementalTypes)
+    public int CalculateDamage(float amount, AttributeTypes attributeTypes, ElementType elementalTypes)
     {
         float damageOutput = amount;
 
@@ -149,20 +149,20 @@ public class EntityStatistics
                 break;
         }
 
-        switch (elementalTypes)
-        {
-            case ElementalTypes.NoElement:
-                damageOutput -= 0;
-                break;
+        // switch (elementalTypes)
+        // {
+        //     case ElementalTypes.NoElement:
+        //         damageOutput -= 0;
+        //         break;
 
-            case ElementalTypes.Divine:
-                damageOutput -= divineResistance * (2 * elementalProtectionMultiplier);
-                break;
+        //     case ElementalTypes.Divine:
+        //         damageOutput -= divineResistance * (2 * elementalProtectionMultiplier);
+        //         break;
 
-            case ElementalTypes.Demonic:
-                damageOutput -= demonicResistance * (2 * elementalProtectionMultiplier);
-                break;
-        }
+        //     case ElementalTypes.Demonic:
+        //         damageOutput -= demonicResistance * (2 * elementalProtectionMultiplier);
+        //         break;
+        // }
 
         //Check if damage is negative to not heal entity
         if (damageOutput <= 0)
@@ -247,8 +247,8 @@ public class EntityStatistics
         WeaponItem _weaponItemBoth = _gearHolder.GetHoldingWeapon(WeaponHoldingType.Both_Hands);
 
         ItemID _weaponLeft = null;
-        ItemID _weaponRight = null; ;
-        ItemID _weaponBoth = null; ;
+        ItemID _weaponRight = null;
+        ItemID _weaponBoth = null;
 
         if (_weaponItemLeft != null)
             _weaponLeft = _weaponItemLeft.GetComponent<ItemID>();

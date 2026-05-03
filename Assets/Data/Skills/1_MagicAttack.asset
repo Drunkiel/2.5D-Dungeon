@@ -15,7 +15,7 @@ MonoBehaviour:
   ID: 1
   displayedName: MagicAttack
   spritePath: Heart.png
-  spriteIconPath: Heart.png
+  spriteIconPath: ../../Icons/MagicMissle_Icon.png
   animationName: Test_CastingSpell
   size: {x: 5, y: 0.1, z: 5}
   center: {x: 0, y: 0, z: 0}
@@ -30,8 +30,10 @@ MonoBehaviour:
   - attributeType: 3
     elementalTypes: 0
     buffTypes: 0
+    valueType: 0
     amount: 1
-  - attributeType: 8
+  - attributeType: 13
     elementalTypes: 0
     buffTypes: 0
+    valueType: 0
     amount: 55
