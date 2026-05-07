@@ -1,10 +1,11 @@
+using Newtonsoft.Json;
 using UnityEngine;
 
 [System.Serializable]
-[CreateAssetMenu(menuName = "Custom/Items/Weapon data")]
+[CreateAssetMenu(menuName = "Custom/Items/Collectable data")]
 public class CollectableData : ScriptableObject
 {
     public ItemData _itemData;
-    public Sprite itemSprite;
-    public Sprite iconSprite;
+    [JsonIgnore] public Sprite itemSprite;
+    [JsonIgnore] public Sprite iconSprite;
 }

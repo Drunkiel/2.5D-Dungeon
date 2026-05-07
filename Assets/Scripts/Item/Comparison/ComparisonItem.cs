@@ -30,8 +30,30 @@ public class ComparisonItem : MonoBehaviour
     private void SetItemData()
     {
         ItemData _itemData = _itemID._itemData;
+        List<Attributes> _attributes = new();
         List<ItemBuff> _itemBuffs = new();
         titleText = _itemData.displayedName;
+
+        if (_itemData._attributes.Count > 0)
+            _attributes = _itemData._attributes;
+
+        if (_itemData._itemBuffs.Count > 0)
+            _itemBuffs = _itemData._itemBuffs;
+
+        //Displaying stats
+        for (int i = 0; i < _attributes.Count; i++)
+        {
+            string attributeName = BetterSkillNames(_attributes[i].attributeType, _attributes[i].buffTypes);
+
+            TMP_Text newStatText = Instantiate(statTextPrefab, statContent);
+            newStatText.text = $"{attributeName}: {_attributes[i].amount}";
+        }
+
+        for (int i = 0; i < _itemBuffs.Count; i++)
+        {
+            TMP_Text newStatText = Instantiate(statTextPrefab, statContent);
+            newStatText.text = $"{_itemBuffs[i].itemBuffs}: {_itemBuffs[i].amount}";
+        }
 
         switch (_itemID._itemData.itemType)
         {
@@ -47,16 +69,6 @@ public class ComparisonItem : MonoBehaviour
                 holdingTypeText.text = "Holding type:" + _itemID._armorItem.armorType;
                 break;
         }
-
-        if (_itemData._itemBuffs.Count > 0)
-            _itemBuffs = _itemData._itemBuffs;
-
-        //Displaying stats
-        for (int i = 0; i < _itemBuffs.Count; i++)
-        {
-            TMP_Text newStatText = Instantiate(statTextPrefab, statContent);
-            newStatText.text = $"{_itemBuffs[i].itemBuffs}: {_itemBuffs[i].amount}";
-        }
     }
 
     private void SetSkillData()
@@ -65,7 +77,6 @@ public class ComparisonItem : MonoBehaviour
         List<Attributes> _attributes = new();
         titleText = _skillData._skillData.displayedName;
         iconSprite = _skillData.iconSprite;
-
 
         if (_skillData._skillData._skillAttributes.Count > 0)
             _attributes = _skillData._skillData._skillAttributes;

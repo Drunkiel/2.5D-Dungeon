@@ -51,6 +51,18 @@ public class SaveLoadSystem : MonoBehaviour
         File.WriteAllText(path, jsonData);
     }
 
+    public static void Ala(Object data, string path)
+    {
+        string jsonData = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            PreserveReferencesHandling = PreserveReferencesHandling.None
+        });
+
+        File.WriteAllText(path, jsonData);
+    }
+
     public virtual void Load(string path)
     {
         //EXAMPLE

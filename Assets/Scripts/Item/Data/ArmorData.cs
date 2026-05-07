@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using UnityEngine;
 
 [System.Serializable]
@@ -6,7 +7,7 @@ public class ArmorData : ScriptableObject
 {
     public ItemData _itemData;
     public ArmorType armorType;
-    public Sprite itemSpriteFront;
-    public Sprite itemSpriteBack;
-    public Sprite iconSprite;
+    [JsonIgnore] public Sprite itemSpriteFront;
+    [JsonIgnore] public Sprite itemSpriteBack;
+    [JsonIgnore] public Sprite iconSprite;
 }

@@ -1,4 +1,3 @@
-using Codice.Client.BaseCommands;
 using UnityEditor;
 using UnityEngine;
 
@@ -32,8 +31,8 @@ public static class GridTerrainPainterSceneGUI
             generator.data.tileHeight *
             GridTerrainPainterWindow.currentHeight;
 
-        // 🔥 pozioma płaszczyzna NA WYSOKOŚCI MALOWANIA
-        Plane groundPlane = new Plane(
+        //Plane painting ground
+        Plane groundPlane = new(
             Vector3.up,
             new Vector3(0, paintHeight, 0)
         );
@@ -78,7 +77,7 @@ public static class GridTerrainPainterSceneGUI
                 float simulatedBase =
                     GetSimulatedHeight(c, cell, previewHeight, data, true);
 
-                // jeśli tile nie istnieje ani przed ani po – pomijamy
+                //If tile doesn't exists skip
                 if (originalBase == 0f && simulatedBase == 0f)
                     continue;
 
@@ -116,43 +115,6 @@ public static class GridTerrainPainterSceneGUI
         return 0f;
     }
 
-    static void DrawSimulatedTile(
-        Vector2Int cell,
-        float baseHeight,
-        float previewHeight,
-        Vector2Int previewCell,
-        GridTerrainData data,
-        float size)
-    {
-        float half = size / 2f;
-
-        float hBL = GetCornerSim(cell, new Vector2Int(-1, -1), baseHeight, previewCell, previewHeight, data);
-        float hBR = GetCornerSim(cell, new Vector2Int(1, -1), baseHeight, previewCell, previewHeight, data);
-        float hTL = GetCornerSim(cell, new Vector2Int(-1, 1), baseHeight, previewCell, previewHeight, data);
-        float hTR = GetCornerSim(cell, new Vector2Int(1, 1), baseHeight, previewCell, previewHeight, data);
-
-        Vector3 center = new(
-            cell.x * size + size / 2f,
-            baseHeight,
-            cell.y * size + size / 2f
-        );
-
-        Vector3[] v =
-        {
-        center + new Vector3(-half, hBL - baseHeight, -half),
-        center + new Vector3(half,  hBR - baseHeight, -half),
-        center + new Vector3(half,  hTR - baseHeight,  half),
-        center + new Vector3(-half, hTL - baseHeight,  half),
-    };
-
-        Handles.color = new Color(0f, 1f, 1f, 0.8f);
-
-        Handles.DrawLine(v[0], v[1]);
-        Handles.DrawLine(v[1], v[2]);
-        Handles.DrawLine(v[2], v[3]);
-        Handles.DrawLine(v[3], v[0]);
-    }
-
     static float[] GetCorners(
     Vector2Int cell,
     float baseHeight,
@@ -168,47 +130,6 @@ public static class GridTerrainPainterSceneGUI
         GetCorner(cell, new Vector2Int( 1, 1), baseHeight, previewCell, previewHeight, data, simulate),
         GetCorner(cell, new Vector2Int(-1, 1), baseHeight, previewCell, previewHeight, data, simulate)
         };
-    }
-
-    static float GetCornerSim(
-        Vector2Int cell,
-        Vector2Int cornerOffset,
-        float baseHeight,
-        Vector2Int previewCell,
-        float previewHeight,
-        GridTerrainData data)
-    {
-        float maxHeight = baseHeight;
-
-        Vector2Int[] influence =
-        {
-        new(0,0),
-        new(cornerOffset.x,0),
-        new(0,cornerOffset.y),
-        new(cornerOffset.x,cornerOffset.y)
-    };
-
-        foreach (var offset in influence)
-        {
-            Vector2Int pos = cell + offset;
-
-            float h = 0f;
-
-            if (pos == previewCell &&
-                GridTerrainPainterWindow.paintMode == PaintMode.Paint)
-            {
-                h = previewHeight;
-            }
-            else if (data.TryGetTile(pos, out var tile))
-            {
-                h = tile.height * data.tileHeight;
-            }
-
-            if (h > maxHeight)
-                maxHeight = h;
-        }
-
-        return maxHeight;
     }
 
     static float GetCorner(
@@ -343,24 +264,24 @@ public static class GridTerrainPainterSceneGUI
 
         float size = data.asset.cellSize / 2f;
 
-        // 🔥 wysokość zależna od aktualnej wysokości malowania
+        //Height setting
         float height =
             GridTerrainPainterWindow.currentHeight *
             data.tileHeight;
 
-        int halfRange = 2; // 5x5 grid (2 w każdą stronę)
+        int halfRange = 2; //5x5 grid
 
         Handles.color = new Color(1f, 1f, 1f, 0.25f);
 
         for (int x = -halfRange; x <= halfRange + 1; x++)
         {
-            Vector3 from = new Vector3(
+            Vector3 from = new(
                 (centerCell.x + x) * size,
                 height,
                 (centerCell.y - halfRange) * size
             );
 
-            Vector3 to = new Vector3(
+            Vector3 to = new(
                 (centerCell.x + x) * size,
                 height,
                 (centerCell.y + halfRange + 1) * size
@@ -371,13 +292,13 @@ public static class GridTerrainPainterSceneGUI
 
         for (int y = -halfRange; y <= halfRange + 1; y++)
         {
-            Vector3 from = new Vector3(
+            Vector3 from = new(
                 (centerCell.x - halfRange) * size,
                 height,
                 (centerCell.y + y) * size
             );
 
-            Vector3 to = new Vector3(
+            Vector3 to = new(
                 (centerCell.x + halfRange + 1) * size,
                 height,
                 (centerCell.y + y) * size
