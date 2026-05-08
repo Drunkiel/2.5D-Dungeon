@@ -16,7 +16,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         DragDropSlot _dragDropSlot = rectTransform.GetComponent<DragDropSlot>();
 
         //Check if slot is locked
-        if (_dragDropSlot.lockedUp)
+        if (_dragDropSlot.lockedUp || eventData.button != PointerEventData.InputButton.Left)
             return;
 
         //Checks if item is correct type

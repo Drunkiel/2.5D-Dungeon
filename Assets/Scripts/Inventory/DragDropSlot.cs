@@ -17,7 +17,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (lockedUp)
+        if (lockedUp || eventData.button != PointerEventData.InputButton.Left)
             return;
 
         InventoryController.instance.isMovingItem = true;
@@ -78,7 +78,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (lockedUp)
+        if (lockedUp || eventData.button != PointerEventData.InputButton.Left)
             return;
 
         rectTransform.anchoredPosition += eventData.delta / GameController.instance.GetCanvas().scaleFactor;
@@ -86,7 +86,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (lockedUp)
+        if (lockedUp || eventData.button != PointerEventData.InputButton.Left)
             return;
 
         ItemID _itemID = transform.GetChild(1).GetComponent<ItemID>();
@@ -123,7 +123,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         if (lockedUp)
             return;
 
-        if (currentSlot == null)
+        if (currentSlot == null || eventData.button != PointerEventData.InputButton.Left)
             currentSlot = eventData.pointerEnter.transform.parent.parent.GetComponent<InventorySlot>();
 
         if (eventData.button == PointerEventData.InputButton.Right)
@@ -132,7 +132,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (lockedUp)
+        if (lockedUp || eventData.button != PointerEventData.InputButton.Left)
             return;
 
         rectTransform.SetParent(currentSlot.transform);

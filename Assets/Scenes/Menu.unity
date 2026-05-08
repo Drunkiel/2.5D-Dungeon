@@ -15970,45 +15970,79 @@ MonoBehaviour:
     vitals:
       maxHealth:
         BaseValue: 100
+        flatBonus: 0
+        percentBonus: 0
       maxMana:
         BaseValue: 100
+        flatBonus: 0
+        percentBonus: 0
       health: 0
       mana: 0
       healthRegeneration: 1
       manaRegeneration: 1
       manaUsageMultiplier:
         BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
     damage:
       damageMultiplier:
         BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
       meleeDamage:
         BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
       rangeDamage:
         BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
       magicDamage:
         BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
     protection:
       allProtectionMultiplier:
         BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
       allProtection:
         BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
       meleeProtection:
         BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
       rangeProtection:
         BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
       magicProtection:
         BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
     elemental:
       elementalProtectionMultiplier:
         BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
       fireResistance:
         BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
       waterResistance:
         BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
       earthResistance:
         BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
       airResistance:
         BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
     movement:
       speedForce: 30
       maxSpeed: 1.2
@@ -16909,7 +16943,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -19740,7 +19774,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -26162,6 +26196,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 5d2b3af0-84ce-44e5-8661-3d89b35f2c18
     m_ActionName: Player/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ae143a14-ac8f-4597-96ad-637979557c87
+    m_ActionName: Player/PlayerEQ[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: df08c334-c072-4e0d-8118-484a37c3c5b3
+    m_ActionName: Player/Skills[/Keyboard/v]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Console
@@ -27297,7 +27339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 0.5882353}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

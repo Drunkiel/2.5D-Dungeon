@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
@@ -15,6 +16,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private bool isLocked;
 
+    private Vector2 rotationInput;
     // Rotate speed
     public float rotationXSpeed = 50f;
     public float rotationYSpeed = 50f;
@@ -44,6 +46,10 @@ public class CameraController : MonoBehaviour
             return;
 
         HandleZoom();
+
+        if (!IsPointerOverUI())
+            ApplyRotation();
+
         SetCamera();
         SmoothRotateCamera();
     }
@@ -74,14 +80,30 @@ public class CameraController : MonoBehaviour
     public void HandleRotation(InputAction.CallbackContext context)
     {
         if (!rightClick)
+        {
+            rotationInput = Vector2.zero;
             return;
+        }
 
-        Vector2 inputRotation = context.ReadValue<Vector2>();
+        rotationInput = context.ReadValue<Vector2>();
+    }
 
-        targetXRotation += inputRotation.x * rotationXSpeed;
-        //!TESTING CONCEPT
-        // targetYRotation -= inputRotation.y * rotationYSpeed;
-        // targetYRotation = Mathf.Clamp(targetYRotation, 15, 45);
+    private bool IsPointerOverUI()
+    {
+        PointerEventData eventData = new(EventSystem.current)
+        {
+            position = Mouse.current.position.ReadValue()
+        };
+
+        List<RaycastResult> results = new();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        return results.Count > 0;
+    }
+
+    private void ApplyRotation()
+    {
+        targetXRotation += rotationInput.x * rotationXSpeed;
     }
 
     private void SmoothRotateCamera()

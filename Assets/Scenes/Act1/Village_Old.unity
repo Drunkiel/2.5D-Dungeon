@@ -14,22 +14,22 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.03
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
-  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientSkyColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
+  m_AmbientEquatorColor: {r: 0.45490196, g: 0.5019608, b: 0.53333336, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 0
-  m_AmbientMode: 3
+  m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 191e220b1c8714d41b0ac6c8e08598b2, type: 2}
-  m_HaloStrength: 0.5
-  m_FlareStrength: 1
-  m_FlareFadeSpeed: 3
+  m_HaloStrength: 0
+  m_FlareStrength: 0
+  m_FlareFadeSpeed: 0
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
   m_DefaultReflectionMode: 0
@@ -7066,8 +7066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillHolder:
-    skillNames:
-    - Basic Attack
+    skillsID: 
     _skillDatas: []
   _combatUI: {fileID: 1726155908}
   skillsParent: {fileID: 1726155907}
@@ -7085,7 +7084,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponRightName: 
   weaponLeftName: 
-  weaponBothName: 
   armorHeadName: Guard hat
   armorChestplateName: 
   armorBootsName: 
@@ -7178,7 +7176,7 @@ MonoBehaviour:
     leg_Back: {fileID: 0}
   skinPath: NPC/Guard
   bodyType: 0
-  isRotated: 0
+  direction: {x: 1, y: 1}
 --- !u!114 &196249350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7191,12 +7189,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStopped: 0
+  currentState: 0
+  _behaviourStates: []
   wanderingDistance: 1
   positionToGo: {x: 0, y: 0, z: 0}
   allowedDistance: 0
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
+  newVelocityXZ: {x: 0, y: 0}
+  newVelocityY: 0
   isMoving: 0
   movingTime: 0
   isFacingCamera: 0
@@ -7217,110 +7218,100 @@ MonoBehaviour:
     ID: 0
     name: 
     title: Guard
+    entityClass: 0
     entity: 0
     behaviour: 2
   _statistics:
-    _stats:
-      maxHealth: 0
+    vitals:
+      maxHealth:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      maxMana:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      health: 0
+      mana: 0
       healthRegeneration: 0
       manaRegeneration: 0
-      damageMultiplier: 0
-      allProtectionMultiplier: 0
-      elementalProtectionMultiplier: 0
-      manaUsageMultiplier: 0
-      meleeDamage: 0
-      rangeDamage: 0
-      magicDamage: 0
-      allProtection: 0
-      meleeProtection: 0
-      rangeProtection: 0
-      magicProtection: 0
-      divineResistance: 0
-      demonicResistance: 0
+      manaUsageMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+    damage:
+      damageMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+      meleeDamage:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      rangeDamage:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      magicDamage:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+    protection:
+      allProtectionMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+      allProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      meleeProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      rangeProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      magicProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+    elemental:
+      elementalProtectionMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+      fireResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      waterResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      earthResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      airResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+    movement:
       speedForce: 0
-      maxSpeed: 0
-    health: 50
-    maxHealth: 100
-    healthRegeneration: 1
-    mana: 5
-    maxMana: 5
-    manaRegeneration: 1
-    damageMultiplier: 1
-    allProtectionMultiplier: 1
-    elementalProtectionMultiplier: 1
-    manaUsageMultiplier: 1
-    meleeDamage: 0
-    rangeDamage: 0
-    magicDamage: 0
-    allProtection: 0
-    meleeProtection: 0
-    rangeProtection: 0
-    magicProtection: 0
-    divineResistance: 0
-    demonicResistance: 0
-    speedForce: 18
-    maxSpeed: 0.5
-    jumpForce: 5
-    additionalJumps: 
+      maxSpeed: 1.2
+      jumpForce: 0
+      additionalJumps: 
     _activeBuffs: []
     _statsController: {fileID: 1724085808}
     onDeath:
       m_PersistentCalls:
         m_Calls: []
-  _holdingController: {fileID: 196249347}
-  currentState: 1
-  _behaviourStates:
-  - state: 0
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
-  - state: 1
-    acton:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 196249350}
-          m_TargetAssemblyTypeName: EnemyWalk, Assembly-CSharp
-          m_MethodName: Patrolling
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - state: 2
-    acton:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 196249350}
-          m_TargetAssemblyTypeName: EnemyWalk, Assembly-CSharp
-          m_MethodName: ApproachPlayer
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 196249344}
-          m_TargetAssemblyTypeName: SkillController, Assembly-CSharp
-          m_MethodName: CastSkill
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  _itemController: {fileID: 0}
+  _skillsController: {fileID: 0}
   rgBody: {fileID: 196249354}
   anim: {fileID: 196249342}
-  _entityWalk: {fileID: 196249350}
 --- !u!65 &196249352
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45322,7 +45313,7 @@ MonoBehaviour:
     leg_Back: {fileID: 0}
   skinPath: NPC/Mage
   bodyType: 0
-  isRotated: 0
+  direction: {x: 1, y: 1}
 --- !u!114 &1303834238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45620,7 +45611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillHolder:
-    skillNames: []
+    skillsID: 
     _skillDatas: []
   _combatUI: {fileID: 0}
   skillsParent: {fileID: 0}
@@ -45691,12 +45682,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStopped: 0
+  currentState: 0
+  _behaviourStates: []
   wanderingDistance: 5
   positionToGo: {x: 0, y: 0, z: 0}
   allowedDistance: 0
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
+  newVelocityXZ: {x: 0, y: 0}
+  newVelocityY: 0
   isMoving: 0
   movingTime: 0
   isFacingCamera: 0
@@ -45717,86 +45711,100 @@ MonoBehaviour:
     ID: 5
     name: John
     title: 
+    entityClass: 0
     entity: 0
     behaviour: 0
   _statistics:
-    _stats:
-      maxHealth: 0
+    vitals:
+      maxHealth:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      maxMana:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      health: 0
+      mana: 0
       healthRegeneration: 0
       manaRegeneration: 0
-      damageMultiplier: 0
-      allProtectionMultiplier: 0
-      elementalProtectionMultiplier: 0
-      manaUsageMultiplier: 0
-      meleeDamage: 0
-      rangeDamage: 0
-      magicDamage: 0
-      allProtection: 0
-      meleeProtection: 0
-      rangeProtection: 0
-      magicProtection: 0
-      divineResistance: 0
-      demonicResistance: 0
+      manaUsageMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+    damage:
+      damageMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+      meleeDamage:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      rangeDamage:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      magicDamage:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+    protection:
+      allProtectionMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+      allProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      meleeProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      rangeProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      magicProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+    elemental:
+      elementalProtectionMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+      fireResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      waterResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      earthResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      airResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+    movement:
       speedForce: 0
-      maxSpeed: 0
-    health: 100
-    maxHealth: 100
-    healthRegeneration: 0
-    mana: 1
-    maxMana: 1
-    manaRegeneration: 0
-    damageMultiplier: 1
-    allProtectionMultiplier: 1
-    elementalProtectionMultiplier: 1
-    manaUsageMultiplier: 1
-    meleeDamage: 0
-    rangeDamage: 0
-    magicDamage: 0
-    allProtection: 0
-    meleeProtection: 0
-    rangeProtection: 0
-    magicProtection: 0
-    divineResistance: 0
-    demonicResistance: 0
-    speedForce: 0
-    maxSpeed: 0
-    jumpForce: 5
-    additionalJumps: 
+      maxSpeed: 1.2
+      jumpForce: 0
+      additionalJumps: 
     _activeBuffs: []
     _statsController: {fileID: 1961712637}
     onDeath:
       m_PersistentCalls:
         m_Calls: []
-  _holdingController: {fileID: 1303834247}
-  currentState: 0
-  _behaviourStates:
-  - state: 0
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
-  - state: 1
-    acton:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1303834249}
-          m_TargetAssemblyTypeName: EnemyWalk, Assembly-CSharp
-          m_MethodName: Patrolling
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - state: 2
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
+  _itemController: {fileID: 0}
+  _skillsController: {fileID: 0}
   rgBody: {fileID: 1303834253}
   anim: {fileID: 0}
-  _entityWalk: {fileID: 1303834249}
 --- !u!65 &1303834251
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45898,7 +45906,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponRightName: 
   weaponLeftName: 
-  weaponBothName: 
   armorHeadName: Mage hat
   armorChestplateName: Mage ch
   armorBootsName: Mage boots
@@ -60467,7 +60474,7 @@ MonoBehaviour:
     leg_Back: {fileID: 0}
   skinPath: NPC/NPC
   bodyType: 0
-  isRotated: 0
+  direction: {x: 1, y: 1}
 --- !u!114 &1691451270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60781,7 +60788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillHolder:
-    skillNames: []
+    skillsID: 
     _skillDatas: []
   _combatUI: {fileID: 0}
   skillsParent: {fileID: 0}
@@ -60852,12 +60859,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStopped: 0
+  currentState: 0
+  _behaviourStates: []
   wanderingDistance: 5
   positionToGo: {x: 0, y: 0, z: 0}
   allowedDistance: 0
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
+  newVelocityXZ: {x: 0, y: 0}
+  newVelocityY: 0
   isMoving: 0
   movingTime: 0
   isFacingCamera: 0
@@ -60878,86 +60888,100 @@ MonoBehaviour:
     ID: 4
     name: Thomas
     title: Army General
+    entityClass: 0
     entity: 0
     behaviour: 0
   _statistics:
-    _stats:
-      maxHealth: 0
+    vitals:
+      maxHealth:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      maxMana:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      health: 0
+      mana: 0
       healthRegeneration: 0
       manaRegeneration: 0
-      damageMultiplier: 0
-      allProtectionMultiplier: 0
-      elementalProtectionMultiplier: 0
-      manaUsageMultiplier: 0
-      meleeDamage: 0
-      rangeDamage: 0
-      magicDamage: 0
-      allProtection: 0
-      meleeProtection: 0
-      rangeProtection: 0
-      magicProtection: 0
-      divineResistance: 0
-      demonicResistance: 0
+      manaUsageMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+    damage:
+      damageMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+      meleeDamage:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      rangeDamage:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      magicDamage:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+    protection:
+      allProtectionMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+      allProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      meleeProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      rangeProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      magicProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+    elemental:
+      elementalProtectionMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+      fireResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      waterResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      earthResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      airResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+    movement:
       speedForce: 0
-      maxSpeed: 0
-    health: 100
-    maxHealth: 100
-    healthRegeneration: 0
-    mana: 1
-    maxMana: 1
-    manaRegeneration: 0
-    damageMultiplier: 1
-    allProtectionMultiplier: 1
-    elementalProtectionMultiplier: 1
-    manaUsageMultiplier: 1
-    meleeDamage: 0
-    rangeDamage: 0
-    magicDamage: 0
-    allProtection: 0
-    meleeProtection: 0
-    rangeProtection: 0
-    magicProtection: 0
-    divineResistance: 0
-    demonicResistance: 0
-    speedForce: 0
-    maxSpeed: 0
-    jumpForce: 5
-    additionalJumps: 
+      maxSpeed: 1.2
+      jumpForce: 0
+      additionalJumps: 
     _activeBuffs: []
     _statsController: {fileID: 960384623}
     onDeath:
       m_PersistentCalls:
         m_Calls: []
-  _holdingController: {fileID: 1691451280}
-  currentState: 0
-  _behaviourStates:
-  - state: 0
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
-  - state: 1
-    acton:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1691451282}
-          m_TargetAssemblyTypeName: EnemyWalk, Assembly-CSharp
-          m_MethodName: Patrolling
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - state: 2
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
+  _itemController: {fileID: 0}
+  _skillsController: {fileID: 0}
   rgBody: {fileID: 1691451286}
   anim: {fileID: 0}
-  _entityWalk: {fileID: 1691451282}
 --- !u!65 &1691451284
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -78353,7 +78377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillHolder:
-    skillNames: []
+    skillsID: 
     _skillDatas: []
   _combatUI: {fileID: 0}
   skillsParent: {fileID: 0}
@@ -80619,12 +80643,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8857f3666d05d50499ecbce854c912cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStopped: 0
+  currentState: 0
+  _behaviourStates: []
   wanderingDistance: 5
   positionToGo: {x: 0, y: 0, z: 0}
   allowedDistance: 0
   targetTransform: {fileID: 0}
   movement: {x: 0, y: 0}
+  newVelocityXZ: {x: 0, y: 0}
+  newVelocityY: 0
   isMoving: 0
   movingTime: 0
   isFacingCamera: 0
@@ -81195,86 +81222,100 @@ MonoBehaviour:
     ID: 2
     name: Bobby
     title: Blacksmith
+    entityClass: 0
     entity: 0
     behaviour: 0
   _statistics:
-    _stats:
-      maxHealth: 0
+    vitals:
+      maxHealth:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      maxMana:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      health: 0
+      mana: 0
       healthRegeneration: 0
       manaRegeneration: 0
-      damageMultiplier: 0
-      allProtectionMultiplier: 0
-      elementalProtectionMultiplier: 0
-      manaUsageMultiplier: 0
-      meleeDamage: 0
-      rangeDamage: 0
-      magicDamage: 0
-      allProtection: 0
-      meleeProtection: 0
-      rangeProtection: 0
-      magicProtection: 0
-      divineResistance: 0
-      demonicResistance: 0
+      manaUsageMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+    damage:
+      damageMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+      meleeDamage:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      rangeDamage:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      magicDamage:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+    protection:
+      allProtectionMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+      allProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      meleeProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      rangeProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      magicProtection:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+    elemental:
+      elementalProtectionMultiplier:
+        BaseValue: 1
+        flatBonus: 0
+        percentBonus: 0
+      fireResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      waterResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      earthResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+      airResistance:
+        BaseValue: 0
+        flatBonus: 0
+        percentBonus: 0
+    movement:
       speedForce: 0
-      maxSpeed: 0
-    health: 100
-    maxHealth: 100
-    healthRegeneration: 0
-    mana: 1
-    maxMana: 1
-    manaRegeneration: 0
-    damageMultiplier: 1
-    allProtectionMultiplier: 1
-    elementalProtectionMultiplier: 1
-    manaUsageMultiplier: 1
-    meleeDamage: 0
-    rangeDamage: 0
-    magicDamage: 0
-    allProtection: 0
-    meleeProtection: 0
-    rangeProtection: 0
-    magicProtection: 0
-    divineResistance: 0
-    demonicResistance: 0
-    speedForce: 0
-    maxSpeed: 0
-    jumpForce: 5
-    additionalJumps: 
+      maxSpeed: 1.2
+      jumpForce: 0
+      additionalJumps: 
     _activeBuffs: []
     _statsController: {fileID: 3150734566223440658}
     onDeath:
       m_PersistentCalls:
         m_Calls: []
-  _holdingController: {fileID: 67188909547215620}
-  currentState: 0
-  _behaviourStates:
-  - state: 0
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
-  - state: 1
-    acton:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6634431840859896702}
-          m_TargetAssemblyTypeName: EnemyWalk, Assembly-CSharp
-          m_MethodName: Patrolling
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - state: 2
-    acton:
-      m_PersistentCalls:
-        m_Calls: []
+  _itemController: {fileID: 0}
+  _skillsController: {fileID: 0}
   rgBody: {fileID: 7289960858542168046}
   anim: {fileID: 0}
-  _entityWalk: {fileID: 6634431840859896702}
 --- !u!114 &7871436604571292761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82084,7 +82125,7 @@ MonoBehaviour:
     leg_Back: {fileID: 0}
   skinPath: NPC/Blacksmith
   bodyType: 1
-  isRotated: 0
+  direction: {x: 1, y: 1}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
