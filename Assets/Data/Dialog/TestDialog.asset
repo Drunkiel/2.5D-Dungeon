@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de13913299c0c94abac5ed66e03d0f8, type: 3}
+  m_Name: TestDialog
+  m_EditorClassIdentifier: 
+  nodes:
+  - GUID: 
+    nodeType: 0
+    position: {x: 0, y: 0}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 0}
+  - GUID: 631e0af9-3492-4f14-8b6c-949a1d2ca49d
+    nodeType: 1
+    position: {x: 182.4, y: 0}
+    entityID: 0
+    text: "Ale ja mam zajebist\u0105 histori\u0119 do opowiedzenia wi\u0119c usi\u0105d\u017A
+      wygodnie i si\u0119 kurwa nie ruszaj a\u017C nie sko\u0144cz\u0119 pierdoli\u0107
+      nie wa\u017Cne \u017Ce zajmie mi to 20 lat \u015Bwietlnych"
+    choices: []
+    action: {fileID: 0}
+  - GUID: 49cf06ac-de8c-4434-ac28-389eae66592c
+    nodeType: 3
+    position: {x: 1242.4, y: 15.200001}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 11400000, guid: 30400da546afb9c40aea72ab53524ffb, type: 2}
+  - GUID: 4602c882-ae94-4b7c-be55-c79d37b922f1
+    nodeType: 4
+    position: {x: 1672.8, y: 24.8}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 0}
+  edges:
+  - outputNodeGUID: 
+    outputPortGUID: 
+    inputNodeGUID: 631e0af9-3492-4f14-8b6c-949a1d2ca49d
+  - outputNodeGUID: 631e0af9-3492-4f14-8b6c-949a1d2ca49d
+    outputPortGUID: 
+    inputNodeGUID: 49cf06ac-de8c-4434-ac28-389eae66592c
+  - outputNodeGUID: 49cf06ac-de8c-4434-ac28-389eae66592c
+    outputPortGUID: 
+    inputNodeGUID: 4602c882-ae94-4b7c-be55-c79d37b922f1

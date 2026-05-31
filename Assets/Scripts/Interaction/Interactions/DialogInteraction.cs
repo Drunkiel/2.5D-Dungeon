@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class DialogInteraction : MonoBehaviour
 {
-    public int dialogIndex;
+    public DialogGraph dialogIndex;
 
     public void StartDialog()
     {
-        DialogController.instance.StartDialog(dialogIndex);
+        DialogController.instance._graph = dialogIndex;
+        DialogController.instance.StartDialog();
     }
 }

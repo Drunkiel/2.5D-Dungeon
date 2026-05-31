@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DialogController : MonoBehaviour
 {
     public static DialogController instance;
 
-    [SerializeField] private List<Dialog> _dialogs = new();
-    private int dialogIndex;
-    private short npcIdPreviewLoaded = -1; //ID that should be never assigned to NPC
+    public DialogGraph _graph;
+    private NodeSaveData currentNode;
+    private short npcIdPreviewLoaded = -1;
     public bool isTalking;
 
     public DialogUI _dialogUI;
@@ -19,49 +18,148 @@ public class DialogController : MonoBehaviour
         instance = this;
     }
 
-    public void StartDialog(int index)
+    public void StartDialog()
     {
-        EntityController _playerController = GameController.instance._player;
-
         if (isTalking)
         {
             _dialogUI.OnDialogClick();
             return;
         }
 
-        //Assigning values
-        dialogIndex = index;
-        _entityController = EntityHolder.instance.GetEntityInScene(_dialogs[dialogIndex].entityID);
+        NodeSaveData startNode =
+            _graph.nodes.Find(x =>
+                x.nodeType ==
+                NodeTypes.Start);
+
+        if (startNode == null)
+        {
+            Debug.LogError(
+                "Start node not found.");
+
+            return;
+        }
+
+        NodeSaveData firstNode = GetConnectedNode(startNode.GUID);
+
+        if (firstNode == null)
+        {
+            Debug.LogError(
+                "Start node is not connected.");
+
+            return;
+        }
+
+        EntityController player = GameController.instance._player;
+        UpdatePreviewLook(player, _dialogUI._playerPreview);
+        CameraController.instance.LockCamera(true);
+
+        _openCloseUI.Open();
+        isTalking = true;
+        ProcessNode(firstNode);
+    }
+
+    private NodeSaveData GetNode(string guid)
+    {
+        return _graph.nodes.Find(x => x.GUID == guid);
+    }
+
+    private NodeSaveData GetConnectedNode(string outputNodeGUID)
+    {
+        EdgeSaveData edge =
+            _graph.edges.Find(x =>
+                x.outputNodeGUID ==
+                outputNodeGUID);
+
+        if (edge == null)
+            return null;
+
+        return GetNode(edge.inputNodeGUID);
+    }
+
+    private NodeSaveData GetConnectedChoiceNode(string choicePortGUID)
+    {
+        EdgeSaveData edge =
+            _graph.edges.Find(x =>
+                x.outputPortGUID ==
+                choicePortGUID);
+
+        if (edge == null)
+            return null;
+
+        return GetNode(edge.inputNodeGUID);
+    }
+
+    private void ProcessNode(NodeSaveData node)
+    {
+        if (node == null)
+        {
+            EndDialog();
+            return;
+        }
+
+        switch (node.nodeType)
+        {
+            case NodeTypes.Dialogue:
+                ShowDialogueNode(node);
+                break;
+
+            case NodeTypes.Choice:
+                ShowChoiceNode(node);
+                break;
+
+            case NodeTypes.Event:
+                ExecuteEventNode(node);
+                break;
+
+            case NodeTypes.End:
+                EndDialog();
+                break;
+        }
+    }
+
+    private void ShowDialogueNode(NodeSaveData node)
+    {
+        currentNode = node;
+
+        _entityController = EntityHolder.instance.GetEntityInScene(node.entityID);
 
         if (_entityController != null)
         {
-            UpdatePreviewLook(_entityController, _dialogUI._npcPreview);
-            npcIdPreviewLoaded = _dialogs[dialogIndex].entityID;
-            UpdatePreviewLook(_playerController, _dialogUI._playerPreview);
+            if (npcIdPreviewLoaded != node.entityID)
+            {
+                UpdatePreviewLook(_entityController, _dialogUI._npcPreview);
+                npcIdPreviewLoaded = node.entityID;
+            }
 
-            //Checking if player is talking to right npc
             QuestController.instance.InvokeTalkEvent(_entityController._entityInfo.ID);
         }
-        else
-        {
-            ConsoleController.instance.ChatMessage(SenderType.System, $"Entity {_dialogs[dialogIndex].entityID} does not exists", OutputType.Error);
-            return;
-        }
 
-        CameraController.instance.LockCamera(true);
-        _openCloseUI.Open();
-        _dialogUI.UpdateDialog(_dialogs[dialogIndex], _entityController._entityInfo.name);
-        isTalking = true;
+        _dialogUI.UpdateDialog(node, _entityController != null ? _entityController._entityInfo.name : "");
     }
 
-    private void UpdatePreviewLook(EntityController _entityController, EntityPreview _entityPreview)
+    private void ShowChoiceNode(NodeSaveData node)
     {
-        _entityController.StopEntity(true);
-        EntityLookController _entityLookController = _entityController.GetComponent<EntityLookController>();
-        _entityPreview.UpdateAllByEntity(_entityLookController._entityLook, _entityLookController._spriteHolder, _entityController._itemController._gearHolder);
+        currentNode = node;
+        _dialogUI.ShowChoices(node.choices, OnChoiceSelected);
     }
 
-    public void ChangeDialog(int index)
+    private void ExecuteEventNode(NodeSaveData node)
+    {
+        currentNode = node;
+
+        node.action.Execute();
+
+        NodeSaveData nextNode = GetConnectedNode(node.GUID);
+        ProcessNode(nextNode);
+    }
+
+    private void OnChoiceSelected(ChoiceSaveData choice)
+    {
+        NodeSaveData nextNode = GetConnectedChoiceNode(choice.GUID);
+        ProcessNode(nextNode);
+    }
+
+    public void ContinueDialog()
     {
         if (!_dialogUI.finishedSpelling)
         {
@@ -69,22 +167,19 @@ public class DialogController : MonoBehaviour
             return;
         }
 
-        dialogIndex = index;
-        EntityController _entity = EntityHolder.instance.GetEntityInScene(_dialogs[dialogIndex].entityID);
-        if (_entity != null && npcIdPreviewLoaded != _dialogs[dialogIndex].entityID)
-        {
-            UpdatePreviewLook(_entity, _dialogUI._npcPreview);
-            npcIdPreviewLoaded = _dialogs[dialogIndex].entityID;
-        }
-        _dialogUI.UpdateDialog(_dialogs[dialogIndex], _entity != null ? _entity._entityInfo.name : "");
+        NodeSaveData nextNode = GetConnectedNode(currentNode.GUID);
+        ProcessNode(nextNode);
     }
 
-    public void ForceChangeDialog(int index)
+    private void UpdatePreviewLook(EntityController entityController, EntityPreview entityPreview)
     {
-        if (!_dialogUI.finishedSpelling)
-            _dialogUI.SpeedUpDialog();
+        entityController.StopEntity(true);
+        EntityLookController lookController = entityController.GetComponent<EntityLookController>();
 
-        dialogIndex = index;
+        entityPreview.UpdateAllByEntity(
+            lookController._entityLook,
+            lookController._spriteHolder,
+            entityController._itemController._gearHolder);
     }
 
     public void EndDialog()
@@ -97,10 +192,13 @@ public class DialogController : MonoBehaviour
 
         CameraController.instance.LockCamera(false);
         GameController.instance._player.StopEntity(false);
+
         if (_entityController != null)
             _entityController.StopEntity(false);
 
         _openCloseUI.Close();
+        currentNode = null;
+        npcIdPreviewLoaded = -1;
         isTalking = false;
     }
 }
