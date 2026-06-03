@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de13913299c0c94abac5ed66e03d0f8, type: 3}
+  m_Name: Seraphine_NormalInteraction
+  m_EditorClassIdentifier: 
+  nodes:
+  - GUID: 
+    nodeType: 0
+    position: {x: 0, y: 0}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 0}
+  - GUID: c824e7a8-bc32-40c9-8809-0c50d6c0dc8e
+    nodeType: 1
+    position: {x: 159.2, y: 0}
+    entityID: 0
+    text: Hello, how can I help you today?
+    choices: []
+    action: {fileID: 0}
+  - GUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
+    nodeType: 2
+    position: {x: 552.8, y: 0}
+    entityID: 0
+    text: 
+    choices:
+    - GUID: 526b3263-c97e-48e8-a1ac-479765311ab6
+      text: Show me what you have for sale
+    - GUID: f50e7daf-0aec-458d-9e62-dd575f6b3949
+      text: Nevermind
+    action: {fileID: 0}
+  - GUID: b4f2c1e4-30f1-4f80-8698-41ae7cbc1bb3
+    nodeType: 3
+    position: {x: 950.4, y: 0}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 11400000, guid: 30400da546afb9c40aea72ab53524ffb, type: 2}
+  - GUID: f417d62f-e3c1-47a2-9719-f23bdc1c4230
+    nodeType: 4
+    position: {x: 1307.2, y: 80}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 0}
+  edges:
+  - outputNodeGUID: 
+    outputPortGUID: 
+    inputNodeGUID: c824e7a8-bc32-40c9-8809-0c50d6c0dc8e
+  - outputNodeGUID: c824e7a8-bc32-40c9-8809-0c50d6c0dc8e
+    outputPortGUID: 
+    inputNodeGUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
+  - outputNodeGUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
+    outputPortGUID: 526b3263-c97e-48e8-a1ac-479765311ab6
+    inputNodeGUID: b4f2c1e4-30f1-4f80-8698-41ae7cbc1bb3
+  - outputNodeGUID: b4f2c1e4-30f1-4f80-8698-41ae7cbc1bb3
+    outputPortGUID: 
+    inputNodeGUID: f417d62f-e3c1-47a2-9719-f23bdc1c4230
+  - outputNodeGUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
+    outputPortGUID: f50e7daf-0aec-458d-9e62-dd575f6b3949
+    inputNodeGUID: f417d62f-e3c1-47a2-9719-f23bdc1c4230

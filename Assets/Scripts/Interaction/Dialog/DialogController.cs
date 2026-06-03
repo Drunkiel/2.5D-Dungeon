@@ -26,16 +26,11 @@ public class DialogController : MonoBehaviour
             return;
         }
 
-        NodeSaveData startNode =
-            _graph.nodes.Find(x =>
-                x.nodeType ==
-                NodeTypes.Start);
+        NodeSaveData startNode = _graph.nodes.Find(x => x.nodeType == NodeTypes.Start);
 
         if (startNode == null)
         {
-            Debug.LogError(
-                "Start node not found.");
-
+            Debug.LogError("Start node not found.");
             return;
         }
 
@@ -43,9 +38,7 @@ public class DialogController : MonoBehaviour
 
         if (firstNode == null)
         {
-            Debug.LogError(
-                "Start node is not connected.");
-
+            Debug.LogError("Start node is not connected.");
             return;
         }
 
@@ -65,10 +58,7 @@ public class DialogController : MonoBehaviour
 
     private NodeSaveData GetConnectedNode(string outputNodeGUID)
     {
-        EdgeSaveData edge =
-            _graph.edges.Find(x =>
-                x.outputNodeGUID ==
-                outputNodeGUID);
+        EdgeSaveData edge = _graph.edges.Find(x => x.outputNodeGUID == outputNodeGUID);
 
         if (edge == null)
             return null;
@@ -78,10 +68,7 @@ public class DialogController : MonoBehaviour
 
     private NodeSaveData GetConnectedChoiceNode(string choicePortGUID)
     {
-        EdgeSaveData edge =
-            _graph.edges.Find(x =>
-                x.outputPortGUID ==
-                choicePortGUID);
+        EdgeSaveData edge = _graph.edges.Find(x => x.outputPortGUID == choicePortGUID);
 
         if (edge == null)
             return null;

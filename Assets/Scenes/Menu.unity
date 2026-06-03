@@ -2129,6 +2129,57 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -25}
   m_SizeDelta: {x: 740, y: 530}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &110240688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 110240689}
+  - component: {fileID: 110240690}
+  m_Layer: 0
+  m_Name: Shop_Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &110240689
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110240688}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6155188376276210408}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &110240690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110240688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fea1df2cd40775b4b8c517cea576f9dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shopSlots: []
+  shopUiParent: {fileID: 400526019}
+  shopUiPrefab: {fileID: 8661550318691525234, guid: 1a3f60df3e62f79459c3d6939726be93,
+    type: 3}
+  slotPrefab: {fileID: 2065325961813379951, guid: 5e4f70be8a40f7d4a9b7765c4ff35085,
+    type: 3}
+  testList: {fileID: 11400000, guid: 36665d8bc5c7789468827a129db66e8a, type: 2}
 --- !u!1 &116080761
 GameObject:
   m_ObjectHideFlags: 0
@@ -43618,6 +43669,7 @@ Transform:
   - {fileID: 5244262675001738971}
   - {fileID: 222248058970762431}
   - {fileID: 2395576194855956710}
+  - {fileID: 110240689}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &6367219136163513808

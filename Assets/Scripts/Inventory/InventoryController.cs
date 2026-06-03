@@ -63,23 +63,10 @@ public class InventoryController : MonoBehaviour
             return;
 
         _inventorySlots[slotIndex]._itemID = _itemID;
-        GameObject slot = Instantiate(_inventorySlots[slotIndex].itemPlacePrefab, _inventorySlots[slotIndex].transform);
+        DragDropSlot slot = Instantiate(_inventorySlots[slotIndex].itemPlacePrefab, _inventorySlots[slotIndex].transform).GetComponent<DragDropSlot>();
+        slot.currentSlot = _inventorySlots[slotIndex];
+        slot.image.sprite = _itemID.GetSprite();
         _inventorySlots[slotIndex]._itemID.transform.SetParent(slot.transform, false);
-
-        switch (_itemID._itemData.itemType)
-        {
-            case ItemType.Weapon:
-                slot.GetComponent<DragDropSlot>().image.sprite = _itemID._weaponItem.iconSprite;
-                break;
-
-            case ItemType.Armor:
-                slot.GetComponent<DragDropSlot>().image.sprite = _itemID._armorItem.iconSprite;
-                break;
-
-            case ItemType.Collectable:
-                slot.GetComponent<DragDropSlot>().image.sprite = _itemID._collectableItem.iconSprite;
-                break;
-        }
 
         QuestController.instance.InvokeCollectEvent(_itemID._itemData.ID);
     }
@@ -89,15 +76,14 @@ public class InventoryController : MonoBehaviour
         GameObject slot = Instantiate(_gearSlots[slotIndex].itemPlacePrefab, _gearSlots[slotIndex].transform);
         ItemController _itemController = GameController.instance._player._itemController;
 
+        slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemID.GetSprite();
         switch (_itemID._itemData.itemType)
         {
             case ItemType.Weapon:
-                slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemID._weaponItem.iconSprite;
                 _itemController.SetWeapon(_itemID);
                 break;
 
             case ItemType.Armor:
-                slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemID._armorItem.iconSprite;
                 _itemController.SetArmor(_itemID);
                 break;
         }
@@ -110,21 +96,7 @@ public class InventoryController : MonoBehaviour
     public void LoadToInventory(ItemID _itemID, int slotIndex)
     {
         GameObject slot = Instantiate(_inventorySlots[slotIndex].itemPlacePrefab, _inventorySlots[slotIndex].transform);
-
-        switch (_itemID._itemData.itemType)
-        {
-            case ItemType.Weapon:
-                slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemID._weaponItem.iconSprite;
-                break;
-
-            case ItemType.Armor:
-                slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemID._armorItem.iconSprite;
-                break;
-
-            case ItemType.Collectable:
-                slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemID._collectableItem.iconSprite;
-                break;
-        }
+        slot.transform.GetChild(0).GetComponent<Image>().sprite = _itemID.GetSprite();
 
         ItemID _itemCopy = Instantiate(_itemID.gameObject, slot.transform).GetComponent<ItemID>();
         slot.transform.parent.GetComponent<InventorySlot>()._itemID = _itemCopy;

@@ -22,6 +22,9 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
         InventoryController.instance.isMovingItem = true;
 
+        if (currentSlot == null)
+            return;
+
         if (currentSlot._itemID != null && currentSlot.itemRestriction != ItemType.None)
         {
             GearHolder _gearHolder = GameController.instance._player._itemController._gearHolder;
@@ -120,10 +123,7 @@ public class DragDropSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (lockedUp)
-            return;
-
-        if (currentSlot == null || eventData.button != PointerEventData.InputButton.Left)
+        if (lockedUp && currentSlot == null || eventData.button != PointerEventData.InputButton.Left)
             currentSlot = eventData.pointerEnter.transform.parent.parent.GetComponent<InventorySlot>();
 
         if (eventData.button == PointerEventData.InputButton.Right)

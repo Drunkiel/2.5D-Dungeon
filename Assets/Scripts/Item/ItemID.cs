@@ -34,4 +34,15 @@ public class ItemID : MonoBehaviour
     public ArmorItem _armorItem;
     public CollectableItem _collectableItem;
     public SkillDataParser _skillDataParser;
+
+    public Sprite GetSprite()
+    {
+        return _itemData.itemType switch
+        {
+            ItemType.Weapon => _weaponItem.iconSprite,
+            ItemType.Armor => _armorItem.iconSprite,
+            ItemType.Collectable => _collectableItem.iconSprite,
+            _ => null,
+        };
+    }
 }
