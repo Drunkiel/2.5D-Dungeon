@@ -9,16 +9,12 @@ public class ShopController : MonoBehaviour
     [SerializeField] private GameObject shopUiPrefab;
     [SerializeField] private GameObject slotPrefab;
 
-    public ShopListData testList;
+    private ShopListData _currentShopList;
+    private int itemListID;
 
     void Awake()
     {
         instance = this;
-    }
-
-    void Start()
-    {
-        CreateShop(testList);
     }
 
     public void CreateShop(ShopListData _listData)
@@ -36,19 +32,31 @@ public class ShopController : MonoBehaviour
             _slot._itemID = _itemCopy;
             int a = i;
             _dragDropSlot.image.sprite = _itemCopy.GetSprite();
-            _dragDropSlot.GetComponent<Button>().onClick.AddListener(() => _shopUI.UpdateDisplay(_itemCopy, _listData._shopItems[a].price));
+            _dragDropSlot.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                itemListID = a;
+                _shopUI.UpdateDisplay(_itemCopy, _listData._shopItems[a].price);
+            });
 
             if (i == 0)
+            {
+                itemListID = a;
                 _shopUI.UpdateDisplay(_itemCopy, _listData._shopItems[a].price);
+            }
         }
+
+        _currentShopList = _listData;
+        GameController.instance._player.StopEntity(true);
     }
 
     public void BuyItem(ItemID _itemID)
     {
-        int availableSlotIndex = InventoryController.instance.GetAvailableSlotIndex();
+        InventoryController _inventoryController = InventoryController.instance;
+        int availableSlotIndex = _inventoryController.GetAvailableSlotIndex();
         if (availableSlotIndex == -1)
             return;
 
-        InventoryController.instance.AddToInventory(ItemContainer.instance.GetItemByID(_itemID._itemData.ID), availableSlotIndex);
+        if (CurrencyController.instance.TakeLumens(_currentShopList._shopItems[itemListID].price))
+            _inventoryController.AddToInventory(ItemContainer.instance.GetItemByID(_itemID._itemData.ID), availableSlotIndex);
     }
 }

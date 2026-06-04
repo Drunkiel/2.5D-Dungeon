@@ -4,6 +4,7 @@ public class SaveData
     public string skinPath;
     public string sceneName;
     public EasyVector3 position;
+    public int lumens;
     public InventoryData _inventoryData;
     public SkillSaveData _skillData;
 }

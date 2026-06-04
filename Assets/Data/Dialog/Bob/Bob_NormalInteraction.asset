@@ -20,6 +20,7 @@ MonoBehaviour:
     text: 
     choices: []
     action: {fileID: 0}
+    condition: {fileID: 0}
   - GUID: c824e7a8-bc32-40c9-8809-0c50d6c0dc8e
     nodeType: 1
     position: {x: 159.2, y: 0}
@@ -27,6 +28,7 @@ MonoBehaviour:
     text: Ahoy, where are we sailing today?
     choices: []
     action: {fileID: 0}
+    condition: {fileID: 0}
   - GUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
     nodeType: 2
     position: {x: 552.8, y: 0}
@@ -38,6 +40,7 @@ MonoBehaviour:
     - GUID: f50e7daf-0aec-458d-9e62-dd575f6b3949
       text: Nevermind
     action: {fileID: 0}
+    condition: {fileID: 0}
   - GUID: b4f2c1e4-30f1-4f80-8698-41ae7cbc1bb3
     nodeType: 3
     position: {x: 950.4, y: 0}
@@ -45,26 +48,33 @@ MonoBehaviour:
     text: 
     choices: []
     action: {fileID: 11400000, guid: 30400da546afb9c40aea72ab53524ffb, type: 2}
-  - GUID: f417d62f-e3c1-47a2-9719-f23bdc1c4230
-    nodeType: 4
-    position: {x: 1307.2, y: 80}
+    condition: {fileID: 0}
+  - GUID: be4a7c82-61aa-4986-96c9-a8f07e66b420
+    nodeType: 5
+    position: {x: 1320, y: 70.399994}
     entityID: 0
     text: 
     choices: []
     action: {fileID: 0}
+    condition: {fileID: 0}
   edges:
   - outputNodeGUID: 
     outputPortGUID: 
     inputNodeGUID: c824e7a8-bc32-40c9-8809-0c50d6c0dc8e
+    outputPortName: Output
   - outputNodeGUID: c824e7a8-bc32-40c9-8809-0c50d6c0dc8e
     outputPortGUID: 
     inputNodeGUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
+    outputPortName: Output
   - outputNodeGUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
     outputPortGUID: 526b3263-c97e-48e8-a1ac-479765311ab6
     inputNodeGUID: b4f2c1e4-30f1-4f80-8698-41ae7cbc1bb3
+    outputPortName: Output
   - outputNodeGUID: b4f2c1e4-30f1-4f80-8698-41ae7cbc1bb3
     outputPortGUID: 
-    inputNodeGUID: f417d62f-e3c1-47a2-9719-f23bdc1c4230
+    inputNodeGUID: be4a7c82-61aa-4986-96c9-a8f07e66b420
+    outputPortName: Output
   - outputNodeGUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
     outputPortGUID: f50e7daf-0aec-458d-9e62-dd575f6b3949
-    inputNodeGUID: f417d62f-e3c1-47a2-9719-f23bdc1c4230
+    inputNodeGUID: be4a7c82-61aa-4986-96c9-a8f07e66b420
+    outputPortName: Output

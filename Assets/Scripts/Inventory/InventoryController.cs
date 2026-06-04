@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class InventoryController : MonoBehaviour
 {
     public static InventoryController instance;
+
     public QuickInventoryController _quickInventory;
 
     public List<InventorySlot> _gearSlots = new();

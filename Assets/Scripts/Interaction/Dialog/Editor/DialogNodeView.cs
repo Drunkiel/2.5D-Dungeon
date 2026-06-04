@@ -20,6 +20,9 @@ public class DialogNodeView : Node
     public TextField DialogueTextField;
     public ObjectField ActionField;
     public List<ChoicePortView> ChoicePorts = new();
+    public ObjectField ConditionField;
+    public Port TrueOutput;
+    public Port FalseOutput;
 
     public DialogNodeView(NodeTypes type)
     {
@@ -89,7 +92,27 @@ public class DialogNodeView : Node
 
                 inputContainer.Add(Input);
                 outputContainer.Add(Output);
+                break;
 
+            case NodeTypes.If:
+                Input = GeneratePort(
+                    "Input",
+                    Direction.Input,
+                    Port.Capacity.Multi);
+
+                TrueOutput = GeneratePort(
+                    "True",
+                    Direction.Output,
+                    Port.Capacity.Single);
+
+                FalseOutput = GeneratePort(
+                    "False",
+                    Direction.Output,
+                    Port.Capacity.Single);
+
+                inputContainer.Add(Input);
+                outputContainer.Add(TrueOutput);
+                outputContainer.Add(FalseOutput);
                 break;
 
             case NodeTypes.End:
@@ -117,6 +140,10 @@ public class DialogNodeView : Node
 
             case NodeTypes.Event:
                 DrawEventNode();
+                break;
+
+            case NodeTypes.If:
+                DrawIfNode();
                 break;
         }
     }
@@ -250,6 +277,24 @@ public class DialogNodeView : Node
         extensionContainer.Add(ActionField);
     }
 
+    private void DrawIfNode()
+    {
+        ConditionField = new ObjectField("Condition")
+        {
+            objectType = typeof(DialogCondition),
+            allowSceneObjects = false
+        };
+
+        ConditionField.style.minWidth = 250;
+
+        ConditionField.RegisterValueChangedCallback(_ =>
+        {
+            SaveGraph();
+        });
+
+        extensionContainer.Add(ConditionField);
+    }
+
     private Port GeneratePort(
         string portName,
         Direction direction,
@@ -288,6 +333,12 @@ public class DialogNodeView : Node
             case NodeTypes.Event:
                 ColorUtility.TryParseHtmlString(
                     "#D2BC52",
+                    out color);
+                break;
+
+            case NodeTypes.If:
+                ColorUtility.TryParseHtmlString(
+                    "#8E6CD1",
                     out color);
                 break;
 

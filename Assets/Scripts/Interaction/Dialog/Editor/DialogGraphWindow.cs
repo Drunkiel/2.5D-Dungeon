@@ -83,6 +83,10 @@ public class DialogGraphWindow : EditorWindow
                 case NodeTypes.Event:
                     data.action = node.ActionField.value as DialogEvent;
                     break;
+
+                case NodeTypes.If:
+                    data.condition = node.ConditionField.value as DialogCondition;
+                    break;
             }
 
             currentGraph.nodes.Add(data);
@@ -96,7 +100,8 @@ public class DialogGraphWindow : EditorWindow
             EdgeSaveData edgeData = new()
             {
                 outputNodeGUID = outputNode.GUID,
-                inputNodeGUID = inputNode.GUID
+                inputNodeGUID = inputNode.GUID,
+                outputPortName = edge.output.portName
             };
 
             ChoicePortView choice = outputNode.ChoicePorts.Find(x => x.Port == edge.output);
@@ -158,6 +163,10 @@ public class DialogGraphWindow : EditorWindow
                     case NodeTypes.Event:
                         node.ActionField.value = nodeData.action;
                         break;
+
+                    case NodeTypes.If:
+                        node.ConditionField.value = nodeData.condition;
+                        break;
                 }
 
                 graphView.AddElement(node);
@@ -177,13 +186,24 @@ public class DialogGraphWindow : EditorWindow
 
                 if (outputNode.NodeType == NodeTypes.Choice)
                 {
-                    ChoicePortView choice = outputNode.ChoicePorts.FirstOrDefault(x => x.GUID == edgeData.outputPortGUID);
+                    ChoicePortView choice =
+                        outputNode.ChoicePorts.FirstOrDefault(
+                            x => x.GUID == edgeData.outputPortGUID);
 
                     if (choice != null)
                         outputPort = choice.Port;
                 }
+                else if (outputNode.NodeType == NodeTypes.If)
+                {
+                    if (edgeData.outputPortName == "True")
+                        outputPort = outputNode.TrueOutput;
+                    else if (edgeData.outputPortName == "False")
+                        outputPort = outputNode.FalseOutput;
+                }
                 else
+                {
                     outputPort = outputNode.Output;
+                }
 
                 Port inputPort = inputNode.Input;
 

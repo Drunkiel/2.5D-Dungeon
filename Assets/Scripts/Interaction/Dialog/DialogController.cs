@@ -98,6 +98,10 @@ public class DialogController : MonoBehaviour
                 ExecuteEventNode(node);
                 break;
 
+            case NodeTypes.If:
+                ExecuteIfNode(node);
+                break;
+
             case NodeTypes.End:
                 EndDialog();
                 break;
@@ -143,6 +147,23 @@ public class DialogController : MonoBehaviour
     private void OnChoiceSelected(ChoiceSaveData choice)
     {
         NodeSaveData nextNode = GetConnectedChoiceNode(choice.GUID);
+        ProcessNode(nextNode);
+    }
+
+    private NodeSaveData GetIfResultNode(NodeSaveData ifNode, bool result)
+    {
+        EdgeSaveData edge = _graph.edges.Find(x => x.outputNodeGUID == ifNode.GUID && x.outputPortName == (result ? "True" : "False"));
+
+        if (edge == null)
+            return null;
+
+        return GetNode(edge.inputNodeGUID);
+    }
+
+    private void ExecuteIfNode(NodeSaveData node)
+    {
+        bool result = node.condition != null && node.condition.CheckIfTrue();
+        NodeSaveData nextNode = GetIfResultNode(node, result);
         ProcessNode(nextNode);
     }
 

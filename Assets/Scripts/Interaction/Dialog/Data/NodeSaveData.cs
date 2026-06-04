@@ -12,4 +12,5 @@ public class NodeSaveData
     public string text;
     public List<ChoiceSaveData> choices = new();
     public DialogEvent action;
+    public DialogCondition condition;
 }

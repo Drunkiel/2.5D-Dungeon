@@ -83,6 +83,12 @@ public class DialogGraphView : GraphView
                 mousePosition));
 
         evt.menu.AppendAction(
+            "Add If Node",
+                x => CreateNode(
+                NodeTypes.If,
+                mousePosition));
+
+        evt.menu.AppendAction(
             "Add End Node",
             x => CreateNode(
                 NodeTypes.End,

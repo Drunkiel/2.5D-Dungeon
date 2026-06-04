@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -83,5 +84,15 @@ public class ConsoleCommands : MonoBehaviour
     public void ForcePlayerMovement()
     {
         GameController.instance._player.GetComponent<PlayerMovement>().ForceMovement(Vector2.up, 0.2f);
+    }
+
+    public void GetLumens()
+    {
+        ConsoleController.instance.ChatMessage(SenderType.Hidden, CurrencyController.instance.GetLumens().ToString());
+    }
+
+    public void GiveLumens()
+    {
+        CurrencyController.instance.GiveLumens(100);
     }
 }

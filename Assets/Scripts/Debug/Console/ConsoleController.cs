@@ -194,8 +194,7 @@ public class ConsoleController : MonoBehaviour
         }
 
         messages.Add(newText);
-        Canvas.ForceUpdateCanvases();
-        scrollRect.verticalNormalizedPosition = -1;
+        ScrollToBottom();
     }
 
     public void EnterChatMode()
@@ -251,5 +250,15 @@ public class ConsoleController : MonoBehaviour
         commandAttributes.AddRange(args.Skip(1));
 
         return args[0];
+    }
+
+    private void ScrollToBottom()
+    {
+        Canvas.ForceUpdateCanvases();
+        RectTransform content = chatParent as RectTransform;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(content);
+        scrollRect.content.anchoredPosition = new Vector2(scrollRect.content.anchoredPosition.x, 0);
+        scrollRect.verticalNormalizedPosition = 0f;
+        Canvas.ForceUpdateCanvases();
     }
 }

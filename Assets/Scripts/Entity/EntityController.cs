@@ -48,6 +48,7 @@ public class EntityController : MonoBehaviour
         get;
         private set;
     }
+    private int stopCounter;
     public bool isFlipped
     {
         get;
@@ -99,7 +100,15 @@ public class EntityController : MonoBehaviour
         }
     }
 
-    public void StopEntity(bool value) => isStopped = value;
+    public void StopEntity(bool value)
+    {
+        if (value)
+            stopCounter++;
+        else
+            stopCounter = Mathf.Max(0, stopCounter - 1);
+
+        isStopped = stopCounter > 0;
+    }
     public void Flip(bool value) => isFlipped = value;
     public void FaceCamera(bool value) => isFacingCamera = value;
 

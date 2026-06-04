@@ -20,6 +20,7 @@ MonoBehaviour:
     text: 
     choices: []
     action: {fileID: 0}
+    condition: {fileID: 0}
   - GUID: c824e7a8-bc32-40c9-8809-0c50d6c0dc8e
     nodeType: 1
     position: {x: 159.2, y: 0}
@@ -27,6 +28,7 @@ MonoBehaviour:
     text: Hello, how can I help you today?
     choices: []
     action: {fileID: 0}
+    condition: {fileID: 0}
   - GUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
     nodeType: 2
     position: {x: 552.8, y: 0}
@@ -37,49 +39,54 @@ MonoBehaviour:
       text: Is there any new quest avalaible?
     - GUID: f50e7daf-0aec-458d-9e62-dd575f6b3949
       text: Nevermind
-    - GUID: 7e0bcf00-9612-43ba-a6ab-09035350b3f3
-      text: Choice
     action: {fileID: 0}
+    condition: {fileID: 0}
   - GUID: b80ad6b6-121d-4ab0-be7a-a268621cc6ee
     nodeType: 1
-    position: {x: 944.8, y: 0}
+    position: {x: 1291.2, y: -100}
     entityID: 0
     text: Currently no, sorry
     choices: []
     action: {fileID: 0}
-  - GUID: 2521f474-1b31-4462-a163-5d02cd360529
-    nodeType: 3
-    position: {x: 944.8, y: 184.8}
-    entityID: 0
-    text: 
-    choices: []
-    action: {fileID: 11400000, guid: 03316f5d469148b4f88ab6ffa6220522, type: 2}
-  - GUID: 7e457722-026d-42f7-851d-b37e6f8124bc
-    nodeType: 4
-    position: {x: 1300, y: 74.399994}
+    condition: {fileID: 0}
+  - GUID: d048ad1c-8b5b-4ad4-8e6f-e54e8485829a
+    nodeType: 5
+    position: {x: 1605.6, y: 74.399994}
     entityID: 0
     text: 
     choices: []
     action: {fileID: 0}
+    condition: {fileID: 0}
+  - GUID: ed93eaa6-5d3b-4fdc-9f52-2251565193b4
+    nodeType: 4
+    position: {x: 905.6, y: 35.2}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 0}
+    condition: {fileID: 11400000, guid: 289f9d00bc4b9664a9187ddc81851f20, type: 2}
   edges:
   - outputNodeGUID: 
     outputPortGUID: 
     inputNodeGUID: c824e7a8-bc32-40c9-8809-0c50d6c0dc8e
-  - outputNodeGUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
-    outputPortGUID: f50e7daf-0aec-458d-9e62-dd575f6b3949
-    inputNodeGUID: 7e457722-026d-42f7-851d-b37e6f8124bc
-  - outputNodeGUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
-    outputPortGUID: 526b3263-c97e-48e8-a1ac-479765311ab6
-    inputNodeGUID: b80ad6b6-121d-4ab0-be7a-a268621cc6ee
+    outputPortName: Output
   - outputNodeGUID: c824e7a8-bc32-40c9-8809-0c50d6c0dc8e
     outputPortGUID: 
     inputNodeGUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
+    outputPortName: Output
+  - outputNodeGUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
+    outputPortGUID: 526b3263-c97e-48e8-a1ac-479765311ab6
+    inputNodeGUID: ed93eaa6-5d3b-4fdc-9f52-2251565193b4
+    outputPortName: Output
+  - outputNodeGUID: ed93eaa6-5d3b-4fdc-9f52-2251565193b4
+    outputPortGUID: 
+    inputNodeGUID: b80ad6b6-121d-4ab0-be7a-a268621cc6ee
+    outputPortName: True
+  - outputNodeGUID: ed93eaa6-5d3b-4fdc-9f52-2251565193b4
+    outputPortGUID: 
+    inputNodeGUID: d048ad1c-8b5b-4ad4-8e6f-e54e8485829a
+    outputPortName: False
   - outputNodeGUID: b80ad6b6-121d-4ab0-be7a-a268621cc6ee
     outputPortGUID: 
-    inputNodeGUID: 7e457722-026d-42f7-851d-b37e6f8124bc
-  - outputNodeGUID: 7de1ab32-08c2-4a78-989a-0d461678e82b
-    outputPortGUID: 7e0bcf00-9612-43ba-a6ab-09035350b3f3
-    inputNodeGUID: 2521f474-1b31-4462-a163-5d02cd360529
-  - outputNodeGUID: 2521f474-1b31-4462-a163-5d02cd360529
-    outputPortGUID: 
-    inputNodeGUID: 7e457722-026d-42f7-851d-b37e6f8124bc
+    inputNodeGUID: d048ad1c-8b5b-4ad4-8e6f-e54e8485829a
+    outputPortName: Output

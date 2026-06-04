@@ -23,6 +23,7 @@ public class SaveController : SaveLoadSystem
         _saveData.skinPath = _playerController.GetComponent<EntityLookController>().skinPath;
         _saveData.sceneName = PortalController.instance._currScene.sceneName;
         _saveData.position = new(_playerController.transform.position);
+        _saveData.lumens = CurrencyController.instance.GetLumens();
         _saveData._inventoryData = new(_playerController._itemController._gearHolder, InventoryController.instance._inventorySlots);
         _saveData._skillData = new(InventoryController.instance._skillSlots);
 
@@ -65,6 +66,7 @@ public class SaveController : SaveLoadSystem
         LoadSkills();
         //Load Skin
         LoadSkin(_playerController);
+        CurrencyController.instance.GiveLumens(_saveData.lumens);
         //Change camera angle
         CameraController.instance.ChangeCameraYAngle(45);
 

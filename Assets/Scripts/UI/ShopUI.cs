@@ -18,7 +18,7 @@ public class ShopUI : MonoBehaviour
     {
         itemImage.sprite = _itemID.GetSprite();
         itemTitleText.text = _itemID._itemData.displayedName;
-        itemPriceText.text = $"{price} Lumens";
+        itemPriceText.text = $"{price}";
         currentlyPickedItem = _itemID;
     }
 
@@ -28,5 +28,11 @@ public class ShopUI : MonoBehaviour
             return;
 
         ShopController.instance.BuyItem(currentlyPickedItem);
+    }
+
+    public void CloseUI()
+    {
+        GetComponent<AutoDestroy>().InstantDestroy();
+        GameController.instance._player.StopEntity(false);
     }
 }

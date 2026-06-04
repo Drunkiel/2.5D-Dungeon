@@ -4,5 +4,6 @@ public enum NodeTypes
     Dialogue,
     Choice,
     Event,
+    If,
     End
 }
