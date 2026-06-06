@@ -42,16 +42,20 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (GameController.isPaused || isLocked)
+        if (GameController.isPaused)
             return;
 
-        HandleZoom();
+        if (!isLocked)
+        {
+            HandleZoom();
 
-        if (!IsPointerOverUI())
-            ApplyRotation();
+            if (!IsPointerOverUI())
+                ApplyRotation();
+
+            SmoothRotateCamera();
+        }
 
         SetCamera();
-        SmoothRotateCamera();
     }
 
     public void RightClick(InputAction.CallbackContext context)

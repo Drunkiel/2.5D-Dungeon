@@ -24,11 +24,9 @@ public class GridTerrainComponent : MonoBehaviour
                 AssetDatabase.GetAssetPath(data.asset)
             );
 
-        string meshAssetPath =
-            $"{folderPath}/{data.asset.name.Replace("Data", "Mesh")}.asset";
+        string meshAssetPath = $"{folderPath}/{data.asset.name.Replace("Data", "Mesh")}.asset";
 
-        Mesh meshAsset =
-            AssetDatabase.LoadAssetAtPath<Mesh>(meshAssetPath);
+        Mesh meshAsset = AssetDatabase.LoadAssetAtPath<Mesh>(meshAssetPath);
 
         if (meshAsset == null)
         {
