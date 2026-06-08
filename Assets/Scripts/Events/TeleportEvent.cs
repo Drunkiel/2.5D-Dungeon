@@ -43,7 +43,7 @@ public class TeleportEvent : MonoBehaviour
         }));
     }
 
-    public void TeleportToSceneTeleport(string sceneName)
+    public void TeleportToSceneByID(string sceneName)
     {
         PortalController _portalController = PortalController.instance;
 
@@ -59,7 +59,7 @@ public class TeleportEvent : MonoBehaviour
                 return;
             }
 
-            PortalController.instance.TeleportToSceneTeleport(sceneName, teleportID);
+            PortalController.instance.TeleportToSceneByID(sceneName, teleportID);
             _portalController.SetCooldown();
             StartCoroutine(WaitAndRunAction());
         }));

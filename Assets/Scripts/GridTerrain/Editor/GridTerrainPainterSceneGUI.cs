@@ -7,7 +7,7 @@ public static class GridTerrainPainterSceneGUI
     static Vector2Int? lastPaintedCell = null;
 
     static GridTerrainPainterSceneGUI()
-    {
+    { 
         SceneView.duringSceneGui += OnSceneGUI;
     }
 
@@ -27,9 +27,7 @@ public static class GridTerrainPainterSceneGUI
 
         Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
 
-        float paintHeight =
-            generator.data.tileHeight *
-            GridTerrainPainterWindow.currentHeight;
+        float paintHeight = generator.data.tileHeight * GridTerrainPainterWindow.currentHeight;
 
         //Plane painting ground
         Plane groundPlane = new(
@@ -71,11 +69,9 @@ public static class GridTerrainPainterSceneGUI
             {
                 Vector2Int c = cell + new Vector2Int(x, y);
 
-                float originalBase =
-                    GetSimulatedHeight(c, cell, previewHeight, data, false);
+                float originalBase = GetSimulatedHeight(c, cell, previewHeight, data, false);
 
-                float simulatedBase =
-                    GetSimulatedHeight(c, cell, previewHeight, data, true);
+                float simulatedBase = GetSimulatedHeight(c, cell, previewHeight, data, true);
 
                 //If tile doesn't exists skip
                 if (originalBase == 0f && simulatedBase == 0f)
@@ -95,19 +91,10 @@ public static class GridTerrainPainterSceneGUI
         }
     }
 
-    static float GetSimulatedHeight(
-        Vector2Int checkCell,
-        Vector2Int previewCell,
-        float previewHeight,
-        GridTerrainData data,
-        bool simulate)
+    static float GetSimulatedHeight(Vector2Int checkCell, Vector2Int previewCell, float previewHeight, GridTerrainData data, bool simulate)
     {
-        if (simulate &&
-            checkCell == previewCell &&
-            GridTerrainPainterWindow.paintMode == PaintMode.Paint)
-        {
+        if (simulate && checkCell == previewCell && GridTerrainPainterWindow.paintMode == PaintMode.Paint)
             return previewHeight;
-        }
 
         if (data.TryGetTile(checkCell, out var tile))
             return tile.height * data.tileHeight;
@@ -115,31 +102,18 @@ public static class GridTerrainPainterSceneGUI
         return 0f;
     }
 
-    static float[] GetCorners(
-    Vector2Int cell,
-    float baseHeight,
-    Vector2Int previewCell,
-    float previewHeight,
-    GridTerrainData data,
-    bool simulate)
+    static float[] GetCorners(Vector2Int cell, float baseHeight, Vector2Int previewCell, float previewHeight, GridTerrainData data, bool simulate)
     {
         return new float[]
         {
-        GetCorner(cell, new Vector2Int(-1,-1), baseHeight, previewCell, previewHeight, data, simulate),
-        GetCorner(cell, new Vector2Int( 1,-1), baseHeight, previewCell, previewHeight, data, simulate),
-        GetCorner(cell, new Vector2Int( 1, 1), baseHeight, previewCell, previewHeight, data, simulate),
-        GetCorner(cell, new Vector2Int(-1, 1), baseHeight, previewCell, previewHeight, data, simulate)
+            GetCorner(cell, new Vector2Int(-1,-1), baseHeight, previewCell, previewHeight, data, simulate),
+            GetCorner(cell, new Vector2Int( 1,-1), baseHeight, previewCell, previewHeight, data, simulate),
+            GetCorner(cell, new Vector2Int( 1, 1), baseHeight, previewCell, previewHeight, data, simulate),
+            GetCorner(cell, new Vector2Int(-1, 1), baseHeight, previewCell, previewHeight, data, simulate)
         };
     }
 
-    static float GetCorner(
-        Vector2Int cell,
-        Vector2Int cornerOffset,
-        float baseHeight,
-        Vector2Int previewCell,
-        float previewHeight,
-        GridTerrainData data,
-        bool simulate)
+    static float GetCorner(Vector2Int cell, Vector2Int cornerOffset, float baseHeight, Vector2Int previewCell, float previewHeight, GridTerrainData data, bool simulate)
     {
         float maxHeight = baseHeight;
 
@@ -156,9 +130,7 @@ public static class GridTerrainPainterSceneGUI
             Vector2Int pos = cell + offset;
             float h = 0f;
 
-            if (simulate &&
-                pos == previewCell &&
-                GridTerrainPainterWindow.paintMode == PaintMode.Paint)
+            if (simulate && pos == previewCell && GridTerrainPainterWindow.paintMode == PaintMode.Paint)
             {
                 h = previewHeight;
             }
@@ -185,11 +157,7 @@ public static class GridTerrainPainterSceneGUI
         return false;
     }
 
-    static void DrawTileFromCorners(
-        Vector2Int cell,
-        float baseHeight,
-        float[] corners,
-        float size)
+    static void DrawTileFromCorners(Vector2Int cell, float baseHeight, float[] corners,float size)
     {
         float half = size / 2f;
 
@@ -201,11 +169,11 @@ public static class GridTerrainPainterSceneGUI
 
         Vector3[] v =
         {
-        center + new Vector3(-half, corners[0] - baseHeight, -half),
-        center + new Vector3( half, corners[1] - baseHeight, -half),
-        center + new Vector3( half, corners[2] - baseHeight,  half),
-        center + new Vector3(-half, corners[3] - baseHeight,  half),
-    };
+            center + new Vector3(-half, corners[0] - baseHeight, -half),
+            center + new Vector3( half, corners[1] - baseHeight, -half),
+            center + new Vector3( half, corners[2] - baseHeight,  half),
+            center + new Vector3(-half, corners[3] - baseHeight,  half),
+        };
 
         Handles.color = new Color(0f, 1f, 1f, 0.9f);
 
@@ -265,9 +233,7 @@ public static class GridTerrainPainterSceneGUI
         float size = data.asset.cellSize / 2f;
 
         //Height setting
-        float height =
-            GridTerrainPainterWindow.currentHeight *
-            data.tileHeight;
+        float height = GridTerrainPainterWindow.currentHeight * data.tileHeight;
 
         int halfRange = 2; //5x5 grid
 

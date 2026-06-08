@@ -1184,7 +1184,7 @@ PrefabInstance:
     - target: {fileID: 2372980406436250140, guid: c87939e846de226479484f32a4943fd1,
         type: 3}
       propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TeleportToSceneTeleport
+      value: TeleportToSceneByID
       objectReference: {fileID: 0}
     - target: {fileID: 2372980406436250140, guid: c87939e846de226479484f32a4943fd1,
         type: 3}
@@ -1267,6 +1267,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 136172148}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &136172150 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3504059797714687864, guid: c87939e846de226479484f32a4943fd1,
+    type: 3}
+  m_PrefabInstance: {fileID: 136172148}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136172149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 219643b18f56316489db2fd68ffc5141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &144270605 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5720383350572810988, guid: c05c796d9da81d54bb82e0fb24635922,
@@ -1728,8 +1740,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2372980406436250140, guid: c87939e846de226479484f32a4943fd1,
         type: 3}
+      propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 136172150}
+    - target: {fileID: 2372980406436250140, guid: c87939e846de226479484f32a4943fd1,
+        type: 3}
       propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TeleportToSceneTeleport
+      value: TeleportToSceneByID
       objectReference: {fileID: 0}
     - target: {fileID: 2372980406436250140, guid: c87939e846de226479484f32a4943fd1,
         type: 3}
@@ -12882,8 +12899,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2372980406436250140, guid: c87939e846de226479484f32a4943fd1,
         type: 3}
+      propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 136172150}
+    - target: {fileID: 2372980406436250140, guid: c87939e846de226479484f32a4943fd1,
+        type: 3}
       propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TeleportToSceneTeleport
+      value: TeleportToSceneByID
       objectReference: {fileID: 0}
     - target: {fileID: 2372980406436250140, guid: c87939e846de226479484f32a4943fd1,
         type: 3}
@@ -14080,8 +14102,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2372980406436250140, guid: c87939e846de226479484f32a4943fd1,
         type: 3}
+      propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 136172150}
+    - target: {fileID: 2372980406436250140, guid: c87939e846de226479484f32a4943fd1,
+        type: 3}
       propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TeleportToSceneTeleport
+      value: TeleportToSceneByID
       objectReference: {fileID: 0}
     - target: {fileID: 2372980406436250140, guid: c87939e846de226479484f32a4943fd1,
         type: 3}

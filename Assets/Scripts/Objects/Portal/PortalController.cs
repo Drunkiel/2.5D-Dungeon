@@ -83,7 +83,7 @@ public class PortalController : MonoBehaviour
         }));
     }
 
-    public void TeleportToSceneTeleport(string sceneName, short teleportID)
+    public void TeleportToSceneByID(string sceneName, short teleportID)
     {
         if (GameController.isPaused)
             return;
