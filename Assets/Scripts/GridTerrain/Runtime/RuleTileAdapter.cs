@@ -3,10 +3,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public static class RuleTileAdapter
 {
-    public static Sprite ResolveSprite(
-        RuleTile ruleTile,
-        Vector2Int position,
-        GridTerrainData data)
+    public static Sprite ResolveSprite(RuleTile ruleTile, Vector2Int position, GridTerrainData data)
     {
         if (ruleTile == null || data == null)
             return null;
@@ -26,11 +23,7 @@ public static class RuleTileAdapter
         return ruleTile.m_DefaultSprite;
     }
 
-    static bool RuleMatches(
-        RuleTile.TilingRule rule,
-        Vector2Int centerPos,
-        GridTerrainData data,
-        RuleTile ruleTile)
+    static bool RuleMatches(RuleTile.TilingRule rule, Vector2Int centerPos, GridTerrainData data, RuleTile ruleTile)
     {
         var neighbors = rule.m_Neighbors;
         var positions = rule.m_NeighborPositions;
@@ -57,11 +50,7 @@ public static class RuleTileAdapter
         return true;
     }
 
-    static bool Check(
-        Vector2Int pos,
-        int rule,
-        GridTerrainData data,
-        RuleTile ruleTile)
+    static bool Check(Vector2Int pos, int rule, GridTerrainData data, RuleTile ruleTile)
     {
         bool same = false;
 
@@ -79,10 +68,7 @@ public static class RuleTileAdapter
         };
     }
 
-    static Sprite GetRuleSprite(
-        RuleTile.TilingRule rule,
-        Vector2Int position,
-        int ruleIndex)
+    static Sprite GetRuleSprite(RuleTile.TilingRule rule, Vector2Int position, int ruleIndex)
     {
         var sprites = rule.m_Sprites;
 

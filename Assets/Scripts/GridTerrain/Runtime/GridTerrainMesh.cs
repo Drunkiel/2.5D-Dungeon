@@ -67,13 +67,7 @@ public class GridTerrainMesh : MonoBehaviour
         mesh.RecalculateBounds();
     }
 
-    void AddTile(
-        Vector2Int cell,
-        TileData tile,
-        GridTerrainData data,
-        List<Vector3> vertices,
-        List<int> triangles,
-        List<Vector2> uvs)
+    void AddTile(Vector2Int cell, TileData tile, GridTerrainData data, List<Vector3> vertices, List<int> triangles, List<Vector2> uvs)
     {
         if (string.IsNullOrEmpty(tile.tileId))
             return;
@@ -141,21 +135,17 @@ public class GridTerrainMesh : MonoBehaviour
         uvs.Add(new Vector2(uvMin.x, uvMax.y));
     }
 
-    float GetCornerHeight(
-        Vector2Int cell,
-        Vector2Int cornerOffset,
-        float baseHeight,
-        GridTerrainData data)
+    float GetCornerHeight(Vector2Int cell, Vector2Int cornerOffset, float baseHeight, GridTerrainData data)
     {
         float maxHeight = baseHeight;
 
         Vector2Int[] influence =
         {
-        new(0,0),
-        new(cornerOffset.x,0),
-        new(0,cornerOffset.y),
-        new(cornerOffset.x,cornerOffset.y)
-    };
+            new(0,0),
+            new(cornerOffset.x,0),
+            new(0,cornerOffset.y),
+            new(cornerOffset.x,cornerOffset.y)
+        };
 
         foreach (var offset in influence)
         {

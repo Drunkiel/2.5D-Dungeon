@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 954c8b127f14a5d4a8863c61a0bcbeac, type: 3}
+  m_Name: TreeCategory
+  m_EditorClassIdentifier: 
+  categoryName: Tree
+  prefabs:
+  - name: Tree
+    prefab: {fileID: 456967404416055376, guid: a6752537ef72589499abfbd1df1dad62, type: 3}
+    materialIdToUse: 0
+    materials:
+    - {fileID: 2100000, guid: 9479837e0380a224d986fe192a711f8b, type: 2}
+    - {fileID: 2100000, guid: 0a3cd521693c20244be9e25f7cd7a1d3, type: 2}
+    - {fileID: 2100000, guid: 7af2fd5bded430e4f86abe07c4ded85d, type: 2}
+    - {fileID: 2100000, guid: 77de30a8a058db84099ac055b61ddece, type: 2}
+    minScale: 1
+    maxScale: 2
+    randomYRotation: 1
+  - name: Tree
+    prefab: {fileID: 729501035279452536, guid: 79c5aa7903fd3a0489ba42139d3b4f3f, type: 3}
+    materialIdToUse: 1
+    materials:
+    - {fileID: 2100000, guid: 9479837e0380a224d986fe192a711f8b, type: 2}
+    - {fileID: 2100000, guid: 0a3cd521693c20244be9e25f7cd7a1d3, type: 2}
+    - {fileID: 2100000, guid: 7af2fd5bded430e4f86abe07c4ded85d, type: 2}
+    - {fileID: 2100000, guid: 77de30a8a058db84099ac055b61ddece, type: 2}
+    minScale: 1
+    maxScale: 2
+    randomYRotation: 1
+  - name: Tree
+    prefab: {fileID: 3941342298976511371, guid: 7b4491019fcb082439f586c5802a4825,
+      type: 3}
+    materialIdToUse: 0
+    materials:
+    - {fileID: 2100000, guid: 9479837e0380a224d986fe192a711f8b, type: 2}
+    - {fileID: 2100000, guid: 0a3cd521693c20244be9e25f7cd7a1d3, type: 2}
+    - {fileID: 2100000, guid: 7af2fd5bded430e4f86abe07c4ded85d, type: 2}
+    - {fileID: 2100000, guid: 77de30a8a058db84099ac055b61ddece, type: 2}
+    minScale: 1
+    maxScale: 2
+    randomYRotation: 1

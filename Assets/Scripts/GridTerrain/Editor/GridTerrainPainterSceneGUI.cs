@@ -42,10 +42,7 @@ public static class GridTerrainPainterSceneGUI
 
         float size = generator.data.asset.cellSize / 2f;
 
-        Vector2Int cell = new(
-            Mathf.FloorToInt(world.x / size),
-            Mathf.FloorToInt(world.z / size)
-        );
+        Vector2Int cell = new(Mathf.FloorToInt(world.x / size), Mathf.FloorToInt(world.z / size));
 
         DrawLocalGrid(cell, generator);
         DrawPreview(cell, generator);
@@ -77,11 +74,9 @@ public static class GridTerrainPainterSceneGUI
                 if (originalBase == 0f && simulatedBase == 0f)
                     continue;
 
-                var originalCorners =
-                    GetCorners(c, originalBase, cell, previewHeight, data, false);
+                var originalCorners = GetCorners(c, originalBase, cell, previewHeight, data, false);
 
-                var simulatedCorners =
-                    GetCorners(c, simulatedBase, cell, previewHeight, data, true);
+                var simulatedCorners = GetCorners(c, simulatedBase, cell, previewHeight, data, true);
 
                 if (!CornersChanged(originalCorners, simulatedCorners))
                     continue;
@@ -119,11 +114,11 @@ public static class GridTerrainPainterSceneGUI
 
         Vector2Int[] influence =
         {
-        new(0,0),
-        new(cornerOffset.x,0),
-        new(0,cornerOffset.y),
-        new(cornerOffset.x,cornerOffset.y)
-    };
+            new(0,0),
+            new(cornerOffset.x,0),
+            new(0,cornerOffset.y),
+            new(cornerOffset.x,cornerOffset.y)
+        };
 
         foreach (var offset in influence)
         {
@@ -216,6 +211,10 @@ public static class GridTerrainPainterSceneGUI
                 case PaintMode.Erase:
                     gen.data.RemoveTile(cell);
                     break;
+
+                case PaintMode.Environment:
+                    PlaceEnvironmentObject(cell, gen);
+                    break;
             }
 
             gen.Rebuild();
@@ -230,15 +229,16 @@ public static class GridTerrainPainterSceneGUI
         if (data == null || data.asset == null)
             return;
 
-        float size = data.asset.cellSize / 2f;
-
         //Height setting
         float height = GridTerrainPainterWindow.currentHeight * data.tileHeight;
 
         int halfRange = 2; //5x5 grid
 
+        //Set color of grid
         Handles.color = new Color(1f, 1f, 1f, 0.25f);
 
+        //Drawing grid lines
+        float size = data.asset.cellSize / 2f;
         for (int x = -halfRange; x <= halfRange + 1; x++)
         {
             Vector3 from = new(
@@ -271,6 +271,65 @@ public static class GridTerrainPainterSceneGUI
             );
 
             Handles.DrawLine(from, to);
+        }
+    }
+
+    static void PlaceEnvironmentObject(Vector2Int cell, GridTerrainGenerator gen)
+    {
+        EnvironmentDatabase _database = GridTerrainPainterWindow.environmentDatabase;
+
+        if (_database == null)
+            return;
+
+        EnvironmentCategory _category = _database.categories[GridTerrainPainterWindow.selectedCategory];
+        EnvironmentPrefabData _prefabData;
+
+        if (GridTerrainPainterWindow.randomPrefab)
+            _prefabData = _category.prefabs[Random.Range(0, _category.prefabs.Count)];
+        else
+            _prefabData = GridTerrainPainterWindow.currentEnvironmentPrefab;
+
+        if (_prefabData == null || _prefabData.prefab == null)
+            return;
+
+        GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(_prefabData.prefab);
+
+        //Set position in center of cell
+        float size = gen.data.asset.cellSize / 2f;
+        Vector3 position = new(cell.x * size + size * 0.5f, GridTerrainPainterWindow.currentHeight * gen.data.tileHeight, cell.y * size + size * 0.5f);
+        instance.transform.position = position;
+
+        //Give random rotation
+        float rotationY = 0f;
+        if (_prefabData.randomYRotation)
+            rotationY = Random.Range(0f, 360f);
+        instance.transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
+
+        //Give random scale
+        if (_prefabData.randomScale)
+        {
+            float scale = Random.Range(_prefabData.minScale, _prefabData.maxScale);
+            instance.transform.localScale = Vector3.one * scale;   
+        }
+
+        Undo.RegisterCreatedObjectUndo(instance, "Paint Environment");
+
+        //Randomize material
+        if (_prefabData.materials.Count > 0)
+        {
+            Material material = _prefabData.materials[Random.Range(0, _prefabData.materials.Count)];
+            Renderer renderer = instance.GetComponentInChildren<Renderer>();
+
+            if (renderer != null)
+            {
+                Material[] materials = renderer.sharedMaterials;
+
+                if (_prefabData.materialIdToUse >= 0 && _prefabData.materialIdToUse < materials.Length)
+                {
+                    materials[_prefabData.materialIdToUse] = material;
+                    renderer.sharedMaterials =materials;
+                }
+            }
         }
     }
 }

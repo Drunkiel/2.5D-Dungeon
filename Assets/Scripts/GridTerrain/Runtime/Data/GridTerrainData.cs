@@ -13,7 +13,6 @@ public class GridTerrainData : MonoBehaviour
 {
     public GridTerrainAsset asset;
 
-    // 🔥 jedna komórka = jeden tile
     public Dictionary<Vector2Int, TileData> tiles = new();
 
     public float heightStep = 0.2f;
@@ -40,12 +39,9 @@ public class GridTerrainData : MonoBehaviour
 
     public void AddTile(Vector2Int pos, TileData data)
     {
-        float snapped =
-            Mathf.Round(data.height / heightStep) * heightStep;
+        float snapped = Mathf.Round(data.height / heightStep) * heightStep;
 
         data.height = snapped;
-
-        // 🔥 nadpisujemy zamiast dodawać
         tiles[pos] = data;
     }
 

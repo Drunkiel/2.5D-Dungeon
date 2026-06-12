@@ -11,8 +11,7 @@ public enum PaintMode
 {
     Paint,
     Erase,
-    Raise,
-    Lower
+    Environment
 }
 
 public class GridTerrainPainterWindow : EditorWindow
@@ -39,6 +38,12 @@ public class GridTerrainPainterWindow : EditorWindow
     int selectedMapIndex = -1;
 
     const string ROOT_PATH = "Assets/GridTerrains";
+
+    public static EnvironmentDatabase environmentDatabase;
+    public static int selectedCategory;
+    public static int selectedEnvironmentPrefab;
+    public static bool randomPrefab = true;
+    public static EnvironmentPrefabData currentEnvironmentPrefab;
 
     [MenuItem("Tools/Grid Terrain Painter")]
     static void Open()
@@ -137,9 +142,6 @@ public class GridTerrainPainterWindow : EditorWindow
 
         if (GUILayout.Button("Save"))
             SaveTerrain();
-
-        if (GUILayout.Button("Rebuild Mesh"))
-            FindObjectOfType<GridTerrainGenerator>()?.Rebuild();
     }
 
     void DrawPaintControls()
@@ -148,7 +150,7 @@ public class GridTerrainPainterWindow : EditorWindow
 
         paintMode = (PaintMode)GUILayout.Toolbar(
             (int)paintMode,
-            new[] { "Paint", "Erase", "Raise", "Lower" }
+            new[] { "Paint", "Erase", "Environment" }
         );
 
         GUILayout.Space(10);
@@ -169,46 +171,42 @@ public class GridTerrainPainterWindow : EditorWindow
                 if (GUILayout.Button("-"))
                 {
                     currentHeight -= data.heightStep;
-                    currentHeight =
-                        Mathf.Round(currentHeight / data.heightStep) * data.heightStep;
+                    currentHeight = Mathf.Round(currentHeight / data.heightStep) * data.heightStep;
                 }
 
-                currentHeight =
-                    EditorGUILayout.FloatField("Height (Y)", currentHeight);
+                currentHeight = EditorGUILayout.FloatField("Height (Y)", currentHeight);
 
                 if (GUILayout.Button("+"))
                 {
                     currentHeight += data.heightStep;
-                    currentHeight =
-                        Mathf.Round(currentHeight / data.heightStep) * data.heightStep;
+                    currentHeight = Mathf.Round(currentHeight / data.heightStep) * data.heightStep;
                 }
 
                 EditorGUILayout.EndHorizontal();
 
-                data.heightStep =
-                    EditorGUILayout.FloatField("Height Step", data.heightStep);
+                data.heightStep = EditorGUILayout.FloatField("Height Step", data.heightStep);
             }
 
             GUILayout.Space(10);
             GUILayout.Label("Rotation", EditorStyles.boldLabel);
 
-            snapRotation =
-                EditorGUILayout.Toggle("Snap Rotation", snapRotation);
+            snapRotation = EditorGUILayout.Toggle("Snap Rotation", snapRotation);
 
-            currentRotation =
-                EditorGUILayout.Vector3Field("Rotation", currentRotation);
+            currentRotation = EditorGUILayout.Vector3Field("Rotation", currentRotation);
 
             if (data != null)
-            {
-                data.autoSnapHeight =
-                    EditorGUILayout.Toggle("Auto Snap Height", data.autoSnapHeight);
-            }
+                data.autoSnapHeight = EditorGUILayout.Toggle("Auto Snap Height", data.autoSnapHeight);
+
+            GUILayout.Space(10);
+
+            if (GUILayout.Button("Reload Tiles"))
+                LoadTiles();
         }
 
-        GUILayout.Space(10);
+        if (paintMode == PaintMode.Environment)
+            DrawEnvironmentSelection();
 
-        if (GUILayout.Button("Reload Tiles"))
-            LoadTiles();
+        GUILayout.Space(10);
     }
 
     void LoadSelectedMapByName(string mapName)
@@ -241,28 +239,20 @@ public class GridTerrainPainterWindow : EditorWindow
         string folderPath = $"{ROOT_PATH}/{mapName}";
 
         if (!AssetDatabase.IsValidFolder(folderPath))
-        {
             AssetDatabase.CreateFolder(ROOT_PATH, mapName);
-        }
         else
         {
             Debug.LogError("Map folder already exists!");
             return;
         }
 
-        // 🔥 Create Data Asset
+        //Create data asset
         GridTerrainAsset dataAsset = CreateInstance<GridTerrainAsset>();
-        AssetDatabase.CreateAsset(
-            dataAsset,
-            $"{folderPath}/{mapName}Data.asset"
-        );
+        AssetDatabase.CreateAsset(dataAsset, $"{folderPath}/{mapName}Data.asset");
 
-        // 🔥 Create Mesh Asset
+        //Create mesh asset
         Mesh mesh = new();
-        AssetDatabase.CreateAsset(
-            mesh,
-            $"{folderPath}/{mapName}Mesh.asset"
-        );
+        AssetDatabase.CreateAsset(mesh, $"{folderPath}/{mapName}Mesh.asset");
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
@@ -382,10 +372,75 @@ public class GridTerrainPainterWindow : EditorWindow
         }
     }
 
+    void DrawEnvironmentSelection()
+    {
+        GUILayout.Label("Environment", EditorStyles.boldLabel);
+
+        environmentDatabase =
+            (EnvironmentDatabase)
+            EditorGUILayout.ObjectField(
+                "Database",
+                environmentDatabase,
+                typeof(EnvironmentDatabase),
+                false
+            );
+
+        if (environmentDatabase == null)
+            return;
+
+        if (environmentDatabase.categories.Count == 0)
+            return;
+
+        string[] categories = new string[environmentDatabase.categories.Count];
+
+        for (int i = 0; i < categories.Length; i++)
+        {
+            categories[i] =
+                environmentDatabase
+                .categories[i]
+                .categoryName;
+        }
+
+        selectedCategory =
+            EditorGUILayout.Popup(
+                "Category",
+                selectedCategory,
+                categories
+            );
+
+        var category =
+            environmentDatabase
+            .categories[selectedCategory];
+
+        randomPrefab =
+            EditorGUILayout.Toggle(
+                "Random Prefab",
+                randomPrefab
+            );
+
+        if (!randomPrefab)
+        {
+            string[] prefabNames = new string[category.prefabs.Count];
+
+            for (int i = 0; i < prefabNames.Length; i++)
+            {
+                prefabNames[i] = category.prefabs[i].name;
+            }
+
+            selectedEnvironmentPrefab =
+                EditorGUILayout.Popup(
+                    "Prefab",
+                    selectedEnvironmentPrefab,
+                    prefabNames
+                );
+
+            currentEnvironmentPrefab = category.prefabs[selectedEnvironmentPrefab];
+        }
+    }
+
     void SaveTerrain()
     {
-        GridTerrainComponent terrain =
-            FindObjectOfType<GridTerrainComponent>();
+        GridTerrainComponent terrain = FindObjectOfType<GridTerrainComponent>();
 
         if (terrain == null)
         {

@@ -14,7 +14,8 @@ public static class TileDatabase
 
     public static RuleTile GetRuleTile(string id)
     {
-        if (tiles == null) Build();
+        if (tiles == null) 
+            Build();
         return tiles.TryGetValue(id, out var t) ? t : null;
     }
 }
