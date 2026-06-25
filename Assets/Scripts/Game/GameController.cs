@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private Canvas mainCanvas;
 
     public static bool isPC = true;
+    public static bool isStarted;
     public static bool isPaused;
 
     public List<GameObject> objectsToTeleportMust = new();
@@ -52,6 +53,12 @@ public class GameController : MonoBehaviour
             yield return null;
 
         action?.Invoke();
+    }
+
+    public void StartGame()
+    {
+        isStarted = true;
+        PortalController.instance.ResetCooldown();
     }
 
     public Canvas GetCanvas() => mainCanvas;

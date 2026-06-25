@@ -58,6 +58,24 @@ public class InventoryController : MonoBehaviour
             _playerEqUI.OpenClose();
     }
 
+    public void OpenSelectedUI(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                _inventoryUI.Open();
+                break;
+
+            case 1:
+                _playerEqUI.Open();
+                break;
+
+            case 2:
+                _skillsUI.Open();
+                break;
+        }
+    }
+
     public void AddToInventory(ItemID _itemID, int slotIndex)
     {
         if (slotIndex == -1)

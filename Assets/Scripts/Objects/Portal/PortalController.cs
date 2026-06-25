@@ -136,7 +136,7 @@ public class PortalController : MonoBehaviour
         Invoke(nameof(ResetCooldown), 10);
     }
 
-    private void ResetCooldown()
+    public void ResetCooldown()
     {
         isTeleportsOnCooldown = false;
     }

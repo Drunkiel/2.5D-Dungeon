@@ -17,12 +17,12 @@ public class CameraController : MonoBehaviour
     [SerializeField] private bool isLocked;
 
     private Vector2 rotationInput;
-    // Rotate speed
+    //Rotate speed
     public float rotationXSpeed = 50f;
     public float rotationYSpeed = 50f;
     public float smoothingFactor = 5f;
 
-    // Distance from camera
+    //Distance from camera
     [SerializeField] private float minDistance = 0.8f;
     [SerializeField] private float maxDistance = 2f;
     [SerializeField] private float distanceFromTarget = 2f;
@@ -55,7 +55,8 @@ public class CameraController : MonoBehaviour
             SmoothRotateCamera();
         }
 
-        SetCamera();
+        if (GameController.isStarted)
+            SetCamera();
     }
 
     public void RightClick(InputAction.CallbackContext context)

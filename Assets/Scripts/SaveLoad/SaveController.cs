@@ -47,6 +47,27 @@ public class SaveController : SaveLoadSystem
         ConsoleController.instance.ChatMessage(SenderType.System, "Game is saved", OutputType.Normal);
     }
 
+    public override void Save(SaveData _saveData, string path)
+    {
+        //Save data to file
+        string jsonData = JsonConvert.SerializeObject(_saveData, Formatting.Indented, new JsonSerializerSettings
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            PreserveReferencesHandling = PreserveReferencesHandling.None
+        });
+
+        try
+        {
+            File.WriteAllText(path, jsonData);
+        }
+        catch (System.Exception)
+        {
+            ConsoleController.instance.ChatMessage(SenderType.System, "Failed to save game", OutputType.Normal);
+            return;
+        }
+    }
+
     public override void Load(string path)
     {
         EntityController _playerController = GameController.instance._player;
@@ -129,6 +150,14 @@ public class SaveController : SaveLoadSystem
 
     public void ForceLoad()
     {
+        Load(savePath + "save.json");
+    }
+
+    public void CreateNewSaveFile()
+    {
+        _saveData = new(Application.version);
+        Save(_saveData, savePath + "save.json");
+        GameController.instance.StartGame();
         Load(savePath + "save.json");
     }
 }

@@ -19293,7 +19293,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3042424091731887512}
         m_TargetAssemblyTypeName: SaveController, Assembly-CSharp
-        m_MethodName: ForceSave
+        m_MethodName: CreateNewSaveFile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19301,18 +19301,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 288795169}
-        m_TargetAssemblyTypeName: TeleportEvent, Assembly-CSharp
-        m_MethodName: TeleportToScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Village
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &857278001
@@ -43501,6 +43489,7 @@ MonoBehaviour:
       inventoryItemIDs: 
     _skillData:
       skillIDs: 
+    gameVersion: 
 --- !u!1 &3088618687650450345
 GameObject:
   m_ObjectHideFlags: 0
@@ -43974,6 +43963,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4260579076324286211}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 715051604}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine

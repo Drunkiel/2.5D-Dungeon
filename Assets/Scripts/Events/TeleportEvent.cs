@@ -69,6 +69,9 @@ public class TeleportEvent : MonoBehaviour
     {
         PortalController _portalController = PortalController.instance;
 
+        print(_portalController.IsOnCooldown());
+        print(GameController.instance._player.GetComponent<EntityCombat>().inCombat);
+
         if (_portalController.IsOnCooldown() || GameController.instance._player.GetComponent<EntityCombat>().inCombat)
             return;
 
@@ -116,9 +119,9 @@ public class TeleportEvent : MonoBehaviour
         action();
     }
 
-    private IEnumerator WaitAndRunAction()
+    private IEnumerator WaitAndRunAction(float time = 2)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(time);
         onTeleportEvent.Invoke();
     }
 }
