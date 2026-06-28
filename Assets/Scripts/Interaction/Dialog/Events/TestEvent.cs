@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Dialog/Events/Test")]
+[CreateAssetMenu(menuName = "Custom/Dialog/Events/Test")]
 public class TestEvent : DialogEvent
 {
     public int a;

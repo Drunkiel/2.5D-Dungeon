@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class DialogController : MonoBehaviour
@@ -49,6 +50,12 @@ public class DialogController : MonoBehaviour
         _openCloseUI.Open();
         isTalking = true;
         ProcessNode(firstNode);
+    }
+
+    public IEnumerator StartDialog(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        StartDialog();
     }
 
     private NodeSaveData GetNode(string guid)

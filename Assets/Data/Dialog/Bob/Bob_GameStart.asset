@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de13913299c0c94abac5ed66e03d0f8, type: 3}
+  m_Name: Bob_GameStart
+  m_EditorClassIdentifier: 
+  nodes:
+  - GUID: 
+    nodeType: 0
+    position: {x: 0, y: 0}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 0}
+    condition: {fileID: 0}
+  - GUID: a276b8bc-fd30-43ef-b6e1-915a31ec67d6
+    nodeType: 1
+    position: {x: 172.8, y: 0}
+    entityID: 8
+    text: We arrived at ValVille
+    choices: []
+    action: {fileID: 0}
+    condition: {fileID: 0}
+  - GUID: 041dadeb-ff0c-46b6-8969-8142d82fda85
+    nodeType: 3
+    position: {x: 526.4, y: 0}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 11400000, guid: e80635533dec9584d87666bf3433b833, type: 2}
+    condition: {fileID: 0}
+  - GUID: 10cb7d03-fe29-4f2d-bbcc-9beb8d1bda55
+    nodeType: 5
+    position: {x: 942.4, y: 0}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 0}
+    condition: {fileID: 0}
+  edges:
+  - outputNodeGUID: 
+    outputPortGUID: 
+    inputNodeGUID: a276b8bc-fd30-43ef-b6e1-915a31ec67d6
+    outputPortName: Output
+  - outputNodeGUID: a276b8bc-fd30-43ef-b6e1-915a31ec67d6
+    outputPortGUID: 
+    inputNodeGUID: 041dadeb-ff0c-46b6-8969-8142d82fda85
+    outputPortName: Output
+  - outputNodeGUID: 041dadeb-ff0c-46b6-8969-8142d82fda85
+    outputPortGUID: 
+    inputNodeGUID: 10cb7d03-fe29-4f2d-bbcc-9beb8d1bda55
+    outputPortName: Output

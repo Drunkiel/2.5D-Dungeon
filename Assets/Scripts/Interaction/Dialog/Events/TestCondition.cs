@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Dialog/Conditions/Test")]
+[CreateAssetMenu(menuName = "Custom/Dialog/Conditions/Test")]
 public class TestCondition : DialogCondition
 {
     public int a;

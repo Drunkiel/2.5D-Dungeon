@@ -6,7 +6,7 @@ public class QuestController : MonoBehaviour
     public static QuestController instance;
     public QuestUI _questUI;
 
-    public List<Quest> _allQuests;
+    public List<QuestData> _allQuests;
     public List<int> _currentQuestsIndex;
 
     public short idToCheck;
@@ -17,11 +17,6 @@ public class QuestController : MonoBehaviour
     private void Awake()
     {
         instance = this;
-    }
-
-    void Start()
-    {
-        GiveQuest(0, false);
     }
 
     public void GiveQuest(int questIndex)

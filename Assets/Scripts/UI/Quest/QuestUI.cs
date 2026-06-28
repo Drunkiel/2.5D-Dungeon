@@ -9,7 +9,7 @@ public class QuestUI : MonoBehaviour
     public Transform parent;
     [SerializeField] private QuestExpander _questExpander;
 
-    public void AddQuestToUI(Quest _quest)
+    public void AddQuestToUI(QuestData _quest)
     {
         GameObject newQuest = Instantiate(questPrefab, parent);
         newQuest.transform.name = _quest.id.ToString();
@@ -44,7 +44,7 @@ public class QuestUI : MonoBehaviour
         Destroy(parent.GetChild(index).gameObject);
     }
 
-    public void UpdateQuestUI(int questIndex, int requirementIndex, Quest _quest)
+    public void UpdateQuestUI(int questIndex, int requirementIndex, QuestData _quest)
     {
         int index = GetQuestIndex(questIndex);
         if (index == -1)

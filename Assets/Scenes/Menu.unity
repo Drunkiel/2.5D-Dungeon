@@ -43117,7 +43117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d7a80f8a8f3ff6e9765f5dbb55dd26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _graph: {fileID: 0}
+  _graph: {fileID: 11400000, guid: bf585fb813257d34798e7d1b8f347798, type: 2}
   isTalking: 0
   _dialogUI: {fileID: 721264825}
   _openCloseUI: {fileID: 7025520666643110666}
@@ -44119,126 +44119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _questUI: {fileID: 425872822}
   _allQuests:
-  - id: 0
-    title: New Recruit 1/4
-    description: Talk to City Mayor
-    _requirements:
-    - type: 2
-      description: Talk to City Mayor
-      targetID: 0
-      progressCurrent: 0
-      progressNeeded: 1
-    onFinishEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 768776106131332069}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ForceChangeDialog
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 1
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 8139832753388351889}
-          m_TargetAssemblyTypeName: QuestController, Assembly-CSharp
-          m_MethodName: GiveQuest
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 1
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - id: 1
-    title: New Recruit 2/4
-    description: Talk to Guild Receptionist
-    _requirements:
-    - type: 2
-      description: Talk to Guild Receptionist
-      targetID: 1
-      progressCurrent: 0
-      progressNeeded: 1
-    onFinishEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 768776106131332069}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ForceChangeDialog
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 1
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 8139832753388351889}
-          m_TargetAssemblyTypeName: QuestController, Assembly-CSharp
-          m_MethodName: GiveQuest
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 2
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - id: 2
-    title: New Recruit 3/4
-    description: Talk to Black Smith
-    _requirements:
-    - type: 2
-      description: Talk to Black Smith
-      targetID: 2
-      progressCurrent: 0
-      progressNeeded: 1
-    onFinishEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 768776106131332069}
-          m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
-          m_MethodName: ForceChangeDialog
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 2
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 8139832753388351889}
-          m_TargetAssemblyTypeName: QuestController, Assembly-CSharp
-          m_MethodName: GiveQuest
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 3
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - id: 2
-    title: New Recruit 4/4
-    description: Talk with Army General
-    _requirements:
-    - type: 0
-      description: Complete the dungeon
-      targetID: 0
-      progressCurrent: 0
-      progressNeeded: 1
-    onFinishEvent:
-      m_PersistentCalls:
-        m_Calls: []
+  - {fileID: 11400000, guid: b232c1e6719b62245a09b898ab1a7ea2, type: 2}
   _currentQuestsIndex: 
   idToCheck: 0
   killQuestIndexes: 

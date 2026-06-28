@@ -69,9 +69,6 @@ public class TeleportEvent : MonoBehaviour
     {
         PortalController _portalController = PortalController.instance;
 
-        print(_portalController.IsOnCooldown());
-        print(GameController.instance._player.GetComponent<EntityCombat>().inCombat);
-
         if (_portalController.IsOnCooldown() || GameController.instance._player.GetComponent<EntityCombat>().inCombat)
             return;
 

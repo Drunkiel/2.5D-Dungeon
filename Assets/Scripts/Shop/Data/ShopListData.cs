@@ -9,7 +9,7 @@ public class ShopItem
     public int price;
 }
 
-[CreateAssetMenu(menuName = "Shop/Shop List")]
+[CreateAssetMenu(menuName = "Custom/Shop/Shop List")]
 public class ShopListData : ScriptableObject
 {
     public List<ShopItem> _shopItems;

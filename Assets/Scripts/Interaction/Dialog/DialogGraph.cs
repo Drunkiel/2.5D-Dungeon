@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Dialog/Dialog Graph")]
+[CreateAssetMenu(menuName = "Custom/Dialog/Dialog Graph")]
 public class DialogGraph : ScriptableObject
 {
     public List<NodeSaveData> nodes = new();

@@ -159,5 +159,6 @@ public class SaveController : SaveLoadSystem
         Save(_saveData, savePath + "save.json");
         GameController.instance.StartGame();
         Load(savePath + "save.json");
+        StartCoroutine(DialogController.instance.StartDialog(2.5f));
     }
 }

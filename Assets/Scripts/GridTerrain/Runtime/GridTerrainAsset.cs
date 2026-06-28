@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Grid Terrain/Terrain Data")]
+[CreateAssetMenu(menuName = "Custom/Grid Terrain/Terrain Data")]
 public class GridTerrainAsset : ScriptableObject
 {
     public float cellSize = 1;
@@ -14,7 +14,6 @@ public class GridTerrainAsset : ScriptableObject
     }
 
     public List<TileEntry> tiles = new();
-
     Dictionary<Vector2Int, TileData> runtimeLookup;
 
     public void BuildLookup()
