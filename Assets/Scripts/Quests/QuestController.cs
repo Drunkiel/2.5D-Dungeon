@@ -13,6 +13,8 @@ public class QuestController : MonoBehaviour
     public List<short> killQuestIndexes;
     public List<short> collectQuestIndexes;
     public List<short> talkQuestIndexes;
+    public List<short> finishQuestIndexes;
+    public List<short> craftQuestIndexes;
 
     private void Awake()
     {
@@ -57,6 +59,14 @@ public class QuestController : MonoBehaviour
                 case RequirementType.Talk:
                     talkQuestIndexes.Add((short)questID);
                     break;
+
+                case RequirementType.QuestFinish:
+                    finishQuestIndexes.Add((short)questID);
+                    break;
+
+                case RequirementType.Craft:
+                    craftQuestIndexes.Add((short)questID);
+                    break;
             }
         }
     }
@@ -88,8 +98,18 @@ public class QuestController : MonoBehaviour
                 case RequirementType.Talk:
                     talkQuestIndexes.Remove((short)questIndex);
                     break;
+                
+                case RequirementType.QuestFinish:
+                    finishQuestIndexes.Remove((short)questIndex);
+                    break;
+                
+                case RequirementType.Craft:
+                    craftQuestIndexes.Remove((short)questIndex);
+                    break;
             }
         }
+
+        InvokeQuestFinishEvent((short)questIndex);
     }
 
     public void InvokeKillEvent(short id)
@@ -102,7 +122,7 @@ public class QuestController : MonoBehaviour
                 continue;
 
             //Get correct RequirementType
-            var requirements = _allQuests[killQuestIndexes[i]]._requirements;
+            List<RequirementData> requirements = _allQuests[killQuestIndexes[i]]._requirements;
             for (int j = 0; j < requirements.Count; j++)
             {
                 if (requirements[j].type != RequirementType.Kill)
@@ -124,7 +144,7 @@ public class QuestController : MonoBehaviour
                 continue;
 
             //Get correct RequirementType
-            var requirements = _allQuests[collectQuestIndexes[i]]._requirements;
+            List<RequirementData> requirements = _allQuests[collectQuestIndexes[i]]._requirements;
             for (int j = 0; j < requirements.Count; j++)
             {
                 if (requirements[j].type != RequirementType.Collect)
@@ -146,13 +166,57 @@ public class QuestController : MonoBehaviour
                 continue;
 
             //Get correct RequirementType
-            var requirements = _allQuests[talkQuestIndexes[i]]._requirements;
+            List<RequirementData> requirements = _allQuests[talkQuestIndexes[i]]._requirements;
             for (int j = 0; j < requirements.Count; j++)
             {
                 if (requirements[j].type != RequirementType.Talk)
                     continue;
 
                 EventListener(talkQuestIndexes[i], j);
+                break;
+            }
+        }
+    }
+
+    public void InvokeQuestFinishEvent(short id)
+    {
+        idToCheck = id;
+        for (int i = 0; i < finishQuestIndexes.Count; i++)
+        {
+            //Simple check
+            if (finishQuestIndexes[i] < 0 || finishQuestIndexes[i] >= _allQuests.Count)
+                continue;
+
+            //Get correct RequirementType
+            List<RequirementData> requirements = _allQuests[finishQuestIndexes[i]]._requirements;
+            for (int j = 0; j < requirements.Count; j++)
+            {
+                if (requirements[j].type != RequirementType.QuestFinish)
+                    continue;
+
+                EventListener(finishQuestIndexes[i], j);
+                break;
+            }
+        }
+    }
+    
+    public void InvokeCraftEvent(short id)
+    {
+        idToCheck = id;
+        for (int i = 0; i < craftQuestIndexes.Count; i++)
+        {
+            //Simple check
+            if (craftQuestIndexes[i] < 0 || craftQuestIndexes[i] >= _allQuests.Count)
+                continue;
+
+            //Get correct RequirementType
+            List<RequirementData> requirements = _allQuests[craftQuestIndexes[i]]._requirements;
+            for (int j = 0; j < requirements.Count; j++)
+            {
+                if (requirements[j].type != RequirementType.Craft)
+                    continue;
+
+                EventListener(craftQuestIndexes[i], j);
                 break;
             }
         }

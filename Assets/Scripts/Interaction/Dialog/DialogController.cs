@@ -43,8 +43,8 @@ public class DialogController : MonoBehaviour
             return;
         }
 
-        EntityController player = GameController.instance._player;
-        UpdatePreviewLook(player, _dialogUI._playerPreview);
+        EntityController _player = GameController.instance._player;
+        UpdatePreviewLook(_player, _dialogUI._playerPreview);
         CameraController.instance.LockCamera(true);
 
         _openCloseUI.Open();
@@ -128,8 +128,6 @@ public class DialogController : MonoBehaviour
                 UpdatePreviewLook(_entityController, _dialogUI._npcPreview);
                 npcIdPreviewLoaded = node.entityID;
             }
-
-            QuestController.instance.InvokeTalkEvent(_entityController._entityInfo.ID);
         }
 
         _dialogUI.UpdateDialog(node, _entityController != null ? _entityController._entityInfo.name : "");

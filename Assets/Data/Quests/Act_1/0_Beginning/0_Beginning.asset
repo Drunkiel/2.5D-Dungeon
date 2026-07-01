@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f9552a7f5cf03429468e55d9df6417, type: 3}
+  m_Name: 0_Beginning
+  m_EditorClassIdentifier: 
+  id: 0
+  title: The Beginning
+  description: A new journey awaits
+  _requirements:
+  - type: 2
+    description: Talk to Roxana
+    targetID: 0
+    progressCurrent: 0
+    progressNeeded: 1
+  onFinishEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: cd9a43d5b212d2d44904b348bc9af5d1, type: 2}
+        m_TargetAssemblyTypeName: DialogOverrideEvent, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

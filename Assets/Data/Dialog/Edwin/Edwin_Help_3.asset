@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de13913299c0c94abac5ed66e03d0f8, type: 3}
+  m_Name: Edwin_Help_3
+  m_EditorClassIdentifier: 
+  nodes:
+  - GUID: 
+    nodeType: 0
+    position: {x: 0, y: 0}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 0}
+    condition: {fileID: 0}
+  - GUID: a7dec84f-472e-48ff-9bbd-6bf44939448a
+    nodeType: 1
+    position: {x: 155.2, y: 0}
+    entityID: 2
+    text: I need some stuff
+    choices: []
+    action: {fileID: 0}
+    condition: {fileID: 0}
+  - GUID: 1976f113-da66-4df6-bcc6-206b63e4c3f0
+    nodeType: 3
+    position: {x: 526.4, y: 0}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 0}
+    condition: {fileID: 0}
+  - GUID: 9125748a-d6a8-4796-b781-5543099a8448
+    nodeType: 5
+    position: {x: 896.8, y: 0}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 0}
+    condition: {fileID: 0}
+  edges:
+  - outputNodeGUID: 
+    outputPortGUID: 
+    inputNodeGUID: a7dec84f-472e-48ff-9bbd-6bf44939448a
+    outputPortName: Output
+  - outputNodeGUID: a7dec84f-472e-48ff-9bbd-6bf44939448a
+    outputPortGUID: 
+    inputNodeGUID: 1976f113-da66-4df6-bcc6-206b63e4c3f0
+    outputPortName: Output
+  - outputNodeGUID: 1976f113-da66-4df6-bcc6-206b63e4c3f0
+    outputPortGUID: 
+    inputNodeGUID: 9125748a-d6a8-4796-b781-5543099a8448
+    outputPortName: Output

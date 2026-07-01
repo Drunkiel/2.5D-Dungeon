@@ -7,6 +7,6 @@ public class GiveQuestEvent : DialogEvent
 
     public override void Execute()
     {
-        QuestController.instance.GiveQuest(_questData.id - 1);
+        QuestController.instance.GiveQuest(_questData.id);
     }
 }

@@ -8,6 +8,8 @@ public enum RequirementType
     Kill,
     Collect,
     Talk,
+    QuestFinish,
+    Craft,
 }
 
 [Serializable]

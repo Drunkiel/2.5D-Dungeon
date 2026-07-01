@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de13913299c0c94abac5ed66e03d0f8, type: 3}
+  m_Name: Roxana_Beginning_0
+  m_EditorClassIdentifier: 
+  nodes:
+  - GUID: 
+    nodeType: 0
+    position: {x: 0, y: 0}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 0}
+    condition: {fileID: 0}
+  - GUID: 59082f17-ad6d-4626-b45f-15be8fa5eff9
+    nodeType: 1
+    position: {x: 205.6, y: -1.5999985}
+    entityID: 0
+    text: I need help with some quests
+    choices: []
+    action: {fileID: 0}
+    condition: {fileID: 0}
+  - GUID: 0e6904d9-c40b-4e1d-af27-d28f36b78215
+    nodeType: 3
+    position: {x: 558.4, y: -1.5999985}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 11400000, guid: 777219e3c6090324db354130c072a25b, type: 2}
+    condition: {fileID: 0}
+  - GUID: 685f4cca-0055-4517-a9b5-85c8826f06ad
+    nodeType: 3
+    position: {x: 558.4, y: 111.2}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 11400000, guid: 951b6adbc144dbb428e81ff2200dfd19, type: 2}
+    condition: {fileID: 0}
+  - GUID: ca17db9f-75ad-4c7e-bfeb-23beca0f16c8
+    nodeType: 3
+    position: {x: 558.4, y: 224.8}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 11400000, guid: e60f1de77c94c2b469103659ef9d30d8, type: 2}
+    condition: {fileID: 0}
+  - GUID: a97db76c-0104-4110-8854-d6980a5b39c1
+    nodeType: 3
+    position: {x: 558.4, y: 335.2}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 11400000, guid: 996f672e8e31ddd41bbd57d27c5d33a1, type: 2}
+    condition: {fileID: 0}
+  - GUID: 4b628383-279b-432b-9434-38bad7deac9a
+    nodeType: 3
+    position: {x: 558.4, y: 449.6}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 11400000, guid: 6f6acc3cd8c4cb340a76d9a13689009f, type: 2}
+    condition: {fileID: 0}
+  - GUID: e055baef-69c5-49f2-ba2d-6739380fc861
+    nodeType: 5
+    position: {x: 972.8, y: 449.6}
+    entityID: 0
+    text: 
+    choices: []
+    action: {fileID: 0}
+    condition: {fileID: 0}
+  edges:
+  - outputNodeGUID: 
+    outputPortGUID: 
+    inputNodeGUID: 59082f17-ad6d-4626-b45f-15be8fa5eff9
+    outputPortName: Output
+  - outputNodeGUID: 59082f17-ad6d-4626-b45f-15be8fa5eff9
+    outputPortGUID: 
+    inputNodeGUID: 0e6904d9-c40b-4e1d-af27-d28f36b78215
+    outputPortName: Output
+  - outputNodeGUID: 0e6904d9-c40b-4e1d-af27-d28f36b78215
+    outputPortGUID: 
+    inputNodeGUID: 685f4cca-0055-4517-a9b5-85c8826f06ad
+    outputPortName: Output
+  - outputNodeGUID: 685f4cca-0055-4517-a9b5-85c8826f06ad
+    outputPortGUID: 
+    inputNodeGUID: ca17db9f-75ad-4c7e-bfeb-23beca0f16c8
+    outputPortName: Output
+  - outputNodeGUID: ca17db9f-75ad-4c7e-bfeb-23beca0f16c8
+    outputPortGUID: 
+    inputNodeGUID: a97db76c-0104-4110-8854-d6980a5b39c1
+    outputPortName: Output
+  - outputNodeGUID: a97db76c-0104-4110-8854-d6980a5b39c1
+    outputPortGUID: 
+    inputNodeGUID: 4b628383-279b-432b-9434-38bad7deac9a
+    outputPortName: Output
+  - outputNodeGUID: 4b628383-279b-432b-9434-38bad7deac9a
+    outputPortGUID: 
+    inputNodeGUID: e055baef-69c5-49f2-ba2d-6739380fc861
+    outputPortName: Output
